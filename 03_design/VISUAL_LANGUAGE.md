@@ -178,6 +178,9 @@ solange keine Datei vorliegt). Details: [tokens/README](../00_design-system/toke
   trägt Labels, Codes, Metadaten (Stations-Tag, „ANZEIGE DES…", Walzen-Werte). (SHAPE SH13)
 - **T2 [MUST NOT]** Keine Fremd-Fonts. Die Google-Fonts im Motion-Artefakt (Archivo/Inter/
   JetBrains Mono) sind **Demo-Platzhalter** und werden durch die Token-Fonts ersetzt.
+- **T3 [MUST]** `DM Mono` steht ausnahmslos in Versalien (`text-transform: uppercase`,
+  Token `--text-transform-dm-mono`). Diese Font-Family wird nie lower- oder mixed-case
+  gesetzt. (SHAPE SH13)
 
 ---
 
@@ -221,6 +224,10 @@ Zwei Familien × drei Stufen. Bedeutung folgt der Farb-Semantik (§1).
   `state/selected-surface`); passive Struktur bleibt neutral.
 - **IX3 [MUST]** Vertiefungs-Affordanzen sind **blau** (C3) und führen in LAYER/400 (L2).
 - **IX4 [MUST]** Touch-Target ≥ `size/touch/min` (44px). (A1)
+- **IX5 [MUST]** Button-Text (alle Stufen — primary/secondary/tertiary, Action wie
+  Navigation) nutzt ausschließlich den `Label`-Textstyle (Token `font-size/label`,
+  `DM Mono`, versal per T3) — nie Body-, Caption- oder Headline-Größen. · Einheitliche,
+  wiedererkennbare Bedienelemente. (§5 Typografie)
 
 ---
 

@@ -70,11 +70,12 @@
   --space-8: 64px;
   --space-9: 96px;
 
+  /* No rounded corners at any level — all radii pinned to 0, no exceptions. */
   --radius-none: 0px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-full: 0px;
 
   --size-control-sm: 36px;
   --size-control-md: 44px;
@@ -98,7 +99,9 @@
   --font-family: "Switzer";
   --font-family-panchang: "Panchang";
   --font-family-baton-turbo: "Baton Turbo";
+  /* DM Mono is never used lowercase — always pair with text-transform: uppercase. */
   --font-family-dm-mono: "DM Mono";
+  --text-transform-dm-mono: uppercase;
   --font-family-switzer: "Switzer";
 
   --font-size-display: 96px;

@@ -4,12 +4,13 @@
 
 ## 1. Grundhaltung der Form
 
-Rechtwinklig, technisch, präzise. Formen wirken **gebaut**, nicht gezeichnet. Wenig Radius,
-harte Kanten, feine Linien. Rundungen sind die Ausnahme und semantisch begründet (z. B. die
-runden Enigma-Tasten als physisches Tastatur-Zitat).
+Rechtwinklig, technisch, präzise. Formen wirken **gebaut**, nicht gezeichnet. Kein Radius,
+harte Kanten, feine Linien. Rundungen kommen ausschließlich über Bildsprache (Foto/Illustration),
+nie über `border-radius`/`CORNER_RADIUS` (siehe SH12).
 
-- **SH1 [MUST]** Default ist die scharfe Kante (`radius/none`). Radius nur, wo ein Element
-  es funktional/metaphorisch verlangt. · Technischer, konstruierter Charakter.
+- **SH1 [MUST]** Scharfe Kante auf jeder Ebene: alle `radius/*`-Tokens (`none|sm|md|lg|full`)
+  sind `0`, ohne Ausnahme. Kein Element erhält einen abgerundeten `border-radius`. ·
+  Technischer, konstruierter Charakter.
 - **SH2 [MUST]** Linienstärken sind fein und einheitlich (Haarlinien für Line-Art, 1px für
   UI-Borders via `layer-border`). · Präzision, keine grafische Schwere.
 
@@ -48,15 +49,16 @@ Die Erklärsprache für **Funktion und Aufbau**.
 
 ## 5. Rundung & Metapher
 
-- **SH12 [SHOULD]** Skeuomorphe Zitate (z. B. runde Enigma-Tasten, cremeweißer Tastenton
-  ≈ `primary/50`) sind erlaubt, wo sie ein reales Bedienelement referenzieren und die
-  Erklärung stützen — sparsam und klar begrenzt auf das jeweilige Exponat. · Haptik als
-  Verständnishilfe, nicht als Deko.
+- **SH12 [MUST NOT]** Seit 2026-07-24 keine Rundung mehr über `border-radius`/`CORNER_RADIUS`
+  — auch nicht als skeuomorphes Zitat (ehemals: runde Enigma-Tasten). Soll ein reales rundes
+  Bedienelement referenziert werden, geschieht das ausschließlich über Bildmaterial
+  (Foto/Illustration/Icon), nie über einen abgerundeten Rahmen. · SH1 gilt ausnahmslos.
 
 ## 6. Typografie als Form
 
 - **SH13 [MUST]** Display/Headlines sind schwere, kondensierte, versale Großformen
   (Display-Font) — sie tragen die Screens optisch. Mono (`DM Mono`) trägt Labels, Codes,
-  Metadaten (der „Maschinen-Ableser"-Ton). · Kontrast aus massiver Headline und technischem
+  Metadaten (der „Maschinen-Ableser"-Ton) und steht **immer in Versalien** (`text-transform:
+  uppercase`), nie lower-/mixed-case. · Kontrast aus massiver Headline und technischem
   Mono ist Teil der Identität.
 - Werte/Skala: siehe [VISUAL_LANGUAGE §Typografie](VISUAL_LANGUAGE.md).

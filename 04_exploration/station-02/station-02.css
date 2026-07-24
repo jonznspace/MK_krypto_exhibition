@@ -1,0 +1,306 @@
+/* =========================================================================
+   Station 2 — Zirkel & Permutationsscheibe
+   Immersiver Screen-Kontext, fix 1920×1080. Werte aus dem Design-System (tokens.css).
+   Tiefe nur über Opazität (kein Blur/Schatten/Scale>1). Orange=Action, Blau=Vertiefung.
+   Kein border-radius (alle radius/*-Tokens = 0). DM Mono immer uppercase. Buttons immer
+   im Label-Textstyle (font-size/label).
+   ========================================================================= */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
+  color: var(--immersive-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#scaler {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: #000;
+}
+
+/* Die feste Kiosk-Bühne — wird per JS auf das Fenster skaliert */
+#frame {
+  width: 1920px; height: 1080px;
+  background: var(--immersive-bg);
+  position: relative;
+  transform-origin: center center;
+  padding: 64px 72px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+.hdr {
+  display: grid; grid-template-columns: 1fr auto; align-items: end;
+  gap: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--layer-border);
+}
+.tag {
+  display: inline-block;
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-bg); background: var(--immersive-accent);
+  padding: 6px 14px; border-radius: var(--radius-sm);
+}
+.kicker {
+  display: block; margin: 18px 0 6px;
+  font-family: var(--font-family-dm-mono); font-size: 17px; letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+}
+.title {
+  font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
+  font-size: 72px; line-height: .96; text-transform: uppercase; letter-spacing: -.01em;
+}
+.intro {
+  max-width: 640px; font-size: 22px; line-height: 1.5; color: var(--immersive-body);
+  text-align: right;
+}
+.intro b { color: var(--immersive-ink); font-weight: 600; }
+
+/* ---------- Bühne ---------- */
+.stage {
+  flex: 1; display: grid; grid-template-columns: 860px 1fr; gap: 72px;
+  align-items: center; padding-top: 40px; min-height: 0;
+}
+
+/* ---------- Scheibe ---------- */
+.disk-col { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+#disc { width: 760px; height: 760px; touch-action: none; cursor: grab; }
+#disc.dragging { cursor: grabbing; }
+
+.disk-ctrl { display: flex; align-items: center; gap: 20px; }
+.keyread {
+  min-width: 260px; text-align: center;
+  border: 1px solid var(--layer-border); border-radius: var(--radius-md);
+  padding: 10px 24px; background: var(--layer-surface-raised);
+}
+.keyread-lbl {
+  display: block; font-family: var(--font-family-dm-mono); font-size: 12px;
+  letter-spacing: .18em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+}
+.keyread b {
+  font-family: var(--font-family-dm-mono); font-size: 30px; font-weight: 500;
+  letter-spacing: .1em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
+}
+
+/* ---------- Buttons ---------- */
+/* Button-Text nutzt ausschließlich den Label-Textstyle (font-size/label). VISUAL_LANGUAGE IX5. */
+.btn {
+  min-height: var(--size-touch-min); min-width: 56px;
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  background: var(--immersive-accent); color: var(--immersive-bg);
+  border: none; border-radius: var(--radius-md); padding: 12px 22px; cursor: pointer;
+  transition: background var(--duration-1) var(--ease-standard),
+              border-color var(--duration-1) var(--ease-standard);
+}
+.btn.ghost {
+  background: transparent; color: var(--immersive-ink);
+  border: 1px solid var(--layer-border); padding: 12px 20px;
+}
+.btn.ghost:hover { border-color: var(--immersive-accent); }
+.btn:focus-visible, .tab:focus-visible, .vert-btn:focus-visible,
+.chip:focus-visible, .az button:focus-visible, .ov-close:focus-visible, .mute:focus-visible {
+  outline: 2px solid var(--immersive-focus); outline-offset: 3px;
+}
+
+/* ---------- Panel ---------- */
+.panel { display: flex; flex-direction: column; gap: 22px; min-width: 0; max-width: 760px; }
+
+.tabs { display: flex; gap: 8px; border: 1px solid var(--layer-border);
+  border-radius: var(--radius-md); padding: 6px; width: fit-content; }
+.tab {
+  min-height: 48px; padding: 8px 28px; cursor: pointer;
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+  background: transparent; color: var(--immersive-muted); border: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-1) var(--ease-standard),
+              background var(--duration-1) var(--ease-standard);
+}
+.tab.active { color: var(--immersive-bg); background: var(--immersive-accent); }
+
+.mode { display: flex; flex-direction: column; gap: 18px; }
+.mode.hidden { display: none; }
+.hint { font-size: 19px; line-height: 1.5; color: var(--immersive-body); }
+
+/* Wort-Chips */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  min-height: 44px; padding: 8px 18px; cursor: pointer;
+  font-family: var(--font-family-dm-mono); font-size: 16px; letter-spacing: .1em;
+  text-transform: var(--text-transform-dm-mono);
+  background: var(--layer-surface-raised); color: var(--immersive-ink);
+  border: 1px solid var(--layer-border); border-radius: var(--radius-full);
+  transition: border-color var(--duration-1) var(--ease-standard);
+}
+.chip:hover { border-color: var(--immersive-accent); }
+.chip.active { border-color: var(--immersive-accent); color: var(--immersive-accent); }
+
+/* Ein-/Ausgabe */
+.io { display: flex; flex-direction: column; gap: 14px; }
+.io-row { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 18px; }
+.io-lbl {
+  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+}
+.tiles { display: flex; flex-wrap: wrap; gap: 8px; min-height: 56px; align-content: center; }
+.tile {
+  width: 48px; height: 56px; display: grid; place-items: center;
+  font-family: var(--font-family-dm-mono); font-size: 26px; font-weight: 500;
+  text-transform: var(--text-transform-dm-mono);
+  background: var(--layer-surface-raised); border: 1px solid var(--layer-border);
+  border-radius: var(--radius-sm); color: var(--immersive-ink);
+  transition: color var(--duration-2) var(--ease-standard),
+              border-color var(--duration-2) var(--ease-standard),
+              opacity var(--duration-2) var(--ease-standard);
+}
+.tiles.cipher .tile { color: var(--immersive-accent); }
+.tile.pending { opacity: var(--dimmed-opacity); }
+.tile.active { border-color: var(--immersive-accent); }
+
+/* A–Z Leiste */
+.az { display: grid; grid-template-columns: repeat(13, 1fr); gap: 8px; }
+.az button {
+  min-height: var(--size-touch-min); cursor: pointer;
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label);
+  text-transform: var(--text-transform-dm-mono);
+  background: var(--layer-surface-raised); color: var(--immersive-ink);
+  border: 1px solid var(--layer-border); border-radius: var(--radius-sm);
+  transition: border-color var(--duration-1) var(--ease-standard),
+              background var(--duration-1) var(--ease-standard);
+}
+.az button:hover { border-color: var(--immersive-accent); }
+.az button:active { background: var(--state-pressed-surface); }
+
+.row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+/* Knacken */
+.crack-status {
+  font-family: var(--font-family-dm-mono); font-size: 20px; letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted); min-height: 1.4em;
+}
+.crack-status.solved { color: var(--immersive-accent); }
+
+/* Vertiefung-Button (blau) */
+.vert-btn {
+  margin-top: 8px; align-self: flex-start; cursor: pointer;
+  display: flex; align-items: center; gap: 12px; min-height: var(--size-touch-min);
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+  background: transparent; color: var(--immersive-focus);
+  border: 1px solid var(--immersive-focus); border-radius: var(--radius-md);
+  padding: 12px 22px;
+  transition: background var(--duration-1) var(--ease-standard);
+}
+.vert-btn:hover { background: color-mix(in srgb, var(--immersive-focus) 14%, transparent); }
+.vert-dot { width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--immersive-focus); }
+
+/* ---------- Vertiefung Overlay (LAYER/400) ---------- */
+.overlay {
+  position: absolute; inset: 0; z-index: 400;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--immersive-bg) 60%, transparent); /* 40% dim, kein Blur */
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--duration-4) var(--ease-standard);
+}
+.overlay.open { opacity: 1; pointer-events: auto; }
+.ov-card {
+  position: relative; width: 900px; max-width: 90%;
+  background: var(--layer-surface-raised);
+  border: 1px solid var(--immersive-focus); border-radius: var(--radius-lg);
+  padding: 48px 56px;
+  transform: translateY(24px);
+  transition: transform var(--duration-4) var(--ease-standard);
+}
+.overlay.open .ov-card { transform: translateY(0); }
+.ov-close {
+  position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; cursor: pointer;
+  font-size: var(--font-size-label);
+  background: transparent; color: var(--immersive-muted);
+  border: 1px solid var(--layer-border); border-radius: var(--radius-sm);
+}
+.ov-tag {
+  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .18em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-focus);
+}
+.ov-card h2 {
+  font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
+  font-size: 40px; text-transform: uppercase; margin: 10px 0 20px; line-height: 1;
+}
+.ov-card p { font-size: 20px; line-height: 1.6; color: var(--immersive-body); margin-bottom: 16px; max-width: 62ch; }
+.ov-card p b { color: var(--immersive-ink); font-weight: 600; }
+.perm-compare { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 12px; }
+.perm-box {
+  background: var(--immersive-bg); border: 1px solid var(--layer-border);
+  border-radius: var(--radius-md); padding: 18px 22px;
+}
+.perm-box.hi { border-color: var(--immersive-focus); }
+.perm-lbl { font-family: var(--font-family-dm-mono); font-size: 12px; letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted); }
+.perm-val { display: block; margin: 8px 0 4px; font-family: var(--font-family-dm-mono);
+  text-transform: var(--text-transform-dm-mono);
+  font-size: 22px; color: var(--immersive-focus); word-break: break-all; line-height: 1.2; }
+.perm-cap { font-family: var(--font-family-dm-mono); font-size: 12px; color: var(--immersive-muted);
+  text-transform: var(--text-transform-dm-mono); letter-spacing: .1em; }
+
+/* ---------- Attract & Toast ---------- */
+.attract {
+  position: absolute; left: 72px; bottom: 96px; z-index: 300;
+  font-family: var(--font-family-dm-mono); font-size: 18px; letter-spacing: .12em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
+  opacity: 0; transition: opacity var(--duration-3) var(--ease-standard);
+}
+.attract.show { opacity: 1; animation: pulse 2.4s var(--ease-standard) infinite; }
+@keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:1} }
+
+.toast {
+  position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%) translateY(16px);
+  z-index: 500; background: var(--layer-surface-raised);
+  border: 1px solid var(--state-accent); color: var(--immersive-ink);
+  font-family: var(--font-family-dm-mono); font-size: 18px; letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+  padding: 14px 28px; border-radius: var(--radius-md);
+  opacity: 0; pointer-events: none; transition: opacity var(--duration-2) var(--ease-standard),
+              transform var(--duration-2) var(--ease-standard);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Ton-Schalter (dev/kiosk) */
+.mute {
+  position: fixed; right: 16px; bottom: 16px; z-index: 600; min-height: 40px; cursor: pointer;
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .1em;
+  text-transform: var(--text-transform-dm-mono);
+  background: var(--layer-surface-raised); color: var(--immersive-muted);
+  border: 1px solid var(--layer-border); border-radius: var(--radius-full); padding: 8px 16px;
+}
+.mute[aria-pressed="false"] { color: var(--immersive-muted); opacity: .6; }
+
+/* ---------- SVG Scheibe ---------- */
+.disc-ring { fill: var(--layer-surface-raised); stroke: var(--layer-border); stroke-width: 1; }
+.disc-ring.inner { fill: #060606; }
+.disc-hub { fill: var(--immersive-bg); stroke: var(--layer-border); stroke-width: 1; }
+.disc-letter { font-family: var(--font-family-dm-mono); font-size: 20px; fill: var(--immersive-body);
+  text-transform: var(--text-transform-dm-mono);
+  text-anchor: middle; dominant-baseline: central; }
+.disc-letter.inner { fill: var(--immersive-muted); }
+.disc-letter.hot { fill: var(--immersive-accent); }
+.disc-marker { fill: var(--immersive-accent); }
+.disc-ray { stroke: var(--immersive-accent); stroke-width: 2; opacity: 0; }
+.disc-ray.on { opacity: 1; }
+.disc-dot { fill: var(--immersive-accent); opacity: 0; }
+.disc-dot.on { opacity: 1; }
+#discInner { transition: transform var(--duration-2) var(--ease-mechanical); }
+#discInner.free { transition: none; }
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, #discInner { transition: none !important; animation: none !important; }
+}

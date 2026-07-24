@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station 2 · Zirkel &amp; Permutationsscheibe</title>
+<!-- Design-System-Tokens (zieht per @import auch die self-hosted Fonts) -->
+<link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-02.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" aria-label="Station 2 – Verschlüsseln mit System">
+
+    <!-- ---------- Header (LAYER/300) ---------- -->
+    <header class="hdr">
+      <div class="hdr-left">
+        <span class="tag">STATION 2 · KRYPTOGRAFIE</span>
+        <span class="kicker">Verschlüsseln mit System</span>
+        <h1 class="title">Zirkel &amp; Permutationsscheibe</h1>
+      </div>
+      <p class="intro">
+        Zwei drehbare Alphabet-Scheiben. Außen der <b>Klartext</b>, innen die
+        <b>Geheimschrift</b>. Jede Drehung ist ein neuer Schlüssel — 26 in einem Gerät.
+      </p>
+    </header>
+
+    <!-- ---------- Bühne ---------- -->
+    <section class="stage">
+
+      <!-- Scheibe -->
+      <div class="disk-col">
+        <svg id="disc" viewBox="0 0 760 760" role="img"
+             aria-label="Kryptografischer Zirkel: äußere und innere Alphabetscheibe. Innere Scheibe drehbar."></svg>
+        <div class="disk-ctrl">
+          <button class="btn ghost" id="rotL" aria-label="Innere Scheibe eine Stellung nach links">◀</button>
+          <div class="keyread">
+            <span class="keyread-lbl">Schlüssel</span>
+            <b id="keyRead">A → A</b>
+          </div>
+          <button class="btn ghost" id="rotR" aria-label="Innere Scheibe eine Stellung nach rechts">▶</button>
+        </div>
+      </div>
+
+      <!-- Panel -->
+      <div class="panel">
+        <div class="tabs" role="tablist">
+          <button class="tab active" id="tabEncrypt" data-mode="encrypt" role="tab" aria-selected="true">Verschlüsseln</button>
+          <button class="tab" id="tabCrack" data-mode="crack" role="tab" aria-selected="false">Knacken</button>
+        </div>
+
+        <!-- Modus: Verschlüsseln -->
+        <div class="mode" id="modeEncrypt" role="tabpanel">
+          <p class="hint">Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.</p>
+          <div class="chips" id="wordChips"></div>
+          <div class="io">
+            <div class="io-row"><span class="io-lbl">Klartext</span><div class="tiles" id="plainTiles"></div></div>
+            <div class="io-row"><span class="io-lbl">Geheim</span><div class="tiles cipher" id="cipherTiles"></div></div>
+          </div>
+          <div class="az" id="azStrip" aria-label="Buchstaben eingeben"></div>
+          <div class="row">
+            <button class="btn" id="playBtn">Zeichen für Zeichen</button>
+            <button class="btn ghost" id="clearBtn">Leeren</button>
+          </div>
+        </div>
+
+        <!-- Modus: Knacken -->
+        <div class="mode hidden" id="modeCrack" role="tabpanel">
+          <p class="hint">Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.</p>
+          <div class="io">
+            <div class="io-row"><span class="io-lbl">Abgefangen</span><div class="tiles cipher" id="crackCipher"></div></div>
+            <div class="io-row"><span class="io-lbl">Entschlüsselt</span><div class="tiles" id="crackPlain"></div></div>
+          </div>
+          <div class="crack-status" id="crackStatus">Schlüssel drehen …</div>
+          <div class="row"><button class="btn ghost" id="newMsg">Neue Botschaft</button></div>
+        </div>
+
+        <button class="vert-btn" id="vertBtn">
+          <span class="vert-dot"></span> Vertiefung · Schwarze Kammern &amp; die Permutationsscheibe
+        </button>
+      </div>
+    </section>
+
+    <!-- ---------- Vertiefung (LAYER/400, blau markiert) ---------- -->
+    <div class="overlay" id="overlay" aria-hidden="true">
+      <div class="ov-card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+        <button class="ov-close" id="ovClose" aria-label="Schließen">✕</button>
+        <span class="ov-tag">Vertiefung</span>
+        <h2 id="ovTitle">Schwarze Kammern &amp; die Permutationsscheibe</h2>
+        <p>Im 15. Jahrhundert prägten solche Geräte die europäische Diplomatie. In sogenannten
+          „schwarzen Kammern“ chiffrierten und dechiffrierten die Höfe abgefangene Nachrichten.
+          Zugleich begann der bis heute andauernde <b>Wettlauf zwischen Verschlüsseln und Entschlüsseln</b>.</p>
+        <p>Eine reine Drehung kennt nur <b>26 Schlüssel</b> — mit Geduld durchprobierbar (siehe „Knacken“).
+          Die nächste Stufe verwürfelt das Innenalphabet: eine <b>Permutation</b>. Dann steht unter A nicht
+          das nächste, sondern ein beliebiges Zeichen — die Zahl der Möglichkeiten explodiert.</p>
+        <div class="perm-compare">
+          <div class="perm-box">
+            <span class="perm-lbl">Verschiebung</span>
+            <b class="perm-val" id="permShift">26</b>
+            <span class="perm-cap">Schlüssel</span>
+          </div>
+          <div class="perm-box hi">
+            <span class="perm-lbl">Permutation</span>
+            <b class="perm-val">403 291 461 126 605 635 584 000 000</b>
+            <span class="perm-cap">Schlüssel (26!)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attract-Hinweis -->
+    <div class="attract" id="attract" aria-hidden="true">Drehe die Scheibe</div>
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status"></div>
+
+  </main>
+</div>
+
+<button class="mute" id="mute" aria-label="Ton an/aus" aria-pressed="true">Ton</button>
+
+<script src="station-02.js"></script>
+</body>
+</html>

@@ -25,6 +25,11 @@ The default theme is light. Use `[data-theme="dark"]` on a parent element to act
 
 Primitive tokens should stay stable. Semantic tokens should be preferred in UI code because they describe intent.
 
+## Hard rules
+
+- **No rounded corners.** All `radius/*` tokens (`--radius-none|sm|md|lg|full`) are pinned to `0` on every level — no exceptions.
+- **DM Mono is uppercase-only.** Any text/font style using `font-family/DM Mono` (`--font-family-dm-mono`) must also apply `text-transform: uppercase` (`--text-transform-dm-mono`). This family is never set lowercase or mixed-case.
+
 ## Fonts
 
 Self-hosted webfonts liegen in `../fonts/`. `tokens.css` bindet sie automatisch ein
