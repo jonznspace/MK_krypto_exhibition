@@ -156,6 +156,12 @@ Jede interaktive Komponente durchläuft dieselben neun Zustände:
 Schriften aus Tokens: **Switzer** (Body), **Panchang** / **Baton Turbo** (Display),
 **DM Mono** (Mono/Labels). Skala responsiv (Desktop/Tablet/Phone) über die Typography-Tokens.
 
+Die Fonts sind **self-hosted** in `00_design-system/fonts/` (woff2) und werden über
+`tokens.css` (`@import fonts.css`) eingebunden — kein CDN, wichtig für Offline-Kioske.
+Switzer/Panchang sind Variable Fonts, DM Mono statisch. **Baton Turbo** ist aktuell nur im
+Token referenziert, aber noch nicht als Font hinterlegt (nicht als Display-Font einsetzen,
+solange keine Datei vorliegt). Details: [tokens/README](../00_design-system/tokens/README.md).
+
 | Rolle | Token | Desktop |
 |-------|-------|---------|
 | Display | `font-size/display` | 96 |

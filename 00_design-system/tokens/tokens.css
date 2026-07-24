@@ -4,6 +4,9 @@
   Generated from local Figma variables on 2026-07-23.
 */
 
+/* Self-hosted webfonts (Family-Namen = --font-family-* Tokens). Muss vor :root stehen. */
+@import "../fonts/fonts.css";
+
 :root {
   --color-neutral-0: #FFFFFF;
   --color-neutral-50: #F8F9FB;

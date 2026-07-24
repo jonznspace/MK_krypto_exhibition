@@ -1,0 +1,42 @@
+/*
+  SKD Krypto — self-hosted webfonts.
+  Wird von tokens/tokens.css importiert. Die Family-Namen entsprechen exakt den
+  --font-family-* Tokens, damit bestehende Referenzen automatisch auflösen.
+
+  Hinweis: "Baton Turbo" ist in den Tokens referenziert, aber aktuell NICHT als
+  self-hosted Font provisioniert (keine Datei). DM Mono wurde verlustfrei von TTF
+  nach woff2 konvertiert (Variable-Achsen bzw. Gewichte unverändert).
+*/
+
+/* ---- Switzer — Body. Variable, wght 100–900 ---- */
+@font-face {
+  font-family: "Switzer";
+  src: url("./switzer/Switzer-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("./switzer/Switzer-VariableItalic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---- Panchang — Display. Variable, wght 200–800 ---- */
+@font-face {
+  font-family: "Panchang";
+  src: url("./panchang/Panchang-Variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- DM Mono — Mono / Labels. Statisch 300 / 400 / 500 (+ Italics) ---- */
+@font-face { font-family: "DM Mono"; src: url("./dm-mono/DMMono-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("./dm-mono/DMMono-LightItalic.woff2") format("woff2"); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("./dm-mono/DMMono-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("./dm-mono/DMMono-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("./dm-mono/DMMono-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("./dm-mono/DMMono-MediumItalic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
