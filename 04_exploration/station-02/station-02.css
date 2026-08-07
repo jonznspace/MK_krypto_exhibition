@@ -214,7 +214,7 @@ html, body {
 .overlay.open { opacity: 1; pointer-events: auto; }
 .ov-card {
   position: relative; width: 900px; max-width: 90%;
-  background: var(--layer-surface-raised);
+  background: var(--layer-surface-elevated);
   border: 1px solid var(--immersive-focus); border-radius: var(--radius-lg);
   padding: 48px 56px;
   transform: translateY(24px);
@@ -263,7 +263,7 @@ html, body {
 
 .toast {
   position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%) translateY(16px);
-  z-index: 500; background: var(--layer-surface-raised);
+  z-index: 500; background: var(--layer-surface-elevated);
   border: 1px solid var(--state-accent); color: var(--immersive-ink);
   font-family: var(--font-family-dm-mono); font-size: 18px; letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);

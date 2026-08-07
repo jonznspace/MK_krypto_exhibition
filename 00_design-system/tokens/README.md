@@ -10,8 +10,8 @@ This folder contains the shared base tokens for the SKD Krypto design system.
 ## Source
 
 - Figma file: `xdc82fp188ssSV45Y7LKhz`
-- Figma node: `383:408`
-- Last export: `2026-07-23T13:47:50.642Z`
+- Figma node: `726:2224`
+- Last export: `2026-08-06T07:14:09Z`
 
 ## Usage
 

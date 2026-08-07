@@ -35,8 +35,10 @@ Inhalt: [Farbe](#1-farbe) · [Surfaces](#2-surfaces) · [Layer](#3-layer-system)
 | `immersive/ink` | `neutral/0` #FFFFFF | Primärtext, Headlines |
 | `immersive/body` | `neutral/300` #C7CBD3 | Fließtext |
 | `immersive/muted` | `neutral/500` #7D8290 | Mono-Labels, Meta, dezent |
-| `layer-surface-raised` | `neutral/850` #0A0A0A | erhöhte Fläche (Contained/Overlay) |
+| `layer-surface-raised` | `neutral/875` #0B0B0F | erhöhte Fläche (Contained) |
+| `layer-surface-elevated` | `neutral/850` #1A1C23 | hervorgehobene Fläche (Elevated/Overlay) |
 | `layer-border` | `neutral/800` #292C33 | Trennlinien, 1px |
+| `border-surface-raised` | `neutral/800` #292C33 | spezialisierte Kontur für Raised Surfaces |
 | `immersive/accent` | `primary/400` #F79530 | **Action** (Orange) |
 | `immersive/focus` | `secondary/500` #264EFF | **Information** / Fokusring (Blau) |
 
@@ -61,7 +63,7 @@ Layer-System (§3). Auf schwarzem Grund wird Elevation **nicht über Helligkeit*
 
 | Surface | Rolle | Fläche | Trennung |
 |---------|-------|--------|----------|
-| **01 Elevated** | hervorgehobene Info, zentrale Interaktion, fokussierter Inhalt, wichtige Overlays | `layer-surface-raised` | Border + i. d. R. höhere Layer + ggf. Akzent |
+| **01 Elevated** | hervorgehobene Info, zentrale Interaktion, fokussierter Inhalt, wichtige Overlays | `layer-surface-elevated` | `border-surface-raised` + i. d. R. höhere Layer + ggf. Akzent |
 | **02 Contained** | Cards, Module, Controls, Inhaltsgruppen, normale UI-Flächen | `layer-surface-raised` | `layer-border` (1px) |
 | **03 Subtle** | sekundäre Info, passive Bereiche, technische Gruppierungen, Hintergrund | `layer-surface-base` (Grund) | nur Abstand / feine Linie |
 
@@ -83,8 +85,8 @@ sind z-Index-Werte einer stations-lokalen Skala (0–500), **keine Farben**.
 | **LAYER/100** | Objektebene | 100 | transparent | Video, Dither-Bild | Ambient (nur hier), linear |
 | **LAYER/200** | Information | 200 | Base + Border | Typografie, Inhalt | `duration/3–4` |
 | **LAYER/300** | Struktur | 300 | Base + Border | Navigation, Timeline | `duration/3`, Timeline separat |
-| **LAYER/400** | Overlay | 400 | `layer-surface-raised` + Border | Detailpanel, Explosionszeichnung, interaktive Module | `duration/4`, nur **eine** gleichzeitig |
-| **LAYER/500** | System | 500 | `layer-surface-raised` + Border | Attract-Mode, Reset-Hinweis, Fehler | `duration/2`, darf ungefragt erscheinen |
+| **LAYER/400** | Overlay | 400 | `layer-surface-elevated` + `border-surface-raised` | Detailpanel, Explosionszeichnung, interaktive Module | `duration/4`, nur **eine** gleichzeitig |
+| **LAYER/500** | System | 500 | `layer-surface-elevated` + `border-surface-raised` | Attract-Mode, Reset-Hinweis, Fehler | `duration/2`, darf ungefragt erscheinen |
 
 - **L1 [MUST]** Ebenen-Trennung über **Border + 40 % Dim** (`dimmed-opacity`) + Motion —
   nie über Blur. Beim Öffnen wird der Hintergrund gedimmt, nicht weichgezeichnet. (DNA6)

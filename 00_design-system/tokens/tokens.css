@@ -1,7 +1,7 @@
 /*
   SKD Krypto design tokens.
-  Source: Figma file xdc82fp188ssSV45Y7LKhz, node 383:408.
-  Generated from local Figma variables on 2026-07-23.
+  Source: Figma file xdc82fp188ssSV45Y7LKhz, node 726:2224.
+  Refreshed from local Figma variables on 2026-08-06.
 */
 
 /* Self-hosted webfonts (Family-Namen = --font-family-* Tokens). Muss vor :root stehen. */
@@ -9,16 +9,15 @@
 
 :root {
   --color-neutral-0: #FFFFFF;
-  --color-neutral-50: #F8F9FB;
   --color-neutral-100: #EEF0F3;
-  --color-neutral-200: #DFE2E8;
   --color-neutral-300: #C7CBD3;
   --color-neutral-400: #A4A9B4;
   --color-neutral-500: #7D8290;
   --color-neutral-600: #5B606D;
   --color-neutral-700: #41454F;
   --color-neutral-800: #292C33;
-  --color-neutral-850: #0A0A0A;
+  --color-neutral-850: #1A1C23;
+  --color-neutral-875: #0B0B0F;
   --color-neutral-900: #000000;
 
   --color-primary-50: #FFF4E6;
@@ -123,7 +122,7 @@
   --color-text-disabled: var(--color-neutral-400);
   --color-text-on-primary: var(--color-neutral-0);
   --color-text-on-secondary: var(--color-neutral-0);
-  --color-bg-page: var(--color-neutral-50);
+  --color-bg-page: var(--color-neutral-0);
   --color-bg-surface: var(--color-neutral-0);
   --color-bg-subtle: var(--color-neutral-100);
   --color-border-default: var(--color-neutral-300);
@@ -188,9 +187,11 @@
   --immersive-focus: var(--color-secondary-500); /* artefact #2B5BFF -> #264EFF */
 
   /* Layer surfaces + separation — neutral; warmth is reserved for state. */
-  --layer-surface-base: var(--color-neutral-900);   /* #000000 */
-  --layer-surface-raised: var(--color-neutral-850); /* #0A0A0A, overlay/system */
-  --layer-border: var(--color-neutral-800);         /* artefact #2A2A2A -> #292C33 */
+  --layer-surface-base: var(--color-neutral-900);       /* #000000 */
+  --layer-surface-raised: var(--color-neutral-875);     /* #0B0B0F, contained */
+  --layer-surface-elevated: var(--color-neutral-850);   /* #1A1C23, overlay/system */
+  --layer-border: var(--color-neutral-800);             /* artefact #2A2A2A -> #292C33 */
+  --border-surface-raised: var(--color-neutral-800);    /* specialized raised-surface border */
 
   /* Warm = active/selected — this is where primary-800/900 live. */
   --state-pressed-surface: var(--color-primary-800);  /* #1F1000 */
