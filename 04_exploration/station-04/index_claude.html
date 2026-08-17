@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station 4 · Die Enigma</title>
+<!-- Design-System-Tokens (zieht per @import auch die self-hosted Fonts) -->
+<link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-04.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" aria-label="Station 4 – Die Enigma">
+
+    <!-- ================= STARTBILDSCHIRM ================= -->
+    <section class="screen screen-start" id="screenStart">
+      <div class="start-copy">
+        <span class="eyebrow">Maschinen verschlüsseln</span>
+        <h1 class="title title--hero">Die Enigma</h1>
+        <div class="hero-text">
+          <p>Mit dem kryptografischen Zirkel ließen sich einige Dutzend Verschlüsselungen erzeugen. Die Enigma erzeugte mehr Einstellungsmöglichkeiten, als es Sterne in unserer Galaxie gibt, bei der militärischen Standardausführung über 150 Trillionen. Sie verändert die Buchstabenzuordnung bei jedem einzelnen Tastendruck.</p>
+          <p>Entwickelt wurde sie Anfang des 20. Jahrhunderts vom deutschen Ingenieur Arthur Scherbius, ursprünglich als kommerzielles Produkt. Später übernahm das Militär die Technik. Im Zweiten Weltkrieg war die Enigma Teil der Infrastruktur eines menschenverachtenden Krieges, der Abermillionen Opfer forderte. Kryptografie ist nie nur Technik, sie ist in politische und militärische Machtverhältnisse eingebunden.</p>
+          <p>Schon in den 1930er Jahren analysierten polnische Mathematiker um Marian Rejewski ihre Funktionsweise. Auf dieser Grundlage bauten britische Kryptologen in Bletchley Park unter Alan Turing und Gordon Welchman elektromechanische Entschlüsselungsmaschinen. Die Entzifferung mit der Turing-Welchman-Bombe ab 1940 gilt als Meilenstein der Kryptografiegeschichte.</p>
+        </div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img src="img/eknigma02.png" alt="" class="enigma-img">
+      </div>
+
+      <button class="cta" id="btnTry">
+        <span class="cta-label">Enigma ausprobieren</span>
+        <span class="cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="15" r="3.1"/>
+            <path d="M12 12.5V4"/>
+            <path d="M7.5 8a6.4 6.4 0 0 1 9 0"/>
+          </svg>
+        </span>
+      </button>
+    </section>
+
+    <!-- ================= ACTIONBEREICH ================= -->
+    <section class="screen screen-action hidden" id="screenAction">
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow">Maschinen verschlüsseln</span>
+          <h1 class="title title--compact">Die Enigma</h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen">✕</button>
+      </header>
+
+      <div class="action-grid">
+
+        <!-- Row 1 — Walzen -->
+        <p class="row-label" style="grid-row:1;">Walzen müssen korrekt eingesetzt und kalibriert werden</p>
+        <div class="row-content rotors" style="grid-row:1;">
+          <div class="rotor">
+            <span class="rotor-lbl">Walze I</span>
+            <div class="rotor-box">06</div>
+          </div>
+          <div class="rotor">
+            <span class="rotor-lbl">Walze II</span>
+            <div class="rotor-box">19</div>
+          </div>
+          <div class="rotor">
+            <span class="rotor-lbl">Walze III</span>
+            <div class="rotor-box">03</div>
+          </div>
+        </div>
+        <p class="row-note" style="grid-row:1;">Bei jedem Tastendruck dreht die rechte Walze weiter</p>
+
+        <!-- Row 2 — Anzeige (Lampenfeld) -->
+        <p class="row-label" style="grid-row:2;">Anzeige des unverschlüsselten Ergebnisses</p>
+        <div class="row-content" style="grid-row:2;">
+          <div class="keyboard keyboard--lamp">
+            <div class="key-row">
+              <button class="key" type="button">Q</button><button class="key" type="button">W</button><button class="key" type="button">E</button><button class="key" type="button">R</button><button class="key" type="button">T</button><button class="key" type="button">Z</button><button class="key" type="button">U</button><button class="key" type="button">I</button><button class="key" type="button">O</button>
+            </div>
+            <div class="key-row key-row--offset">
+              <button class="key" type="button">A</button><button class="key" type="button">S</button><button class="key" type="button">D</button><button class="key" type="button">F</button><button class="key" type="button">G</button><button class="key key--lit" type="button">H</button><button class="key" type="button">J</button><button class="key" type="button">K</button>
+            </div>
+            <div class="key-row">
+              <button class="key" type="button">P</button><button class="key" type="button">Y</button><button class="key" type="button">X</button><button class="key" type="button">C</button><button class="key" type="button">V</button><button class="key" type="button">B</button><button class="key" type="button">N</button><button class="key" type="button">M</button><button class="key" type="button">L</button>
+            </div>
+          </div>
+        </div>
+        <div class="io-box" style="grid-row:2;">
+          <span class="io-lbl">Ausgabe:</span>
+          <span class="io-val">XLWS</span>
+        </div>
+
+        <!-- Row 3 — Eingabe (Tastatur) -->
+        <p class="row-label" style="grid-row:3;">Eingabe der verschlüsselten Buchstaben</p>
+        <div class="row-content" style="grid-row:3;">
+          <div class="keyboard keyboard--input">
+            <div class="key-row">
+              <button class="key" type="button">Q</button><button class="key" type="button">W</button><button class="key" type="button">E</button><button class="key" type="button">R</button><button class="key" type="button">T</button><button class="key" type="button">Z</button><button class="key" type="button">U</button><button class="key" type="button">I</button><button class="key" type="button">O</button>
+            </div>
+            <div class="key-row key-row--offset">
+              <button class="key" type="button">A</button><button class="key key--pressed" type="button">S</button><button class="key" type="button">D</button><button class="key" type="button">F</button><button class="key" type="button">G</button><button class="key" type="button">H</button><button class="key" type="button">J</button><button class="key" type="button">K</button>
+            </div>
+            <div class="key-row">
+              <button class="key" type="button">P</button><button class="key" type="button">Y</button><button class="key" type="button">X</button><button class="key" type="button">C</button><button class="key" type="button">V</button><button class="key" type="button">B</button><button class="key" type="button">N</button><button class="key" type="button">M</button><button class="key" type="button">L</button>
+            </div>
+          </div>
+        </div>
+        <div class="row-side" style="grid-row:3;">
+          <div class="io-box">
+            <span class="io-lbl">Eingabe:</span>
+            <span class="io-val">Auto</span>
+          </div>
+          <button class="reset-btn" type="button">Zurücksetzen</button>
+        </div>
+
+        <!-- Vertiefung-Karte -->
+        <div class="vert-card">
+          <span class="vert-tag">Vertiefung</span>
+          <p>Warum verschlüsselt und entschlüsselt dieselbe Maschine?</p>
+          <span class="vert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18h6"/>
+              <path d="M10 21h4"/>
+              <path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.7V16h5.6v-.5c0-.7.3-1.3.8-1.7A6 6 0 0 0 12 3Z"/>
+            </svg>
+          </span>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="station-04.js"></script>
+</body>
+</html>

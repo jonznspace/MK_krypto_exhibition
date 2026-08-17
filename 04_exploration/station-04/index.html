@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station 4 · Die Enigma</title>
+<link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-04.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" data-station-id="station-04" aria-label="Station 4 – Die Enigma">
+
+    <!--
+      Reusable station scaffold:
+      - Keep this HTML as the stable shell for future stations.
+      - Fill texts, images, keyboard states, and labels from station-04.js.
+      - Future AI sessions should prefer changing the content object first and only
+        extend the markup when a station truly needs a new UI module.
+    -->
+
+    <section class="screen screen-start" id="screenStart">
+      <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
+        <h1 class="title title--hero" id="startTitle"></h1>
+        <div class="hero-text" id="startIntro"></div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img src="" alt="" class="enigma-img" id="startImage">
+      </div>
+
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label" id="tryLabel"></span>
+        <span class="cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="15" r="3.1"/>
+            <path d="M12 12.5V4"/>
+            <path d="M7.5 8a6.4 6.4 0 0 1 9 0"/>
+          </svg>
+        </span>
+      </button>
+    </section>
+
+    <section class="screen screen-action hidden" id="screenAction">
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow" id="actionEyebrow"></span>
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <div class="action-grid">
+        <p class="row-label" id="rotorRowLabel" style="grid-row:1;"></p>
+        <div class="row-content rotors" id="rotorList" style="grid-row:1;"></div>
+        <p class="row-note" id="rotorNote" style="grid-row:1;"></p>
+
+        <p class="row-label" id="outputRowLabel" style="grid-row:2;"></p>
+        <div class="row-content" id="lampKeyboard" style="grid-row:2;"></div>
+        <div class="io-box" style="grid-row:2;">
+          <span class="io-lbl" id="outputBoxLabel"></span>
+          <span class="io-val" id="outputValue"></span>
+        </div>
+
+        <p class="row-label" id="inputRowLabel" style="grid-row:3;"></p>
+        <div class="row-content" id="inputKeyboard" style="grid-row:3;"></div>
+        <div class="row-side" style="grid-row:3;">
+          <div class="io-box">
+            <span class="io-lbl" id="inputBoxLabel"></span>
+            <span class="io-val" id="inputValue"></span>
+          </div>
+          <button class="reset-btn" id="resetButton" type="button"></button>
+        </div>
+
+        <div class="vert-card">
+          <span class="vert-tag" id="infoTag"></span>
+          <p id="infoText"></p>
+          <span class="vert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18h6"/>
+              <path d="M10 21h4"/>
+              <path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.7V16h5.6v-.5c0-.7.3-1.3.8-1.7A6 6 0 0 0 12 3Z"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="station-04.js"></script>
+</body>
+</html>

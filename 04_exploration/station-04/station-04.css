@@ -1,0 +1,241 @@
+/* =========================================================================
+   Station 4 — Die Enigma
+   Immersiver Screen-Kontext, fix 1920×1080. Werte aus dem Design-System (tokens.css).
+   Erste optische Umsetzung der Figma-Vorlagen (figmavorlagen/). Funktionen folgen.
+   Kein border-radius bei UI-Elementen (radius/*-Tokens = 0) — Ausnahme sind die
+   runden Enigma-Tasten, die bewusst ein physisches Tastenfeld nachbilden.
+   DM Mono immer uppercase. Buttons im Label-Textstyle (font-size/label).
+   ========================================================================= */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
+  color: var(--immersive-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#scaler {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: #000;
+}
+
+/* Die feste Kiosk-Bühne — wird per JS auf das Fenster skaliert */
+#frame {
+  width: 1920px; height: 1080px;
+  background: var(--immersive-bg);
+  position: relative;
+  transform-origin: center center;
+  overflow: hidden;
+}
+
+.screen { position: absolute; inset: 0; }
+.screen.hidden { display: none; }
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ---------- gemeinsame Textbausteine ---------- */
+.eyebrow {
+  display: block;
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
+}
+.title {
+  font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
+  text-transform: uppercase; letter-spacing: -.01em; line-height: .92;
+}
+.title--hero { font-size: 128px; margin-top: 18px; }
+.title--compact { font-size: 68px; margin-top: 10px; }
+
+/* =========================================================================
+   Startbildschirm
+   ========================================================================= */
+.screen-start { padding: 88px 72px; display: flex; flex-direction: column; }
+
+.start-copy { width: 44%; max-width: 660px; position: relative; z-index: 2; }
+
+.hero-text { margin-top: 44px; display: flex; flex-direction: column; gap: 26px; }
+.hero-text p { font-size: 21px; line-height: 1.55; color: var(--immersive-body); max-width: 58ch; }
+
+.start-visual {
+  position: absolute;
+  right: -60px; top: -20px; bottom: 0;
+  width: 1180px;
+  display: flex; align-items: flex-end; justify-content: flex-end;
+  z-index: 1;
+  pointer-events: none;
+}
+.enigma-img { width: 100%; height: auto; max-height: 1020px; object-fit: contain; object-position: bottom right; }
+
+.cta {
+  position: absolute; right: 72px; bottom: 80px; z-index: 3;
+  display: flex; align-items: stretch;
+  border: none; background: none;
+}
+.cta-label {
+  display: flex; align-items: center;
+  min-height: 68px; padding: 0 32px;
+  font-family: var(--font-family-dm-mono); font-size: 22px; letter-spacing: .1em;
+  text-transform: var(--text-transform-dm-mono);
+  background: var(--color-neutral-800); color: var(--immersive-ink);
+  transition: background var(--duration-1) var(--ease-standard);
+}
+.cta-icon {
+  display: grid; place-items: center;
+  width: 68px; height: 68px;
+  background: var(--immersive-focus); color: var(--immersive-ink);
+}
+.cta-icon svg { width: 26px; height: 26px; }
+.cta:hover .cta-label { background: var(--color-neutral-700); }
+.cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }
+
+/* =========================================================================
+   Actionbereich
+   ========================================================================= */
+.screen-action { padding: 56px 72px 64px; display: flex; flex-direction: column; }
+
+.action-hdr { display: flex; align-items: flex-start; justify-content: space-between; }
+
+.close-btn {
+  width: 64px; height: 64px; flex: none;
+  display: grid; place-items: center;
+  font-size: 22px; color: var(--immersive-ink);
+  background: transparent; border: 1px solid var(--layer-border);
+  transition: border-color var(--duration-1) var(--ease-standard);
+}
+.close-btn:hover { border-color: var(--immersive-accent); }
+.close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
+
+/* ---------- Grid ----------
+   Spalten: Beschriftung (250px) | Bühne (1fr) | Ausgabe/Eingabe-Boxen (220px) | Vertiefung (300px)
+   Zeilen: Walzen / Anzeige / Eingabe. Divider trennt Bühne von der Seitenspalte. */
+.action-grid {
+  flex: 1; min-height: 0; margin-top: 46px;
+  display: grid;
+  grid-template-columns: 250px 1fr 220px 300px;
+  grid-template-rows: repeat(3, 1fr);
+  column-gap: 32px; row-gap: 20px;
+  position: relative;
+}
+.action-grid::before {
+  content: ""; position: absolute; top: 4px; bottom: 4px;
+  left: calc(250px + 32px - 16px);
+  width: 1px; background: var(--layer-border);
+}
+
+.row-label {
+  grid-column: 1; align-self: center;
+  font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.5;
+  letter-spacing: .1em; text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted); text-align: right;
+}
+.row-content { grid-column: 2; align-self: center; min-width: 0; }
+.row-note {
+  grid-column: 3 / 5; align-self: start; margin-top: 6px;
+  font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.5;
+  letter-spacing: .08em; text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted);
+}
+.row-side { align-self: center; display: flex; flex-direction: column; gap: 18px; }
+
+/* ---------- Walzen ---------- */
+.rotors { display: flex; gap: 40px; }
+.rotor { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.rotor-lbl {
+  font-family: var(--font-family-dm-mono); font-size: 14px; letter-spacing: .14em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
+}
+.rotor-box {
+  width: 100px; height: 96px;
+  display: grid; place-items: center;
+  border: 1px solid var(--layer-border);
+  font-family: var(--font-family-dm-mono); font-size: 34px; font-weight: 500;
+  color: var(--immersive-ink);
+}
+
+/* ---------- Tastenfelder ---------- */
+.keyboard { display: flex; flex-direction: column; gap: 12px; }
+.key-row { display: flex; gap: 12px; }
+.key-row--offset { margin-left: 34px; }
+
+.key {
+  width: 60px; height: 60px; flex: none;
+  border-radius: 50%; /* Ausnahme: physisches Rundtasten-Layout der Enigma */
+  border: none;
+  display: grid; place-items: center;
+  font-family: var(--font-family-dm-mono); font-size: 20px; font-weight: 500;
+  text-transform: var(--text-transform-dm-mono);
+  transition: background var(--duration-1) var(--ease-standard),
+              color var(--duration-1) var(--ease-standard);
+}
+
+.keyboard--lamp .key { background: var(--color-neutral-800); color: var(--immersive-muted); }
+.keyboard--lamp .key.key--lit { background: var(--color-primary-200); color: var(--color-neutral-900); }
+
+.keyboard--input .key { background: var(--color-primary-50); color: var(--color-neutral-900); }
+.keyboard--input .key.key--pressed { background: var(--immersive-accent); color: var(--immersive-ink); }
+
+/* ---------- Ein-/Ausgabe-Boxen ---------- */
+.io-box {
+  border: 1px solid var(--layer-border);
+  padding: 16px 22px;
+  display: flex; flex-direction: column; gap: 6px;
+  min-width: 190px;
+}
+.io-lbl {
+  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .14em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+}
+.io-val {
+  font-family: var(--font-family-dm-mono); font-size: 26px; letter-spacing: .1em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-ink);
+}
+
+.reset-btn {
+  min-height: var(--size-touch-min); min-width: 190px;
+  padding: 14px 20px;
+  background: var(--color-neutral-800); color: var(--immersive-ink);
+  border: none;
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+  transition: background var(--duration-1) var(--ease-standard);
+}
+.reset-btn:hover { background: var(--color-neutral-700); }
+
+/* ---------- Vertiefung-Karte ---------- */
+.vert-card {
+  grid-column: 4; grid-row: 2 / 4; align-self: center;
+  position: relative;
+  padding: 32px 88px 32px 28px;
+  border: 1px solid var(--immersive-accent);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--immersive-accent) 22%, transparent),
+    color-mix(in srgb, var(--immersive-accent) 4%, transparent));
+}
+.vert-tag {
+  display: block; margin-bottom: 14px;
+  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
+}
+.vert-card p { font-size: 21px; line-height: 1.4; color: var(--immersive-ink); max-width: 26ch; }
+.vert-icon {
+  position: absolute; right: 20px; bottom: 20px;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  background: var(--immersive-accent); color: var(--immersive-bg);
+}
+.vert-icon svg { width: 22px; height: 22px; }
+
+/* Ausgabe-Box (Zeile 2) sitzt direkt in Spalte 3, neben der Vertiefungskarte */
+.action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: center; }
+/* Eingabe-Box + Zurücksetzen-Button (Zeile 3) */
+.row-side { grid-column: 3; grid-row: 3; }
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

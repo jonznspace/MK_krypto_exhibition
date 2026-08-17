@@ -23,6 +23,10 @@ BRIEFING.md            ← Einstiegspunkt / Constitution (zuerst lesen)
 04_exploration/        ← Explorationen / Skizzen
 ```
 
+## Wiederverwendbare Medienstationen
+
+Fuer kuenftige Touchscreen-Stationen dient [04_exploration/station-04/README.md](04_exploration/station-04/README.md) als Startpunkt fuer das Grundgeruest. Die Station trennt jetzt bewusst zwischen stabiler HTML-Huelle und stationsspezifischem Content in JavaScript.
+
 ## Werte
 
 Alle konkreten Werte (Farben, Maße, Dauern) stammen ausschließlich aus
