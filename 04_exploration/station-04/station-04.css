@@ -101,7 +101,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   width: 68px; height: 68px;
   background: var(--immersive-focus); color: var(--immersive-ink);
 }
-.cta-icon img { width: 40px; height: 40px; }
+.cta-icon img { width: 40px; height: 40px; filter: brightness(0) invert(1); }
 .cta:hover .cta-label { background: var(--color-neutral-700); }
 .cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }
 
@@ -262,7 +262,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: grid; place-items: center;
   background: var(--immersive-accent); color: var(--immersive-bg);
 }
-.vert-icon img { width: 28px; height: 28px; }
+.vert-icon img { width: 28px; height: 28px; filter: brightness(0) invert(1); }
 
 /* Ausgabe-Box (Zeile 2) sitzt direkt in Spalte 3, neben der Vertiefungskarte */
 .action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: start; }
