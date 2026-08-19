@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://downloads.jonzn.space/krypto_02.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krypto, was? · Münzkabinett Dresden</title>
+<meta name="description" content="Krypto, was? Eine Ausstellung im Münzkabinett der Staatlichen Kunstsammlungen Dresden. Drei Bereiche, fünfzehn Stationen, eine Frage.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./Krypto_was_files/css2" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4edda; --paper-2:#ece0c4; --card:#faf4e4;
+  --ink:#241d13; --ink-soft:#5d5140; --hairline:#cbb87f;
+  --wine:#6e1a26; --wine-deep:#54121d;
+  --gold:#b08b3f; --gold-soft:#cdb277; --gold-bright:#dcb75e;
+  --machine:#1c160d; --machine-2:#28200f; --machine-edge:#4a3b1c;
+  --mono-ink:#efe3c2; --mono-dim:#9d8d63;
+  --ok:#2f6b4f; --ok-bright:#7fc39e; --bad:#a03028; --bad-bright:#e0806f;
+  --serif:"Fraunces", Georgia, serif;
+  --sans:"DM Sans", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper); color:var(--ink); font-family:var(--sans); font-size:17px; line-height:1.65;}
+::selection{background:var(--gold-soft); color:var(--ink)}
+img,svg{display:block; max-width:100%}
+a{color:var(--wine)}
+strong{font-weight:650}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1080px; margin:0 auto; padding:0 clamp(16px,4vw,40px)}
+.kicker{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:600}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:560; line-height:1.12; letter-spacing:-.01em}
+h1{font-size:clamp(2.9rem,8vw,5.6rem)}
+h2{font-size:clamp(2.1rem,5vw,3.4rem)}
+h3{font-size:clamp(1.45rem,3vw,2.05rem); margin-bottom:.6rem}
+h4{font-size:1.12rem}
+h2 em, h1 em, h3 em{font-style:italic; font-weight:430; color:var(--wine)}
+p{margin-bottom:1rem; max-width:66ch}
+p:last-child{margin-bottom:0}
+.small{font-size:.85rem; color:var(--ink-soft)}
+
+/* ---------- top nav ---------- */
+.nav{position:sticky; top:0; z-index:60; background:color-mix(in srgb, var(--paper) 88%, white 0%); backdrop-filter:blur(8px); border-bottom:1px solid var(--hairline)}
+.nav-in{display:flex; align-items:center; gap:1.2rem; padding:.65rem 0}
+.brand{font-family:var(--serif); font-size:1.25rem; font-weight:600; color:var(--ink); text-decoration:none; white-space:nowrap}
+.brand em{color:var(--wine)}
+.nav-links{display:flex; gap:.35rem; margin-left:auto; flex-wrap:wrap}
+.nav-links a{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--ink-soft); padding:.42rem .6rem; border-radius:7px}
+.nav-links a:hover{background:var(--paper-2); color:var(--wine)}
+.pass-pill{font-family:var(--mono); font-size:.72rem; font-weight:600; color:var(--wine); border:1px solid var(--gold); border-radius:99px; padding:.34rem .7rem; white-space:nowrap; background:var(--card)}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(3rem,8vw,6.5rem) 0 clamp(3rem,7vw,5.5rem); position:relative; overflow:hidden}
+.hero-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:2.5rem; align-items:center}
+.hero .lede{font-size:clamp(1.05rem,1.8vw,1.3rem); max-width:34em; margin-top:1.3rem; color:var(--ink)}
+.hero-meta{display:flex; gap:1.6rem; flex-wrap:wrap; margin-top:1.8rem; font-family:var(--mono); font-size:.78rem; color:var(--ink-soft)}
+.hero-meta b{color:var(--wine); font-weight:600; display:block; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase}
+.cta{display:inline-block; margin-top:2rem; font-family:var(--mono); font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; background:var(--wine); color:var(--paper); text-decoration:none; padding:.85rem 1.5rem; border-radius:10px}
+.cta:hover{background:var(--wine-deep)}
+.coin-hero{width:min(320px,70vw); margin:0 auto; filter:drop-shadow(0 18px 30px rgba(60,40,10,.25))}
+.coin-spin{animation:spin 60s linear infinite; transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- bereich intro ---------- */
+.zone{background:var(--wine); color:var(--paper); padding:clamp(3rem,7vw,5rem) 0; position:relative; margin-top:4rem}
+.zone .kicker{color:var(--gold-bright)}
+.zone h2{color:#fdf7e6; margin:.4rem 0 1rem}
+.zone p{color:#eadfc4; max-width:62ch}
+.zone-num{font-family:var(--serif); font-weight:300; font-size:clamp(5rem,14vw,10rem); line-height:.8; color:transparent; -webkit-text-stroke:1.5px var(--gold-bright); opacity:.55; position:absolute; right:4vw; top:1.5rem; pointer-events:none}
+
+/* ---------- stations ---------- */
+.st{background:var(--card); border:1px solid var(--hairline); border-radius:16px; padding:clamp(1.4rem,3.5vw,2.4rem); margin:2.4rem 0; box-shadow:0 6px 20px rgba(90,60,20,.06)}
+.st-head{display:flex; gap:1.1rem; align-items:flex-start; margin-bottom:1rem}
+.coin{flex:0 0 auto; width:62px; height:62px; border-radius:50%;
+  background:radial-gradient(circle at 32% 28%, #e6c887 0%, #c8a457 45%, #977433 100%);
+  border:2px solid #7d5f26; position:relative; display:grid; place-items:center;
+  font-family:var(--serif); font-weight:640; font-size:1.35rem; color:#3d2c0d;
+  box-shadow:inset 0 2px 4px rgba(255,245,210,.7), inset 0 -3px 5px rgba(60,40,5,.45), 0 3px 8px rgba(70,50,15,.3)}
+.coin::after{content:""; position:absolute; inset:4px; border-radius:50%; border:1.5px dashed rgba(70,50,10,.5)}
+.coin.bridge{background:radial-gradient(circle at 32% 28%, #ddd2b4 0%, #b9a87f 45%, #8b7c55 100%); font-size:1rem}
+.st-title .kicker{display:block; margin-bottom:.25rem; color:var(--wine)}
+.st-title .kicker span{color:var(--gold)}
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; align-items:start}
+.grid-2 > *{min-width:0}
+
+/* ---------- werkbank (interactive module frame) ---------- */
+.wb{background:var(--machine); color:var(--mono-ink); border-radius:14px; overflow:hidden; margin-top:1.4rem; border:1px solid #3a2e13; font-family:var(--mono); font-size:.86rem; position:relative}
+.wb-head{display:flex; align-items:center; gap:.9rem; padding:.6rem 1rem; background:var(--machine-2); border-bottom:1px solid var(--machine-edge)}
+.wb-head .lbl{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-bright); font-weight:600; white-space:nowrap}
+.wb-head .ridge{flex:1; height:8px; border-radius:4px; background:repeating-linear-gradient(90deg,#3d3115 0 5px,#241c0c 5px 10px); opacity:.9}
+.wb-body{padding:1.1rem 1.15rem 1.25rem}
+.wb p{max-width:none; color:var(--mono-dim); font-size:.8rem; line-height:1.55}
+.wb .out{color:var(--gold-bright)}
+.wb label{display:block; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mono-dim); margin:.7rem 0 .3rem}
+.wb input[type=text], .wb textarea, .wb select{width:100%; background:#120d06; border:1px solid var(--machine-edge); color:var(--mono-ink); font-family:var(--mono); font-size:.9rem; padding:.55rem .65rem; border-radius:8px; outline:none}
+.wb input[type=text]:focus, .wb textarea:focus, .wb select:focus{border-color:var(--gold)}
+.wb input[type=range]{width:100%; accent-color:var(--gold-bright)}
+.btn{font-family:var(--mono); font-size:.78rem; font-weight:600; letter-spacing:.05em; background:var(--gold); color:#20180a; border:none; border-radius:8px; padding:.6rem 1rem; cursor:pointer}
+.btn:hover{background:var(--gold-bright)}
+.btn.ghost{background:transparent; color:var(--gold-bright); border:1px solid var(--machine-edge)}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn:disabled{opacity:.4; cursor:default}
+.btn:focus-visible, .wb input:focus-visible, a:focus-visible{outline:2px solid var(--gold-bright); outline-offset:2px}
+.row{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center}
+.mono-big{font-size:1.5rem; letter-spacing:.14em; word-break:break-all; line-height:1.4}
+.hashline{word-break:break-all; font-size:.78rem; line-height:1.5}
+.chip{display:inline-block; font-size:.7rem; padding:.22rem .55rem; border-radius:99px; border:1px solid var(--machine-edge); color:var(--mono-dim)}
+.chip.ok{border-color:var(--ok); color:var(--ok-bright)}
+.chip.bad{border-color:var(--bad); color:var(--bad-bright)}
+.stamp{position:absolute; top:.45rem; right:.7rem; font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ok-bright); border:1.5px solid var(--ok-bright); border-radius:6px; padding:.15rem .45rem; transform:rotate(6deg); opacity:0; pointer-events:none}
+.wb.done .stamp{opacity:1; animation:stampIn .45s cubic-bezier(.2,1.6,.4,1)}
+@keyframes stampIn{0%{transform:rotate(6deg) scale(2.4); opacity:0}60%{opacity:1}100%{transform:rotate(6deg) scale(1); opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.shake{animation:shake .3s}
+@keyframes flashbg{0%{background:#3d3115}100%{background:transparent}}
+.flash{animation:flashbg 1s}
+
+/* ---------- module specifics ---------- */
+.mapline{font-size:.72rem; letter-spacing:.28em; color:var(--mono-dim); overflow-x:auto; white-space:nowrap; padding-bottom:.2rem}
+.mapline b{color:var(--gold-bright)}
+.skytale-grid{display:grid; gap:3px; margin:.6rem 0}
+.skytale-grid span{background:#120d06; border:1px solid #33280f; border-radius:4px; text-align:center; padding:.22rem 0; font-size:.8rem; color:var(--gold-bright)}
+.disc-wrap{display:grid; grid-template-columns:auto 1fr; gap:1.2rem; align-items:center}
+.abacus{display:flex; flex-direction:column; gap:2px; margin:.5rem 0}
+.ab-row{display:flex; align-items:center; gap:.6rem; padding:.34rem .5rem; border-radius:7px; cursor:pointer; min-height:34px}
+.ab-row:hover{background:#241c0c}
+.ab-row.line{border-top:1.5px solid #6b5726; border-radius:0}
+.ab-row .v{flex:0 0 52px; font-size:.7rem; color:var(--mono-dim); text-align:right}
+.ab-row .dots{display:flex; gap:5px; flex-wrap:wrap}
+.ab-dot{width:16px; height:16px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #e6c887, #a8853d 70%); box-shadow:0 1px 2px rgba(0,0,0,.6); cursor:pointer}
+.bin-grid{display:flex; gap:.45rem; flex-wrap:wrap; margin-top:.6rem}
+.bin-cell{background:#120d06; border:1px solid #33280f; border-radius:8px; padding:.45rem .5rem; text-align:center; min-width:64px}
+.bin-cell b{display:block; font-size:1.05rem; color:var(--mono-ink)}
+.bin-cell span{font-size:.66rem; color:var(--gold-bright); letter-spacing:.08em}
+.rotor-bank{display:flex; gap:.7rem; margin:.4rem 0 .8rem}
+.rotor{flex:1; text-align:center; background:#120d06; border:1px solid var(--machine-edge); border-radius:10px; padding:.5rem .3rem}
+.rotor .win{font-size:1.7rem; font-weight:600; color:var(--gold-bright); font-family:var(--mono)}
+.rotor .nm{font-size:.62rem; letter-spacing:.14em; color:var(--mono-dim); text-transform:uppercase}
+.keys, .lamps{display:grid; grid-template-columns:repeat(9,1fr); gap:5px; margin-top:.5rem}
+.keys button{background:#2b2210; border:1px solid var(--machine-edge); color:var(--mono-ink); border-radius:7px; padding:.42rem 0; font-family:var(--mono); font-size:.82rem; cursor:pointer}
+.keys button:hover{border-color:var(--gold)}
+.lamps span{background:#161006; border:1px solid #2e2410; color:#5b4f33; border-radius:50%; aspect-ratio:1; display:grid; place-items:center; font-size:.76rem}
+.lamps span.lit{background:radial-gradient(circle at 40% 30%, #ffe9a8, #d9a833 75%); color:#241a05; border-color:#e8c05a; box-shadow:0 0 14px rgba(230,190,80,.55)}
+.tape{margin-top:.7rem; font-size:.8rem; word-break:break-all}
+.tape b{color:var(--gold-bright); font-weight:400}
+.tl{display:flex; gap:.5rem; overflow-x:auto; padding-bottom:.5rem; scrollbar-width:thin}
+.tl button{flex:0 0 auto; background:#120d06; border:1px solid var(--machine-edge); color:var(--mono-dim); font-family:var(--mono); font-size:.74rem; border-radius:99px; padding:.4rem .8rem; cursor:pointer}
+.tl button.on{border-color:var(--gold); color:var(--gold-bright); background:#241c0c}
+.tl-detail{margin-top:.8rem; border-left:2px solid var(--gold); padding:.2rem 0 .2rem .9rem}
+.tl-detail b{color:var(--gold-bright); display:block; margin-bottom:.2rem; font-size:.9rem}
+.reveal-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.6rem}
+.reveal{background:#120d06; border:1px solid var(--machine-edge); border-radius:10px; padding:.7rem; cursor:pointer; min-height:98px}
+.reveal:hover{border-color:var(--gold)}
+.reveal .front{color:var(--mono-ink)}
+.reveal .back{display:none; color:var(--gold-bright); font-size:.74rem; line-height:1.5}
+.reveal.open .front{color:var(--mono-dim); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase}
+.reveal.open .back{display:block; margin-top:.3rem}
+.stat-row{display:flex; gap:1.6rem; flex-wrap:wrap; margin:.7rem 0}
+.stat b{display:block; font-size:1.3rem; color:var(--gold-bright); font-weight:600}
+.stat span{font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mono-dim)}
+.ledger-nodes{display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; margin-top:.8rem}
+.node-book{background:#120d06; border:1px solid var(--machine-edge); border-radius:10px; padding:.6rem; min-height:120px}
+.node-book h5{font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-bright); margin-bottom:.4rem; font-weight:600}
+.node-book div{font-size:.7rem; color:var(--mono-dim); border-bottom:1px dotted #33280f; padding:.18rem 0}
+.balances{display:flex; gap:.9rem; flex-wrap:wrap; margin-top:.7rem}
+.bal{background:#241c0c; border-radius:8px; padding:.35rem .7rem; font-size:.76rem}
+.bal b{color:var(--gold-bright)}
+.race{display:flex; flex-direction:column; gap:.5rem; margin:.7rem 0}
+.race .lane{display:grid; grid-template-columns:110px 1fr 40px; gap:.6rem; align-items:center; font-size:.74rem}
+.race .bar{height:12px; background:#120d06; border:1px solid var(--machine-edge); border-radius:6px; overflow:hidden}
+.race .fill{height:100%; width:0%; background:linear-gradient(90deg,#8a6a2a,var(--gold-bright))}
+.blocks{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.8rem; margin-top:.8rem}
+.blk{background:#120d06; border:1.5px solid var(--ok); border-radius:10px; padding:.7rem; transition:border-color .2s}
+.blk.bad{border-color:var(--bad)}
+.blk h5{font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-bright); font-weight:600; margin-bottom:.4rem; display:flex; justify-content:space-between}
+.blk .h{font-size:.62rem; word-break:break-all; color:var(--mono-dim); margin:.3rem 0}
+.blk .h b{color:var(--mono-ink); font-weight:400}
+.blk textarea{min-height:52px; resize:vertical; font-size:.78rem}
+.netsvg circle{cursor:pointer}
+.money-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:.7rem}
+.mc{background:#120d06; border:1px solid var(--machine-edge); border-radius:10px; padding:.7rem; cursor:pointer; min-height:150px}
+.mc:hover{border-color:var(--gold)}
+.mc .big{font-size:1.5rem}
+.mc h5{font-family:var(--mono); font-size:.8rem; color:var(--mono-ink); margin:.2rem 0 .3rem; font-weight:600}
+.mc .fn{display:none; font-size:.68rem; line-height:1.6; color:var(--mono-dim)}
+.mc .fn b{color:var(--gold-bright); font-weight:400}
+.mc.open .fn{display:block}
+.mc.open .hint{display:none}
+.mc .hint{font-size:.66rem; color:var(--mono-dim)}
+.match-grid{display:grid; grid-template-columns:1fr 1fr; gap:.6rem}
+.match-grid button{text-align:left; background:#120d06; border:1px solid var(--machine-edge); color:var(--mono-ink); font-family:var(--mono); font-size:.74rem; line-height:1.45; border-radius:9px; padding:.6rem .7rem; cursor:pointer}
+.match-grid button.sel{border-color:var(--gold-bright); background:#241c0c}
+.match-grid button.locked{border-color:var(--ok); color:var(--ok-bright); cursor:default}
+.match-msg{margin-top:.7rem; font-size:.76rem; min-height:1.4em; color:var(--gold-bright)}
+.vault{display:flex; gap:1rem; align-items:flex-end; margin:.8rem 0}
+.vcol{flex:1}
+.vcol .bars{display:flex; flex-wrap:wrap; gap:3px; align-content:flex-end; min-height:90px}
+.vcol .unit{width:14px; height:9px; border-radius:2px}
+.unit.coinu{background:linear-gradient(180deg,#e2c078,#9a7830)}
+.unit.noteu{background:linear-gradient(180deg,#c9d8c2,#7fa477)}
+.unit.noteu.uncov{background:linear-gradient(180deg,#d78f7f,#a03d2e)}
+.cycle{display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin-top:.8rem}
+.cyc{background:#120d06; border:1px solid var(--machine-edge); border-radius:10px; padding:.6rem; font-size:.7rem; color:var(--mono-dim); text-align:center}
+.cyc b{display:block; color:var(--gold-bright); font-size:1rem; margin-bottom:.2rem; font-weight:600}
+.cyc.on{border-color:var(--gold-bright); color:var(--mono-ink); background:#241c0c}
+.note-card{background:linear-gradient(135deg,#20180a,#120d06); border:1px solid var(--machine-edge); border-radius:12px; padding:1rem; margin:.7rem 0; position:relative}
+.note-card h5{font-family:var(--serif); font-size:1.15rem; color:var(--gold-bright); margin-bottom:.3rem}
+.note-card ul{list-style:none; font-size:.74rem; color:var(--mono-dim)}
+.note-card li{padding:.12rem 0}
+.verdict{margin-top:.7rem; font-size:.76rem; line-height:1.55; border-left:2px solid var(--gold); padding-left:.8rem; color:var(--mono-ink)}
+.gl-chips{display:flex; flex-wrap:wrap; gap:.45rem}
+.gl-chips button{background:#120d06; border:1px solid var(--machine-edge); color:var(--mono-ink); font-family:var(--mono); font-size:.74rem; border-radius:99px; padding:.4rem .8rem; cursor:pointer}
+.gl-chips button.on{border-color:var(--gold); color:var(--gold-bright); background:#241c0c}
+.gl-panel{margin-top:.9rem; border-left:2px solid var(--gold); padding-left:.9rem; min-height:5em}
+.gl-panel .cat{font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mono-dim)}
+.gl-panel b{display:block; color:var(--gold-bright); font-size:.95rem; margin:.15rem 0 .3rem}
+.gl-panel p{color:var(--mono-ink); font-size:.8rem}
+.quiz-item{font-size:1rem; color:var(--mono-ink); margin:.6rem 0; min-height:2.4em}
+.duo{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:.7rem}
+.risk-card{background:#120d06; border:1px solid var(--machine-edge); border-radius:10px; padding:.8rem; cursor:pointer}
+.risk-card h5{font-family:var(--mono); font-size:.8rem; color:var(--mono-ink); font-weight:600; display:flex; justify-content:space-between; align-items:center}
+.risk-card .face{margin-top:.5rem; font-size:.76rem; line-height:1.55}
+.risk-card .face .tag{font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; display:inline-block; margin-bottom:.25rem}
+.risk-card.c .tag{color:var(--ok-bright)} .risk-card.c .face{color:var(--mono-ink)}
+.risk-card.r .tag{color:var(--bad-bright)} .risk-card.r .face{color:var(--mono-ink)}
+
+/* ---------- vertiefung & misc ---------- */
+details.vert{margin-top:1.2rem; border:1px dashed var(--hairline); border-radius:10px; padding:.8rem 1rem; background:var(--paper)}
+details.vert summary{cursor:pointer; font-family:var(--mono); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:var(--wine); font-weight:600}
+details.vert[open] summary{margin-bottom:.6rem}
+details.vert h5{font-family:var(--serif); font-size:1.05rem; margin-bottom:.35rem}
+details.vert p{font-size:.92rem}
+.hinge{border-left:3px solid var(--gold); background:var(--paper-2); border-radius:0 12px 12px 0; padding:1.2rem 1.4rem; margin:2.4rem 0}
+.hinge .kicker{color:var(--wine)}
+.hinge h3{font-size:1.35rem; margin:.3rem 0 .5rem}
+.hinge p{font-size:.95rem}
+.tri{display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1rem}
+.tri .cell{background:var(--paper); border:1px solid var(--hairline); border-radius:10px; padding:.8rem; font-size:.85rem}
+.tri .cell b{display:block; font-family:var(--serif); font-size:1.05rem; margin-bottom:.2rem}
+.footer{background:var(--machine); color:var(--mono-dim); margin-top:5rem; padding:3.5rem 0 2.5rem; font-size:.85rem}
+.footer h5{font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-bright); margin-bottom:.6rem}
+.footer .cols{display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2rem}
+.footer a{color:var(--mono-ink); text-decoration:none}
+.footer a:hover{color:var(--gold-bright)}
+.footer .sig{font-family:var(--serif); font-size:2rem; color:var(--mono-ink); margin-bottom:.8rem}
+.footer .sig em{color:var(--gold-bright)}
+.footer .fine{border-top:1px solid #33280f; margin-top:2.5rem; padding-top:1.2rem; font-size:.74rem}
+.toast{position:fixed; left:50%; bottom:5.2rem; transform:translateX(-50%) translateY(20px); background:var(--wine); color:var(--paper); font-family:var(--mono); font-size:.8rem; padding:.7rem 1.2rem; border-radius:10px; opacity:0; pointer-events:none; transition:.35s; z-index:80; box-shadow:0 10px 30px rgba(40,10,10,.4)}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+.pass-float{position:fixed; right:1rem; bottom:1rem; z-index:70; background:var(--machine); color:var(--gold-bright); border:1px solid var(--machine-edge); border-radius:99px; font-family:var(--mono); font-size:.72rem; padding:.5rem .9rem; box-shadow:0 8px 22px rgba(30,20,5,.35)}
+
+/* ---------- reveal on scroll ---------- */
+.fx{opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease}
+.fx.in{opacity:1; transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .fx{opacity:1; transform:none; transition:none}
+  .coin-spin{animation:none}
+  *{animation-duration:.001s !important}
+}
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr}
+  .coin-hero{order:-1; width:min(220px,55vw)}
+  .grid-2{grid-template-columns:1fr}
+  .footer .cols{grid-template-columns:1fr 1fr}
+  .tri{grid-template-columns:1fr}
+  .cycle{grid-template-columns:repeat(2,1fr)}
+  .ledger-nodes{grid-template-columns:1fr}
+  .keys,.lamps{grid-template-columns:repeat(7,1fr)}
+  .match-grid{grid-template-columns:1fr}
+  .zone-num{display:none}
+}
+</style>
+<style>[id]{scroll-margin-top:74px}.btn.ghost.on{border-color:var(--gold);color:var(--gold-bright);background:#241c0c}.race .lane .nm.win{color:var(--gold-bright);font-weight:600}</style></head>
+<body>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="https://downloads.jonzn.space/krypto_02.html#top">Krypto, <em>was?</em></a>
+    <div class="nav-links">
+      <a href="https://downloads.jonzn.space/krypto_02.html#bereich-1">01 Verschlüsseln</a>
+      <a href="https://downloads.jonzn.space/krypto_02.html#bereich-2">02 Bitcoin</a>
+      <a href="https://downloads.jonzn.space/krypto_02.html#bereich-3">03 Geldformen</a>
+      <a href="https://downloads.jonzn.space/krypto_02.html#station-15">Medientisch</a>
+    </div>
+    <span class="pass-pill" id="passTop">Pass 0/24</span>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Münzkabinett · Staatliche Kunstsammlungen Dresden</span>
+      <h1>Krypto, <em>was?</em></h1>
+      <p class="lede">Eine Ausstellung über Verschlüsselung, Rechnen und das, was wir Geld nennen. Von der Skytale bis zum digitalen Yuan, von Adam Ries bis Bitcoin. Alles war einmal analog, nichts kommt aus dem Nichts.</p>
+      <div class="hero-meta">
+        <div><b>Laufzeit</b>03.10.2026 bis 28.06.2027</div>
+        <div><b>Bereiche</b>3</div>
+        <div><b>Stationen</b>15 + Brücke</div>
+        <div><b>Zum Ausprobieren</b>24 Module</div>
+      </div>
+      <a class="cta" href="https://downloads.jonzn.space/krypto_02.html#bereich-1">Eintreten</a>
+    </div>
+    <svg class="coin-hero" viewBox="0 0 300 300" role="img" aria-label="Geprägte Münze mit der Umschrift Krypto, was?">
+      <defs>
+        <radialgradient id="coinG" cx="35%" cy="30%">
+          <stop offset="0%" stop-color="#ecd193"></stop><stop offset="45%" stop-color="#c8a457"></stop><stop offset="100%" stop-color="#8a6a2a"></stop>
+        </radialgradient>
+        <path id="rim" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"></path>
+      </defs>
+      <circle cx="150" cy="150" r="140" fill="url(#coinG)" stroke="#6e5420" stroke-width="4"></circle>
+      <circle cx="150" cy="150" r="128" fill="none" stroke="#5d4517" stroke-width="1.5" stroke-dasharray="3 4"></circle>
+      <g class="coin-spin">
+        <text font-family="JetBrains Mono, monospace" font-size="14.5" letter-spacing="3.5" fill="#4a3810">
+          <textpath href="#rim">KRYPTO, WAS? · MÜNZKABINETT DRESDEN · 2026 · SHA-256 ·</textpath>
+        </text>
+      </g>
+      <text x="150" y="176" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="104" font-weight="600" fill="#43310c">₿?</text>
+    </svg>
+  </div>
+</header>
+
+<!-- ================= BEREICH 1 ================= -->
+<section class="zone" id="bereich-1">
+  <div class="zone-num">01</div>
+  <div class="wrap">
+    <span class="kicker">Ausstellungsbereich Eins · Stationen 1 bis 7</span>
+    <h2>Verschlüsseln <em>und</em> Rechnen</h2>
+    <p>Drei technische Grundlagen liegen unter dem Versprechen digitaler Werte: Kryptografie, Rechentechnik und globale Vernetzung. Dieser Bereich folgt jeder einzelnen davon, von der Antike bis ins 21. Jahrhundert, bevor sie im Bitcoin-Mining zusammenkommen. Eine Zeitleiste im Raum fasst die Entwicklungslinien zusammen.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+<!-- Station 1 -->
+<article class="st fx" id="station-1">
+  <div class="st-head">
+    <div class="coin">1</div>
+    <div class="st-title">
+      <span class="kicker">Station 1 · <span>Kryptografie</span></span>
+      <h3>Geheime Botschaften: Verschlüsseln in der Antike</h3>
+    </div>
+  </div>
+  <p>Verschlüsselung beginnt mit einem einfachen Wunsch: Eine Botschaft soll nur für Eingeweihte lesbar sein. Im antiken Sparta diente dazu die <strong>Skytale</strong>: ein Lederstreifen, spiralförmig um einen Holzstab gewickelt, die Nachricht über die Wicklungen hinweg geschrieben. Nach dem Abnehmen war der Text unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder anordnen.</p>
+  <p>Die <strong>Caesar-Chiffre</strong> funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Beide Verfahren zeigen das Grundprinzip, das bis heute gilt: Information wird nach einer Regel verwandelt und erst mit einem Schlüssel wieder lesbar.</p>
+  <div class="grid-2">
+    <div class="wb" data-module="caesar">
+      <span class="stamp">Geprägt</span>
+      <div class="wb-head"><span class="lbl">Zum Ausprobieren · Caesar-Chiffre</span><span class="ridge"></span></div>
+      <div class="wb-body">
+        <label for="caeIn">Klartext</label>
+        <input type="text" id="caeIn" value="MUENZKABINETT" maxlength="40" autocomplete="off">
+        <label for="caeShift">Verschiebung: <b class="out" id="caeShiftVal">3</b></label>
+        <input type="range" id="caeShift" min="0" max="25" value="3">
+        <div class="mapline" id="caeMap">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br><b>DEFGHIJKLMNOPQRSTUVWXYZABC</b></div>
+        <label>Chiffretext</label>
+        <div class="mono-big out" id="caeOut">PXHQCNDELQHWW</div>
+      </div>
+    </div>
+    <div class="wb" data-module="skytale">
+      <span class="stamp">Geprägt</span>
+      <div class="wb-head"><span class="lbl">Zum Ausprobieren · Skytale</span><span class="ridge"></span></div>
+      <div class="wb-body">
+        <label for="skyIn">Nachricht auf dem Lederstreifen</label>
+        <input type="text" id="skyIn" value="TREFFEN BEI MONDLICHT" maxlength="36" autocomplete="off">
+        <label for="skyCols">Stabdurchmesser (Wicklungen): <b class="out" id="skyColsVal">5</b></label>
+        <input type="range" id="skyCols" min="2" max="7" value="5">
+        <div class="skytale-grid" id="skyGrid" style="grid-template-columns: repeat(5, 1fr);"><span>T</span><span>R</span><span>E</span><span>F</span><span>F</span><span>E</span><span>N</span><span>B</span><span>E</span><span>I</span><span>M</span><span>O</span><span>N</span><span>D</span><span>L</span><span>I</span><span>C</span><span>H</span><span>T</span><span>·</span></div>
+        <label>Abgewickelter Streifen</label>
+        <div class="hashline out" id="skyOut">TEMIRNOCEBNHFEDTFIL·</div>
+        <p>Lies die Spalten von oben nach unten. Nur mit einem Stab gleichen Durchmessers geht es zurück.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Station 2 -->
+<article class="st fx" id="station-2">
+  <div class="st-head">
+    <div class="coin">2</div>
+    <div class="st-title">
+      <span class="kicker">Station 2 · <span>Kryptografie</span></span>
+      <h3>Verschlüsseln mit System: Zirkel und Permutationsscheibe</h3>
+    </div>
+  </div>
+  <p>Antike Verfahren hatten einen Nachteil: War ihr Prinzip einmal bekannt, ließ sich eine Nachricht oft rasch entschlüsseln. Durch <strong>veränderbare Zuordnungen</strong> entstand ein frühes technisches Hilfsmittel gegen das Mitlesen. Der hier gezeigte kryptografische Zirkel besteht aus zwei drehbaren Scheiben mit Alphabeten. Sender und Empfänger brauchten jeweils ein baugleiches Exemplar.</p>
+  <p>Im 15. Jahrhundert prägten solche Hilfsmittel die europäische Diplomatie. In sogenannten "schwarzen Kammern" chiffrierten und dechiffrierten die Höfe abgefangene Nachrichten. Zugleich begann der bis heute andauernde <strong>Wettlauf zwischen Verschlüsseln und Entschlüsseln</strong>.</p>
+  <div class="wb" data-module="scheibe">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Drehscheiben-Chiffre</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="disc-wrap">
+        <svg id="discSvg" width="220" height="220" viewBox="0 0 220 220" aria-label="Zwei drehbare Alphabetscheiben"><circle cx="110" cy="110" r="104" fill="none" stroke="#4a3b1c" stroke-width="2"></circle><circle cx="110" cy="110" r="78" fill="#241c0c" stroke="#4a3b1c" stroke-width="1.5"></circle><circle cx="110" cy="110" r="8" fill="#4a3b1c"></circle><path d="M104,4 L116,4 L110,14 Z" fill="#dcb75e"></path><text x="110" y="23" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">A</text><text x="131.77772545016774" y="25.644294614229267" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">B</text><text x="152.28980865598294" y="33.42350166555789" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">C</text><text x="170.34416189991236" y="45.885521916429795" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">D</text><text x="184.89153179632274" y="62.30610804746482" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">E</text><text x="195.08647808437274" y="81.73095527912926" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">F</text><text x="200.3365075429229" y="103.03116209676561" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">G</text><text x="200.3365075429229" y="124.96883790323439" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">H</text><text x="195.08647808437274" y="146.26904472087074" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">I</text><text x="184.89153179632274" y="165.69389195253518" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">J</text><text x="170.34416189991236" y="182.1144780835702" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">K</text><text x="152.28980865598294" y="194.5764983344421" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">L</text><text x="131.77772545016774" y="202.35570538577073" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">M</text><text x="110" y="205" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">N</text><text x="88.22227454983225" y="202.35570538577073" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">O</text><text x="67.71019134401706" y="194.5764983344421" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">P</text><text x="49.65583810008763" y="182.1144780835702" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">Q</text><text x="35.108468203677276" y="165.69389195253518" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">R</text><text x="24.913521915627257" y="146.26904472087077" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">S</text><text x="19.663492457077083" y="124.96883790323436" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">T</text><text x="19.663492457077083" y="103.03116209676567" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">U</text><text x="24.913521915627243" y="81.73095527912929" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">V</text><text x="35.108468203677305" y="62.30610804746477" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">W</text><text x="49.65583810008761" y="45.88552191642982" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">X</text><text x="67.710191344017" y="33.42350166555792" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">Y</text><text x="88.22227454983216" y="25.64429461422928" text-anchor="middle" font-size="11" fill="#efe3c2" font-family="JetBrains Mono, monospace">Z</text><g id="discInner" style="transform-origin: 110px 110px; transition: transform 0.35s; transform: rotate(-96.9231deg);"><text x="110" y="52" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">A</text><text x="124.83757118582858" y="53.801607319584775" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">B</text><text x="138.81283666671365" y="59.10172640950098" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">C</text><text x="151.1136048109293" y="67.59233361339173" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">D</text><text x="161.0249996854067" y="78.77998570266834" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">E</text><text x="167.9710070464957" y="92.01449700336279" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">F</text><text x="171.54795019407936" y="106.52672582416997" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">G</text><text x="171.54795019407936" y="121.47327417583003" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">H</text><text x="167.9710070464957" y="135.98550299663722" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">I</text><text x="161.0249996854067" y="149.22001429733166" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">J</text><text x="151.1136048109293" y="160.40766638660827" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">K</text><text x="138.81283666671365" y="168.898273590499" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">L</text><text x="124.83757118582858" y="174.19839268041522" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">M</text><text x="110" y="176" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">N</text><text x="95.16242881417142" y="174.19839268041522" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">O</text><text x="81.18716333328635" y="168.898273590499" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">P</text><text x="68.8863951890707" y="160.40766638660827" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">Q</text><text x="58.97500031459331" y="149.22001429733166" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">R</text><text x="52.028992953504286" y="135.98550299663722" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">S</text><text x="48.452049805920645" y="121.47327417583" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">T</text><text x="48.452049805920645" y="106.52672582417001" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">U</text><text x="52.02899295350427" y="92.01449700336282" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">V</text><text x="58.97500031459332" y="78.77998570266831" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">W</text><text x="68.88639518907067" y="67.59233361339174" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">X</text><text x="81.18716333328632" y="59.101726409501005" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">Y</text><text x="95.16242881417136" y="53.80160731958479" text-anchor="middle" font-size="11" fill="#dcb75e" font-family="JetBrains Mono, monospace">Z</text></g></svg>
+        <div>
+          <div class="row">
+            <button class="btn ghost" id="discL" aria-label="Innere Scheibe nach links drehen">◀ drehen</button>
+            <button class="btn ghost" id="discR" aria-label="Innere Scheibe nach rechts drehen">drehen ▶</button>
+          </div>
+          <label for="discIn">Klartext</label>
+          <input type="text" id="discIn" value="DRESDEN" maxlength="24" autocomplete="off">
+          <label>Chiffre bei Stellung <b class="out" id="discPos">H</b> unter A</label>
+          <div class="mono-big out" id="discOut">KYLZKLU</div>
+          <p>Außen steht der Klartext, innen die Geheimschrift. Jede Drehung ergibt eine neue Zuordnung, 26 Schlüssel in einem Gerät.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Brückenstation -->
+<article class="st fx" id="station-bruecke">
+  <div class="st-head">
+    <div class="coin bridge">A·R</div>
+    <div class="st-title">
+      <span class="kicker">Brückenstation · <span>Rechentechnik</span></span>
+      <h3>Rechnen für alle: Adam Ries</h3>
+    </div>
+  </div>
+  <p>Seit dem späten Mittelalter verbreiteten Rechenbücher in Europa einheitliche Verfahren. <strong>Adam Ries</strong> (1492 bis 1559) erklärte sie auf Deutsch statt auf Latein und machte sie so für Kaufleute, Handwerker und Beamte zugänglich. Seine Bücher trugen dazu bei, die heute gebräuchlichen Ziffern 0 bis 9 zu verbreiten, ein Zahlensystem, das im indischen Raum entstand und über die arabischsprachige Welt nach Europa kam.</p>
+  <p>Die Redensart "nach Adam Riese" erinnert bis heute an den Anspruch, dass Rechnen nach klaren und überprüfbaren Regeln funktioniert. Genau dieser Anspruch trägt jede Rechenmaschine und jede Blockchain.</p>
+  <div class="wb" data-module="linien">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Rechnen auf den Linien</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <p>So rechnete man zu Ries' Zeit: Rechenpfennige auf Linien legen. Klicke auf eine Linie, um einen Pfennig zu legen, klicke auf einen Pfennig, um ihn zu entfernen.</p>
+      <div class="abacus" id="abacus"><div class="ab-row line"><span class="v">1000</span><span class="dots"></span></div><div class="ab-row"><span class="v">500</span><span class="dots"></span></div><div class="ab-row line"><span class="v">100</span><span class="dots"></span></div><div class="ab-row"><span class="v">50</span><span class="dots"></span></div><div class="ab-row line"><span class="v">10</span><span class="dots"></span></div><div class="ab-row"><span class="v">5</span><span class="dots"></span></div><div class="ab-row line"><span class="v">1</span><span class="dots"></span></div></div>
+      <div class="row">
+        <div class="stat"><b id="abSum">0</b><span>Wert der Pfennige</span></div>
+        <button class="btn" id="abBundle">Bündeln nach Ries</button>
+        <button class="btn ghost" id="abReset">Abräumen</button>
+      </div>
+      <p id="abMsg">Regel: Fünf Pfennige auf einer Linie werden zu einem im Zwischenraum darüber, zwei im Zwischenraum zu einem auf der nächsten Linie.</p>
+    </div>
+  </div>
+</article>
+
+<!-- Station 3 -->
+<article class="st fx" id="station-3">
+  <div class="st-head">
+    <div class="coin">3</div>
+    <div class="st-title">
+      <span class="kicker">Station 3 · <span>Rechentechnik</span></span>
+      <h3>Die Maschine rechnet: Die Leibniz-Rechenmaschine</h3>
+    </div>
+  </div>
+  <p>Im 17. Jahrhundert arbeiteten Gelehrte in mehreren Ländern Europas an der Frage, ob sich Rechenvorgänge mechanisieren lassen. Einer von ihnen war der in Leipzig geborene <strong>Gottfried Wilhelm Leibniz</strong>. Seine mechanische Rechenmaschine konnte alle vier Grundrechenarten ausführen: Maschinen zählen nicht nur, sie rechnen.</p>
+  <p>Leibniz beschäftigte sich außerdem früh mit dem <strong>Binärsystem</strong> und schrieb es als einer der Ersten systematisch nieder. Diese Zahlendarstellung verwendet nur zwei Ziffern, 0 und 1, wie ein Schalter, der entweder an oder aus ist. Dieses Prinzip ist heute grundlegend für digitale Technik. Jedes Foto, jede Nachricht, jede Transaktion beruht letztendlich auf Folgen von Nullen und Einsen.</p>
+  <div class="wb" data-module="binaer">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Dein Name in Binär</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <label for="binIn">Eingabe</label>
+      <input type="text" id="binIn" value="ADA" maxlength="12" autocomplete="off">
+      <div class="bin-grid" id="binGrid"><div class="bin-cell"><b>A</b><span>01000001</span></div><div class="bin-cell"><b>D</b><span>01000100</span></div><div class="bin-cell"><b>A</b><span>01000001</span></div></div>
+      <p id="binInfo">Das sind 24 Schalter, jeder an oder aus. Mehr braucht eine Maschine nicht, um dich zu speichern.</p>
+    </div>
+  </div>
+</article>
+
+<!-- Station 4 -->
+<article class="st fx" id="station-4">
+  <div class="st-head">
+    <div class="coin">4</div>
+    <div class="st-title">
+      <span class="kicker">Station 4 · <span>Kryptografie</span></span>
+      <h3>Maschinen verschlüsseln: Die Enigma</h3>
+    </div>
+  </div>
+  <p>Mit dem kryptografischen Zirkel ließen sich einige Dutzend Verschlüsselungen erzeugen. Die <strong>Enigma</strong> erzeugte mehr Einstellungsmöglichkeiten, als es Sterne in unserer Galaxie gibt, bei der militärischen Standardausführung über 150 Trillionen. Sie verändert die Buchstabenzuordnung bei jedem einzelnen Tastendruck.</p>
+  <p>Entwickelt wurde sie Anfang des 20. Jahrhunderts vom deutschen Ingenieur Arthur Scherbius, ursprünglich als kommerzielles Produkt. Später übernahm das Militär die Technik. Im Zweiten Weltkrieg war die Enigma Teil der Infrastruktur eines menschenverachtenden Krieges, der Abermillionen Opfer forderte. Kryptografie ist nie nur Technik, sie ist in politische und militärische Machtverhältnisse eingebunden.</p>
+  <p>Schon in den 1930er Jahren analysierten polnische Mathematiker um <strong>Marian Rejewski</strong> ihre Funktionsweise. Auf dieser Grundlage bauten britische Kryptologen in Bletchley Park unter Alan Turing und Gordon Welchman elektromechanische Entschlüsselungsmaschinen. Die Entzifferung mit der <strong>Turing-Welchman-Bombe</strong> ab 1940 gilt als Meilenstein der Kryptografiegeschichte.</p>
+  <div class="grid-2">
+    <div class="wb" data-module="enigma">
+      <span class="stamp">Geprägt</span>
+      <div class="wb-head"><span class="lbl">Zum Ausprobieren · Enigma I, Walzen I·II·III, UKW B</span><span class="ridge"></span></div>
+      <div class="wb-body">
+        <div class="rotor-bank" id="rotorBank">
+          <div class="rotor"><div class="win" id="rw0">A</div><div class="nm">Walze I</div></div>
+          <div class="rotor"><div class="win" id="rw1">A</div><div class="nm">Walze II</div></div>
+          <div class="rotor"><div class="win" id="rw2">A</div><div class="nm">Walze III</div></div>
+        </div>
+        <div class="lamps" id="lamps" aria-label="Lampenfeld"><span id="lamp0">A</span><span id="lamp1">B</span><span id="lamp2">C</span><span id="lamp3">D</span><span id="lamp4">E</span><span id="lamp5">F</span><span id="lamp6">G</span><span id="lamp7">H</span><span id="lamp8">I</span><span id="lamp9">J</span><span id="lamp10">K</span><span id="lamp11">L</span><span id="lamp12">M</span><span id="lamp13">N</span><span id="lamp14">O</span><span id="lamp15">P</span><span id="lamp16">Q</span><span id="lamp17">R</span><span id="lamp18">S</span><span id="lamp19">T</span><span id="lamp20">U</span><span id="lamp21">V</span><span id="lamp22">W</span><span id="lamp23">X</span><span id="lamp24">Y</span><span id="lamp25">Z</span></div>
+        <div class="keys" id="keys" aria-label="Tastatur"><button type="button">A</button><button type="button">B</button><button type="button">C</button><button type="button">D</button><button type="button">E</button><button type="button">F</button><button type="button">G</button><button type="button">H</button><button type="button">I</button><button type="button">J</button><button type="button">K</button><button type="button">L</button><button type="button">M</button><button type="button">N</button><button type="button">O</button><button type="button">P</button><button type="button">Q</button><button type="button">R</button><button type="button">S</button><button type="button">T</button><button type="button">U</button><button type="button">V</button><button type="button">W</button><button type="button">X</button><button type="button">Y</button><button type="button">Z</button></div>
+        <div class="tape">EIN&nbsp;&nbsp;<span id="tapeIn"></span><br>AUS&nbsp;&nbsp;<b id="tapeOut"></b></div>
+        <div class="row" style="margin-top:.7rem">
+          <button class="btn ghost" id="enReset">Zurück auf A·A·A</button>
+          <span class="chip" id="enHint">Bei jedem Tastendruck dreht die rechte Walze weiter</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="wb" data-module="none" style="margin-top:1.4rem">
+        <div class="wb-head"><span class="lbl">Größenordnung · Vergleich</span><span class="ridge"></span></div>
+        <div class="wb-body">
+          <div class="stat-row">
+            <div class="stat"><b>150 000 000 000 000 000 000</b><span>Einstellungen der Enigma</span></div>
+            <div class="stat"><b>~ 200 000 000 000</b><span>Sterne in der Milchstraße</span></div>
+          </div>
+          <p>Trotzdem fiel sie. Nicht die Mathematik allein entschied, sondern Bedienfehler, erbeutete Schlüsselhefte und der Ideenreichtum der Entzifferer.</p>
+        </div>
+      </div>
+      <details class="vert">
+        <summary>Vertiefung: Warum verschlüsselt und entschlüsselt dieselbe Maschine?</summary>
+        <h5>Die Umkehrwalze</h5>
+        <p>Am Ende des Stromwegs sitzt die Umkehrwalze. Sie schickt das Signal durch die Walzen zurück. Dadurch gilt: Wird aus A ein S, wird bei gleicher Stellung aus S wieder ein A. Sender und Empfänger brauchten nur dieselbe Grundeinstellung. Probiere es aus: Tippe das Ergebnis nach einem Reset erneut ein.</p>
+      </details>
+    </div>
+  </div>
+</article>
+<!-- Station 5 -->
+<article class="st fx" id="station-5">
+  <div class="st-head">
+    <div class="coin">5</div>
+    <div class="st-title">
+      <span class="kicker">Station 5 · <span>Rechentechnik · Vernetzung</span></span>
+      <h3>Die Maschine denkt mit und vernetzt sich</h3>
+    </div>
+  </div>
+  <p>Die Leibniz-Rechenmaschine konnte rechnen, brauchte aber für jede Aufgabe einen Menschen, der sie Schritt für Schritt bediente. Der entscheidende Sprung vom Rechner zum Computer ist das <strong>Programm</strong>: Maschinen führen Abfolgen von Anweisungen selbstständig aus.</p>
+  <p>Im 20. Jahrhundert überschlagen sich die Entwicklungen. <strong>Konrad Zuse</strong> baut 1941 mit der Z3 den ersten funktionsfähigen programmierbaren Computer, die ENIAC folgt prompt in den USA. Mit den privaten Computern der 1980er Jahre und ihrer Vernetzung über das <strong>Internet</strong> entsteht schließlich die dritte Grundlage digitaler Systeme: die globale Verbindung.</p>
+  <div class="wb" data-module="timeline">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Vom Rechner zum Netz</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="tl" id="tlChips"><button type="button">1936</button><button type="button">1941</button><button type="button">1946</button><button type="button">1969</button><button type="button">1982</button><button type="button">1990</button><button type="button">2008</button></div>
+      <div class="tl-detail" id="tlDetail"><b>1941 · Zuse Z3, Berlin</b>Wähle oben ein Jahr, um die Etappe zu lesen.</div>
+    </div>
+  </div>
+</article>
+
+<!-- Station 6 -->
+<article class="st fx" id="station-6">
+  <div class="st-head">
+    <div class="coin">6</div>
+    <div class="st-title">
+      <span class="kicker">Station 6 · <span>Zusammenführung</span></span>
+      <h3>Unsichtbare Schutzschilde: Kryptografie im Zahlungsalltag</h3>
+    </div>
+  </div>
+  <p>Kryptografie ist längst Teil unseres Alltags. Ob beim Online-Einkauf, der Überweisung per Banking-App, dem Bezahlen mit Karte oder dem Einloggen ins E-Mail-Konto: Im Hintergrund laufen jedes Mal kryptografische Verfahren. Sie sorgen dafür, dass Daten unterwegs nicht gelesen oder verändert werden können. <strong>Sie erzeugen Vertrauen in digitalen Austausch.</strong></p>
+  <p>Aber was wäre, wenn dieses Vertrauen ganz ohne Banken und zentrale Institutionen funktionieren sollte, allein getragen von Kryptografie, Rechenleistung und einem weltweiten Netzwerk?</p>
+  <div class="wb" data-module="alltag">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Ein ganz normaler Dienstag</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <p>Tippe die Momente eines Tages an und entdecke den Schutzschild dahinter. <span class="out" id="alltagCount">0 von 5 entdeckt</span></p>
+      <div class="reveal-grid" id="alltagGrid"><div class="reveal" role="button" tabindex="0"><div class="front">07:40 · Handy entsperren</div><div class="back">Gerätesperre und Biometrie: Deine Daten liegen verschlüsselt auf dem Chip. Ohne Schlüssel bleibt das Gerät ein Ziegelstein.</div></div><div class="reveal" role="button" tabindex="0"><div class="front">09:15 · Mail-Login</div><div class="back">Passwort plus Einmalcode: Zwei-Faktor-Verfahren beweisen, dass du es wirklich bist.</div></div><div class="reveal" role="button" tabindex="0"><div class="front">12:30 · Mit Karte zahlen</div><div class="back">Der EMV-Chip erzeugt für jede Zahlung ein einmaliges Kryptogramm. Abgefangene Daten sind wertlos.</div></div><div class="reveal" role="button" tabindex="0"><div class="front">17:05 · Überweisung per App</div><div class="back">TLS verschlüsselt die Verbindung zur Bank, eine TAN signiert genau diesen einen Auftrag.</div></div><div class="reveal" role="button" tabindex="0"><div class="front">21:50 · Nachricht an Freunde</div><div class="back">Ende-zu-Ende-Verschlüsselung: Nur Absender und Empfänger können mitlesen. Nicht einmal der Anbieter.</div></div></div>
+    </div>
+  </div>
+</article>
+
+<!-- Station 7 -->
+<article class="st fx" id="station-7">
+  <div class="st-head">
+    <div class="coin">7</div>
+    <div class="st-title">
+      <span class="kicker">Station 7 · <span>Zusammenführung</span></span>
+      <h3>Rechnen erzeugt "Coins": Bitcoin-Mining</h3>
+    </div>
+  </div>
+  <p>Bitcoin verbindet Kryptografie, Rechenleistung und globale Vernetzung zu einem System ohne zentrale Verwaltung. <strong>Mining</strong> macht diese abstrakte Infrastruktur sichtbar: Maschinen prüfen Transaktionen, sichern das Netzwerk und erzeugen nach festen Regeln neue Bitcoin.</p>
+  <p>Mining-Geräte sind spezialisierte Computer, die ununterbrochen kryptografische Berechnungen ausführen. Im Inneren arbeiten Chips aus Silizium, auf ihnen Milliarden winziger Schalter, die mit 0 und 1 rechnen. Im Raum steht die Hardware, hier läuft das Prinzip.</p>
+  <div class="wb" data-module="mining">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Mining-Simulation mit echtem SHA-256</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="row">
+        <span>Ziel: Hash beginnt mit</span>
+        <button class="btn ghost" id="diffMinus" aria-label="Schwierigkeit senken">−</button>
+        <b class="out" id="diffShow">000</b>
+        <button class="btn ghost" id="diffPlus" aria-label="Schwierigkeit erhöhen">+</button>
+      </div>
+      <div class="hashline" id="mineHash" style="margin-top:.6rem">Drücke "Mining starten"</div>
+      <div class="stat-row">
+        <div class="stat"><b id="mineTries">0</b><span>Versuche</span></div>
+        <div class="stat"><b id="mineRate">0</b><span>Hashes/s</span></div>
+        <div class="stat"><b id="mineBlocks">0</b><span>Gefundene Blöcke</span></div>
+      </div>
+      <div class="row">
+        <button class="btn" id="mineStart">Mining starten</button>
+        <button class="btn ghost" id="mineStop">Stopp</button>
+      </div>
+      <p style="margin-top:.7rem">Es gibt keine Abkürzung. Es hilft nur, sehr viele Versuche pro Sekunde zu machen. Genau das tun Mining-Farmen, nur billiardenfach schneller.</p>
+    </div>
+  </div>
+</article>
+
+<div class="hinge fx">
+  <span class="kicker">Scharnier zum Ausstellungsbereich 02</span>
+  <h3>Vom Ideal zur Industrie</h3>
+  <p>Als Bitcoin 2009 startete, war das Mining als offener, dezentraler Prozess gedacht. Jede und jeder konnte mit einem Computer teilnehmen. Inzwischen prägen industrielle Farmen das Bild: Aus einer technisch dezentral konzipierten Infrastruktur entstand eine zunehmend ökonomisch konzentrierte Landschaft. Wie dieses System im Inneren funktioniert, zeigt der nächste Bereich.</p>
+</div>
+
+<!-- ================= BEREICH 2 ================= -->
+</div>
+<section class="zone" id="bereich-2">
+  <div class="zone-num">02</div>
+  <div class="wrap">
+    <span class="kicker">Ausstellungsbereich Zwei · Station 8</span>
+    <h2>Wie funktioniert <em>Bitcoin?</em></h2>
+    <p>Bitcoin ersetzt Bank, Staat und Unternehmen durch fünf ineinandergreifende Prinzipien. Kein Vorwissen nötig, alles wird über alltagsnahe Bilder erklärt. Die Vertiefungen unter den Modulen entsprechen den QR-Codes im Raum.</p>
+  </div>
+</section>
+<div class="wrap">
+
+<!-- Station 8 -->
+<article class="st fx" id="station-8">
+  <div class="st-head">
+    <div class="coin">8</div>
+    <div class="st-title">
+      <span class="kicker">Station 8 · <span>Das Bitcoin-Labor in fünf Kapiteln</span></span>
+      <h3>Vom Kassenbuch zum Netzwerk als Instanz</h3>
+    </div>
+  </div>
+
+  <!-- 8.1 Kassenbuch -->
+  <h4 style="margin-top:1.2rem">Kapitel 1 · Das Kassenbuch, das allen gehört</h4>
+  <p>Geld ist in Wahrheit meistens eine Liste. Kein Bündel Scheine liegt mit Ihrem Namen im Tresor, es gibt nur einen Eintrag in der Datenbank Ihrer Bank. Bitcoin ersetzt das Bankkonto durch ein gemeinsames digitales Kassenbuch, das gleichzeitig auf vielen Rechnern liegt. Die <strong>Blockchain</strong> hält fest, wem was gehört: nicht zentral verwaltet, sondern gemeinsam geprüft und fortgeschrieben.</p>
+  <div class="wb" data-module="kassenbuch">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Ein Buch, viele Kopien</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="row">
+        <span>Du sendest</span>
+        <select id="kbAmt" aria-label="Betrag"><option>1</option><option selected="">2</option><option>3</option></select>
+        <span>Taler an</span>
+        <select id="kbTo" aria-label="Empfänger"><option>Anna</option><option>Ben</option><option>Chiara</option></select>
+        <button class="btn" id="kbSend">Eintragen</button>
+      </div>
+      <div class="balances" id="kbBal"><span class="bal">Du: <b>10 Taler</b></span><span class="bal">Anna: <b>5 Taler</b></span><span class="bal">Ben: <b>3 Taler</b></span><span class="bal">Chiara: <b>7 Taler</b></span></div>
+      <div class="ledger-nodes" id="kbNodes"><div class="node-book"><h5>Knoten Dresden</h5><div>Start: Guthaben verteilt</div></div><div class="node-book"><h5>Knoten Lagos</h5><div>Start: Guthaben verteilt</div></div><div class="node-book"><h5>Knoten Osaka</h5><div>Start: Guthaben verteilt</div></div></div>
+      <p style="margin-top:.7rem">Ein Eintrag, sofort in jeder Kopie. Wer nachträglich nur die eigene Kopie ändert, fliegt beim Abgleich auf.</p>
+    </div>
+  </div>
+
+  <!-- 8.2 Schlüssel -->
+  <h4 style="margin-top:2rem">Kapitel 2 · Mein Schlüssel, dein Schloss</h4>
+  <p>Besitz bei Bitcoin bedeutet nicht, eine digitale Münze zu haben, sondern den <strong>privaten Schlüssel</strong> zu kontrollieren. Digitale Signaturen beweisen die Zahlungsberechtigung, ohne das Geheimnis preiszugeben. Stellen Sie sich einen Briefkasten vor: Der Schlitz ist öffentlich, jeder darf einwerfen. Nur wer den Schlüssel besitzt, kann öffnen. Aber wer den Schlüssel verliert, verliert den Zugang endgültig.</p>
+  <div class="wb" data-module="schluessel">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Unterschreiben und Prüfen</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="row"><button class="btn" id="keyGen">Schlüsselpaar prägen</button></div>
+      <label>Privat (geheim halten!)</label><div class="hashline" id="keyPriv">noch keiner geprägt</div>
+      <label>Öffentlich (für alle sichtbar)</label><div class="hashline out" id="keyPub">noch keiner geprägt</div>
+      <label for="keyMsg">Nachricht</label>
+      <input type="text" id="keyMsg" value="Ich sende 2 Taler an Anna" maxlength="48">
+      <div class="row" style="margin-top:.6rem">
+        <button class="btn ghost" id="keySign">Unterschreiben</button>
+        <button class="btn ghost" id="keyVerify">Als Netzwerk prüfen</button>
+        <span class="chip" id="keyStatus">bereit</span>
+      </div>
+      <label>Signatur</label><div class="hashline" id="keySig">noch keine</div>
+      <p>Ändere nach dem Unterschreiben ein einziges Zeichen der Nachricht und prüfe erneut. Vereinfachtes Modell, das Prinzip ist echt.</p>
+    </div>
+  </div>
+
+  <!-- 8.3 Mining als Abstimmung -->
+  <h4 style="margin-top:2rem">Kapitel 3 · Mining: Rechnen als Abstimmung</h4>
+  <p>Wenn es keine zentrale Instanz gibt, muss das Netzwerk anders entscheiden, welche Version des Kassenbuchs gilt. Bei Bitcoin geschieht diese Einigung durch Rechenarbeit: <strong>Wer den Arbeitsnachweis liefert, darf den nächsten Block schreiben.</strong> Dieses Verfahren heißt Proof of Work. Der Gewinner erhält als Belohnung neu erzeugte Bitcoin, so entstehen sie.</p>
+  <div class="wb" data-module="wettlauf">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Der Wettlauf um den nächsten Block</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <label for="powSlider">Deine Rechenleistung: <b class="out" id="powVal">2</b> von 10</label>
+      <input type="range" id="powSlider" min="1" max="10" value="2">
+      <div class="race" id="raceLanes"><div class="lane"><span class="nm" id="raceNm0">Du</span><div class="bar"><div class="fill" id="raceFill0"></div></div><span id="racePct0"></span></div><div class="lane"><span class="nm" id="raceNm1">Rechner Nord</span><div class="bar"><div class="fill" id="raceFill1"></div></div><span id="racePct1"></span></div><div class="lane"><span class="nm" id="raceNm2">Farm West</span><div class="bar"><div class="fill" id="raceFill2"></div></div><span id="racePct2"></span></div><div class="lane"><span class="nm" id="raceNm3">Pool Ost</span><div class="bar"><div class="fill" id="raceFill3"></div></div><span id="racePct3"></span></div></div>
+      <div class="row">
+        <button class="btn" id="raceStart">Runde starten</button>
+        <span class="chip" id="raceMsg">4 Miner, einer schreibt die nächste Seite</span>
+      </div>
+      <div class="tape" id="raceChain">KETTE&nbsp;&nbsp;</div>
+      <p style="margin-top:.6rem">Mehr Rechenleistung heißt bessere Chancen, nie Gewissheit. Betrug bleibt möglich, aber extrem teuer: Man müsste dauerhaft mehr leisten als alle ehrlichen Teilnehmer zusammen.</p>
+    </div>
+  </div>
+
+  <!-- 8.4 Kette -->
+  <h4 style="margin-top:2rem">Kapitel 4 · Die Kette wächst: Sicherheit durch Anhäufung</h4>
+  <p>Die Sicherheit der Blockchain entsteht durch Zeit und angesammelte Rechenarbeit. Jeder Block trägt den Fingerabdruck seines Vorgängers. Je älter ein Eintrag ist, desto aufwendiger wäre seine Fälschung: Man müsste alle nachfolgenden Blöcke neu berechnen, schneller als das gesamte Netzwerk neue hinzufügt. <strong>Bitcoin ersetzt institutionelles Vertrauen durch öffentlich nachprüfbaren Aufwand.</strong></p>
+  <div class="wb" data-module="kette">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Manipuliere die Kette</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <label for="shaIn">Erst der Fingerabdruck: SHA-256 live</label>
+      <input type="text" id="shaIn" value="Krypto, was?" maxlength="60">
+      <div class="hashline out" id="shaOut">9eee5688be94f0a5f6bf06c442a1b4ba370578d9287e11ffc9d5be8ef91e8828</div>
+      <p>Ändere ein einziges Zeichen und beobachte den Hash. Dann versuche unten, einen alten Eintrag zu fälschen.</p>
+      <div class="blocks" id="chainBlocks"><div class="blk" id="blk0"><h5><span>Block 1</span><span id="blkState0">gültig</span></h5><textarea id="blkData0" aria-label="Daten Block 1">Anna zahlt Ben 2 Taler</textarea><div class="h">Nonce <b id="blkNonce0">25</b></div><div class="h">Vorgänger <b id="blkPrev0">0000000000000000…</b></div><div class="h">Hash <b id="blkHash0">001d5fcb3d23da271e8e81…</b></div><button class="btn ghost" id="blkMine0" type="button">Block neu prägen</button></div><div class="blk" id="blk1"><h5><span>Block 2</span><span id="blkState1">gültig</span></h5><textarea id="blkData1" aria-label="Daten Block 2">Ben zahlt Chiara 1 Taler</textarea><div class="h">Nonce <b id="blkNonce1">9</b></div><div class="h">Vorgänger <b id="blkPrev1">001d5fcb3d23da271e8e81…</b></div><div class="h">Hash <b id="blkHash1">0020c786f4c480569a48ad…</b></div><button class="btn ghost" id="blkMine1" type="button">Block neu prägen</button></div><div class="blk" id="blk2"><h5><span>Block 3</span><span id="blkState2">gültig</span></h5><textarea id="blkData2" aria-label="Daten Block 3">Chiara zahlt Anna 3 Taler</textarea><div class="h">Nonce <b id="blkNonce2">475</b></div><div class="h">Vorgänger <b id="blkPrev2">0020c786f4c480569a48ad…</b></div><div class="h">Hash <b id="blkHash2">00ad5dbcf2be9fb99e3a20…</b></div><button class="btn ghost" id="blkMine2" type="button">Block neu prägen</button></div></div>
+      <p style="margin-top:.7rem" id="chainMsg">Kette gültig. Jeder Block trägt den Fingerabdruck seines Vorgängers.</p>
+    </div>
+  </div>
+
+  <!-- 8.5 Netzwerk -->
+  <h4 style="margin-top:2rem">Kapitel 5 · Das Netzwerk als Instanz</h4>
+  <p>Kassenbuch, digitale Signatur und Mining greifen zu einem neuen Modell zusammen: ein Zahlungssystem ohne Bank, Staat oder Unternehmen in der Mitte. <strong>Das Netzwerk selbst übernimmt die Rolle der Instanz</strong> und wirft die Frage auf, was das gesellschaftlich bedeutet. Seit 2009 läuft es ohne Unterbrechung.</p>
+  <div class="wb" data-module="netz">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Knoten ausschalten</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="row">
+        <button class="btn ghost on" id="netModeA">Mit Bank in der Mitte</button>
+        <button class="btn ghost" id="netModeB">Bitcoin-Netz</button>
+        <button class="btn ghost" id="netReset">Neu aufbauen</button>
+      </div>
+      <svg id="netSvg" class="netsvg" viewBox="0 0 420 240" width="100%" aria-label="Netzwerkdiagramm"><line x1="210" y1="120" x2="348" y2="120" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="307.58073580374355" y2="182.22539674441617" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="210" y2="208" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="112.41926419625645" y2="182.22539674441617" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="72" y2="120.00000000000001" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="112.41926419625642" y2="57.77460325558383" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="209.99999999999997" y2="32" stroke="#6b5726" stroke-width="1.5"></line><line x1="210" y1="120" x2="307.58073580374355" y2="57.774603255583806" stroke="#6b5726" stroke-width="1.5"></line><circle cx="210" cy="120" r="17" fill="#dcb75e" stroke="#6e5420" stroke-width="2" data-id="bank"></circle><text x="210" y="124" text-anchor="middle" font-size="10" fill="#241a05" font-family="JetBrains Mono, monospace" pointer-events="none">BANK</text><circle cx="348" cy="120" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n0"></circle><circle cx="307.58073580374355" cy="182.22539674441617" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n1"></circle><circle cx="210" cy="208" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n2"></circle><circle cx="112.41926419625645" cy="182.22539674441617" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n3"></circle><circle cx="72" cy="120.00000000000001" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n4"></circle><circle cx="112.41926419625642" cy="57.77460325558383" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n5"></circle><circle cx="209.99999999999997" cy="32" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n6"></circle><circle cx="307.58073580374355" cy="57.774603255583806" r="11" fill="#caa64f" stroke="#6e5420" stroke-width="2" data-id="n7"></circle></svg>
+      <p class="out" id="netMsg">Das klassische Modell: Alle Wege führen über die Bank. Klicke Knoten an, um sie auszuschalten.</p>
+    </div>
+  </div>
+</article>
+
+<div class="hinge fx">
+  <span class="kicker">Scharnier zum Ausstellungsbereich 03</span>
+  <h3>Einordnung, Anspruch, Infrastruktur</h3>
+  <p>Bitcoin ist nicht allein geblieben. Tausende weitere digitale Token sind entstanden, die nach ganz unterschiedlichen Prinzipien funktionieren, oder auch gar nicht. Der Sammelbegriff "Kryptowährung" verdeckt mehr, als er erklärt. Neue Geldformen brauchen Vertrauen, Regeln, Infrastrukturen. Unternehmen, die eigenes Geld ausgeben? Auch das ist nicht neu. Der nächste Bereich folgt dieser Spur in die Geschichte zurück.</p>
+</div>
+<!-- ================= BEREICH 3 ================= -->
+</div>
+<section class="zone" id="bereich-3">
+  <div class="zone-num">03</div>
+  <div class="wrap">
+    <span class="kicker">Ausstellungsbereich Drei · Stationen 9 bis 15</span>
+    <h2>Neue Entwicklungen, <em>bekannte Probleme</em></h2>
+    <p>Papiergeld war einmal so fremd und verdächtig, wie digitale Token es heute für viele sind. Die Technologie ist neu, die Entwicklung neuer Geldformen und ihre Herausforderungen sind es nicht. Vier historische Fälle erlauben konkrete Vergleiche mit "neu" erscheinenden Geldformen wie Stablecoins.</p>
+  </div>
+</section>
+<div class="wrap">
+
+<!-- Station 9 -->
+<article class="st fx" id="station-9">
+  <div class="st-head">
+    <div class="coin">9</div>
+    <div class="st-title">
+      <span class="kicker">Station 9 · <span>Grundlagen</span></span>
+      <h3>Was ist Geld?</h3>
+    </div>
+  </div>
+  <p>Geld ist ein Versprechen, das drei Funktionen erfüllen soll: Es dient als <strong>Tauschmittel</strong>, als <strong>Recheneinheit</strong> zum Vergleich von Waren und als <strong>Wertspeicher</strong> zur Erhaltung von Kaufkraft über die Zeit. Diese Funktionen kann Geld nur erfüllen, wenn es im Alltag angenommen wird, ohne dass Herausgeber, Deckung oder Einlösbarkeit jedes Mal geprüft werden müssen. "No Questions Asked": ein Zustand, der Regeln, Institutionen und Vertrauen voraussetzt.</p>
+  <p>Die Formen des Geldes haben sich über Jahrtausende verändert: von Muscheln, Warengeld und Wechseln über Edelmetallmünzen zu Zentralbankgeld, Buch- und Giralgeld, Fiatgeld und E-Geld. Aber die Fragen, die es aufwirft, sind immer dieselben: <strong>Wer garantiert den Wert, wer trägt das Risiko, und wer bestimmt die Regeln?</strong></p>
+  <div class="wb" data-module="geldcheck">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Der Geld-Check</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <p>Sechs Kandidaten, drei Funktionen. Tippe eine Karte an: Wie gut besteht sie den Check? ● stark · ◐ teils · ○ schwach</p>
+      <div class="money-cards" id="moneyCards"><div class="mc" role="button" tabindex="0"><div class="big">🐚</div><h5>Muschelgeld</h5><div class="hint">Kaurischnecken dienten auf mehreren Kontinenten jahrhundertelang als Geld.</div><div class="fn"><b>Tauschmittel ●</b><br><b>Recheneinheit ◐</b><br><b>Wertspeicher ◐</b><br>No Questions Asked im eigenen Handelsraum, wertlos außerhalb.</div></div><div class="mc" role="button" tabindex="0"><div class="big">🥈</div><h5>Silbertaler</h5><div class="hint">Der Dresdner Klassiker: Materialwert plus Prägung des Herrschers.</div><div class="fn"><b>Tauschmittel ●</b><br><b>Recheneinheit ●</b><br><b>Wertspeicher ●</b><br>Stark, aber schwer. Und der Herrscher kann den Silbergehalt heimlich senken.</div></div><div class="mc" role="button" tabindex="0"><div class="big">💶</div><h5>Banknote</h5><div class="hint">Fiatgeld: kaum Materialwert, dafür Zentralbank, Recht und Alltag dahinter.</div><div class="fn"><b>Tauschmittel ●</b><br><b>Recheneinheit ●</b><br><b>Wertspeicher ◐</b><br>Inflation nagt langsam, doch an der Kasse stellt niemand Fragen.</div></div><div class="mc" role="button" tabindex="0"><div class="big">💳</div><h5>Giralgeld</h5><div class="hint">Zahlen auf Konten, bewegt per Karte und Überweisung. Das meiste Geld existiert nur so.</div><div class="fn"><b>Tauschmittel ●</b><br><b>Recheneinheit ●</b><br><b>Wertspeicher ◐</b><br>Bequem, aber abhängig von Banken, Strom und Infrastruktur.</div></div><div class="mc" role="button" tabindex="0"><div class="big">₿</div><h5>Bitcoin</h5><div class="hint">Digitaler Wert ohne Herausgeber, gesichert durch Rechenarbeit.</div><div class="fn"><b>Tauschmittel ◐</b><br><b>Recheneinheit ○</b><br><b>Wertspeicher ◐</b><br>Grenzenlos übertragbar, aber stark schwankend. Kaum ein Preis ist in Bitcoin ausgezeichnet.</div></div><div class="mc" role="button" tabindex="0"><div class="big">🎟️</div><h5>Bonuspunkte</h5><div class="hint">Firmengeld im Kleinen: Meilen, Herzen, Sterne.</div><div class="fn"><b>Tauschmittel ◐</b><br><b>Recheneinheit ○</b><br><b>Wertspeicher ○</b><br>Gilt nur im Reich des Herausgebers, Regeln jederzeit änderbar.</div></div></div>
+    </div>
+  </div>
+</article>
+
+<!-- Station 10 -->
+<article class="st fx" id="station-10">
+  <div class="st-head">
+    <div class="coin">10</div>
+    <div class="st-title">
+      <span class="kicker">Station 10 · <span>Überblick</span></span>
+      <h3>Neue Entwicklungen, bekannte Herausforderungen</h3>
+    </div>
+  </div>
+  <p>Der heutige Kryptomarkt ist heterogen: Bitcoin, Plattform-Kryptowerte wie Ether, private und algorithmische Stablecoins, staatliche Digitalwährungen, Utility und Security Token, NFTs, DeFi-Protokolle, Memecoins. Vieles davon wirkt neu, doch viele Grundfragen sind alt: <strong>Warum vertrauen Menschen einer neuen Geldform?</strong> Die Geldgeschichte zeigt wiederkehrende Muster von Scheitern, Gelingen und Abhängigkeit.</p>
+  <div class="wb" data-module="muster">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Muster erkennen, damals trifft heute</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <p>Wähle links ein historisches Muster und rechts sein Echo aus der Kryptowelt. <span class="out" id="musterScore">0 von 4 Paaren</span></p>
+      <div class="match-grid" id="musterGrid"><button type="button">DAMALS<br>Mehr versprochen als gedeckt (Stockholms Banco, 1668)</button><button type="button" data-pair="3">HEUTE<br>Hunderte Stablecoins ohne einheitliche Prüfung (der Markt heute)</button><button type="button">DAMALS<br>Regeln verankern den Gebrauch (Sachsen, 1772)</button><button type="button" data-pair="0">HEUTE<br>Ein Stablecoin verliert die Bindung (TerraUSD, 2022)</button><button type="button">DAMALS<br>Firmengeld schafft Abhängigkeit (VOC, 17. Jahrhundert)</button><button type="button" data-pair="1">HEUTE<br>Gesetzesrahmen für Kryptowerte (MiCA 2023, GENIUS Act 2025)</button><button type="button">DAMALS<br>Viele Emittenten, keine Standards (Wildcat Banking, ab 1837)</button><button type="button" data-pair="2">HEUTE<br>Eine Plattform gibt eigene Währung aus (PayPal PYUSD, 2023)</button></div>
+      <div class="match-msg" id="musterMsg"></div>
+    </div>
+  </div>
+</article>
+
+<!-- Station 11 -->
+<article class="st fx" id="station-11">
+  <div class="st-head">
+    <div class="coin">11</div>
+    <div class="st-title">
+      <span class="kicker">Station 11 · <span>Scheitern ohne Regeln</span></span>
+      <h3>Zu viel Papier, zu wenig Vertrauen: Palmstruch und die Stockholms Banco</h3>
+    </div>
+  </div>
+  <p>Schweden bezahlte im 17. Jahrhundert mit Kupferplatten von bis zu 20 Kilogramm. <strong>Johan Palmstruch</strong> erhielt 1656 die königliche Genehmigung, eine Bank zu gründen. Seine Idee: Papierscheine sollten den Wert der schweren Platten verbürgen, das erste Papiergeld Europas.</p>
+  <p>Anfangs funktionierte das System. Doch niemand kontrollierte, wie viele Scheine die Bank ausgab. Palmstruch ließ mehr drucken, als durch Einlagen gedeckt war. <strong>1668 brach die Bank zusammen.</strong> Palmstruch wurde zum Tode verurteilt, später begnadigt. Die Lehre: Neues Geld braucht nicht nur eine gute Idee, sondern Rahmensetzungen und Vertrauen. Die Nachfolgeeinrichtung unter Aufsicht des Parlaments gilt als älteste noch bestehende Zentralbank der Welt.</p>
+  <div class="wb" data-module="bankrun">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Die Druckerpresse der Stockholms Banco</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <label for="runSlider">Ausgegebene Scheine im Verhältnis zu den Einlagen: <b class="out" id="runVal">100%</b></label>
+      <input type="range" id="runSlider" min="100" max="300" value="100" step="10">
+      <div class="vault">
+        <div class="vcol"><div class="bars" id="vaultCoins"><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span><span class="unit coinu"></span></div><p style="text-align:center; margin-top:.3rem">Einlagen (Kupfer)</p></div>
+        <div class="vcol"><div class="bars" id="vaultNotes"><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span><span class="unit noteu"></span></div><p style="text-align:center; margin-top:.3rem">Umlaufende Scheine</p></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b id="runCover">100%</b><span>Deckung</span></div>
+        <div class="stat"><b id="runStatus" style="color: var(--ok-bright);">stabil</b><span>Status</span></div>
+      </div>
+      <p id="runMsg">Jeder Schein findet sein Kupfer. Niemand stellt Fragen, das System trägt.</p>
+    </div>
+  </div>
+  <details class="vert">
+    <summary>Vertiefung: Bank Runs, damals und heute</summary>
+    <h5>Stockholm 1668, TerraUSD 2022</h5>
+    <p>Was in Stockholm geschah, hat einen Namen, der bis heute verwendet wird: Bank Run. Im Mai 2022 verlor der algorithmische Stablecoin TerraUSD innerhalb weniger Tage seine Bindung an den US-Dollar. Schätzungen zufolge gingen rund 40 Milliarden US-Dollar verloren. Anders als bei Banken gab es keine Einlagensicherung und keine Aufsichtsbehörde.</p>
+  </details>
+</article>
+
+<!-- Station 12 -->
+<article class="st fx" id="station-12">
+  <div class="st-head">
+    <div class="coin">12</div>
+    <div class="st-title">
+      <span class="kicker">Station 12 · <span>Gelingen durch Regeln</span></span>
+      <h3>Verordnetes Vertrauen: Das erste Papiergeld in Deutschland</h3>
+    </div>
+  </div>
+  <p>Was in Schweden scheiterte, gelang in Sachsen. Als erstes deutsches Territorium gab Sachsen 1772 <strong>Papiergeld</strong> heraus. Anders als Palmstruch setzte man nicht allein auf freiwillige Akzeptanz: Per Verordnung wurde festgelegt, dass bestimmte Zahlungen, etwa Steuern, in der neuen Geldform geleistet werden mussten.</p>
+  <p>Damit entstand ein Kreislauf: Wer Steuern in Papiergeld zahlen konnte, war bereit, es auch im Handel anzunehmen. <strong>Das Vertrauen wuchs aus dem alltäglichen Gebrauch, und der Gebrauch wurde durch Regeln angestoßen.</strong> Geld erhält seinen Wert nicht aus dem Material oder der Deckung allein, sondern aus dem Rahmen, in dem es akzeptiert und verwendet wird.</p>
+  <div class="wb" data-module="kreislauf">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Der Steuerkreislauf</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="row"><button class="btn" id="cycStart">Kreislauf anstoßen</button><span class="chip" id="cycMsg">4 Schritte, dann trägt er sich selbst</span></div>
+      <div class="cycle" id="cycGrid"><div class="cyc" id="cyc0"><b>1 · Verordnung</b>Steuern und Abgaben sind in Papiergeld zu leisten.</div><div class="cyc" id="cyc1"><b>2 · Nachfrage</b>Wer zahlen muss, will die Scheine haben.</div><div class="cyc" id="cyc2"><b>3 · Annahme</b>Händler nehmen Scheine an, denn alle brauchen sie.</div><div class="cyc" id="cyc3"><b>4 · Gewohnheit</b>Aus Pflicht wird Alltag, aus Alltag Vertrauen.</div></div>
+    </div>
+  </div>
+  <details class="vert">
+    <summary>Vertiefung: Drei Wege, drei Rahmen</summary>
+    <h5>Rahmensetzung in der Gegenwart</h5>
+    <p>Drei große Wirtschaftsräume setzen heute Rahmen für Kryptowerte. Die EU verabschiedete 2023 mit MiCA den weltweit ersten umfassenden Rechtsrahmen. Die USA folgten 2025 mit dem GENIUS Act, einem Gesetz speziell für Stablecoins. China führt seit 2019 den digitalen Yuan ein, private Kryptowährungen sind dort verboten. Chartalismus nennt die Theorie, dass staatliche Annahmepflichten Geld Wert verleihen, genau der sächsische Mechanismus.</p>
+  </details>
+</article>
+
+<!-- Station 13 -->
+<article class="st fx" id="station-13">
+  <div class="st-head">
+    <div class="coin">13</div>
+    <div class="st-title">
+      <span class="kicker">Station 13 · <span>Unternehmen als Staaten</span></span>
+      <h3>Firmengeld: Die VOC und die Macht der Infrastruktur</h3>
+    </div>
+  </div>
+  <p>Die <strong>Vereinigte Ostindische Compagnie (VOC)</strong>, gegründet 1602 in den Niederlanden, war mehr als ein Handelsunternehmen. Sie unterhielt Armeen, verwaltete Territorien, schloss Verträge, und sie prägte eigenes Geld. Innerhalb des eigenen Netzwerks funktionierte diese private monetäre Infrastruktur reibungslos.</p>
+  <p>Aber sie erzeugte Abhängigkeit von den Regeln eines Unternehmens, das <strong>wie ein Staat handelte, ohne wie ein Staat rechenschaftspflichtig zu sein</strong>. Heute haben sich Zahlungsinfrastrukturen wie PayPal weltweit etabliert und emittieren inzwischen eigene Währungen wie den PYUSD-Stablecoin. Die Parallele liegt nicht im Kolonialen, sondern im Strukturellen.</p>
+  <div class="wb" data-module="firmengeld">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Firmengeld, vier Jahrhunderte</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="tl" id="fgChips"><button type="button">1602</button><button type="button">17. Jh.</button><button type="button">19. Jh.</button><button type="button">1998</button><button type="button">2023</button></div>
+      <div class="tl-detail" id="fgDetail"><b>Wähle eine Etappe</b>Vier Jahrhunderte, ein Muster: private Infrastruktur, private Regeln.</div>
+    </div>
+  </div>
+</article>
+
+<!-- Station 14 -->
+<article class="st fx" id="station-14">
+  <div class="st-head">
+    <div class="coin">14</div>
+    <div class="st-title">
+      <span class="kicker">Station 14 · <span>Privates vs. öffentliches Geld</span></span>
+      <h3>"Free Banking Era": Viele Emittenten, keine Standards</h3>
+    </div>
+  </div>
+  <p>Bis zur Gründung der Federal Reserve 1913 gab es in den USA kein einheitliches Papiergeld. In der <strong>"Wildcat Banking"-Ära</strong> ab den 1830er Jahren druckten hunderte private Banken eigene Noten. Manche waren solide gedeckt, andere residierten absichtlich "bei den Wildkatzen", so abgelegen, dass niemand die Einlösung verlangen konnte. Wer einen fremden Schein annahm, musste selbst prüfen: Wer steht dahinter, was ist er wert?</p>
+  <p>Viele private Geldemittenten ohne gemeinsame Standards erzeugen keinen Wettbewerb, sondern Chaos. Die historischen Ereignisse zeigen deutliche Parallelen zum heutigen <strong>Stablecoin-Markt</strong>.</p>
+  <div class="wb" data-module="pruefer">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Der Schein-Prüfer, anno 1850</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <p>Du führst einen Laden in Ohio. Kundschaft zahlt mit fremden Banknoten. Nimmst du an? <span class="out" id="prfScore">Runde 1 von 4 · Instinkt 0</span></p>
+      <div class="note-card" id="prfCard"><h5>Suffolk Bank, Boston</h5><ul><li>Deckung: veröffentlicht und geprüft</li><li>Einlösestelle: zwei Straßen weiter</li><li>Ruf: streng, fast pedantisch</li></ul></div>
+      <div class="row">
+        <button class="btn" data-prf="voll">Voller Wert</button>
+        <button class="btn ghost" data-prf="abschlag">Nur mit Abschlag</button>
+        <button class="btn ghost" data-prf="ablehnen">Ablehnen</button>
+      </div>
+      <div class="verdict" id="prfVerdict">Prüfe Deckung, Entfernung und Ruf, dann entscheide.</div>
+    </div>
+  </div>
+  <details class="vert">
+    <summary>Vertiefung: Wer ordnet den neuen Markt?</summary>
+    <h5>Drei mögliche Ordnungen</h5>
+    <p>Damals entstand Ordnung teils privat: Die Suffolk Bank in Boston erzwang Deckungsstandards im Umland, bevor 1913 die Federal Reserve kam. Heute stellt sich dieselbe Frage neu. Tippe die drei Modelle an.</p>
+    <div class="wb" data-module="modelle" style="margin-top:.8rem">
+      <span class="stamp">Geprägt</span>
+      <div class="wb-head"><span class="lbl">Zum Ausprobieren · Wer kontrolliert das Geld?</span><span class="ridge"></span></div>
+      <div class="wb-body">
+        <div class="reveal-grid" id="modGrid"><div class="reveal" role="button" tabindex="0"><div class="front">Private Marktdominanz</div><div class="back">Ein großer Anbieter setzt faktisch die Standards, wie die Suffolk Bank um 1830 oder Tether heute. Ordnung entsteht, Rechenschaft bleibt begrenzt.</div></div><div class="reveal" role="button" tabindex="0"><div class="front">Demokratische Regulierung</div><div class="back">Parlamente setzen die Regeln: MiCA in der EU (2023), GENIUS Act in den USA (2025). Innovation im Rahmen, der Rahmen selbst bleibt umkämpft.</div></div><div class="reveal" role="button" tabindex="0"><div class="front">Staatliches Digitalgeld</div><div class="back">Zentralbanken geben selbst digitales Geld aus: der digitale Yuan seit 2019, der digitale Euro in Vorbereitung. Volle Kontrolle, neue Fragen an die Privatsphäre.</div></div></div>
+      </div>
+    </div>
+  </details>
+</article>
+
+<!-- Station 15 -->
+<article class="st fx" id="station-15">
+  <div class="st-head">
+    <div class="coin">15</div>
+    <div class="st-title">
+      <span class="kicker">Station 15 · <span>Medientisch</span></span>
+      <h3>Krypto-Glossar und Ausblick</h3>
+    </div>
+  </div>
+  <p>Begriffe, die in der öffentlichen Debatte regelmäßig auftauchen, sachlich eingeordnet: technisch, inhaltlich, gesellschaftlich. Stand: heute. Nächstes Jahr kann vieles schon anders sein.</p>
+  <div class="wb" data-module="glossar">
+    <span class="stamp">Geprägt</span>
+    <div class="wb-head"><span class="lbl">Zum Ausprobieren · Das Glossar der laufenden Debatte</span><span class="ridge"></span></div>
+    <div class="wb-body">
+      <div class="gl-chips" id="glChips"><button type="button">Wallet</button><button type="button">Token vs. Coin</button><button type="button">Stablecoin</button><button type="button">Kryptobörse</button><button type="button">DeFi</button><button type="button">Memecoin</button><button type="button">Volatilität</button><button type="button">Spekulation</button><button type="button">Energieverbrauch</button><button type="button">Vertrauen</button><button type="button">Kriminalität</button><button type="button">Verbraucherschutz und Regulierung</button></div>
+      <div class="gl-panel" id="glPanel"><span class="cat">Begriff wählen</span><b>Zwölf Begriffe, drei Blickwinkel</b><p>Tippe einen Begriff an.</p></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:1.4rem">
+    <div class="wb" data-module="pilotquiz">
+      <span class="stamp">Geprägt</span>
+      <div class="wb-head"><span class="lbl">Zum Ausprobieren · Ausblick Blockchain: Alltag oder Pilotprojekt?</span><span class="ridge"></span></div>
+      <div class="wb-body">
+        <p>Schätze ein: Wird das heute schon produktiv genutzt, oder ist es überwiegend Potenzial? <span class="out" id="pqScore">0 richtig von 0</span></p>
+        <div class="quiz-item" id="pqItem">Behördenprozesse auf der Blockchain</div>
+        <div class="row">
+          <button class="btn" data-pq="verbreitet">Bereits verbreitet</button>
+          <button class="btn ghost" data-pq="pilot">Noch Pilotprojekt</button>
+        </div>
+        <div class="verdict" id="pqVerdict">Produktiv genutzt wird Blockchain vor allem dort, wo mehrere unabhängige Parteien gemeinsame Daten brauchen und Transparenz hohen Wert hat. Die Zukunftsfälle sind technisch machbar, stoßen aber auf rechtliche, organisatorische oder wirtschaftliche Hürden.</div>
+      </div>
+    </div>
+    <div class="wb" data-module="chance">
+      <span class="stamp">Geprägt</span>
+      <div class="wb-head"><span class="lbl">Zum Ausprobieren · Ausblick: Krypto, KI und KI + Blockchain</span><span class="ridge"></span></div>
+      <div class="wb-body">
+        <p>Jede Technologie, zwei Seiten. Tippe eine Karte, um zwischen größter Chance und größtem Risiko zu wechseln.</p>
+        <div class="duo" id="riskCards"><div class="risk-card c" role="button" tabindex="0"><h5>Kryptowährungen<span class="chip">wechseln ⇄</span></h5><div class="face"><span class="tag">Größte Chance</span><br>Mehr finanzielle Freiheit und globale Zahlungen</div></div><div class="risk-card c" role="button" tabindex="0"><h5>KI<span class="chip">wechseln ⇄</span></h5><div class="face"><span class="tag">Größte Chance</span><br>Produktivitäts- und Wissensgewinn</div></div><div class="risk-card c" role="button" tabindex="0"><h5>KI + Blockchain<span class="chip">wechseln ⇄</span></h5><div class="face"><span class="tag">Größte Chance</span><br>Neue digitale Dienste und Automatisierung</div></div></div>
+        <p style="margin-top:.8rem">Für Verbraucher dürfte KI in den nächsten Jahren deutlich sichtbarer werden als Kryptowährungen. Blockchain-Technologien könnten sich eher unsichtbar im Hintergrund etablieren, ähnlich wie heute das Internetprotokoll selbst.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div class="sig">Krypto, <em>was?</em></div>
+        <p>Eine Ausstellung des Münzkabinetts der Staatlichen Kunstsammlungen Dresden. Eröffnung Oktober 2026.</p>
+      </div>
+      <div>
+        <h5>Bereiche</h5>
+        <p><a href="https://downloads.jonzn.space/krypto_02.html#bereich-1">01 Verschlüsseln und Rechnen</a><br><a href="https://downloads.jonzn.space/krypto_02.html#bereich-2">02 Wie funktioniert Bitcoin?</a><br><a href="https://downloads.jonzn.space/krypto_02.html#bereich-3">03 Neue Entwicklungen</a><br><a href="https://downloads.jonzn.space/krypto_02.html#station-15">Glossar und Ausblick</a></p>
+      </div>
+      <div>
+        <h5>Ort</h5>
+        <p>Münzkabinett<br>Residenzschloss<br>Taschenberg 2<br>01067 Dresden</p>
+      </div>
+      <div>
+        <h5>Daten</h5>
+        <p>03.10.2026 bis 28.06.2027<br>Di bis So, 10 bis 18 Uhr<br>Montag geschlossen</p>
+      </div>
+    </div>
+    <div class="fine">© 2026 Staatliche Kunstsammlungen Dresden · Konzept: Sylvia Karges, Münzkabinett SKD · Gestaltung und Umsetzung: JONZN SPACE kollektiv · Arbeitsfassung 02, Stand Juli 2026</div>
+  </div>
+</footer>
+
+<div class="pass-float" id="passFloat" aria-live="polite">Stationen-Pass 0/24</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var q=function(id){return document.getElementById(id);};
+var qa=function(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel));};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+/* extra rules that live close to the logic */
+var xst=document.createElement('style');
+xst.textContent='[id]{scroll-margin-top:74px}.btn.ghost.on{border-color:var(--gold);color:var(--gold-bright);background:#241c0c}.race .lane .nm.win{color:var(--gold-bright);font-weight:600}';
+document.head.appendChild(xst);
+
+/*TESTBLOCK-START*/
+var A='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function sha256(s){
+  function rr(v,a){return (v>>>a)|(v<<(32-a));}
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+         0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+         0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+         0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+         0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+         0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+         0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+         0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  var bytes=[],i,j,t;
+  s=unescape(encodeURIComponent(s));
+  for(i=0;i<s.length;i++)bytes.push(s.charCodeAt(i));
+  var l=bytes.length*8;
+  bytes.push(0x80);
+  while(bytes.length%64!==56)bytes.push(0);
+  bytes.push(0,0,0,0,(l>>>24)&255,(l>>>16)&255,(l>>>8)&255,l&255);
+  for(j=0;j<bytes.length;j+=64){
+    var w=new Array(64);
+    for(t=0;t<16;t++)w[t]=(bytes[j+4*t]<<24)|(bytes[j+4*t+1]<<16)|(bytes[j+4*t+2]<<8)|(bytes[j+4*t+3]);
+    for(t=16;t<64;t++){var s0=rr(w[t-15],7)^rr(w[t-15],18)^(w[t-15]>>>3),s1=rr(w[t-2],17)^rr(w[t-2],19)^(w[t-2]>>>10);w[t]=(w[t-16]+s0+w[t-7]+s1)|0;}
+    var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(t=0;t<64;t++){var S1=rr(e,6)^rr(e,11)^rr(e,25),ch=(e&f)^(~e&g),t1=(h+S1+ch+K[t]+w[t])|0,S0=rr(a,2)^rr(a,13)^rr(a,22),mj=(a&b)^(a&c)^(b&c),t2=(S0+mj)|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+  }
+  var out='';
+  for(i=0;i<8;i++)out+=('00000000'+((H[i]>>>0).toString(16))).slice(-8);
+  return out;
+}
+var ROT={I:['EKMFLGDQVZNTOWYHXUSPAIBRCJ','Q'],II:['AJDKSIRUXBLHWTMCQGZNPYFVOE','E'],III:['BDFHJLCPRTXVZNYEIWGAKMUSQO','V']};
+var REFB='YRUHQSLDPXNGOKMIEBFZCWVJAT';
+function enStep(pos){
+  var midN=pos[1]===A.indexOf(ROT.II[1]);
+  var rightN=pos[2]===A.indexOf(ROT.III[1]);
+  if(midN){pos[1]=(pos[1]+1)%26;pos[0]=(pos[0]+1)%26;}
+  else if(rightN){pos[1]=(pos[1]+1)%26;}
+  pos[2]=(pos[2]+1)%26;
+}
+function enThru(w,c,p,back){
+  var x=(c+p)%26;
+  var y=back?w.indexOf(A[x]):A.indexOf(w[x]);
+  return (y-p+26)%26;
+}
+function enChar(pos,i){
+  enStep(pos);
+  var c=i;
+  c=enThru(ROT.III[0],c,pos[2],false);
+  c=enThru(ROT.II[0],c,pos[1],false);
+  c=enThru(ROT.I[0],c,pos[0],false);
+  c=A.indexOf(REFB.charAt(c));
+  c=enThru(ROT.I[0],c,pos[0],true);
+  c=enThru(ROT.II[0],c,pos[1],true);
+  c=enThru(ROT.III[0],c,pos[2],true);
+  return c;
+}
+/*TESTBLOCK-END*/
+
+/* ---------- Stationen-Pass ---------- */
+var PASS={};
+var TOTAL=qa('.wb[data-module]').filter(function(w){return w.getAttribute('data-module')!=='none';}).length;
+var toastT=null;
+function toast(msg){
+  var t=q('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(function(){t.classList.remove('show');},2800);
+}
+function passCount(){var n=0,k;for(k in PASS)n++;return n;}
+function markDone(id){
+  if(PASS[id])return;
+  var wb=document.querySelector('.wb[data-module="'+id+'"]');
+  if(!wb)return;
+  PASS[id]=true; wb.classList.add('done');
+  var n=passCount();
+  q('passFloat').textContent='Stationen-Pass '+n+'/'+TOTAL;
+  q('passTop').textContent='Pass '+n+'/'+TOTAL;
+  if(n===TOTAL)toast('Alle '+TOTAL+' Module geprägt. Krypto, was? Krypto, das!');
+  else if(n===6||n===12||n===18)toast(n+' von '+TOTAL+' Modulen geprägt. Weiter so.');
+}
+
+/* ---------- Scroll-Reveal ---------- */
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.1});
+  qa('.fx').forEach(function(el){io.observe(el);});
+}else{qa('.fx').forEach(function(el){el.classList.add('in');});}
+
+/* ---------- Station 1: Caesar ---------- */
+function normUp(s){return s.toUpperCase().replace(/Ä/g,'AE').replace(/Ö/g,'OE').replace(/Ü/g,'UE').replace(/ß/g,'SS');}
+function caesarRender(){
+  var s=normUp(q('caeIn').value),k=+q('caeShift').value,out='',i,c;
+  q('caeShiftVal').textContent=k;
+  for(i=0;i<s.length;i++){c=A.indexOf(s.charAt(i));out+=c<0?s.charAt(i):A.charAt((c+k)%26);}
+  q('caeOut').textContent=out||'…';
+  q('caeMap').innerHTML=A+'<br><b>'+A.slice(k)+A.slice(0,k)+'</b>';
+}
+q('caeIn').addEventListener('input',function(){caesarRender();markDone('caesar');});
+q('caeShift').addEventListener('input',function(){caesarRender();markDone('caesar');});
+caesarRender();
+
+/* ---------- Station 1: Skytale ---------- */
+function skytaleRender(){
+  var raw=normUp(q('skyIn').value).replace(/[^A-Z]/g,''),k=+q('skyCols').value;
+  q('skyColsVal').textContent=k;
+  var rows=Math.max(1,Math.ceil(raw.length/k));
+  var pad=raw;while(pad.length<rows*k)pad+='·';
+  var g=q('skyGrid');g.style.gridTemplateColumns='repeat('+k+',1fr)';
+  var html='',i;
+  for(i=0;i<pad.length;i++)html+='<span>'+pad.charAt(i)+'</span>';
+  g.innerHTML=html;
+  var out='',c,r;
+  for(c=0;c<k;c++)for(r=0;r<rows;r++)out+=pad.charAt(r*k+c);
+  q('skyOut').textContent=out||'…';
+}
+q('skyIn').addEventListener('input',function(){skytaleRender();markDone('skytale');});
+q('skyCols').addEventListener('input',function(){skytaleRender();markDone('skytale');});
+skytaleRender();
+
+/* ---------- Station 2: Drehscheibe ---------- */
+var NS='http://www.w3.org/2000/svg';
+function svgEl(n,attrs,parent){var e=document.createElementNS(NS,n),k;for(k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+var discOffset=7;
+(function buildDisc(){
+  var svg=q('discSvg');
+  svgEl('circle',{cx:110,cy:110,r:104,fill:'none',stroke:'#4a3b1c','stroke-width':2},svg);
+  svgEl('circle',{cx:110,cy:110,r:78,fill:'#241c0c',stroke:'#4a3b1c','stroke-width':1.5},svg);
+  svgEl('circle',{cx:110,cy:110,r:8,fill:'#4a3b1c'},svg);
+  svgEl('path',{d:'M104,4 L116,4 L110,14 Z',fill:'#dcb75e'},svg);
+  var i,ang,x,y;
+  for(i=0;i<26;i++){
+    ang=(i*360/26-90)*Math.PI/180;
+    x=110+91*Math.cos(ang);y=110+91*Math.sin(ang)+4;
+    var t=svgEl('text',{x:x,y:y,'text-anchor':'middle','font-size':11,fill:'#efe3c2','font-family':'JetBrains Mono, monospace'},svg);
+    t.textContent=A.charAt(i);
+  }
+  var inner=svgEl('g',{id:'discInner'},svg);
+  inner.style.transformOrigin='110px 110px';
+  inner.style.transition='transform .35s ease';
+  for(i=0;i<26;i++){
+    ang=(i*360/26-90)*Math.PI/180;
+    x=110+62*Math.cos(ang);y=110+62*Math.sin(ang)+4;
+    var t2=svgEl('text',{x:x,y:y,'text-anchor':'middle','font-size':11,fill:'#dcb75e','font-family':'JetBrains Mono, monospace'},inner);
+    t2.textContent=A.charAt(i);
+  }
+})();
+function discRender(){
+  var g=q('discSvg').querySelector('#discInner');
+  g.style.transform='rotate('+(-discOffset*360/26)+'deg)';
+  q('discPos').textContent=A.charAt(discOffset%26);
+  var s=normUp(q('discIn').value),out='',i,c;
+  for(i=0;i<s.length;i++){c=A.indexOf(s.charAt(i));out+=c<0?s.charAt(i):A.charAt((c+discOffset)%26);}
+  q('discOut').textContent=out||'…';
+}
+q('discL').addEventListener('click',function(){discOffset=(discOffset+25)%26;discRender();markDone('scheibe');});
+q('discR').addEventListener('click',function(){discOffset=(discOffset+1)%26;discRender();markDone('scheibe');});
+q('discIn').addEventListener('input',function(){discRender();markDone('scheibe');});
+discRender();
+
+/* ---------- Brücke: Rechnen auf den Linien ---------- */
+var AB_ROWS=[{v:1000,line:true},{v:500,line:false},{v:100,line:true},{v:50,line:false},{v:10,line:true},{v:5,line:false},{v:1,line:true}];
+var abCounts=[0,0,0,0,0,0,0];
+function abSumVal(){var s=0,i;for(i=0;i<AB_ROWS.length;i++)s+=abCounts[i]*AB_ROWS[i].v;return s;}
+function abRender(){
+  var root=q('abacus');root.innerHTML='';
+  AB_ROWS.forEach(function(r,i){
+    var row=document.createElement('div');
+    row.className='ab-row'+(r.line?' line':'');
+    row.innerHTML='<span class="v">'+r.v+'</span><span class="dots"></span>';
+    var dots=row.querySelector('.dots'),d;
+    for(d=0;d<abCounts[i];d++){
+      var dot=document.createElement('span');dot.className='ab-dot';
+      (function(idx){dot.addEventListener('click',function(ev){ev.stopPropagation();abCounts[idx]--;abRender();});})(i);
+      dots.appendChild(dot);
+    }
+    row.addEventListener('click',function(){if(abCounts[i]<12){abCounts[i]++;abRender();markDone('linien');}});
+    root.appendChild(row);
+  });
+  q('abSum').textContent=abSumVal();
+}
+q('abBundle').addEventListener('click',function(){
+  var changed=true;
+  while(changed){changed=false;
+    for(var i=AB_ROWS.length-1;i>0;i--){
+      if(AB_ROWS[i].line&&abCounts[i]>=5){abCounts[i]-=5;abCounts[i-1]++;changed=true;}
+      if(!AB_ROWS[i].line&&abCounts[i]>=2){abCounts[i]-=2;abCounts[i-1]++;changed=true;}
+    }
+  }
+  abRender();markDone('linien');
+  q('abMsg').textContent='Nach Ries gebündelt: gleicher Wert ('+abSumVal()+'), weniger Pfennige. So blieb der Tisch übersichtlich.';
+});
+q('abReset').addEventListener('click',function(){abCounts=[0,0,0,0,0,0,0];abRender();q('abMsg').textContent='Regel: Fünf Pfennige auf einer Linie werden zu einem im Zwischenraum darüber, zwei im Zwischenraum zu einem auf der nächsten Linie.';});
+abRender();
+
+/* ---------- Station 3: Binär ---------- */
+function binRender(){
+  var s=q('binIn').value.slice(0,12),html='',bits=0,i;
+  for(i=0;i<s.length;i++){
+    var code=s.charCodeAt(i),w=code>255?16:8;bits+=w;
+    html+='<div class="bin-cell"><b>'+esc(s.charAt(i))+'</b><span>'+code.toString(2).padStart(w,'0')+'</span></div>';
+  }
+  q('binGrid').innerHTML=html;
+  q('binInfo').textContent=s?('Das sind '+bits+' Schalter, jeder an oder aus. Mehr braucht eine Maschine nicht, um dich zu speichern.'):'Tippe etwas ein.';
+}
+q('binIn').addEventListener('input',function(){binRender();markDone('binaer');});
+binRender();
+
+/* ---------- Station 4: Enigma ---------- */
+var enPos=[0,0,0],enCount=0;
+(function buildEnigma(){
+  var lamps=q('lamps'),keys=q('keys'),i;
+  for(i=0;i<26;i++){
+    var s=document.createElement('span');s.textContent=A.charAt(i);s.id='lamp'+i;lamps.appendChild(s);
+    var b=document.createElement('button');b.type='button';b.textContent=A.charAt(i);
+    (function(idx){b.addEventListener('click',function(){enPress(idx);});})(i);
+    keys.appendChild(b);
+  }
+})();
+function enWindows(){q('rw0').textContent=A.charAt(enPos[0]);q('rw1').textContent=A.charAt(enPos[1]);q('rw2').textContent=A.charAt(enPos[2]);}
+function enPress(i){
+  var o=enChar(enPos,i);
+  enWindows();
+  qa('#lamps span').forEach(function(l){l.classList.remove('lit');});
+  q('lamp'+o).classList.add('lit');
+  enCount++;
+  var sep=(enCount%5===1&&enCount>1)?' ':'';
+  q('tapeIn').textContent+=sep+A.charAt(i);
+  q('tapeOut').textContent+=sep+A.charAt(o);
+  markDone('enigma');
+}
+q('enReset').addEventListener('click',function(){
+  enPos=[0,0,0];enCount=0;enWindows();
+  q('tapeIn').textContent='';q('tapeOut').textContent='';
+  qa('#lamps span').forEach(function(l){l.classList.remove('lit');});
+});
+enWindows();
+
+/* ---------- Station 5: Timeline ---------- */
+var TL=[
+ ['1936','Turings Konzept','Alan Turing beschreibt eine universelle Maschine, die jedes berechenbare Problem lösen kann. Noch Theorie, bald Bauplan.'],
+ ['1941','Zuse Z3, Berlin','Konrad Zuse baut den ersten funktionsfähigen programmierbaren Computer der Welt. Er rechnet binär, mit 600 Relais im Rechenwerk.'],
+ ['1946','ENIAC, USA','30 Tonnen schwer, rund 17 500 Röhren: Der erste vollelektronische Universalrechner wird der Öffentlichkeit vorgestellt.'],
+ ['1969','ARPANET','Vier Universitätsrechner in den USA tauschen erstmals Datenpakete aus. Der Keim des Internets.'],
+ ['1982','Heimcomputer','Rechner ziehen in Wohn- und Kinderzimmer ein. Rechenleistung wird Alltagsgut, programmieren ein Hobby.'],
+ ['1990','World Wide Web','Tim Berners-Lee entwickelt am CERN das WWW. Das Netz bekommt Seiten, Links, ein Gesicht.'],
+ ['2008','Bitcoin-Whitepaper','Unter dem Pseudonym Satoshi Nakamoto erscheint ein Vorschlag: digitales Geld ohne Bank, gebaut auf allen drei Grundlagen zugleich.']
+];
+(function buildTL(){
+  var root=q('tlChips');
+  TL.forEach(function(it,i){
+    var b=document.createElement('button');b.type='button';b.textContent=it[0];
+    b.addEventListener('click',function(){
+      qa('#tlChips button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      q('tlDetail').innerHTML='<b>'+it[0]+' · '+esc(it[1])+'</b>'+esc(it[2]);
+      markDone('timeline');
+    });
+    root.appendChild(b);
+  });
+})();
+
+/* ---------- Station 6: Alltag ---------- */
+var ALLTAG=[
+ ['07:40 · Handy entsperren','Gerätesperre und Biometrie: Deine Daten liegen verschlüsselt auf dem Chip. Ohne Schlüssel bleibt das Gerät ein Ziegelstein.'],
+ ['09:15 · Mail-Login','Passwort plus Einmalcode: Zwei-Faktor-Verfahren beweisen, dass du es wirklich bist.'],
+ ['12:30 · Mit Karte zahlen','Der EMV-Chip erzeugt für jede Zahlung ein einmaliges Kryptogramm. Abgefangene Daten sind wertlos.'],
+ ['17:05 · Überweisung per App','TLS verschlüsselt die Verbindung zur Bank, eine TAN signiert genau diesen einen Auftrag.'],
+ ['21:50 · Nachricht an Freunde','Ende-zu-Ende-Verschlüsselung: Nur Absender und Empfänger können mitlesen. Nicht einmal der Anbieter.']
+];
+var alltagOpen={};
+(function buildAlltag(){
+  var root=q('alltagGrid');
+  ALLTAG.forEach(function(it,i){
+    var d=document.createElement('div');d.className='reveal';
+    d.innerHTML='<div class="front">'+esc(it[0])+'</div><div class="back">'+esc(it[1])+'</div>';
+    d.setAttribute('role','button');d.setAttribute('tabindex','0');
+    function open(){
+      d.classList.toggle('open');
+      alltagOpen[i]=true;
+      var n=0,k;for(k in alltagOpen)n++;
+      q('alltagCount').textContent=n+' von 5 entdeckt';
+      markDone('alltag');
+    }
+    d.addEventListener('click',open);
+    d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+    root.appendChild(d);
+  });
+})();
+
+/* ---------- Station 7: Mining ---------- */
+var mining=false,mTries=0,mBlocks=0,mDiff=3,mNonce=0,mT0=0;
+var MINE_BASE='Block 841000 | Anna zahlt Ben 2 Taler | Nonce ';
+function diffShow(){q('diffShow').textContent=new Array(mDiff+1).join('0');}
+q('diffMinus').addEventListener('click',function(){if(mDiff>1)mDiff--;diffShow();});
+q('diffPlus').addEventListener('click',function(){if(mDiff<4)mDiff++;diffShow();});
+function mineTick(){
+  if(!mining)return;
+  var tgt=new Array(mDiff+1).join('0'),batch=mDiff>=4?700:250,h='',i;
+  for(i=0;i<batch;i++){
+    mNonce++;mTries++;
+    h=sha256(MINE_BASE+mNonce);
+    if(h.indexOf(tgt)===0){
+      mining=false;mBlocks++;
+      q('mineHash').innerHTML='Nonce '+mNonce+' → <span style="color:var(--ok-bright)">'+h+'</span>';
+      q('mineTries').textContent=mTries;q('mineBlocks').textContent=mBlocks;
+      q('mineRate').textContent=Math.max(1,Math.round(mTries/((Date.now()-mT0)/1000||1)));
+      toast('Block gefunden nach '+mTries+' Versuchen.');
+      return;
+    }
+  }
+  q('mineHash').textContent='Nonce '+mNonce+' → '+h;
+  q('mineTries').textContent=mTries;
+  q('mineRate').textContent=Math.round(mTries/((Date.now()-mT0)/1000||1));
+  requestAnimationFrame(mineTick);
+}
+q('mineStart').addEventListener('click',function(){
+  if(mining)return;
+  mining=true;mTries=0;mT0=Date.now();mNonce=Math.floor(Math.random()*1e7);
+  markDone('mining');requestAnimationFrame(mineTick);
+});
+q('mineStop').addEventListener('click',function(){mining=false;});
+diffShow();
+
+/* ---------- Station 8.1: Kassenbuch ---------- */
+var kbBalance={Du:10,Anna:5,Ben:3,Chiara:7};
+var kbLog=['Start: Guthaben verteilt'];
+function kbRender(flash){
+  var names=['Du','Anna','Ben','Chiara'],html='';
+  names.forEach(function(n){html+='<span class="bal">'+n+': <b>'+kbBalance[n]+' Taler</b></span>';});
+  q('kbBal').innerHTML=html;
+  var nodes=['Knoten Dresden','Knoten Lagos','Knoten Osaka'],nh='';
+  nodes.forEach(function(nm){
+    nh+='<div class="node-book"><h5>'+nm+'</h5>';
+    kbLog.forEach(function(e){nh+='<div>'+esc(e)+'</div>';});
+    nh+='</div>';
+  });
+  q('kbNodes').innerHTML=nh;
+  if(flash)qa('#kbNodes .node-book div:last-child').forEach(function(d){d.classList.add('flash');});
+}
+q('kbSend').addEventListener('click',function(){
+  var amt=+q('kbAmt').value,to=q('kbTo').value;
+  if(kbBalance.Du<amt){kbLog.push('Abgelehnt: Du → '+to+' ('+amt+') nicht gedeckt');}
+  else{kbBalance.Du-=amt;kbBalance[to]+=amt;kbLog.push('Du → '+to+': '+amt+' Taler');}
+  if(kbLog.length>6)kbLog.shift();
+  kbRender(true);markDone('kassenbuch');
+});
+kbRender(false);
+
+/* ---------- Station 8.2: Schlüssel ---------- */
+var keyPriv=null,keySig=null,keySignedBy=null;
+function randHex(n){
+  var out='',i;
+  if(window.crypto&&crypto.getRandomValues){
+    var a=new Uint8Array(n);crypto.getRandomValues(a);
+    for(i=0;i<n;i++)out+=('0'+a[i].toString(16)).slice(-2);
+  }else{for(i=0;i<n;i++)out+=('0'+Math.floor(Math.random()*256).toString(16)).slice(-2);}
+  return out;
+}
+function keyChip(txt,cls){var c=q('keyStatus');c.textContent=txt;c.className='chip'+(cls?' '+cls:'');}
+q('keyGen').addEventListener('click',function(){
+  keyPriv=randHex(16);keySig=null;
+  q('keyPriv').textContent=keyPriv;
+  q('keyPub').textContent='pk_'+sha256('pub|'+keyPriv).slice(0,24);
+  q('keySig').textContent='noch keine';
+  keyChip('Paar geprägt','ok');markDone('schluessel');
+});
+q('keySign').addEventListener('click',function(){
+  if(!keyPriv){keyChip('erst Schlüsselpaar prägen','bad');return;}
+  keySig=sha256(keyPriv+'|'+q('keyMsg').value).slice(0,24);
+  q('keySig').textContent=keySig;
+  keyChip('unterschrieben','ok');markDone('schluessel');
+});
+q('keyVerify').addEventListener('click',function(){
+  if(!keySig){keyChip('noch keine Signatur da','bad');return;}
+  var check=sha256(keyPriv+'|'+q('keyMsg').value).slice(0,24);
+  if(check===keySig)keyChip('Signatur gültig ✓','ok');
+  else keyChip('Signatur ungültig ✗ Nachricht verändert?','bad');
+  markDone('schluessel');
+});
+
+/* ---------- Station 8.3: Wettlauf ---------- */
+var RACERS=[{n:'Du',p:0},{n:'Rechner Nord',p:4},{n:'Farm West',p:6},{n:'Pool Ost',p:8}];
+var raceBlocks=0,raceRunning=false;
+(function buildRace(){
+  var root=q('raceLanes');
+  RACERS.forEach(function(r,i){
+    var lane=document.createElement('div');lane.className='lane';
+    lane.innerHTML='<span class="nm" id="raceNm'+i+'">'+esc(r.n)+'</span><div class="bar"><div class="fill" id="raceFill'+i+'"></div></div><span id="racePct'+i+'"></span>';
+    root.appendChild(lane);
+  });
+})();
+q('powSlider').addEventListener('input',function(){q('powVal').textContent=q('powSlider').value;});
+q('raceStart').addEventListener('click',function(){
+  if(raceRunning)return;
+  raceRunning=true;q('raceStart').disabled=true;
+  RACERS[0].p=+q('powSlider').value;
+  var total=0;RACERS.forEach(function(r){total+=r.p;});
+  var r0=Math.random()*total,winner=0,acc=0,i;
+  for(i=0;i<RACERS.length;i++){acc+=RACERS[i].p;if(r0<=acc){winner=i;break;}}
+  var maxDur=0;
+  RACERS.forEach(function(r,idx){
+    var dur=(2400/r.p)*(0.8+Math.random()*0.4);
+    if(idx===winner)dur=Math.min(dur,1200/RACERS[winner].p*3);
+    r.dur=dur;
+  });
+  RACERS.forEach(function(r,idx){if(idx!==winner&&r.dur<=RACERS[winner].dur)r.dur=RACERS[winner].dur*1.15+120;if(r.dur>maxDur)maxDur=r.dur;});
+  RACERS.forEach(function(r,idx){
+    var f=q('raceFill'+idx);
+    f.style.transition='none';f.style.width='0%';
+    q('raceNm'+idx).classList.remove('win');
+    q('racePct'+idx).textContent=Math.round(100*r.p/total)+'%';
+    void f.offsetWidth;
+    f.style.transition='width '+Math.round(r.dur)+'ms linear';
+    f.style.width='100%';
+  });
+  setTimeout(function(){
+    raceBlocks++;
+    q('raceNm'+winner).classList.add('win');
+    q('raceMsg').textContent=RACERS[winner].n+' liefert den Nachweis und schreibt Block '+raceBlocks+'.';
+    q('raceChain').innerHTML+='<b>['+esc(RACERS[winner].n.charAt(0))+']</b>';
+    q('raceStart').disabled=false;raceRunning=false;
+    markDone('wettlauf');
+  },RACERS[winner].dur+140);
+});
+
+/* ---------- Station 8.4: SHA live + Kette ---------- */
+function shaRender(){q('shaOut').textContent=sha256(q('shaIn').value);}
+q('shaIn').addEventListener('input',function(){shaRender();markDone('kette');});
+shaRender();
+
+var CHAIN=[
+ {nr:1,data:'Anna zahlt Ben 2 Taler',nonce:0,prev:'0000000000000000'},
+ {nr:2,data:'Ben zahlt Chiara 1 Taler',nonce:0,prev:''},
+ {nr:3,data:'Chiara zahlt Anna 3 Taler',nonce:0,prev:''}
+];
+function blockHash(b){return sha256(b.nr+'|'+b.data+'|'+b.prev+'|'+b.nonce);}
+function mineBlock(i){
+  if(i>0)CHAIN[i].prev=CHAIN[i-1].hash;
+  CHAIN[i].nonce=0;
+  var h=blockHash(CHAIN[i]);
+  while(h.indexOf('00')!==0){CHAIN[i].nonce++;h=blockHash(CHAIN[i]);}
+  CHAIN[i].hash=h;
+}
+(function chainInit(){
+  var root=q('chainBlocks');
+  CHAIN.forEach(function(b,i){mineBlock(i);});
+  CHAIN.forEach(function(b,i){
+    var d=document.createElement('div');d.className='blk';d.id='blk'+i;
+    d.innerHTML='<h5><span>Block '+b.nr+'</span><span id="blkState'+i+'">gültig</span></h5>'
+      +'<textarea id="blkData'+i+'" aria-label="Daten Block '+b.nr+'">'+esc(b.data)+'</textarea>'
+      +'<div class="h">Nonce <b id="blkNonce'+i+'"></b></div>'
+      +'<div class="h">Vorgänger <b id="blkPrev'+i+'"></b></div>'
+      +'<div class="h">Hash <b id="blkHash'+i+'"></b></div>'
+      +'<button class="btn ghost" id="blkMine'+i+'" type="button">Block neu prägen</button>';
+    root.appendChild(d);
+  });
+  CHAIN.forEach(function(b,i){
+    q('blkData'+i).addEventListener('input',function(){CHAIN[i].data=this.value;chainUpdate();markDone('kette');});
+    q('blkMine'+i).addEventListener('click',function(){mineBlock(i);chainUpdate();markDone('kette');});
+  });
+  chainUpdate();
+})();
+function chainUpdate(){
+  var okAll=true,firstBad=0;
+  CHAIN.forEach(function(b,i){
+    b.hash=blockHash(b);
+    var linkOk=i===0?true:(b.prev===CHAIN[i-1].hash&&CHAIN[i-1].ok);
+    b.ok=b.hash.indexOf('00')===0&&linkOk;
+    if(!b.ok&&okAll){okAll=false;firstBad=i+1;}
+    q('blkNonce'+i).textContent=b.nonce;
+    q('blkPrev'+i).textContent=b.prev.slice(0,22)+'…';
+    q('blkHash'+i).textContent=b.hash.slice(0,22)+'…';
+    q('blkState'+i).textContent=b.ok?'gültig':'ungültig';
+    q('blk'+i).className='blk'+(b.ok?'':' bad');
+  });
+  q('chainMsg').textContent=okAll
+    ?'Kette gültig. Jeder Block trägt den Fingerabdruck seines Vorgängers.'
+    :'Kette gebrochen ab Block '+firstBad+'. Zum Reparieren jeden betroffenen Block neu prägen, von links nach rechts. Genau diese Arbeit macht Fälschung teuer.';
+}
+
+/* ---------- Station 8.5: Netzwerk ---------- */
+var netMode='A';
+function buildNet(){
+  var svg=q('netSvg');svg.innerHTML='';
+  var cx=210,cy=120,nodes=[],lines=[],i;
+  function nodeCircle(x,y,r,id){
+    var c=svgEl('circle',{cx:x,cy:y,r:r,fill:'#caa64f',stroke:'#6e5420','stroke-width':2},svg);
+    c.setAttribute('data-id',id);return c;
+  }
+  function line(x1,y1,x2,y2){return svgEl('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:'#6b5726','stroke-width':1.5},svg);}
+  if(netMode==='A'){
+    var pts=[];
+    for(i=0;i<8;i++){var a=i*Math.PI/4;pts.push([cx+150*Math.cos(a)*0.92,cy+88*Math.sin(a)]);}
+    pts.forEach(function(p){lines.push(line(cx,cy,p[0],p[1]));});
+    var bank=nodeCircle(cx,cy,17,'bank');bank.setAttribute('fill','#dcb75e');
+    var t=svgEl('text',{x:cx,y:cy+4,'text-anchor':'middle','font-size':10,fill:'#241a05','font-family':'JetBrains Mono, monospace','pointer-events':'none'},svg);
+    t.textContent='BANK';
+    pts.forEach(function(p,idx){nodes.push(nodeCircle(p[0],p[1],11,'n'+idx));});
+    bank.addEventListener('click',function(){
+      bank.setAttribute('fill','#4a2320');bank.setAttribute('stroke','#a03028');
+      lines.forEach(function(l){l.setAttribute('stroke','#a03028');l.setAttribute('stroke-dasharray','4 4');});
+      nodes.forEach(function(n){n.setAttribute('fill','#3a2f18');});
+      q('netMsg').textContent='Die Mitte fällt aus, und mit ihr jedes Konto, jede Zahlung, jede Auskunft. Alles hängt an einem Punkt.';
+      markDone('netz');
+    });
+    nodes.forEach(function(n,idx){
+      n.addEventListener('click',function(){
+        n.setAttribute('fill','#4a2320');n.setAttribute('stroke','#a03028');
+        lines[idx].setAttribute('stroke','#a03028');lines[idx].setAttribute('stroke-dasharray','4 4');
+        q('netMsg').textContent='Ein Rand fällt aus, der Rest läuft weiter. Aber alle bleiben von der Mitte abhängig. Tippe die Bank an.';
+        markDone('netz');
+      });
+    });
+    q('netMsg').textContent='Das klassische Modell: Alle Wege führen über die Bank. Klicke Knoten an, um sie auszuschalten.';
+  }else{
+    var N=9,pos=[],dead=[],edges=[];
+    for(i=0;i<N;i++){var a2=i*2*Math.PI/N-Math.PI/2;pos.push([cx+150*Math.cos(a2)*0.9,cy+88*Math.sin(a2)]);dead.push(false);}
+    for(i=0;i<N;i++){edges.push([i,(i+1)%N]);edges.push([i,(i+3)%N]);}
+    var lineEls=edges.map(function(e){return line(pos[e[0]][0],pos[e[0]][1],pos[e[1]][0],pos[e[1]][1]);});
+    var nodeEls=pos.map(function(p,idx){return nodeCircle(p[0],p[1],11,'m'+idx);});
+    function connectedAlive(){
+      var start=-1;for(i=0;i<N;i++)if(!dead[i]){start=i;break;}
+      if(start<0)return true;
+      var seen={},stack=[start];seen[start]=true;
+      while(stack.length){
+        var v=stack.pop();
+        edges.forEach(function(e){
+          var o=e[0]===v?e[1]:(e[1]===v?e[0]:-1);
+          if(o>=0&&!dead[o]&&!seen[o]){seen[o]=true;stack.push(o);}
+        });
+      }
+      var cnt=0,k;for(k in seen)cnt++;
+      var alive=0;for(i=0;i<N;i++)if(!dead[i])alive++;
+      return cnt===alive;
+    }
+    function redraw(){
+      nodeEls.forEach(function(n,idx){
+        n.setAttribute('fill',dead[idx]?'#4a2320':'#caa64f');
+        n.setAttribute('stroke',dead[idx]?'#a03028':'#6e5420');
+      });
+      lineEls.forEach(function(l,li){
+        var e=edges[li],bad=dead[e[0]]||dead[e[1]];
+        l.setAttribute('stroke',bad?'#3a2f18':'#6b5726');
+        l.setAttribute('stroke-dasharray',bad?'4 4':'');
+      });
+      var d=0;for(i=0;i<N;i++)if(dead[i])d++;
+      if(d===0)q('netMsg').textContent='Neun Knoten, viele Wege, keine Mitte. Klicke Knoten an, um sie auszuschalten.';
+      else if(N-d<=2)q('netMsg').textContent='Fast alles aus, Punkt für dich. Realistisch ist das nicht: Weltweit laufen zehntausende Bitcoin-Knoten.';
+      else if(connectedAlive())q('netMsg').textContent=d+' von 9 Knoten ausgefallen. Das Kassenbuch lebt in jeder verbliebenen Kopie weiter.';
+      else q('netMsg').textContent='Das Netz ist in Teile zerfallen. Sobald Verbindung zurückkehrt, gleichen sie sich ab: Die längste gültige Kette gewinnt.';
+    }
+    nodeEls.forEach(function(n,idx){
+      n.addEventListener('click',function(){dead[idx]=!dead[idx];redraw();markDone('netz');});
+    });
+    redraw();
+  }
+}
+q('netModeA').addEventListener('click',function(){netMode='A';q('netModeA').classList.add('on');q('netModeB').classList.remove('on');buildNet();});
+q('netModeB').addEventListener('click',function(){netMode='B';q('netModeB').classList.add('on');q('netModeA').classList.remove('on');buildNet();markDone('netz');});
+q('netReset').addEventListener('click',buildNet);
+buildNet();
+
+/* ---------- Station 9: Geld-Check ---------- */
+var MONEY=[
+ ['🐚','Muschelgeld','Kaurischnecken dienten auf mehreren Kontinenten jahrhundertelang als Geld.',['Tauschmittel ●','Recheneinheit ◐','Wertspeicher ◐'],'No Questions Asked im eigenen Handelsraum, wertlos außerhalb.'],
+ ['🥈','Silbertaler','Der Dresdner Klassiker: Materialwert plus Prägung des Herrschers.',['Tauschmittel ●','Recheneinheit ●','Wertspeicher ●'],'Stark, aber schwer. Und der Herrscher kann den Silbergehalt heimlich senken.'],
+ ['💶','Banknote','Fiatgeld: kaum Materialwert, dafür Zentralbank, Recht und Alltag dahinter.',['Tauschmittel ●','Recheneinheit ●','Wertspeicher ◐'],'Inflation nagt langsam, doch an der Kasse stellt niemand Fragen.'],
+ ['💳','Giralgeld','Zahlen auf Konten, bewegt per Karte und Überweisung. Das meiste Geld existiert nur so.',['Tauschmittel ●','Recheneinheit ●','Wertspeicher ◐'],'Bequem, aber abhängig von Banken, Strom und Infrastruktur.'],
+ ['₿','Bitcoin','Digitaler Wert ohne Herausgeber, gesichert durch Rechenarbeit.',['Tauschmittel ◐','Recheneinheit ○','Wertspeicher ◐'],'Grenzenlos übertragbar, aber stark schwankend. Kaum ein Preis ist in Bitcoin ausgezeichnet.'],
+ ['🎟️','Bonuspunkte','Firmengeld im Kleinen: Meilen, Herzen, Sterne.',['Tauschmittel ◐','Recheneinheit ○','Wertspeicher ○'],'Gilt nur im Reich des Herausgebers, Regeln jederzeit änderbar.']
+];
+(function buildMoney(){
+  var root=q('moneyCards');
+  MONEY.forEach(function(m){
+    var d=document.createElement('div');d.className='mc';
+    d.setAttribute('role','button');d.setAttribute('tabindex','0');
+    d.innerHTML='<div class="big">'+m[0]+'</div><h5>'+esc(m[1])+'</h5><div class="hint">'+esc(m[2])+'</div>'
+      +'<div class="fn"><b>'+m[3].join('</b><br><b>')+'</b><br>'+esc(m[4])+'</div>';
+    function open(){d.classList.toggle('open');markDone('geldcheck');}
+    d.addEventListener('click',open);
+    d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+    root.appendChild(d);
+  });
+})();
+
+/* ---------- Station 10: Muster ---------- */
+var PAIRS=[
+ ['Mehr versprochen als gedeckt (Stockholms Banco, 1668)','Ein Stablecoin verliert die Bindung (TerraUSD, 2022)','Als alle gleichzeitig einlösen wollten, platzte das Versprechen. Bank Run hieß das damals, Depeg heißt es heute.'],
+ ['Regeln verankern den Gebrauch (Sachsen, 1772)','Gesetzesrahmen für Kryptowerte (MiCA 2023, GENIUS Act 2025)','Akzeptanz entsteht nicht von allein: Annahmepflichten damals, Zulassungsregeln heute.'],
+ ['Firmengeld schafft Abhängigkeit (VOC, 17. Jahrhundert)','Eine Plattform gibt eigene Währung aus (PayPal PYUSD, 2023)','Private Infrastruktur, private Regeln. Praktisch im eigenen Netz, Rechenschaft optional.'],
+ ['Viele Emittenten, keine Standards (Wildcat Banking, ab 1837)','Hunderte Stablecoins ohne einheitliche Prüfung (der Markt heute)','Wettbewerb ohne Standards erzeugt kein besseres Geld, sondern Prüfarbeit für alle.']
+];
+(function buildMuster(){
+  var root=q('musterGrid'),selL=-1,selR=-1,locked=0;
+  var order=[0,1,2,3].sort(function(){return Math.random()-0.5;});
+  var Lbtns=[],Rbtns=[];
+  PAIRS.forEach(function(p,i){
+    var b=document.createElement('button');b.type='button';b.innerHTML='DAMALS<br>'+esc(p[0]);Lbtns.push(b);
+  });
+  order.forEach(function(oi){
+    var b=document.createElement('button');b.type='button';b.innerHTML='HEUTE<br>'+esc(PAIRS[oi][1]);b.setAttribute('data-pair',oi);Rbtns.push(b);
+  });
+  for(var i=0;i<4;i++){root.appendChild(Lbtns[i]);root.appendChild(Rbtns[i]);}
+  function tryMatch(){
+    if(selL<0||selR<0)return;
+    var rBtn=Rbtns[selR],target=+rBtn.getAttribute('data-pair');
+    if(target===selL){
+      Lbtns[selL].classList.add('locked');
+      rBtn.classList.add('locked');
+      Lbtns[selL].classList.remove('sel');rBtn.classList.remove('sel');
+      locked++;
+      q('musterMsg').textContent=PAIRS[selL][2];
+      q('musterScore').textContent=locked+' von 4 Paaren';
+      markDone('muster');
+      if(locked===4)q('musterMsg').textContent='Alle Paare gefunden. Die Technik ist neu, die Muster sind alt.';
+    }else{
+      Lbtns[selL].classList.add('shake');rBtn.classList.add('shake');
+      (function(l,r){setTimeout(function(){l.classList.remove('shake','sel');r.classList.remove('shake','sel');},350);})(Lbtns[selL],rBtn);
+      q('musterMsg').textContent='Passt noch nicht. Achte auf das Muster, nicht auf die Jahreszahl.';
+    }
+    selL=-1;selR=-1;
+  }
+  Lbtns.forEach(function(b,i){b.addEventListener('click',function(){
+    if(b.classList.contains('locked'))return;
+    Lbtns.forEach(function(x){x.classList.remove('sel');});
+    b.classList.add('sel');selL=i;tryMatch();
+  });});
+  Rbtns.forEach(function(b,i){b.addEventListener('click',function(){
+    if(b.classList.contains('locked'))return;
+    Rbtns.forEach(function(x){x.classList.remove('sel');});
+    b.classList.add('sel');selR=i;tryMatch();
+  });});
+})();
+
+/* ---------- Station 11: Bank Run ---------- */
+function runRender(){
+  var val=+q('runSlider').value;
+  q('runVal').textContent=val+'%';
+  q('runCover').textContent=Math.round(10000/val)+'%';
+  var coins='',notes='',n=Math.round(20*val/100),i;
+  for(i=0;i<20;i++)coins+='<span class="unit coinu"></span>';
+  for(i=0;i<n;i++)notes+='<span class="unit noteu'+(i>=20?' uncov':'')+'"></span>';
+  q('vaultCoins').innerHTML=coins;q('vaultNotes').innerHTML=notes;
+  var st=q('runStatus'),msg=q('runMsg');
+  if(val<=110){st.textContent='stabil';st.style.color='var(--ok-bright)';msg.textContent='Jeder Schein findet sein Kupfer. Niemand stellt Fragen, das System trägt.';}
+  else if(val<=170){st.textContent='angespannt';st.style.color='var(--gold-bright)';msg.textContent='Gerüchte machen die Runde. Erste Kundinnen und Kunden tauschen ihre Scheine vorsichtshalber zurück.';}
+  else{st.textContent='Bank Run!';st.style.color='var(--bad-bright)';msg.textContent='1668: Alle wollen gleichzeitig einlösen, die Deckung reicht nicht. Die Bank fällt, Palmstruch mit ihr.';}
+}
+q('runSlider').addEventListener('input',function(){runRender();markDone('bankrun');});
+runRender();
+
+/* ---------- Station 12: Steuerkreislauf ---------- */
+var CYC=[
+ ['1 · Verordnung','Steuern und Abgaben sind in Papiergeld zu leisten.'],
+ ['2 · Nachfrage','Wer zahlen muss, will die Scheine haben.'],
+ ['3 · Annahme','Händler nehmen Scheine an, denn alle brauchen sie.'],
+ ['4 · Gewohnheit','Aus Pflicht wird Alltag, aus Alltag Vertrauen.']
+];
+(function buildCyc(){
+  var root=q('cycGrid');
+  CYC.forEach(function(c,i){
+    var d=document.createElement('div');d.className='cyc';d.id='cyc'+i;
+    d.innerHTML='<b>'+esc(c[0])+'</b>'+esc(c[1]);
+    root.appendChild(d);
+  });
+})();
+q('cycStart').addEventListener('click',function(){
+  markDone('kreislauf');
+  var step=0,total=9;
+  q('cycMsg').textContent='Der Kreislauf läuft an …';
+  var iv=setInterval(function(){
+    qa('.cyc').forEach(function(c){c.classList.remove('on');});
+    q('cyc'+(step%4)).classList.add('on');
+    step++;
+    if(step>=total){
+      clearInterval(iv);
+      qa('.cyc').forEach(function(c){c.classList.add('on');});
+      q('cycMsg').textContent='Der Kreislauf trägt sich selbst. Vertrauen per Verordnung angestoßen, im Alltag verdient.';
+    }
+  },650);
+});
+
+/* ---------- Station 13: Firmengeld ---------- */
+var FG=[
+ ['1602','VOC gegründet','Die Compagnie erhält Hoheitsrechte: Verträge schließen, Truppen halten, Münzen prägen. Ein Unternehmen mit Staatsfunktionen.'],
+ ['17. Jh.','Eigene Münzen','Im VOC-Netzwerk von Amsterdam bis Batavia zirkuliert firmeneigenes Geld. Wer handelt, handelt zu VOC-Bedingungen.'],
+ ['19. Jh.','Truck und Scrip','Fabriken und Minen zahlen Löhne in eigenem Warengeld, einlösbar nur im Werksladen. Viele Staaten verbieten das später per Gesetz.'],
+ ['1998','PayPal startet','Eine private Zahlungsinfrastruktur wächst global. Bequemer als jede Bank, jahrelang kaum wie eine reguliert.'],
+ ['2023','PYUSD','PayPal emittiert einen eigenen Stablecoin. Das Firmengeld ist zurück, diesmal auf der Blockchain.']
+];
+(function buildFG(){
+  var root=q('fgChips');
+  FG.forEach(function(it){
+    var b=document.createElement('button');b.type='button';b.textContent=it[0];
+    b.addEventListener('click',function(){
+      qa('#fgChips button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      q('fgDetail').innerHTML='<b>'+esc(it[0])+' · '+esc(it[1])+'</b>'+esc(it[2]);
+      markDone('firmengeld');
+    });
+    root.appendChild(b);
+  });
+})();
+
+/* ---------- Station 14: Schein-Prüfer ---------- */
+var NOTES=[
+ {n:'Suffolk Bank, Boston',f:['Deckung: veröffentlicht und geprüft','Einlösestelle: zwei Straßen weiter','Ruf: streng, fast pedantisch'],best:'voll',v:{
+   voll:'Richtig. Geprüfte Deckung, Einlösung nebenan: Dieser Schein ist so gut wie Münze. Die Suffolk Bank erzwang solche Standards im ganzen Umland. Heute hieße das: geprüfte Reserven, regulierter Herausgeber.',
+   abschlag:'Zu vorsichtig. Bei geprüfter Deckung und naher Einlösestelle verlierst du Kundschaft an den Laden nebenan, der voll annimmt.',
+   ablehnen:'Zu misstrauisch. Diesen Schein nahm damals jeder an, er war so gut wie Münze.'}},
+ {n:'Bank of Owl Creek, Michigan',f:['Deckung: "vertrau uns"','Einlösestelle: drei Tagesreisen, hinter dem Sumpf','Ruf: war noch nie jemand dort'],best:'ablehnen',v:{
+   voll:'Autsch. Genau so funktionierte Wildcat Banking: Einlösung praktisch unmöglich, Deckung reine Behauptung. Heute wäre das ein Coin ohne jeden Reservenachweis.',
+   abschlag:'Mutig. Selbst mit Abschlag bleibt offen, ob hinter dem Sumpf überhaupt eine Kasse steht.',
+   ablehnen:'Richtig. Wenn Einlösung praktisch unmöglich ist, ist der Schein nur Papier. Der Name Wildcat kommt von genau solchen Banken in der Wildnis.'}},
+ {n:'State Bank of Indiana',f:['Deckung: solide, beaufsichtigt','Einlösestelle: 400 Kilometer entfernt','Ruf: gut, aber weit weg'],best:'abschlag',v:{
+   voll:'Fast. Solide Bank, aber die Entfernung kostet Zeit, Transport und Risiko. Solche Scheine kursierten real mit Abschlag.',
+   abschlag:'Richtig. Gute Bank, weiter Weg: Noten ferner Banken wurden mit Rabatt gehandelt. Eigene Kurszettel, die Bank Note Reporter, druckten genau diese Abschläge.',
+   ablehnen:'Zu streng. Mit einem kleinen Abschlag wäre das ein gutes Geschäft gewesen, die Bank war solide.'}},
+ {n:'Merchants Bank, gestern eröffnet',f:['Deckung: unbekannt','Einlösestelle: Adresse existiert nicht','Ruf: Druckbild verdächtig frisch'],best:'ablehnen',v:{
+   voll:'Der Schein ist das Papier vermutlich nicht wert. Ohne erreichbaren Herausgeber keine Einlösung.',
+   abschlag:'Auch geschenkt wäre er teuer: Die Adresse existiert nicht.',
+   ablehnen:'Richtig. Kein Herausgeber, keine Einlösung, kein Wert. Damals Falschgeld-Grauzone, heute der anonyme Token mit der Website von gestern.'}}
+];
+var prfIdx=0,prfScoreN=0,prfAnswered=false;
+function prfRender(){
+  var it=NOTES[prfIdx];
+  q('prfCard').innerHTML='<h5>'+esc(it.n)+'</h5><ul><li>'+it.f.map(esc).join('</li><li>')+'</li></ul>';
+  q('prfScore').textContent='Runde '+(prfIdx+1)+' von 4 · Instinkt '+prfScoreN;
+  prfAnswered=false;
+}
+qa('[data-prf]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var it=NOTES[prfIdx],choice=b.getAttribute('data-prf');
+    markDone('pruefer');
+    if(prfAnswered)return;
+    prfAnswered=true;
+    if(choice===it.best)prfScoreN++;
+    q('prfVerdict').textContent=it.v[choice];
+    q('prfScore').textContent='Runde '+(prfIdx+1)+' von 4 · Instinkt '+prfScoreN;
+    setTimeout(function(){
+      if(prfIdx<NOTES.length-1){prfIdx++;prfRender();}
+      else{
+        q('prfCard').innerHTML='<h5>Feierabend</h5><ul><li>Instinkt: '+prfScoreN+' von 4</li><li>Diese Prüfarbeit übernahmen damals Kurszettel, Clearingbanken und ab 1913 die Federal Reserve.</li><li>Heute heißen die Werkzeuge Reserven-Report, Rating und Regulierung.</li></ul>';
+        q('prfScore').textContent='Fertig · Instinkt '+prfScoreN+' von 4';
+      }
+    },2600);
+  });
+});
+prfRender();
+
+/* ---------- Station 14: Drei Modelle ---------- */
+var MODELLE=[
+ ['Private Marktdominanz','Ein großer Anbieter setzt faktisch die Standards, wie die Suffolk Bank um 1830 oder Tether heute. Ordnung entsteht, Rechenschaft bleibt begrenzt.'],
+ ['Demokratische Regulierung','Parlamente setzen die Regeln: MiCA in der EU (2023), GENIUS Act in den USA (2025). Innovation im Rahmen, der Rahmen selbst bleibt umkämpft.'],
+ ['Staatliches Digitalgeld','Zentralbanken geben selbst digitales Geld aus: der digitale Yuan seit 2019, der digitale Euro in Vorbereitung. Volle Kontrolle, neue Fragen an die Privatsphäre.']
+];
+(function buildMod(){
+  var root=q('modGrid');
+  MODELLE.forEach(function(m){
+    var d=document.createElement('div');d.className='reveal';
+    d.setAttribute('role','button');d.setAttribute('tabindex','0');
+    d.innerHTML='<div class="front">'+esc(m[0])+'</div><div class="back">'+esc(m[1])+'</div>';
+    function open(){d.classList.toggle('open');markDone('modelle');}
+    d.addEventListener('click',open);
+    d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+    root.appendChild(d);
+  });
+})();
+
+/* ---------- Station 15: Glossar ---------- */
+var GLOSSAR=[
+ ['Wallet','technisch','Digitale Geldbörse, die keine Münzen verwahrt, sondern Schlüssel. Wer die Wallet kontrolliert, kontrolliert den Zugriff. Schlüssel weg, Zugang weg, siehe Station 8.'],
+ ['Token vs. Coin','technisch','Ein Coin hat eine eigene Blockchain (Bitcoin, Ether). Ein Token läuft als Eintrag auf einer fremden Blockchain mit. Tausende Token, wenige Ketten.'],
+ ['Stablecoin','Markt','An eine Währung gekoppelter Token, meist 1:1 zum US-Dollar. Stabil nur, solange Deckung und Vertrauen halten, siehe Station 11.'],
+ ['Kryptobörse','Markt','Handelsplatz für Kryptowerte. Wer dort verwahren lässt, vertraut wieder einem Unternehmen, genau das, was Bitcoin vermeiden wollte. Die Pleite der Börse FTX 2022 zeigte das Risiko.'],
+ ['DeFi','technisch','Decentralized Finance: Finanzdienste wie Verleihen und Tauschen als Programmcode auf der Blockchain, ohne Bank dazwischen. Code ersetzt den Vertrag, Programmierfehler inklusive.'],
+ ['Memecoin','Markt','Token ohne Anwendungszweck, geboren aus Witz und Gemeinschaftsgefühl. Der Wert entsteht aus Aufmerksamkeit und verschwindet mit ihr.'],
+ ['Volatilität','Markt','Das Ausmaß der Kursschwankungen. Bei vielen Kryptowerten extrem: Zweistellige Tagesbewegungen sind keine Seltenheit.'],
+ ['Spekulation','gesellschaftlich','Kauf in der Hoffnung auf steigende Preise, nicht zur Nutzung. Treibt Innovation und Blasen gleichermaßen, von der Tulpe bis zum Token.'],
+ ['Energieverbrauch','gesellschaftlich','Proof of Work sichert Bitcoin durch Rechenarbeit, die Strom im Maßstab ganzer Staaten verbraucht. Verfahren wie Proof of Stake kommen mit Bruchteilen aus.'],
+ ['Vertrauen','gesellschaftlich','Die eigentliche Währung hinter jeder Geldform. Ob Kupferdeckung, Zentralbank oder Rechenarbeit: Geld funktioniert, wenn niemand nachfragen muss.'],
+ ['Kriminalität','gesellschaftlich','Erpressung, Geldwäsche und Betrug nutzen Kryptowerte. Öffentliche Blockchains hinterlassen aber auch Spuren, die Ermittler lesen können.'],
+ ['Verbraucherschutz und Regulierung','gesellschaftlich','Wer haftet, wenn etwas schiefgeht? MiCA in der EU und der GENIUS Act in den USA ziehen erste Leitplanken für Herausgeber und Börsen ein.']
+];
+(function buildGl(){
+  var root=q('glChips');
+  GLOSSAR.forEach(function(g){
+    var b=document.createElement('button');b.type='button';b.textContent=g[0];
+    b.addEventListener('click',function(){
+      qa('#glChips button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      q('glPanel').innerHTML='<span class="cat">'+esc(g[1])+'</span><b>'+esc(g[0])+'</b><p>'+esc(g[2])+'</p>';
+      markDone('glossar');
+    });
+    root.appendChild(b);
+  });
+})();
+
+/* ---------- Station 15: Alltag-oder-Pilot-Quiz ---------- */
+var PQ_ALL=[
+ ['Kryptowährungen',true],['Elektronische Wahlen',false],
+ ['Internationale Zahlungen',true],['Digitale Grundbücher',false],
+ ['Lieferketten-Tracking',true],['Vollständige Patientenakten',false],
+ ['Digitale Zertifikate',true],['Behördenprozesse auf der Blockchain',false],
+ ['NFTs und digitale Vermögenswerte',true],['IoT-Zahlungen zwischen Geräten',false],
+ ['Energie-Herkunftsnachweise',true],['Automatisierte Versicherungen',false],
+ ['Teilweise digitale Identitäten',true],['Wissenschaftliche Dokumentation',false]
+];
+var pqPool=[],pqIdx=0,pqRight=0;
+var PQ_GENERAL=q('pqVerdict').textContent;
+function pqShuffle(){
+  pqPool=PQ_ALL.slice().sort(function(){return Math.random()-0.5;}).slice(0,8);
+  pqIdx=0;pqRight=0;
+  q('pqScore').textContent='0 richtig von 0';
+  q('pqItem').textContent=pqPool[0][0];
+  q('pqVerdict').textContent=PQ_GENERAL;
+}
+qa('[data-pq]').forEach(function(b){
+  b.addEventListener('click',function(){
+    markDone('pilotquiz');
+    if(pqIdx>=8){pqShuffle();return;}
+    var it=pqPool[pqIdx],guess=b.getAttribute('data-pq')==='verbreitet';
+    pqIdx++;
+    if(guess===it[1])pqRight++;
+    q('pqScore').textContent=pqRight+' richtig von '+pqIdx;
+    q('pqVerdict').textContent=(guess===it[1]?'Richtig. ':'Nicht ganz. ')+it[0]+(it[1]?' wird bereits produktiv genutzt.':' ist überwiegend noch Potenzial oder Pilotprojekt.');
+    if(pqIdx>=8){q('pqItem').textContent='Fertig: '+pqRight+' von 8. Nochmal? Einfach weitertippen.';}
+    else q('pqItem').textContent=pqPool[pqIdx][0];
+  });
+});
+pqShuffle();
+
+/* ---------- Station 15: Chance / Risiko ---------- */
+var RISK=[
+ ['Kryptowährungen','Mehr finanzielle Freiheit und globale Zahlungen','Hohe Verlustrisiken und Betrug'],
+ ['KI','Produktivitäts- und Wissensgewinn','Manipulation, Datenschutz und Arbeitsplatzveränderungen'],
+ ['KI + Blockchain','Neue digitale Dienste und Automatisierung','Schwer kontrollierbare autonome Systeme']
+];
+(function buildRisk(){
+  var root=q('riskCards');
+  RISK.forEach(function(r){
+    var d=document.createElement('div');d.className='risk-card c';
+    d.setAttribute('role','button');d.setAttribute('tabindex','0');
+    function render(){
+      var chance=d.classList.contains('c');
+      d.innerHTML='<h5>'+esc(r[0])+'<span class="chip">wechseln ⇄</span></h5>'
+        +'<div class="face"><span class="tag">'+(chance?'Größte Chance':'Größtes Risiko')+'</span><br>'+esc(chance?r[1]:r[2])+'</div>';
+    }
+    function flip(){d.classList.toggle('c');d.classList.toggle('r');render();markDone('chance');}
+    d.addEventListener('click',flip);
+    d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+    render();root.appendChild(d);
+  });
+})();
+
+})();
+</script>
+
+
+</body></html>

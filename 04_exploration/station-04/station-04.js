@@ -70,6 +70,18 @@
     $(id).textContent = value;
   }
 
+  function setTitle(id, value) {
+    const [firstWord, ...remainingWords] = value.split(' ');
+    const title = $(id);
+    title.innerHTML = '';
+
+    const firstWordNode = document.createElement('span');
+    firstWordNode.className = 'title-word';
+    firstWordNode.textContent = firstWord;
+    title.appendChild(firstWordNode);
+    title.appendChild(document.createTextNode(remainingWords.join(' ')));
+  }
+
   function renderParagraphs(id, paragraphs) {
     const container = $(id);
     container.innerHTML = '';
@@ -132,7 +144,7 @@
     frame.setAttribute('aria-label', content.meta.ariaLabel);
 
     setText('startEyebrow', content.start.eyebrow);
-    setText('startTitle', content.start.title);
+    setTitle('startTitle', content.start.title);
     renderParagraphs('startIntro', content.start.intro);
     setText('tryLabel', content.start.ctaLabel);
 
@@ -141,7 +153,7 @@
     startImage.alt = content.start.image.alt;
 
     setText('actionEyebrow', content.action.eyebrow);
-    setText('actionTitle', content.action.title);
+    setTitle('actionTitle', content.action.title);
     setText('rotorRowLabel', content.action.rotorRowLabel);
     setText('rotorNote', content.action.rotorNote);
     renderRotors(content.action.rotors);

@@ -21,6 +21,10 @@
     -->
 
     <section class="screen screen-start" id="screenStart">
+      <div class="station-marker" aria-label="Station 4 - Kryptografie">
+        <span class="station-marker__station">Station 4</span>
+        <span class="station-marker__topic">Kryptografie</span>
+      </div>
       <div class="start-copy">
         <span class="eyebrow" id="startEyebrow"></span>
         <h1 class="title title--hero" id="startTitle"></h1>
@@ -34,11 +38,7 @@
       <button class="cta" id="btnTry" type="button">
         <span class="cta-label" id="tryLabel"></span>
         <span class="cta-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="15" r="3.1"/>
-            <path d="M12 12.5V4"/>
-            <path d="M7.5 8a6.4 6.4 0 0 1 9 0"/>
-          </svg>
+          <img src="../../00_design-system/symbols/mediastationstart.svg" alt="">
         </span>
       </button>
     </section>
@@ -63,6 +63,7 @@
           <span class="io-lbl" id="outputBoxLabel"></span>
           <span class="io-val" id="outputValue"></span>
         </div>
+        <span class="connector connector--output" aria-hidden="true"></span>
 
         <p class="row-label" id="inputRowLabel" style="grid-row:3;"></p>
         <div class="row-content" id="inputKeyboard" style="grid-row:3;"></div>
@@ -73,16 +74,13 @@
           </div>
           <button class="reset-btn" id="resetButton" type="button"></button>
         </div>
+        <span class="connector connector--input" aria-hidden="true"></span>
 
         <div class="vert-card">
           <span class="vert-tag" id="infoTag"></span>
           <p id="infoText"></p>
           <span class="vert-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 18h6"/>
-              <path d="M10 21h4"/>
-              <path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.7V16h5.6v-.5c0-.7.3-1.3.8-1.7A6 6 0 0 0 12 3Z"/>
-            </svg>
+            <img src="../../00_design-system/symbols/lightbulb.svg" alt="">
           </span>
         </div>
       </div>

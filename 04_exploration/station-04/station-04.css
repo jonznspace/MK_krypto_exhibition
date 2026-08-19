@@ -48,18 +48,30 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
   text-transform: uppercase; letter-spacing: -.01em; line-height: .92;
 }
-.title--hero { font-size: 128px; margin-top: 18px; }
+.title-word { margin-right: .16em; }
+.title--hero { font-size: 108px; margin-top: 18px; white-space: nowrap; }
 .title--compact { font-size: 68px; margin-top: 10px; }
 
 /* =========================================================================
    Startbildschirm
    ========================================================================= */
-.screen-start { padding: 88px 72px; display: flex; flex-direction: column; }
+.screen-start { padding: 88px 72px 80px; display: flex; flex-direction: column; }
 
-.start-copy { width: 44%; max-width: 660px; position: relative; z-index: 2; }
+.station-marker {
+  display: inline-flex; align-items: stretch;
+  position: relative; z-index: 2;
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
+}
+.station-marker__station,
+.station-marker__topic { display: flex; align-items: center; height: 32px; padding: 0 14px; }
+.station-marker__station { background: var(--immersive-accent); color: var(--immersive-ink); }
+.station-marker__topic { background: var(--color-neutral-850); }
 
-.hero-text { margin-top: 44px; display: flex; flex-direction: column; gap: 26px; }
-.hero-text p { font-size: 21px; line-height: 1.55; color: var(--immersive-body); max-width: 58ch; }
+.start-copy { width: 48%; max-width: 780px; position: relative; z-index: 2; margin-top: 130px; }
+
+.hero-text { margin-top: 32px; display: flex; flex-direction: column; gap: 20px; }
+.hero-text p { font-size: 20px; line-height: 1.45; color: var(--immersive-body); max-width: 58ch; }
 
 .start-visual {
   position: absolute;
@@ -79,8 +91,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .cta-label {
   display: flex; align-items: center;
   min-height: 68px; padding: 0 32px;
-  font-family: var(--font-family-dm-mono); font-size: 22px; letter-spacing: .1em;
-  text-transform: var(--text-transform-dm-mono);
+  font-family: var(--font-family-panchang), sans-serif; font-size: 22px; font-weight: 700; letter-spacing: .02em;
+  text-transform: uppercase;
   background: var(--color-neutral-800); color: var(--immersive-ink);
   transition: background var(--duration-1) var(--ease-standard);
 }
@@ -89,22 +101,27 @@ button { font: inherit; color: inherit; cursor: pointer; }
   width: 68px; height: 68px;
   background: var(--immersive-focus); color: var(--immersive-ink);
 }
-.cta-icon svg { width: 26px; height: 26px; }
+.cta-icon img { width: 40px; height: 40px; }
 .cta:hover .cta-label { background: var(--color-neutral-700); }
 .cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }
 
 /* =========================================================================
    Actionbereich
    ========================================================================= */
-.screen-action { padding: 56px 72px 64px; display: flex; flex-direction: column; }
+.screen-action { padding: 40px; display: flex; flex-direction: column; }
+.screen-action::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("img/eknigma01.png") right center / auto 1240px no-repeat;
+  opacity: .28; pointer-events: none;
+}
 
-.action-hdr { display: flex; align-items: flex-start; justify-content: space-between; }
+.action-hdr { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; }
 
 .close-btn {
-  width: 64px; height: 64px; flex: none;
+  width: 80px; height: 80px; flex: none;
   display: grid; place-items: center;
-  font-size: 22px; color: var(--immersive-ink);
-  background: transparent; border: 1px solid var(--layer-border);
+  font-size: 32px; font-weight: 300; color: var(--immersive-ink);
+  background: var(--color-neutral-800); border: none;
   transition: border-color var(--duration-1) var(--ease-standard);
 }
 .close-btn:hover { border-color: var(--immersive-accent); }
@@ -114,28 +131,44 @@ button { font: inherit; color: inherit; cursor: pointer; }
    Spalten: Beschriftung (250px) | Bühne (1fr) | Ausgabe/Eingabe-Boxen (220px) | Vertiefung (300px)
    Zeilen: Walzen / Anzeige / Eingabe. Divider trennt Bühne von der Seitenspalte. */
 .action-grid {
-  flex: 1; min-height: 0; margin-top: 46px;
+  position: relative; z-index: 1;
+  flex: 1; min-height: 0; margin-top: 108px;
   display: grid;
-  grid-template-columns: 250px 1fr 220px 300px;
-  grid-template-rows: repeat(3, 1fr);
-  column-gap: 32px; row-gap: 20px;
-  position: relative;
+  grid-template-columns: 240px 700px 250px minmax(440px, 1fr);
+  grid-template-rows: 210px 220px 250px;
+  column-gap: 32px; row-gap: 16px;
 }
 .action-grid::before {
-  content: ""; position: absolute; top: 4px; bottom: 4px;
-  left: calc(250px + 32px - 16px);
-  width: 1px; background: var(--layer-border);
+  content: ""; position: absolute; top: 0; bottom: 0;
+  left: 240px;
+  width: 2px;
+  background:
+    linear-gradient(var(--immersive-body), var(--immersive-body)) 0 0 / 2px 210px no-repeat,
+    linear-gradient(var(--immersive-body), var(--immersive-body)) 0 226px / 2px 220px no-repeat,
+    linear-gradient(var(--immersive-body), var(--immersive-body)) 0 462px / 2px 250px no-repeat;
 }
+.connector {
+  position: absolute; width: 34px; height: 36px;
+  border-left: 1px solid var(--immersive-accent);
+  pointer-events: none;
+}
+.connector::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 34px; height: 1px; background: var(--immersive-accent);
+}
+.connector--output { left: 972px; top: 276px; }
+.connector--input { left: 972px; top: 374px; }
 
 .row-label {
   grid-column: 1; align-self: center;
-  font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.5;
+  padding-right: 20px;
+  font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.35;
   letter-spacing: .1em; text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-muted); text-align: right;
 }
 .row-content { grid-column: 2; align-self: center; min-width: 0; }
 .row-note {
-  grid-column: 3 / 5; align-self: start; margin-top: 6px;
+  grid-column: 3; align-self: center; margin: 0;
   font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.5;
   letter-spacing: .08em; text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-muted);
@@ -143,14 +176,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .row-side { align-self: center; display: flex; flex-direction: column; gap: 18px; }
 
 /* ---------- Walzen ---------- */
-.rotors { display: flex; gap: 40px; }
-.rotor { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.rotors { display: flex; justify-content: center; gap: 24px; }
+.rotor { width: 144px; height: 176px; padding: 18px 16px 16px; border: 1px solid var(--layer-border); display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .rotor-lbl {
   font-family: var(--font-family-dm-mono); font-size: 14px; letter-spacing: .14em;
   text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
 }
 .rotor-box {
-  width: 100px; height: 96px;
+  width: 112px; height: 112px;
   display: grid; place-items: center;
   border: 1px solid var(--layer-border);
   font-family: var(--font-family-dm-mono); font-size: 34px; font-weight: 500;
@@ -158,12 +191,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 /* ---------- Tastenfelder ---------- */
-.keyboard { display: flex; flex-direction: column; gap: 12px; }
-.key-row { display: flex; gap: 12px; }
-.key-row--offset { margin-left: 34px; }
+.keyboard { display: flex; flex-direction: column; gap: 14px; }
+.key-row { display: flex; gap: 14px; }
+.key-row--offset { margin-left: 40px; }
 
 .key {
-  width: 60px; height: 60px; flex: none;
+  width: 62px; height: 62px; flex: none;
   border-radius: 50%; /* Ausnahme: physisches Rundtasten-Layout der Enigma */
   border: none;
   display: grid; place-items: center;
@@ -181,22 +214,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ---------- Ein-/Ausgabe-Boxen ---------- */
 .io-box {
-  border: 1px solid var(--layer-border);
-  padding: 16px 22px;
-  display: flex; flex-direction: column; gap: 6px;
-  min-width: 190px;
+  border: 1px solid var(--immersive-body);
+  height: 64px; padding: 0 18px;
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  min-width: 180px;
 }
 .io-lbl {
   font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .14em;
   text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
 }
 .io-val {
-  font-family: var(--font-family-dm-mono); font-size: 26px; letter-spacing: .1em;
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .1em;
   text-transform: var(--text-transform-dm-mono); color: var(--immersive-ink);
 }
 
 .reset-btn {
-  min-height: var(--size-touch-min); min-width: 190px;
+  min-height: 64px; min-width: 180px;
   padding: 14px 20px;
   background: var(--color-neutral-800); color: var(--immersive-ink);
   border: none;
@@ -208,32 +241,33 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ---------- Vertiefung-Karte ---------- */
 .vert-card {
-  grid-column: 4; grid-row: 2 / 4; align-self: center;
+  grid-column: 4; grid-row: 2; align-self: center;
   position: relative;
-  padding: 32px 88px 32px 28px;
+  height: 144px; min-height: 144px; padding: 16px 80px 16px 16px;
+  display: flex; flex-direction: column; justify-content: center;
   border: 1px solid var(--immersive-accent);
-  background: linear-gradient(135deg,
-    color-mix(in srgb, var(--immersive-accent) 22%, transparent),
-    color-mix(in srgb, var(--immersive-accent) 4%, transparent));
+  background: #2F1700;
+  box-shadow: 0 0 28px color-mix(in srgb, var(--immersive-accent) 26%, transparent),
+              inset 0 0 36px color-mix(in srgb, var(--immersive-accent) 10%, transparent);
 }
 .vert-tag {
-  display: block; margin-bottom: 14px;
+  display: block; margin-bottom: 10px;
   font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .16em;
   text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
 }
-.vert-card p { font-size: 21px; line-height: 1.4; color: var(--immersive-ink); max-width: 26ch; }
+.vert-card p { font-size: 20px; line-height: 1.25; color: var(--immersive-ink); max-width: 30ch; }
 .vert-icon {
-  position: absolute; right: 20px; bottom: 20px;
-  width: 44px; height: 44px;
+  position: absolute; right: 16px; bottom: 16px;
+  width: 52px; height: 52px;
   display: grid; place-items: center;
   background: var(--immersive-accent); color: var(--immersive-bg);
 }
-.vert-icon svg { width: 22px; height: 22px; }
+.vert-icon img { width: 28px; height: 28px; }
 
 /* Ausgabe-Box (Zeile 2) sitzt direkt in Spalte 3, neben der Vertiefungskarte */
-.action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: center; }
+.action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: start; }
 /* Eingabe-Box + Zurücksetzen-Button (Zeile 3) */
-.row-side { grid-column: 3; grid-row: 3; }
+.row-side { grid-column: 3; grid-row: 3; align-self: start; }
 
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
