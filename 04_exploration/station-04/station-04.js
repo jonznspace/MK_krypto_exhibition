@@ -12,6 +12,18 @@
     ['P', 'Y', 'X', 'C', 'V', 'B', 'N', 'M', 'L']
   ];
 
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const ROTORS = [
+    { wiring: 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch: 'Q' },
+    { wiring: 'AJDKSIRUXBLHWTMCQGZNPYFVOE', notch: 'E' },
+    { wiring: 'BDFHJLCPRTXVZNYEIWGAKMUSQO', notch: 'V' }
+  ];
+  const REFLECTOR = 'YRUHQSLDPXNGOKMIEBFZCWVJAT';
+  const INITIAL_POSITIONS = [5, 18, 2];
+  let rotorPositions = INITIAL_POSITIONS.slice();
+  let inputText = '';
+  let outputText = '';
+
   const STATION_CONTENT = {
     meta: {
       title: 'Station 4 · Die Enigma',
@@ -51,7 +63,7 @@
         rowLabel: 'Eingabe der verschlüsselten Buchstaben',
         boxLabel: 'Eingabe:',
         value: 'Auto',
-        activeLetter: 'S'
+        activeLetter: ''
       },
       resetLabel: 'Zurücksetzen',
       info: {
@@ -129,6 +141,10 @@
           key.classList.add(variant === 'keyboard--lamp' ? 'key--lit' : 'key--pressed');
         }
 
+        if (variant === 'keyboard--input') {
+          key.addEventListener('click', () => pressKey(letter));
+        }
+
         rowNode.appendChild(key);
       });
 
@@ -137,6 +153,63 @@
 
     container.innerHTML = '';
     container.appendChild(keyboard);
+  }
+
+  function passThrough(letter, rotor, reverse) {
+    const offset = rotorPositions[rotor];
+    const shifted = (ALPHABET.indexOf(letter) + offset + 26) % 26;
+    const mapped = reverse
+      ? ROTORS[rotor].wiring.indexOf(ALPHABET[shifted])
+      : ALPHABET.indexOf(ROTORS[rotor].wiring[shifted]);
+    return ALPHABET[(mapped - offset + 26) % 26];
+  }
+
+  function stepRotors() {
+    const middleAtNotch = ALPHABET[rotorPositions[1]] === ROTORS[1].notch;
+    const rightAtNotch = ALPHABET[rotorPositions[2]] === ROTORS[2].notch;
+
+    if (middleAtNotch) rotorPositions[0] = (rotorPositions[0] + 1) % 26;
+    if (middleAtNotch || rightAtNotch) rotorPositions[1] = (rotorPositions[1] + 1) % 26;
+    rotorPositions[2] = (rotorPositions[2] + 1) % 26;
+  }
+
+  function encrypt(letter) {
+    stepRotors();
+    let signal = letter;
+    signal = passThrough(signal, 2, false);
+    signal = passThrough(signal, 1, false);
+    signal = passThrough(signal, 0, false);
+    signal = REFLECTOR[ALPHABET.indexOf(signal)];
+    signal = passThrough(signal, 0, true);
+    signal = passThrough(signal, 1, true);
+    return passThrough(signal, 2, true);
+  }
+
+  function updateMachine(activeLetter) {
+    const rotorBoxes = document.querySelectorAll('#rotorList .rotor-box');
+    rotorBoxes.forEach((box, index) => {
+      box.textContent = String(rotorPositions[index] + 1).padStart(2, '0');
+    });
+
+    document.querySelectorAll('#lampKeyboard .key').forEach(key => {
+      key.classList.toggle('key--lit', key.textContent === activeLetter);
+    });
+    setText('inputValue', inputText || 'Auto');
+    setText('outputValue', outputText || '');
+  }
+
+  function pressKey(letter) {
+    const encrypted = encrypt(letter);
+    inputText += letter;
+    outputText += encrypted;
+    updateMachine(encrypted);
+  }
+
+  function resetMachine() {
+    rotorPositions = INITIAL_POSITIONS.slice();
+    inputText = '';
+    outputText = '';
+    updateMachine('');
   }
 
   function renderStation(content) {
@@ -175,6 +248,8 @@
 
   renderStation(STATION_CONTENT);
 
+  $('resetButton').addEventListener('click', resetMachine);
+
   $('btnTry').addEventListener('click', () => {
     screenStart.classList.add('hidden');
     screenAction.classList.remove('hidden');
@@ -191,4 +266,5 @@
   }
   window.addEventListener('resize', fit);
   fit();
+  resetMachine();
 })();
