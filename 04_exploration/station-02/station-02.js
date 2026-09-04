@@ -34,6 +34,7 @@
   svg.appendChild(el('circle', { cx: CX, cy: CY, r: 372, class: 'disc-ring' }));
   const innerG = el('g', { id: 'discInner' });
   innerG.appendChild(el('circle', { cx: CX, cy: CY, r: 298, class: 'disc-ring inner' }));
+  const innerLetters = el('g', { id: 'discInnerLetters' });
   // äußere (statische) Buchstaben
   for (let i = 0; i < N; i++) {
     const [x, y] = polar(R_OUTER_TXT, i);
@@ -44,9 +45,9 @@
   for (let j = 0; j < N; j++) {
     const [x, y] = polar(R_INNER_TXT, j);
     const t = el('text', { x, y, id: 'i' + j, class: 'disc-letter inner' }); t.textContent = AL[j];
-    innerG.appendChild(t);
+    innerLetters.appendChild(t);
   }
-  svg.appendChild(innerG);
+  svg.appendChild(innerG); svg.appendChild(innerLetters);
   svg.appendChild(el('circle', { cx: CX, cy: CY, r: 202, class: 'disc-hub' }));
   // Marker oben (zeigt auf den Schlüssel-Buchstaben unter A)
   svg.appendChild(el('polygon', { points: `${CX - 13},58 ${CX + 13},58 ${CX},84`, class: 'disc-marker' }));
@@ -57,7 +58,14 @@
   svg.appendChild(ray); svg.appendChild(oDot); svg.appendChild(iDot);
 
   /* ---------------- Kern: Schlüssel setzen ---------------- */
-  function applyRotation() { innerG.setAttribute('transform', `rotate(${-key * STEP} ${CX} ${CY})`); }
+  function applyRotation() {
+    innerG.setAttribute('transform', `rotate(${-key * STEP} ${CX} ${CY})`);
+    for (let i = 0; i < N; i++) {
+      const [fromX, fromY] = polar(R_INNER_TXT, i);
+      const [toX, toY] = polar(R_INNER_TXT, i - key);
+      $('i' + i).style.transform = `translate(${toX - fromX}px, ${toY - fromY}px)`;
+    }
+  }
   function setKey(k, tick) {
     const nk = mod(k, N);
     if (nk === key) return;
@@ -200,7 +208,7 @@
   }
   svg.addEventListener('pointerdown', e => {
     dragging = true; startAngle = pointerAngle(e); startKey = key;
-    svg.classList.add('dragging'); innerG.classList.add('free');
+    svg.classList.add('dragging'); innerG.classList.add('free'); innerLetters.classList.add('free');
     svg.setPointerCapture(e.pointerId);
     kick();
   });
@@ -210,7 +218,7 @@
     setKey(startKey - Math.round(delta / STEP));
   });
   ['pointerup', 'pointercancel'].forEach(ev => svg.addEventListener(ev, () => {
-    dragging = false; svg.classList.remove('dragging'); innerG.classList.remove('free');
+    dragging = false; svg.classList.remove('dragging'); innerG.classList.remove('free'); innerLetters.classList.remove('free');
   }));
 
   /* ---------------- Vertiefung Overlay ---------------- */

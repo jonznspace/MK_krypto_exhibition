@@ -12,6 +12,8 @@ html, body {
   height: 100%;
   background: #000;
   overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
   font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
   color: var(--immersive-ink);
   -webkit-font-smoothing: antialiased;
@@ -71,7 +73,7 @@ html, body {
 
 /* ---------- Scheibe ---------- */
 .disk-col { display: flex; flex-direction: column; align-items: center; gap: 28px; }
-#disc { width: 760px; height: 760px; touch-action: none; cursor: grab; }
+#disc { width: 548px; height: 548px; touch-action: none; cursor: grab; }
 #disc.dragging { cursor: grabbing; }
 
 .disk-ctrl { display: flex; align-items: center; gap: 20px; }
@@ -290,7 +292,7 @@ html, body {
 .disc-letter { font-family: var(--font-family-dm-mono); font-size: 20px; fill: var(--immersive-body);
   text-transform: var(--text-transform-dm-mono);
   text-anchor: middle; dominant-baseline: central; }
-.disc-letter.inner { fill: var(--immersive-muted); }
+.disc-letter.inner { fill: var(--immersive-muted); transition: transform var(--duration-2) var(--ease-mechanical); }
 .disc-letter.hot { fill: var(--immersive-accent); }
 .disc-marker { fill: var(--immersive-accent); }
 .disc-ray { stroke: var(--immersive-accent); stroke-width: 2; opacity: 0; }
@@ -298,7 +300,8 @@ html, body {
 .disc-dot { fill: var(--immersive-accent); opacity: 0; }
 .disc-dot.on { opacity: 1; }
 #discInner { transition: transform var(--duration-2) var(--ease-mechanical); }
-#discInner.free { transition: none; }
+#discInner.free, #discInnerLetters.free { transition: none; }
+#discInnerLetters.free .disc-letter.inner { transition: none; }
 
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
