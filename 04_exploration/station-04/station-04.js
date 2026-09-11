@@ -33,9 +33,10 @@
       eyebrow: 'Maschinen verschlüsseln',
       title: 'Die Enigma',
       intro: [
-        'Mit dem kryptografischen Zirkel ließen sich einige Dutzend Verschlüsselungen erzeugen. Die Enigma erzeugte mehr Einstellungsmöglichkeiten, als es Sterne in unserer Galaxie gibt, bei der militärischen Standardausführung über 150 Trillionen. Sie verändert die Buchstabenzuordnung bei jedem einzelnen Tastendruck.',
-        'Entwickelt wurde sie Anfang des 20. Jahrhunderts vom deutschen Ingenieur Arthur Scherbius, ursprünglich als kommerzielles Produkt. Später übernahm das Militär die Technik. Im Zweiten Weltkrieg war die Enigma Teil der Infrastruktur eines menschenverachtenden Krieges, der Abermillionen Opfer forderte. Kryptografie ist nie nur Technik, sie ist in politische und militärische Machtverhältnisse eingebunden.',
-        'Schon in den 1930er Jahren analysierten polnische Mathematiker um Marian Rejewski ihre Funktionsweise. Auf dieser Grundlage bauten britische Kryptologen in Bletchley Park unter Alan Turing und Gordon Welchman elektromechanische Entschlüsselungsmaschinen. Die Entzifferung mit der Turing-Welchman-Bombe ab 1940 gilt als Meilenstein der Kryptografiegeschichte.'
+        'Zu Beginn des 20. Jh. wurde mit der sogenannten Enigma, einer Rotor-Chiffriermaschine, ein enormer Entwicklungssprung in der Verschlüsselung von Nachrichten vollzogen.',
+        'Die Enigma erzeugte nun mehr Einstellungsmöglichkeiten, als es Sterne in unserer Galaxie gibt. Bei der militärischen Standardausführung gibt es über 150 Trillionen. Sie wurde vom deutschen Ingenieur Arthur Scherbius ursprünglich als kommerzielles Produkt für Banken und Unternehmen entwickelt, die ihre Kommunikation schützen wollten. Später übernahm das Militär die Technik für seine Zwecke. Die Enigma arbeitete mit rotierenden Walzen, die bei jedem Tastendruck eine neue Zuordnung der Buchstaben erzeugten. Es ist, als würde sich das Schloss nach jedem Buchstaben komplett verändern.',
+        'Im Zweiten Weltkrieg (1939–1945) wurde die Enigma für die militärische Kommunikation der deutschen Streitkräfte eingesetzt. Sie war Teil der technischen Infrastruktur eines menschenverachtenden Krieges, der Abermillionen Opfer forderte.', 
+        'Schon in den 1930er Jahren gelang es polnischen Mathematikern, darunter Marian Rejewski, Jerzy Różycki und Henryk Zygalski, die Funktionsweise der Enigma mathematisch zu analysieren. Auf dieser Grundlage bauten britische Kryptologen in Bletchley Park dann elektromechanische Entschlüsselungsmaschinen. Allen voran entwickelte Alan Turing mit seinem Team die „Turing-Welchman-Bombe“, deren erste Exemplare 1940 in Betrieb gingen und die Technik der Enigma knackten.'
       ],
       image: {
         src: 'img/eknigma02.png',
@@ -260,11 +261,5 @@
     screenStart.classList.remove('hidden');
   });
 
-  function fit() {
-    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
-    frame.style.transform = 'scale(' + s + ')';
-  }
-  window.addEventListener('resize', fit);
-  fit();
   resetMachine();
 })();

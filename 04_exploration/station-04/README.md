@@ -13,7 +13,14 @@ Diese Station dient ab jetzt als wiederverwendbares Grundgeruest fuer weitere Me
 1. Wenn eine neue Station nur andere Inhalte braucht, zuerst `STATION_CONTENT` anpassen.
 2. Wenn ein neues Modul gebraucht wird, die HTML-Huelle moeglichst allgemein halten und den Inhalt ebenfalls aus JavaScript rendern.
 3. Tokens weiter nur aus `../../00_design-system/tokens/tokens.css` beziehen.
-4. Die fixe Kiosk-Buehne bleibt `1920x1080` und wird ueber `fit()` skaliert.
+4. Das Layout bleibt fluid. Neue Module muessen ohne globale Skalierung von Mobile bis Kiosk funktionieren.
+
+## Responsive Basis
+
+- `#frame` nutzt die volle Breite und mindestens die sichtbare Viewport-Hoehe.
+- Lange Inhalte duerfen die Seite vertikal erweitern und bleiben scrollbar.
+- Die Aktionsansicht wechselt von vier Spalten ueber drei Spalten zu einer mobilen Reihenfolge.
+- Breite interaktive Module duerfen auf kleinen Displays intern horizontal scrollen.
 
 ## Copy-Strategie
 

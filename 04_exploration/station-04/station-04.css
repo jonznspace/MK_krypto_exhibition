@@ -1,6 +1,6 @@
 /* =========================================================================
    Station 4 — Die Enigma
-   Immersiver Screen-Kontext, fix 1920×1080. Werte aus dem Design-System (tokens.css).
+  Immersiver Screen-Kontext, responsiv von Kiosk bis Mobile.
    Erste optische Umsetzung der Figma-Vorlagen (figmavorlagen/). Funktionen folgen.
    Kein border-radius bei UI-Elementen (radius/*-Tokens = 0) — Ausnahme sind die
    runden Enigma-Tasten, die bewusst ein physisches Tastenfeld nachbilden.
@@ -10,30 +10,27 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   background: #000;
-  overflow: hidden;
   font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
   color: var(--immersive-ink);
   -webkit-font-smoothing: antialiased;
 }
 
 #scaler {
-  position: fixed; inset: 0;
-  display: flex; align-items: center; justify-content: center;
+  min-height: 100dvh;
   background: #000;
 }
 
-/* Die feste Kiosk-Bühne — wird per JS auf das Fenster skaliert */
+/* Fluid station shell shared by start and interactive screens. */
 #frame {
-  width: 1920px; height: 1080px;
+  width: 100%; min-height: 100dvh;
   background: var(--immersive-bg);
   position: relative;
-  transform-origin: center center;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
-.screen { position: absolute; inset: 0; }
+.screen { min-height: 100dvh; }
 .screen.hidden { display: none; }
 
 button { font: inherit; color: inherit; cursor: pointer; }
@@ -55,7 +52,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* =========================================================================
    Startbildschirm
    ========================================================================= */
-.screen-start { padding: 88px 72px 80px; display: flex; flex-direction: column; }
+.screen-start { position: relative; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 72px); display: flex; flex-direction: column; }
 
 .station-marker {
   display: inline-flex; align-items: stretch;
@@ -68,10 +65,27 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .station-marker__station { background: var(--immersive-accent); color: var(--immersive-ink); }
 .station-marker__topic { background: var(--color-neutral-850); }
 
-.start-copy { width: 48%; max-width: 780px; position: relative; z-index: 2; margin-top: 130px; }
+.start-copy { width: 920px; max-width: calc(100vw - 144px); position: relative; z-index: 2; margin-top: clamp(72px, 12vh, 130px); }
 
-.hero-text { margin-top: 32px; display: flex; flex-direction: column; gap: 20px; }
-.hero-text p { font-size: 20px; line-height: 1.45; color: var(--immersive-body); max-width: 58ch; }
+.hero-text {
+  width: 820px; max-width: 100%; max-height: 430px;
+  margin-top: 32px; padding-right: 30px;
+  display: flex; flex-direction: column; gap: 20px;
+  overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--immersive-accent) color-mix(in srgb, var(--immersive-body) 18%, transparent);
+  scrollbar-gutter: stable;
+}
+.hero-text::-webkit-scrollbar { width: 8px; }
+.hero-text::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--immersive-body) 18%, transparent);
+}
+.hero-text::-webkit-scrollbar-thumb {
+  background: var(--immersive-accent);
+  border: 2px solid var(--immersive-bg);
+}
+.hero-text:focus-visible { outline: 1px solid var(--immersive-accent); outline-offset: 8px; }
+.hero-text p { font-size: 20px; line-height: 1.45; color: var(--immersive-body); max-width: 68ch; }
 
 .start-visual {
   position: absolute;
@@ -84,7 +98,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .enigma-img { width: 100%; height: auto; max-height: 1020px; object-fit: contain; object-position: bottom right; }
 
 .cta {
-  position: absolute; right: 72px; bottom: 80px; z-index: 3;
+  position: absolute; right: clamp(24px, 4vw, 72px); bottom: clamp(40px, 5vw, 80px); z-index: 3;
   display: flex; align-items: stretch;
   border: none; background: none;
 }
@@ -108,7 +122,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* =========================================================================
    Actionbereich
    ========================================================================= */
-.screen-action { padding: 40px; display: flex; flex-direction: column; }
+.screen-action { position: relative; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; }
 .screen-action::before {
   content: ""; position: absolute; inset: 0;
   background: url("img/eknigma01.png") right center / auto 1240px no-repeat;
@@ -132,9 +146,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
    Zeilen: Walzen / Anzeige / Eingabe. Divider trennt Bühne von der Seitenspalte. */
 .action-grid {
   position: relative; z-index: 1;
-  flex: 1; min-height: 0; margin-top: 108px;
+  flex: 1; min-height: 0; margin-top: clamp(56px, 10vh, 108px);
   display: grid;
-  grid-template-columns: 240px 700px 250px minmax(440px, 1fr);
+  grid-template-columns: 240px minmax(580px, 700px) 250px minmax(300px, 1fr);
   grid-template-rows: 210px 220px 250px;
   column-gap: 32px; row-gap: 16px;
 }
@@ -268,6 +282,71 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: start; }
 /* Eingabe-Box + Zurücksetzen-Button (Zeile 3) */
 .row-side { grid-column: 3; grid-row: 3; align-self: start; }
+
+@media (max-width: 1500px) {
+  .title--hero { font-size: clamp(64px, 7vw, 108px); white-space: normal; }
+  .start-copy { width: min(64%, 920px); }
+  .start-visual { width: 65vw; opacity: .72; }
+
+  .action-grid {
+    grid-template-columns: 190px minmax(580px, 1fr) 220px;
+    grid-template-rows: auto auto auto auto;
+  }
+  .action-grid::before { left: 190px; }
+  .vert-card { grid-column: 2 / 4; grid-row: 4; width: min(100%, 720px); }
+  .connector { display: none; }
+}
+
+@media (max-width: 1100px) {
+  .screen-start { padding-bottom: 48px; }
+  .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
+  .hero-text { width: 100%; max-height: none; padding-right: 0; overflow-y: visible; scrollbar-gutter: auto; }
+  .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -24px 0 auto; }
+  .cta { position: relative; inset: auto; align-self: flex-end; margin-top: -24px; }
+
+  .screen-action { overflow: hidden; }
+  .action-grid {
+    grid-template-columns: 150px minmax(0, 1fr) 200px;
+    grid-template-rows: repeat(4, auto);
+    margin-top: 56px;
+  }
+  .action-grid::before { display: none; }
+  .row-content { overflow-x: auto; padding-block: 4px 12px; }
+  .rotors { justify-content: flex-start; }
+}
+
+@media (max-width: 760px) {
+  .title--hero { font-size: clamp(42px, 14vw, 72px); }
+  .title--compact { font-size: clamp(38px, 11vw, 56px); }
+  .title-word { display: block; margin: 0 0 .12em; }
+  .start-copy { width: 100%; margin-top: 48px; }
+  .hero-text p { font-size: 18px; }
+  .start-visual { width: calc(100% + 24px); margin-top: -20px; opacity: .55; }
+  .cta { width: 100%; margin-top: 8px; }
+  .cta-label { flex: 1; min-height: 60px; padding-inline: 20px; font-size: 18px; }
+  .cta-icon { width: 60px; height: 60px; }
+
+  .close-btn { width: 60px; height: 60px; }
+  .action-grid { display: flex; flex-direction: column; gap: 18px; margin-top: 44px; }
+  .row-label { align-self: stretch; padding: 0; text-align: left; color: var(--immersive-body); }
+  .row-note { order: 2; }
+  #rotorRowLabel { order: 0; }
+  #rotorList { order: 1; }
+  #outputRowLabel { order: 3; }
+  #lampKeyboard { order: 4; }
+  .action-grid > .io-box { order: 5; align-self: stretch; }
+  #inputRowLabel { order: 6; }
+  #inputKeyboard { order: 7; }
+  .row-side { order: 8; align-self: stretch; }
+  .vert-card { order: 9; width: 100%; height: auto; min-height: 144px; }
+  .row-content { width: 100%; }
+  .keyboard { width: max-content; }
+  .rotor { width: 124px; height: 156px; }
+  .rotor-box { width: 96px; height: 96px; }
+  .key { width: 54px; height: 54px; }
+  .key-row { gap: 10px; }
+  .key-row--offset { margin-left: 32px; }
+}
 
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
