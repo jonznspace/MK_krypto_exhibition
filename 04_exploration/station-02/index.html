@@ -13,21 +13,45 @@
 <div id="scaler">
   <main id="frame" aria-label="Station 2 – Verschlüsseln mit System">
 
-    <!-- ---------- Header (LAYER/300) ---------- -->
-    <header class="hdr">
-      <div class="hdr-left">
-        <span class="tag">STATION 2 · KRYPTOGRAFIE</span>
-        <span class="kicker">Verschlüsseln mit System</span>
-        <h1 class="title">Zirkel &amp; Permutationsscheibe</h1>
+    <!-- ---------- Startscreen ---------- -->
+    <section class="screen screen-start" id="screenStart">
+      <div class="station-marker" aria-label="Station 2 - Kryptografie">
+        <span class="station-marker__station">Station 2</span>
+        <span class="station-marker__topic">Kryptografie</span>
       </div>
-      <p class="intro">
-        Zwei drehbare Alphabet-Scheiben. Außen der <b>Klartext</b>, innen die
-        <b>Geheimschrift</b>. Jede Drehung ist ein neuer Schlüssel — 26 in einem Gerät.
-      </p>
-    </header>
 
-    <!-- ---------- Bühne ---------- -->
-    <section class="stage">
+      <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
+        <h1 class="title title--hero" id="startTitle"></h1>
+        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img src="../station-04/img/eknigma02.png" alt="" class="station-image" id="startImage">
+      </div>
+
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label" id="tryLabel"></span>
+        <span class="cta-icon">
+          <img src="../../00_design-system/symbols/brand-apple-arcade.svg" alt="">
+        </span>
+      </button>
+    </section>
+
+    <!-- ---------- Interaktion ---------- -->
+    <section class="screen screen-action hidden" id="screenAction">
+
+      <!-- ---------- Header (LAYER/300) ---------- -->
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow" id="actionEyebrow"></span>
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <!-- ---------- Bühne ---------- -->
+      <section class="stage">
 
       <!-- Scheibe -->
       <div class="disk-col">
@@ -77,47 +101,30 @@
         </div>
 
         <button class="vert-btn" id="vertBtn">
-          <span class="vert-dot"></span> Vertiefung · Schwarze Kammern &amp; die Permutationsscheibe
+          <span class="vert-dot"></span> Weitere Verschlüsselungsverfahren
         </button>
       </div>
     </section>
 
-    <!-- ---------- Vertiefung (LAYER/400, blau markiert) ---------- -->
-    <div class="overlay" id="overlay" aria-hidden="true">
-      <div class="ov-card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
-        <button class="ov-close" id="ovClose" aria-label="Schließen">✕</button>
-        <span class="ov-tag">Vertiefung</span>
-        <h2 id="ovTitle">Schwarze Kammern &amp; die Permutationsscheibe</h2>
-        <p>Im 15. Jahrhundert prägten solche Geräte die europäische Diplomatie. In sogenannten
-          „schwarzen Kammern“ chiffrierten und dechiffrierten die Höfe abgefangene Nachrichten.
-          Zugleich begann der bis heute andauernde <b>Wettlauf zwischen Verschlüsseln und Entschlüsseln</b>.</p>
-        <p>Eine reine Drehung kennt nur <b>26 Schlüssel</b> — mit Geduld durchprobierbar (siehe „Knacken“).
-          Die nächste Stufe verwürfelt das Innenalphabet: eine <b>Permutation</b>. Dann steht unter A nicht
-          das nächste, sondern ein beliebiges Zeichen — die Zahl der Möglichkeiten explodiert.</p>
-        <div class="perm-compare">
-          <div class="perm-box">
-            <span class="perm-lbl">Verschiebung</span>
-            <b class="perm-val" id="permShift">26</b>
-            <span class="perm-cap">Schlüssel</span>
-          </div>
-          <div class="perm-box hi">
-            <span class="perm-lbl">Permutation</span>
-            <b class="perm-val">403 291 461 126 605 635 584 000 000</b>
-            <span class="perm-cap">Schlüssel (26!)</span>
+        <!-- ---------- Vertiefung (LAYER/400, blau markiert) ---------- -->
+        <div class="overlay" id="overlay" aria-hidden="true">
+          <div class="ov-card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+            <button class="ov-close" id="ovClose" aria-label="Schließen">✕</button>
+            <span class="ov-tag" id="ovTag"></span>
+            <h2 id="ovTitle"></h2>
+            <div id="ovBody"></div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Attract-Hinweis -->
-    <div class="attract" id="attract" aria-hidden="true">Drehe die Scheibe</div>
-    <!-- Toast -->
-    <div class="toast" id="toast" role="status"></div>
+      <!-- Attract-Hinweis -->
+      <div class="attract" id="attract" aria-hidden="true">Drehe die Scheibe</div>
+      <!-- Toast -->
+      <div class="toast" id="toast" role="status"></div>
+
+    </section>
 
   </main>
 </div>
-
-<button class="mute" id="mute" aria-label="Ton an/aus" aria-pressed="true">Ton</button>
 
 <script src="station-02.js"></script>
 </body>

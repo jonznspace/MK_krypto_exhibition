@@ -42,7 +42,7 @@
         src: 'img/eknigma02.png',
         alt: ''
       },
-      ctaLabel: 'Enigma ausprobieren'
+      ctaLabel: 'ausprobieren'
     },
     action: {
       eyebrow: 'Maschinen verschlüsseln',
@@ -66,11 +66,7 @@
         value: 'Auto',
         activeLetter: ''
       },
-      resetLabel: 'Zurücksetzen',
-      info: {
-        tag: 'Vertiefung',
-        text: 'Warum verschlüsselt und entschlüsselt dieselbe Maschine?'
-      }
+      resetLabel: 'Zurücksetzen'
     }
   };
 
@@ -86,6 +82,9 @@
   function setTitle(id, value) {
     const [firstWord, ...remainingWords] = value.split(' ');
     const title = $(id);
+    const characterCount = value.replace(/\s/g, '').length;
+    title.classList.toggle('title--medium', id === 'startTitle' && characterCount >= 20 && characterCount < 39);
+    title.classList.toggle('title--long', id === 'startTitle' && characterCount >= 39);
     title.innerHTML = '';
 
     const firstWordNode = document.createElement('span');
@@ -118,7 +117,9 @@
         '<div class="rotor-box"></div>';
 
       rotorNode.querySelector('.rotor-lbl').textContent = rotor.label;
-      rotorNode.querySelector('.rotor-box').textContent = rotor.value;
+      const rotorBox = rotorNode.querySelector('.rotor-box');
+      rotorBox.textContent = rotor.value;
+      rotorBox.dataset.value = rotor.value;
       container.appendChild(rotorNode);
     });
   }
@@ -152,6 +153,20 @@
       keyboard.appendChild(rowNode);
     });
 
+    if (variant === 'keyboard--input') {
+      const spaceRow = document.createElement('div');
+      spaceRow.className = 'key-row key-row--space';
+
+      const spaceKey = document.createElement('button');
+      spaceKey.className = 'key key--space';
+      spaceKey.type = 'button';
+      spaceKey.textContent = 'LEERTASTE';
+      spaceKey.addEventListener('click', () => pressKey(' '));
+
+      spaceRow.appendChild(spaceKey);
+      keyboard.appendChild(spaceRow);
+    }
+
     container.innerHTML = '';
     container.appendChild(keyboard);
   }
@@ -166,16 +181,26 @@
   }
 
   function stepRotors() {
+    const moved = [false, false, false];
     const middleAtNotch = ALPHABET[rotorPositions[1]] === ROTORS[1].notch;
     const rightAtNotch = ALPHABET[rotorPositions[2]] === ROTORS[2].notch;
 
-    if (middleAtNotch) rotorPositions[0] = (rotorPositions[0] + 1) % 26;
-    if (middleAtNotch || rightAtNotch) rotorPositions[1] = (rotorPositions[1] + 1) % 26;
+    if (middleAtNotch) {
+      rotorPositions[0] = (rotorPositions[0] + 1) % 26;
+      moved[0] = true;
+    }
+    if (middleAtNotch || rightAtNotch) {
+      rotorPositions[1] = (rotorPositions[1] + 1) % 26;
+      moved[1] = true;
+    }
     rotorPositions[2] = (rotorPositions[2] + 1) % 26;
+    moved[2] = true;
+
+    return moved;
   }
 
   function encrypt(letter) {
-    stepRotors();
+    const moved = stepRotors();
     let signal = letter;
     signal = passThrough(signal, 2, false);
     signal = passThrough(signal, 1, false);
@@ -183,13 +208,45 @@
     signal = REFLECTOR[ALPHABET.indexOf(signal)];
     signal = passThrough(signal, 0, true);
     signal = passThrough(signal, 1, true);
-    return passThrough(signal, 2, true);
+    return { letter: passThrough(signal, 2, true), moved };
   }
 
-  function updateMachine(activeLetter) {
+  function animateRotorStep(rotorBox, nextValue) {
+    const currentValue = rotorBox.dataset.value || rotorBox.textContent.trim() || nextValue;
+
+    rotorBox.innerHTML =
+      '<span class="rotor-roll">' +
+        '<span class="rotor-digit rotor-digit--current"></span>' +
+        '<span class="rotor-digit rotor-digit--next"></span>' +
+      '</span>';
+
+    rotorBox.querySelector('.rotor-digit--current').textContent = currentValue;
+    rotorBox.querySelector('.rotor-digit--next').textContent = nextValue;
+
+    rotorBox.classList.remove('spin');
+    // Force reflow so the animation reliably restarts on rapid key presses.
+    void rotorBox.offsetWidth;
+    rotorBox.classList.add('spin');
+
+    rotorBox.onanimationend = () => {
+      rotorBox.classList.remove('spin');
+      rotorBox.innerHTML = '';
+      rotorBox.textContent = nextValue;
+      rotorBox.dataset.value = nextValue;
+      rotorBox.onanimationend = null;
+    };
+  }
+
+  function updateMachine(activeLetter, moved = []) {
     const rotorBoxes = document.querySelectorAll('#rotorList .rotor-box');
     rotorBoxes.forEach((box, index) => {
-      box.textContent = String(rotorPositions[index] + 1).padStart(2, '0');
+      const nextValue = String(rotorPositions[index] + 1).padStart(2, '0');
+      if (moved[index]) {
+        animateRotorStep(box, nextValue);
+      } else {
+        box.textContent = nextValue;
+        box.dataset.value = nextValue;
+      }
     });
 
     document.querySelectorAll('#lampKeyboard .key').forEach(key => {
@@ -197,13 +254,23 @@
     });
     setText('inputValue', inputText || 'Auto');
     setText('outputValue', outputText || '');
+
+    $('inputValue').scrollLeft = $('inputValue').scrollWidth;
+    $('outputValue').scrollLeft = $('outputValue').scrollWidth;
   }
 
   function pressKey(letter) {
-    const encrypted = encrypt(letter);
+    if (letter === ' ') {
+      inputText += ' ';
+      outputText += ' ';
+      updateMachine('');
+      return;
+    }
+
+    const { letter: encrypted, moved } = encrypt(letter);
     inputText += letter;
     outputText += encrypted;
-    updateMachine(encrypted);
+    updateMachine(encrypted, moved);
   }
 
   function resetMachine() {
@@ -243,8 +310,6 @@
     renderKeyboard('inputKeyboard', 'keyboard--input', content.action.input.activeLetter);
 
     setText('resetButton', content.action.resetLabel);
-    setText('infoTag', content.action.info.tag);
-    setText('infoText', content.action.info.text);
   }
 
   renderStation(STATION_CONTENT);

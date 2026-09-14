@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station 3 · Leibniz-Rechenmaschine</title>
+<link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-03.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" aria-label="Station 3 – Die Leibniz-Rechenmaschine">
+
+    <section class="screen screen-start" id="screenStart">
+      <div class="station-marker" aria-label="Station 3 - Die Leibniz-Rechenmaschine">
+        <span class="station-marker__station">Station 3</span>
+        <span class="station-marker__topic">Kryptografie</span>
+      </div>
+
+      <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
+        <h1 class="title title--hero" id="startTitle"></h1>
+        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img src="../station-04/img/eknigma02.png" alt="" class="station-image" id="startImage">
+      </div>
+
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label" id="tryLabel"></span>
+        <span class="cta-icon">
+          <img src="../../00_design-system/symbols/brand-apple-arcade.svg" alt="">
+        </span>
+      </button>
+    </section>
+
+    <section class="screen screen-action hidden" id="screenAction">
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow" id="actionEyebrow"></span>
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <div class="template-grid">
+        <section class="template-card binary-module template-card--wide">
+          <span class="template-tag" id="binaryTag"></span>
+          <h2 id="binaryTitle"></h2>
+          <p id="actionDescription"></p>
+          <label class="binary-label" id="binaryLabel" for="binaryInput"></label>
+          <input class="binary-input" id="binaryInput" type="text" maxlength="12" autocomplete="off" spellcheck="false">
+          <div class="binary-grid" id="binaryGrid" aria-live="polite"></div>
+          <p class="binary-info" id="binaryInfo"></p>
+        </section>
+
+        <section class="template-card">
+          <span class="template-tag" id="deepeningTag"></span>
+          <h2 id="deepeningTitle"></h2>
+          <div id="deepeningBody"></div>
+        </section>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="station-03.js"></script>
+</body>
+</html>

@@ -45,14 +45,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
   text-transform: uppercase; letter-spacing: -.01em; line-height: .92;
 }
-.title-word { margin-right: .16em; }
-.title--hero { font-size: 108px; margin-top: 18px; white-space: nowrap; }
+.title-word { display: inline-block; max-width: 100%; margin-right: .16em; overflow-wrap: anywhere; }
+.title--hero { width: 100%; max-width: 100%; font-size: 108px; margin-top: 18px; white-space: normal; }
+.title--hero.title--medium { font-size: 88px; }
+.title--hero.title--long { font-size: 68px; }
 .title--compact { font-size: 68px; margin-top: 10px; }
 
 /* =========================================================================
    Startbildschirm
    ========================================================================= */
-.screen-start { position: relative; padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 72px); display: flex; flex-direction: column; }
+.screen-start {
+  position: relative;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 72px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
 .station-marker {
   display: inline-flex; align-items: stretch;
@@ -65,10 +75,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .station-marker__station { background: var(--immersive-accent); color: var(--immersive-ink); }
 .station-marker__topic { background: var(--color-neutral-850); }
 
-.start-copy { width: 920px; max-width: calc(100vw - 144px); position: relative; z-index: 2; margin-top: clamp(72px, 12vh, 130px); }
+.start-copy {
+  flex: 1; min-height: 0;
+  position: relative; z-index: 2;
+  margin-top: clamp(72px, 12vh, 130px);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
 
 .hero-text {
-  width: 820px; max-width: 100%; max-height: 430px;
+  width: 820px; max-width: 100%; max-height: none;
+  flex: 1; min-height: 0;
   margin-top: 32px; padding-right: 30px;
   display: flex; flex-direction: column; gap: 20px;
   overflow-y: auto; overscroll-behavior: contain;
@@ -85,7 +102,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   border: 2px solid var(--immersive-bg);
 }
 .hero-text:focus-visible { outline: 1px solid var(--immersive-accent); outline-offset: 8px; }
-.hero-text p { font-size: 20px; line-height: 1.45; color: var(--immersive-body); max-width: 68ch; }
+.hero-text p { font-size: 24px; line-height: 1.42; color: var(--immersive-body); max-width: 68ch; }
 
 .start-visual {
   position: absolute;
@@ -142,7 +159,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
 /* ---------- Grid ----------
-   Spalten: Beschriftung (250px) | Bühne (1fr) | Ausgabe/Eingabe-Boxen (220px) | Vertiefung (300px)
+  Spalten: Beschriftung (250px) | Bühne (700px) | Ausgabe/Eingabe-Boxen (220px) | Freiraum
    Zeilen: Walzen / Anzeige / Eingabe. Divider trennt Bühne von der Seitenspalte. */
 .action-grid {
   position: relative; z-index: 1;
@@ -181,6 +198,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--immersive-muted); text-align: right;
 }
 .row-content { grid-column: 2; align-self: center; min-width: 0; }
+#inputKeyboard { margin-top: 28px; }
 .row-note {
   grid-column: 3; align-self: center; margin: 0;
   font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.5;
@@ -202,12 +220,62 @@ button { font: inherit; color: inherit; cursor: pointer; }
   border: 1px solid var(--layer-border);
   font-family: var(--font-family-dm-mono); font-size: 34px; font-weight: 500;
   color: var(--immersive-ink);
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transform-origin: center center;
+}
+
+.rotor-roll {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rotor-digit {
+  flex: 0 0 100%;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.rotor-box.spin {
+  animation: rotor-flash 360ms linear;
+}
+
+.rotor-box.spin .rotor-roll {
+  animation: rotor-slot 360ms cubic-bezier(.22, .7, .2, 1);
+}
+
+@keyframes rotor-slot {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes rotor-flash {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.06);
+  }
+  100% {
+    filter: brightness(1);
+  }
 }
 
 /* ---------- Tastenfelder ---------- */
 .keyboard { display: flex; flex-direction: column; gap: 14px; }
 .key-row { display: flex; gap: 14px; }
 .key-row--offset { margin-left: 40px; }
+.key-row--space { margin-top: 4px; justify-content: center; }
 
 .key {
   width: 62px; height: 62px; flex: none;
@@ -225,6 +293,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .keyboard--input .key { background: var(--color-primary-50); color: var(--color-neutral-900); }
 .keyboard--input .key.key--pressed { background: var(--immersive-accent); color: var(--immersive-ink); }
+.keyboard--input .key--space {
+  width: 286px;
+  border-radius: 0;
+  height: 54px;
+  font-size: 15px;
+  letter-spacing: .14em;
+}
 
 /* ---------- Ein-/Ausgabe-Boxen ---------- */
 .io-box {
@@ -240,6 +315,29 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .io-val {
   font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .1em;
   text-transform: var(--text-transform-dm-mono); color: var(--immersive-ink);
+  flex: 1;
+  min-width: 0;
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color var(--duration-1) var(--ease-standard);
+}
+.io-val:hover,
+.io-val:focus-visible {
+  scrollbar-color: color-mix(in srgb, var(--immersive-body) 65%, transparent) transparent;
+}
+.io-val::-webkit-scrollbar { height: 4px; }
+.io-val::-webkit-scrollbar-track { background: transparent; }
+.io-val::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+}
+.io-val:hover::-webkit-scrollbar-thumb,
+.io-val:focus-visible::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--immersive-body) 65%, transparent);
 }
 
 .reset-btn {
@@ -253,31 +351,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .reset-btn:hover { background: var(--color-neutral-700); }
 
-/* ---------- Vertiefung-Karte ---------- */
-.vert-card {
-  grid-column: 4; grid-row: 2; align-self: center;
-  position: relative;
-  height: 144px; min-height: 144px; padding: 16px 80px 16px 16px;
-  display: flex; flex-direction: column; justify-content: center;
-  border: 1px solid var(--immersive-accent);
-  background: #2F1700;
-  box-shadow: 0 0 28px color-mix(in srgb, var(--immersive-accent) 26%, transparent),
-              inset 0 0 36px color-mix(in srgb, var(--immersive-accent) 10%, transparent);
-}
-.vert-tag {
-  display: block; margin-bottom: 10px;
-  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .16em;
-  text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
-}
-.vert-card p { font-size: 20px; line-height: 1.25; color: var(--immersive-ink); max-width: 30ch; }
-.vert-icon {
-  position: absolute; right: 16px; bottom: 16px;
-  width: 52px; height: 52px;
-  display: grid; place-items: center;
-  background: var(--immersive-accent); color: var(--immersive-bg);
-}
-.vert-icon img { width: 28px; height: 28px; filter: brightness(0) invert(1); }
-
 /* Ausgabe-Box (Zeile 2) sitzt direkt in Spalte 3, neben der Vertiefungskarte */
 .action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: start; }
 /* Eingabe-Box + Zurücksetzen-Button (Zeile 3) */
@@ -285,7 +358,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 @media (max-width: 1500px) {
   .title--hero { font-size: clamp(64px, 7vw, 108px); white-space: normal; }
-  .start-copy { width: min(64%, 920px); }
   .start-visual { width: 65vw; opacity: .72; }
 
   .action-grid {
@@ -293,7 +365,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
     grid-template-rows: auto auto auto auto;
   }
   .action-grid::before { left: 190px; }
-  .vert-card { grid-column: 2 / 4; grid-row: 4; width: min(100%, 720px); }
   .connector { display: none; }
 }
 
@@ -337,8 +408,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .action-grid > .io-box { order: 5; align-self: stretch; }
   #inputRowLabel { order: 6; }
   #inputKeyboard { order: 7; }
+  #inputKeyboard { margin-top: 12px; }
   .row-side { order: 8; align-self: stretch; }
-  .vert-card { order: 9; width: 100%; height: auto; min-height: 144px; }
   .row-content { width: 100%; }
   .keyboard { width: max-content; }
   .rotor { width: 124px; height: 156px; }

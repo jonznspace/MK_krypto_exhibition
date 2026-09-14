@@ -21,12 +21,105 @@
   const ENC_WORDS = ['DRESDEN', 'SACHSEN', 'ZIRKEL', 'GEHEIMNIS', 'SCHEIBE', 'KRYPTO'];
   const CRACK_WORDS = ['GEHEIM', 'SCHATZ', 'TALER', 'DUKAT', 'SILBER', 'DRESDEN'];
 
+  const STATION_CONTENT = {
+    meta: {
+      title: 'Station 2 · Der kryptografische Zirkel',
+      ariaLabel: 'Station 2 – Verschlüsseln mit System'
+    },
+    start: {
+      eyebrow: 'Verschlüsseln mit System',
+      title: 'kryptografischer Zirkel & Permutationsscheibe',
+      intro: [
+        'Antike Verfahren hatten einen Nachteil: War ihr Prinzip einmal bekannt, ließen sich Nachrichten oft rasch entschlüsseln. Daraus entstand ein Wettbewerb zwischen dem Verbergen und dem Entziffern von Informationen, der bis heute anhält. Neue Methoden sollen Nachrichten stets sicherer machen, zugleich wird aber ständig nach Wegen gesucht, den Inhalt doch zu entschlüsseln.',
+        'Ein Beispiel hierfür ist der kryptografische Zirkel von 1633, der einen simplen Mechanismus aufweist: Jeder Buchstabe des Alphabets konnte zu einer bestimmten Strichlänge umgewandelt werden, deren Abstand über das Gerät eingestellt wurde. Sender und Empfänger brauchten jeweils ein baugleiches Exemplar, denn nur bei identischer Einstellung ließ sich die Nachricht entschlüsseln.',
+        'Die Permutationsscheibe aus dem Jahr 1587 besaß mit ursprünglich 24 einzeln drehbaren Messingscheiben dagegen bereits ein deutlich komplexeres Verschlüsselungsverfahren. Jede der Scheiben war mit 24 Buchstaben (J=I, U=V) versehen, sodass jeder Buchstabe eines zu verschlüsselnden Wortes einen eigenen Verschiebungswert aufweisen konnte. Ohne den „Schlüssel“, also die Information zur Positionierung der Scheiben zueinander (= den Verschiebungscode), war eine Nachricht nur schwerlich zu dekodieren. Das Objekt zeigt damit ein frühes mechanisches Verfahren, Sprache systematisch zu verschlüsseln und wieder zu entschlüsseln.'
+      ],
+      image: {
+        src: '../station-04/img/eknigma02.png',
+        alt: ''
+      },
+      ctaLabel: 'Ausprobieren'
+    },
+    action: {
+      eyebrow: 'Verschlüsseln mit System',
+      title: 'kryptografischer Zirkel & Permutationsscheibe',
+      closedLabel: 'Zur Startansicht',
+      deepening: {
+        tag: 'Vertiefung',
+        title: 'Weitere Verschlüsselungsverfahren',
+        paragraphs: [
+          'Weitere Hilfsmittel machten Verschlüsselung komplexer. Dazu gehörten Chiffriertabellen oder Codebücher, sogenannte Nomenklatoren, in denen Namen, Orte oder ganze Wörter durch andere Zeichen ersetzt wurden. Solche Verfahren prägten seit dem 15. Jahrhundert besonders die europäische Diplomatie, die auf dichte Netzwerke reisender Boten und Gesandter angewiesen war. In „schwarzen Kammern“ chiffrierten und dechiffrierten die Höfe abgefangene Nachrichten. Auch am sächsischen Hof gab es eine „schwarze Kammer“, die direkt in der Poststelle untergebracht war, um ein- bzw. ausgehende Schreiben zu kontrollieren. Noch zu DDR-Zeiten, zur Zeit des sogenannten Kalten Krieges, waren diese Verfahren gang und gäbe. In unserer heutigen Verfassung ist das Postgeheimnis klar geregelt, was durch die Digitalisierung und Privatisierung dieses Bereiches allerdings aufgeweicht wird.'
+        ]
+      }
+    }
+  };
+
   let key = 3;                 // innerSteps 0..25
   let mode = 'encrypt';
   let plain = 'DRESDEN';
   let crackIdx = [], crackSecret = 0, crackWord = '';
 
+  function setText(id, value) {
+    $(id).textContent = value;
+  }
+
+  function setTitle(id, value) {
+    const title = $(id);
+    const characterCount = value.replace(/\s/g, '').length;
+    title.classList.toggle('title--medium', id === 'startTitle' && characterCount >= 20 && characterCount < 39);
+    title.classList.toggle('title--long', id === 'startTitle' && characterCount >= 39);
+    title.innerHTML = '';
+
+    value.split(' ').forEach((word, index) => {
+      const wordNode = document.createElement('span');
+      wordNode.className = 'title-word';
+      wordNode.textContent = word;
+      title.appendChild(wordNode);
+      if (index < value.split(' ').length - 1) {
+        title.appendChild(document.createTextNode(' '));
+      }
+    });
+  }
+
+  function renderParagraphs(id, paragraphs) {
+    const container = $(id);
+    container.innerHTML = '';
+
+    paragraphs.forEach(text => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      container.appendChild(paragraph);
+    });
+  }
+
+  function renderStation(content) {
+    document.title = content.meta.title;
+    $('frame').setAttribute('aria-label', content.meta.ariaLabel);
+
+    setText('startEyebrow', content.start.eyebrow);
+    setTitle('startTitle', content.start.title);
+    renderParagraphs('startIntro', content.start.intro);
+    setText('tryLabel', content.start.ctaLabel);
+
+    const startImage = $('startImage');
+    startImage.src = content.start.image.src;
+    startImage.alt = content.start.image.alt;
+
+    setText('actionEyebrow', content.action.eyebrow);
+    setTitle('actionTitle', content.action.title);
+    $('btnClose').setAttribute('aria-label', content.action.closedLabel);
+
+    const deepening = content.action.deepening;
+    setText('ovTag', deepening.tag);
+    setText('ovTitle', deepening.title);
+    renderParagraphs('ovBody', deepening.paragraphs);
+  }
+
   /* ---------------- SVG-Scheibe aufbauen ---------------- */
+  const screenStart = $('screenStart');
+  const screenAction = $('screenAction');
+  const btnTry = $('btnTry');
+  const btnClose = $('btnClose');
   const NS = 'http://www.w3.org/2000/svg';
   const svg = $('disc');
   const el = (tag, at) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); return e; };
@@ -263,13 +356,25 @@
       toggle() { on = !on; return on; }
     };
   })();
-  $('mute').onclick = () => { const on = Sound.toggle(); const b = $('mute'); b.setAttribute('aria-pressed', on); b.textContent = on ? 'Ton' : 'Stumm'; if (on) Sound.tick(); };
+
+  btnTry.onclick = () => {
+    screenStart.classList.add('hidden');
+    screenAction.classList.remove('hidden');
+    kick();
+  };
+
+  btnClose.onclick = () => {
+    screenAction.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    kick();
+  };
 
   /* ---------------- Skalierung auf Fenster ---------------- */
-  function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080); $('frame').style.transform = 'scale(' + s + ')'; }
+  function fit() { $('frame').style.transform = 'none'; }
   window.addEventListener('resize', fit); fit();
 
   /* ---------------- Start ---------------- */
+  renderStation(STATION_CONTENT);
   renderPlain();
   switchMode('encrypt');
   kick();
