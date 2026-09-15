@@ -1,0 +1,36 @@
+/* Base layout for station pages — reuse across stations.
+   Keeps spacing consistent with design-system tokens and other stations.
+*/
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--font-family,Switzer),system-ui,sans-serif;color:var(--immersive-ink);-webkit-font-smoothing:antialiased}
+#scaler{min-height:100dvh;background:var(--immersive-bg)}
+#frame{width:100%;min-height:100dvh;position:relative;overflow-x:clip}
+.screen{min-height:100dvh}
+.screen.hidden{display:none}
+
+/* Start screen common */
+.screen-start{position:relative;height:100dvh;min-height:0;padding:clamp(40px,5vw,88px) clamp(24px,4vw,72px);display:flex;flex-direction:column;overflow:hidden}
+.station-marker{display:inline-flex;align-items:stretch;position:relative;z-index:2;font-family:var(--font-family-dm-mono);font-size:15px;letter-spacing:.18em;text-transform:var(--text-transform-dm-mono);color:var(--immersive-body)}
+.start-copy{flex:1;min-height:0;position:relative;z-index:2;margin-top:clamp(72px,12vh,130px);display:flex;flex-direction:column;overflow:hidden}
+.eyebrow{display:block;font-family:var(--font-family-dm-mono);font-size:15px;letter-spacing:.18em;text-transform:var(--text-transform-dm-mono);color:var(--immersive-body)}
+.title{font-family:var(--font-family-panchang),sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;line-height:.92}
+.title--hero{font-size:108px;margin-top:18px;white-space:normal}
+.hero-text{width:820px;max-width:100%;flex:1;min-height:0;margin-top:32px;padding:0 30px 0 0;display:flex;flex-direction:column;gap:20px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--immersive-accent) color-mix(in srgb,var(--immersive-body) 18%,transparent);position:relative}
+.hero-text p{font-size:24px;line-height:1.42;color:var(--immersive-body);max-width:68ch}
+.start-visual{position:absolute;right:-60px;top:-20px;bottom:0;width:1180px;display:flex;align-items:flex-end;justify-content:flex-end;z-index:1;pointer-events:none;opacity:.84}
+.station-image{width:100%;height:auto;max-height:1020px;object-fit:contain;object-position:bottom right}
+
+/* CTA */
+.cta{position:absolute;right:clamp(24px,4vw,72px);bottom:clamp(40px,5vw,80px);z-index:3;display:flex;align-items:stretch;border:none;background:none}
+.cta-label{display:flex;align-items:center;min-height:68px;padding:0 32px;font-family:var(--font-family-panchang),sans-serif;font-size:22px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;background:var(--color-neutral-800);color:var(--immersive-ink);transition:background var(--duration-1) var(--ease-standard)}
+.cta-icon{display:grid;place-items:center;width:68px;height:68px;background:var(--immersive-focus);color:var(--immersive-ink)}
+
+/* Action screen */
+.screen-action{position:relative;height:100dvh;min-height:0;padding:clamp(24px,3vw,40px);overflow:hidden}
+.action-hdr{display:flex;align-items:flex-start;justify-content:space-between}
+.close-btn{width:80px;height:80px;display:grid;place-items:center;font-size:32px;font-weight:300;color:var(--immersive-ink);background:var(--color-neutral-800);border:none}
+.action-layout{margin-top:clamp(44px,8vh,88px);display:grid;grid-template-columns:1.35fr 1fr;gap:24px}
+.template-card{border:1px solid var(--layer-border);background:color-mix(in srgb,var(--immersive-bg) 84%,var(--color-neutral-900));padding:24px;min-height:240px}
+
+@media (max-width:1100px){.start-copy{width:100%;max-width:100%;margin-top:64px}.hero-text{width:100%;max-height:none;padding-right:0;overflow-y:visible;scrollbar-gutter:auto}.start-visual{position:relative;inset:auto;width:min(92vw,760px);margin:-80px -24px 0 auto}.cta{position:relative;inset:auto;align-self:flex-end;margin-top:-24px}.action-layout{grid-template-columns:1fr}}
+@media (max-width:760px){.title--hero{font-size:clamp(42px,14vw,72px)}.template-card p{font-size:19px}.close-btn{width:60px;height:60px}.cta{width:100%;margin-top:8px}.cta-label{flex:1;min-height:60px;padding-inline:20px;font-size:18px}.cta-icon{width:60px;height:60px}}
