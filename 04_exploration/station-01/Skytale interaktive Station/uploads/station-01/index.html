@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station 1 · Vorlage</title>
+<link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-01.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" aria-label="Station 1 – Vorlage">
+
+    <section class="screen screen-start" id="screenStart">
+      <div class="station-marker" aria-label="Station 1 - Kryptografie">
+        <span class="station-marker__station">Station 1</span>
+        <span class="station-marker__topic">Kryptografie</span>
+      </div>
+
+      <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
+        <h1 class="title title--hero" id="startTitle"></h1>
+        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img src="../station-04/img/eknigma02.png" alt="" class="station-image" id="startImage">
+      </div>
+
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label" id="tryLabel"></span>
+        <span class="cta-icon">
+          <img src="../../00_design-system/symbols/brand-apple-arcade.svg" alt="">
+        </span>
+      </button>
+    </section>
+
+    <section class="screen screen-action hidden" id="screenAction">
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow" id="actionEyebrow"></span>
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <div class="action-layout">
+        <section class="template-card skytale-module">
+          <span class="template-tag">Zum Ausprobieren</span>
+          <h2>Skytale</h2>
+          <p class="module-intro" id="actionDescription"></p>
+
+          <label class="field-label" for="skyIn">Nachricht auf dem Lederstreifen</label>
+          <input class="field-input" type="text" id="skyIn" maxlength="36" autocomplete="off">
+
+          <label class="field-label" for="skyCols">Stabdurchmesser (Wicklungen): <b id="skyColsVal">5</b></label>
+          <input type="range" id="skyCols" min="2" max="7" value="5">
+
+          <div class="skytale-grid" id="skyGrid"></div>
+
+          <div class="io-block">
+            <span class="field-label">Abgewickelter Streifen</span>
+            <div class="hashline" id="skyOut">...</div>
+          </div>
+        </section>
+
+        <aside class="template-card info-card">
+          <span class="template-tag" id="deepeningTag"></span>
+          <h2 id="deepeningTitle"></h2>
+          <div id="deepeningBody"></div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="station-01.js"></script>
+</body>
+</html>

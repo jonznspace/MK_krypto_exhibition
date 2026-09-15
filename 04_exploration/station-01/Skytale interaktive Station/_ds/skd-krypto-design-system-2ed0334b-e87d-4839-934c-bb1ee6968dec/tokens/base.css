@@ -1,0 +1,47 @@
+/* Minimal element defaults so specimen cards, kits and slides agree. */
+:root { color-scheme: light dark }
+
+a { color: var(--color-interactive); text-decoration: underline; text-underline-offset: 2px }
+a:hover { color: var(--color-interactive-hover) }
+
+.krypto-immersive a { color: var(--color-primary-200) }
+.krypto-immersive a:hover { color: var(--color-primary-100) }
+
+/* Exhibition canvas: black ground, white ink, no rounded corners. */
+.krypto-immersive {
+  background: var(--immersive-bg);
+  color: var(--immersive-ink);
+  font-family: var(--font-body);
+  text-wrap: pretty;
+}
+
+/* Type roles */
+.krypto-display, .krypto-h1, .krypto-h2, .krypto-h3 {
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight);
+  font-stretch: var(--font-display-stretch);
+  line-height: var(--leading-display);
+  text-transform: uppercase;
+  margin: 0;
+}
+.krypto-display { font-size: var(--type-display) }
+.krypto-h1 { font-size: var(--type-h1) }
+.krypto-h2 { font-size: var(--type-h2) }
+.krypto-h3 { font-size: var(--type-h3) }
+
+.krypto-body-l { font-family: var(--font-body); font-size: var(--type-body-l); line-height: var(--leading-body) }
+.krypto-body-m { font-family: var(--font-body); font-size: var(--type-body-m); line-height: var(--leading-body) }
+.krypto-body-s { font-family: var(--font-body); font-size: var(--type-body-s); line-height: var(--leading-body) }
+
+/* Every technical label, tag, value and button in the exhibition layer. */
+.krypto-mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  line-height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: var(--duration-1) !important; transition-duration: var(--duration-1) !important }
+}

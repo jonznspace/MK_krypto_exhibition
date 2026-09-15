@@ -1,0 +1,23 @@
+/* Exhibition ("immersive") surface recipes.
+   The source defines three surface hierarchies on the black exhibition canvas:
+   01 Elevated, 02 Contained, 03 Subtle — plus the blue "Vertiefung" panel.
+   Values transcribed from /Design-Principles/Design-Briefing → ds-depth-elevation. */
+:root {
+  --immersive-surface-elevated: var(--immersive-layer-surface-elevated); /* @kind color */
+  --immersive-surface-contained: var(--immersive-layer-surface-raised); /* @kind color */
+  --immersive-surface-subtle: var(--immersive-layer-surface-base); /* @kind color */
+  --immersive-hairline: var(--color-neutral-700); /* @kind color */
+
+  /* Vertiefung / deep-dive panel — blue-glow variant */
+  --vertiefung-bg: var(--color-secondary-900); /* @kind color */
+  --vertiefung-border: var(--color-secondary-600); /* @kind color */
+  --vertiefung-glow: 0px 4px 60px 0px rgba(0, 64, 255, 0.32); /* @kind shadow */
+
+  /* keycaps */
+  --key-idle-bg: var(--color-neutral-800); /* @kind color */
+  --key-idle-ink: var(--color-neutral-600); /* @kind color */
+  --key-live-bg: var(--color-primary-50); /* @kind color */
+  --key-live-ink: var(--color-primary-800); /* @kind color */
+  --key-active-bg: var(--color-primary-500); /* @kind color */
+  --key-lit-bg: var(--color-primary-200); /* @kind color */
+}
