@@ -2,9 +2,9 @@ from livereload import Server
 
 server = Server()
 
-server.watch("index.html")
-""" server.watch("style.css")
-server.watch("script.js") """
+server.watch("04_exploration/**/*.html")
+server.watch("04_exploration/**/*.css")
+server.watch("04_exploration/**/*.js")
 
 server.serve(
     root=".",

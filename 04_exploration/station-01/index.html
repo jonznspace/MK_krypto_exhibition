@@ -46,36 +46,54 @@
       </header>
 
       <div class="action-layout">
-        <section class="template-card skytale-module">
-          <span class="template-tag">Zum Ausprobieren</span>
-          <h2>Skytale</h2>
-          <p class="module-intro" id="actionDescription"></p>
+        <section class="skytale-stage" id="skyStage" aria-label="Interaktive Skytale">
+            <div class="skytale-canvas" id="skyCanvas" aria-label="Drehbares Modell einer Skytale"></div>
+            <span class="skytale-stage__instruction">Ziehen zum Drehen</span>
+            <span class="skytale-stage__state" id="skyStageState">Gewickelt · lesbar längs des Stabs</span>
+        </section>
 
-          <label class="field-label" for="skyIn">Nachricht auf dem Lederstreifen</label>
+        <section class="skytale-controls">
+          <span class="template-tag">Zum Ausprobieren</span>
+          <div class="mode-switch" role="group" aria-label="Arbeitsmodus">
+            <button class="mode-button is-active" id="btnEncrypt" type="button" aria-pressed="true">Verschlüsseln</button>
+            <button class="mode-button" id="btnDecrypt" type="button" aria-pressed="false">Entschlüsseln</button>
+          </div>
+
+          <label class="field-label" for="skyIn" id="skyInLabel">Lesbare Nachricht</label>
           <input class="field-input" type="text" id="skyIn" maxlength="36" autocomplete="off">
+
+          <div class="skytale-keyboard hidden" id="skyKeyboard" aria-label="Bildschirmtastatur">
+            <div class="keyboard-row" id="keyboardRowA"></div>
+            <div class="keyboard-row" id="keyboardRowB"></div>
+            <div class="keyboard-row keyboard-row--bottom" id="keyboardRowC"></div>
+            <div class="keyboard-row keyboard-row--actions">
+              <button class="keyboard-key keyboard-key--wide" id="btnKeyboardSpace" type="button">Leerzeichen</button>
+              <button class="keyboard-key keyboard-key--wide" id="btnKeyboardBackspace" type="button">Löschen</button>
+              <button class="keyboard-key keyboard-key--wide" id="btnKeyboardDone" type="button">Fertig</button>
+            </div>
+          </div>
 
           <label class="field-label" for="skyCols">Stabdurchmesser (Wicklungen): <b id="skyColsVal">5</b></label>
           <input type="range" id="skyCols" min="2" max="7" value="5">
 
-          <div class="skytale-grid" id="skyGrid"></div>
+          <div class="skytale-actions">
+            <button class="wrap-button" id="btnWrap" type="button">Streifen abwickeln</button>
+            <button class="read-button" id="btnReadDirection" type="button" aria-pressed="true">Leserichtung</button>
+          </div>
 
           <div class="io-block">
-            <span class="field-label">Abgewickelter Streifen</span>
+            <span class="field-label" id="skyOutLabel">Abgewickelter Geheimtext</span>
             <div class="hashline" id="skyOut">...</div>
+            <button class="next-puzzle hidden" id="btnNextPuzzle" type="button">Nächste Skytale</button>
           </div>
         </section>
-
-        <aside class="template-card info-card">
-          <span class="template-tag" id="deepeningTag"></span>
-          <h2 id="deepeningTitle"></h2>
-          <div id="deepeningBody"></div>
-        </aside>
       </div>
     </section>
 
   </main>
 </div>
 
+<script src="../../shared/js/vendor/three.min.js"></script>
 <script src="station-01.js"></script>
 </body>
 </html>

@@ -188,8 +188,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .screen-action {
   position: relative;
+  height: 100dvh;
+  min-height: 0;
   padding: clamp(24px, 3vw, 40px);
-  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .action-hdr {
@@ -213,10 +217,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
 .action-layout {
-  margin-top: clamp(44px, 8vh, 88px);
+  margin-top: clamp(32px, 5vh, 56px);
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.45fr) minmax(380px, .8fr);
+  gap: var(--space-8);
+  flex: 1;
+  min-height: 0;
 }
 
 .template-card {
@@ -226,8 +232,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: 240px;
 }
 
-.skytale-module { min-height: 520px; }
-.info-card { min-height: 520px; }
+.skytale-controls {
+  min-width: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--layer-border);
+  background: var(--layer-surface-raised);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--immersive-accent) var(--color-neutral-800);
+}
+
+.skytale-controls::-webkit-scrollbar { width: 8px; }
+.skytale-controls::-webkit-scrollbar-track { background: var(--color-neutral-800); }
+.skytale-controls::-webkit-scrollbar-thumb { background: var(--immersive-accent); border: 2px solid var(--layer-surface-raised); }
 
 .template-tag {
   display: inline-block;
@@ -258,6 +275,59 @@ button { font: inherit; color: inherit; cursor: pointer; }
   margin-bottom: 20px;
 }
 
+.skytale-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--layer-border);
+  background: var(--immersive-bg);
+}
+
+.skytale-canvas { position: absolute; inset: 0; touch-action: none; }
+.skytale-canvas canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+.skytale-canvas canvas:active { cursor: grabbing; }
+
+.skytale-stage__instruction,
+.skytale-stage__state {
+  position: absolute;
+  left: var(--space-4);
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-caption-m);
+  letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted);
+  pointer-events: none;
+}
+
+.skytale-stage__instruction { top: var(--space-4); }
+.skytale-stage__state { bottom: var(--space-4); color: var(--immersive-accent); }
+
+.mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 20px;
+  border: 1px solid var(--layer-border);
+}
+
+.mode-button {
+  min-height: var(--size-control-lg);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-right: 1px solid var(--layer-border);
+  background: var(--layer-surface-raised);
+  color: var(--immersive-muted);
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-label);
+  letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+  transition: background var(--duration-2) var(--ease-standard), color var(--duration-2) var(--ease-standard);
+}
+
+.mode-button:last-child { border-right: 0; }
+.mode-button.is-active { background: var(--immersive-accent); color: var(--immersive-bg); }
+.mode-button:not(.is-active):hover { background: var(--state-pressed-surface); color: var(--immersive-ink); }
+.mode-button:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: -2px; position: relative; z-index: 1; }
+
 .field-label {
   display: block;
   margin-bottom: 8px;
@@ -282,30 +352,69 @@ button { font: inherit; color: inherit; cursor: pointer; }
   text-transform: var(--text-transform-dm-mono);
 }
 
+.skytale-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--layer-border);
+  background: var(--immersive-bg);
+}
+
+.skytale-keyboard.hidden { display: none; }
+.keyboard-row { display: flex; justify-content: center; gap: var(--space-2); }
+.keyboard-row--bottom { padding-inline: var(--space-5); }
+.keyboard-row--actions { margin-top: var(--space-1); }
+
+.keyboard-key {
+  display: grid;
+  place-items: center;
+  min-width: var(--size-control-md);
+  min-height: var(--size-control-md);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--layer-border);
+  background: var(--layer-surface-elevated);
+  color: var(--immersive-ink);
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-caption-m);
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+}
+
+.keyboard-key:hover { background: var(--state-pressed-surface); border-color: var(--immersive-accent); }
+.keyboard-key:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 2px; }
+.keyboard-key--wide { flex: 1; }
+
 #skyCols {
   width: 100%;
   margin-bottom: 18px;
   accent-color: var(--immersive-accent);
 }
 
-.skytale-grid {
+.skytale-actions {
   display: grid;
-  gap: 8px;
-  margin-bottom: 18px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
-.skytale-grid span {
-  min-height: 52px;
-  display: grid;
-  place-items: center;
+.wrap-button,
+.read-button {
+  min-height: var(--size-control-lg);
+  padding: 0 var(--space-4);
   border: 1px solid var(--layer-border);
-  background: color-mix(in srgb, var(--layer-surface-raised) 84%, var(--immersive-bg));
   font-family: var(--font-family-dm-mono);
-  font-size: 20px;
+  font-size: var(--font-size-label);
   letter-spacing: .08em;
   text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-ink);
 }
+
+.wrap-button { background: var(--immersive-accent); color: var(--immersive-bg); border-color: var(--immersive-accent); }
+.wrap-button:hover { background: var(--color-primary-300); }
+.read-button { background: transparent; color: var(--immersive-focus); border-color: var(--immersive-focus); }
+.read-button[aria-pressed="false"] { color: var(--immersive-muted); border-color: var(--layer-border); }
+.wrap-button:focus-visible, .read-button:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
 .io-block {
   border-top: 1px solid var(--layer-border);
@@ -313,6 +422,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 .hashline {
+  position: relative;
   min-height: 56px;
   padding: 12px 14px;
   border: 1px solid var(--immersive-accent);
@@ -327,12 +437,45 @@ button { font: inherit; color: inherit; cursor: pointer; }
   scrollbar-width: thin;
 }
 
+.hashline.is-solved { border-color: var(--color-success-strong); padding-right: 56px; }
+.hashline.is-solved::after {
+  content: '';
+  position: absolute;
+  top: 17px;
+  right: 19px;
+  width: 8px;
+  height: 16px;
+  border: solid var(--color-success-strong);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.next-puzzle {
+  width: 100%;
+  min-height: var(--size-control-lg);
+  margin-top: var(--space-3);
+  border: 1px solid var(--immersive-accent);
+  background: transparent;
+  color: var(--immersive-accent);
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-label);
+  letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+}
+
+.next-puzzle:hover { background: var(--state-pressed-surface); }
+.next-puzzle:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
+.next-puzzle.hidden { display: none; }
+
 @media (max-width: 1100px) {
   .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
   .hero-text { width: 100%; max-height: none; padding-right: 0; overflow-y: visible; scrollbar-gutter: auto; }
   .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -24px 0 auto; }
   .cta { position: relative; inset: auto; align-self: flex-end; margin-top: -24px; }
-  .action-layout { grid-template-columns: 1fr; }
+  .screen-action { height: auto; min-height: 100dvh; overflow: visible; }
+  .action-layout { grid-template-columns: 1fr; min-height: 0; gap: var(--space-5); }
+  .skytale-stage { height: clamp(320px, 52vw, 520px); }
+  .skytale-controls { overflow: visible; }
 }
 
 @media (max-width: 760px) {
@@ -343,6 +486,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .cta { width: 100%; margin-top: 8px; }
   .cta-label { flex: 1; min-height: 60px; padding-inline: 20px; font-size: 18px; }
   .cta-icon { width: 60px; height: 60px; }
+  .mode-button { padding-inline: var(--space-2); font-size: var(--font-size-caption-m); }
+  .keyboard-row { gap: var(--space-1); }
+  .keyboard-key { min-width: 32px; min-height: 36px; padding-inline: var(--space-1); font-size: var(--font-size-caption-s); }
+  .keyboard-row--bottom { padding-inline: var(--space-3); }
+  .skytale-stage { height: 300px; }
+  .skytale-actions { grid-template-columns: 1fr; gap: var(--space-2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
