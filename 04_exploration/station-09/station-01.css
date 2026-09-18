@@ -39,6 +39,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -.01em;
+  word-spacing: .24em;
   line-height: .92;
 }
 

@@ -6,6 +6,7 @@
 <title>Station 3 · Leibniz-Rechenmaschine</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
 <link rel="stylesheet" href="station-03.css">
+<link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 </head>
 <body>
 
@@ -45,28 +46,64 @@
         <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
       </header>
 
-      <div class="template-grid">
-        <section class="template-card binary-module template-card--wide">
+      <div class="tabs" role="tablist" aria-label="Binärstation">
+        <button class="tab active" id="tabNames" type="button" role="tab" aria-selected="true">Dein Name in Binär</button>
+        <button class="tab" id="tabDecode" type="button" role="tab" aria-selected="false">Binär entschlüsseln</button>
+      </div>
+
+      <section class="binary-tab-panel" id="binaryTestPanel" role="tabpanel">
+        <div class="template-grid">
+          <section class="template-card binary-module">
           <span class="template-tag" id="binaryTag"></span>
           <h2 id="binaryTitle"></h2>
           <p id="actionDescription"></p>
           <label class="binary-label" id="binaryLabel" for="binaryInput"></label>
           <input class="binary-input" id="binaryInput" type="text" maxlength="12" autocomplete="off" spellcheck="false">
+          <div class="binary-keyboard hidden" id="binaryKeyboard" aria-label="Bildschirmtastatur">
+            <div class="keyboard-row" id="binaryKeyboardRowA"></div>
+            <div class="keyboard-row" id="binaryKeyboardRowB"></div>
+            <div class="keyboard-row keyboard-row--bottom" id="binaryKeyboardRowC"></div>
+            <div class="keyboard-row keyboard-row--actions">
+              <button class="keyboard-key keyboard-key--wide" id="btnBinarySpace" type="button">Leerzeichen</button>
+              <button class="keyboard-key keyboard-key--wide" id="btnBinaryBackspace" type="button">Löschen</button>
+              <button class="keyboard-key keyboard-key--wide" id="btnBinaryDone" type="button">Fertig</button>
+            </div>
+          </div>
           <div class="binary-grid" id="binaryGrid" aria-live="polite"></div>
-          <p class="binary-info" id="binaryInfo"></p>
-        </section>
+          </section>
 
-        <section class="template-card">
-          <span class="template-tag" id="deepeningTag"></span>
-          <h2 id="deepeningTitle"></h2>
-          <div id="deepeningBody"></div>
+          <section class="template-card binary-history" aria-label="Laufende binäre Signale">
+            <div class="binary-signal" id="binaryHistory" aria-label="Aktuelle binäre Signalfolge" aria-live="polite"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="binary-tab-panel hidden" id="binaryDecodePanel" role="tabpanel">
+        <section class="template-card binary-challenge" aria-labelledby="challengeTitle">
+          <span class="template-tag">Entschlüsseln</span>
+          <h2 id="challengeTitle">Binär entschlüsseln</h2>
+          <div class="decode-layout">
+            <div>
+              <h3>Was steht hier?</h3>
+              <div class="challenge-code" id="challengeCode"></div>
+            </div>
+            <div class="character-map" id="characterMap" aria-label="Buchstaben und ihre 8-Bit-Codes"></div>
+          </div>
+          <label class="binary-label" for="challengeInput">Deine Lösung</label>
+          <input class="binary-input challenge-input" id="challengeInput" type="text" maxlength="12" autocomplete="off" spellcheck="false">
+          <div class="challenge-actions">
+            <button class="challenge-button" id="challengeCheck" type="button">Prüfen</button>
+            <button class="challenge-button challenge-button--quiet" id="challengeNext" type="button">Neue Folge</button>
+          </div>
+          <p class="challenge-feedback" id="challengeFeedback" aria-live="polite"></p>
         </section>
-      </div>
+      </section>
     </section>
 
   </main>
 </div>
 
+<script src="../../shared/js/station-language-switch.js"></script>
 <script src="station-03.js"></script>
 </body>
 </html>

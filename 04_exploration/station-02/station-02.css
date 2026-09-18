@@ -55,6 +55,29 @@ html, body {
   overflow: hidden;
 }
 
+#frame > .station-language-switch {
+  top: clamp(40px, 5vw, 88px);
+  right: clamp(24px, 4vw, 72px);
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+#frame > .station-language-switch .station-language-switch__button {
+  min-width: 48px;
+  min-height: 32px;
+  padding: 0 14px;
+  font-family: var(--font-family-dm-mono);
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+
+#screenAction:not(.hidden) ~ .station-language-switch {
+  display: none;
+}
+
 .station-marker {
   display: inline-flex; align-items: stretch;
   position: relative; z-index: 2;
@@ -96,6 +119,7 @@ html, body {
   margin-top: 18px;
   width: 100%;
   max-width: 100%;
+  word-spacing: .24em;
   white-space: normal;
   line-height: .92;
 }
@@ -159,7 +183,7 @@ html, body {
 }
 .action-hdr { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; }
 .action-hdr-copy { flex: 1; min-width: 0; padding-right: 32px; }
-.title--compact { width: 100%; font-size: 68px; margin-top: 10px; white-space: normal; line-height: .92; }
+.title--compact { width: 100%; font-size: 68px; margin-top: 10px; word-spacing: .24em; white-space: normal; line-height: .92; }
 
 .close-btn {
   width: 80px; height: 80px; flex: none;
@@ -372,6 +396,7 @@ html, body {
   font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
   max-width: calc(100% - 64px);
   font-size: clamp(28px, 2.1vw, 40px); text-transform: uppercase; margin: 10px 0 20px; line-height: 1;
+  word-spacing: .24em;
   overflow-wrap: anywhere;
 }
 .ov-card p { font-size: 20px; line-height: 1.6; color: var(--immersive-body); margin-bottom: 16px; max-width: 62ch; }

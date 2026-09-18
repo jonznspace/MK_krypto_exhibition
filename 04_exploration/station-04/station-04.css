@@ -43,7 +43,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .title {
   font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
-  text-transform: uppercase; letter-spacing: -.01em; line-height: .92;
+  text-transform: uppercase; letter-spacing: -.01em; word-spacing: .24em; line-height: .92;
 }
 .title-word { display: inline-block; max-width: 100%; margin-right: .16em; overflow-wrap: anywhere; }
 .title--hero { width: 100%; max-width: 100%; font-size: 108px; margin-top: 18px; white-space: normal; }
@@ -62,6 +62,25 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+#frame > .station-language-switch {
+  top: clamp(40px, 5vw, 88px);
+  right: clamp(24px, 4vw, 72px);
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+#frame > .station-language-switch .station-language-switch__button {
+  min-width: 48px;
+  min-height: 32px;
+  padding: 0 14px;
+  font-family: var(--font-family-dm-mono);
+  font-size: 13px;
+  letter-spacing: .12em;
 }
 
 .station-marker {

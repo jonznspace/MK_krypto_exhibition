@@ -92,6 +92,16 @@
     });
   }
 
+  function setDeepeningTitle() {
+    const title = $('ovTitle');
+    title.innerHTML = '';
+    title.append(
+      document.createTextNode('Weitere Verschlüsselungs-'),
+      document.createElement('br'),
+      document.createTextNode('verfahren')
+    );
+  }
+
   function renderStation(content) {
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
@@ -111,7 +121,7 @@
 
     const deepening = content.action.deepening;
     setText('ovTag', deepening.tag);
-    setText('ovTitle', deepening.title);
+    setDeepeningTitle();
     renderParagraphs('ovBody', deepening.paragraphs);
   }
 
@@ -243,7 +253,6 @@
       az.appendChild(b);
     });
   })();
-  $('playBtn').onclick = () => { Sound.tick(); playEncrypt(); };
   $('clearBtn').onclick = () => { Sound.tick(); plain = ''; renderPlain(); };
 
   /* ---------------- Modus: Knacken ---------------- */

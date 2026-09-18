@@ -6,6 +6,7 @@
 <title>Station 1 · Vorlage</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
 <link rel="stylesheet" href="station-01.css">
+<link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 </head>
 <body>
 
@@ -54,9 +55,9 @@
 
         <section class="skytale-controls">
           <span class="template-tag">Zum Ausprobieren</span>
-          <div class="mode-switch" role="group" aria-label="Arbeitsmodus">
-            <button class="mode-button is-active" id="btnEncrypt" type="button" aria-pressed="true">Verschlüsseln</button>
-            <button class="mode-button" id="btnDecrypt" type="button" aria-pressed="false">Entschlüsseln</button>
+          <div class="tabs" role="tablist" aria-label="Arbeitsmodus">
+            <button class="tab active" id="btnEncrypt" type="button" role="tab" aria-selected="true">Verschlüsseln</button>
+            <button class="tab" id="btnDecrypt" type="button" role="tab" aria-selected="false">Entschlüsseln</button>
           </div>
 
           <label class="field-label" for="skyIn" id="skyInLabel">Lesbare Nachricht</label>
@@ -94,6 +95,7 @@
 </div>
 
 <script src="../../shared/js/vendor/three.min.js"></script>
+<script src="../../shared/js/station-language-switch.js"></script>
 <script src="station-01.js"></script>
 </body>
 </html>

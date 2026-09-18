@@ -1,8 +1,228 @@
-/* Station-08 specific overrides. Keep minimal — prefer tokens and base.css.
-   Use this file for station-08 visual adjustments only.
-*/
+/* Station 08 - Hochkantstation: Was ist Geld? */
 
-/* Example: adjust the start image source size or offset for this station */
-.start-visual { right: -40px; opacity: 0.9 }
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
 
-/* Add any station-specific spacing tweaks here */
+#scaler {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: #000;
+}
+
+#frame {
+  width: min(100vw, 1080px);
+  min-height: 100dvh;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--immersive-body) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--immersive-body) 5%, transparent) 1px, transparent 1px),
+    var(--immersive-bg);
+  background-size: 72px 72px;
+}
+
+.screen-start {
+  padding: 72px 64px 88px;
+}
+
+.start-visual {
+  display: none;
+}
+
+.start-copy {
+  width: 100%;
+  margin-top: 180px;
+}
+
+.title--hero {
+  max-width: 9ch;
+  font-size: clamp(96px, 15vw, 164px);
+}
+
+.hero-text {
+  width: 100%;
+  max-height: 540px;
+  margin-top: 56px;
+  padding-right: 20px;
+}
+
+.hero-text p {
+  max-width: 34ch;
+  font-size: 31px;
+  line-height: 1.34;
+}
+
+.cta {
+  right: 64px;
+  bottom: 88px;
+}
+
+#frame > .station-language-switch {
+  right: 64px;
+}
+
+.screen-action {
+  padding: 56px 56px 64px;
+}
+
+.action-hdr .title--compact {
+  max-width: 8ch;
+  font-size: clamp(68px, 10vw, 116px);
+}
+
+.close-btn {
+  width: 72px;
+  height: 72px;
+}
+
+.money-layout {
+  height: calc(100dvh - 250px);
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  gap: 32px;
+}
+
+.money-topic-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+  gap: 10px;
+}
+
+.money-topic {
+  min-height: 92px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid var(--layer-border);
+  background: var(--layer-surface-raised);
+  color: var(--immersive-ink);
+  text-align: left;
+  transition: background var(--duration-1) var(--ease-standard), border-color var(--duration-1) var(--ease-standard);
+}
+
+.money-topic span {
+  font-family: var(--font-family-dm-mono);
+  font-size: 13px;
+  letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted);
+}
+
+.money-topic strong {
+  font-family: var(--font-family-panchang), sans-serif;
+  font-size: clamp(18px, 2.4vw, 26px);
+  line-height: 1;
+  text-transform: uppercase;
+  word-spacing: .24em;
+}
+
+.money-topic.active {
+  border-color: var(--immersive-accent);
+  background: color-mix(in srgb, var(--immersive-accent) 16%, var(--layer-surface-raised));
+}
+
+.money-topic:focus-visible {
+  outline: 2px solid var(--immersive-focus);
+  outline-offset: 3px;
+}
+
+.money-detail {
+  min-height: 0;
+  padding: 34px 38px;
+  border: 1px solid var(--layer-border);
+  background: color-mix(in srgb, var(--immersive-bg) 88%, var(--color-neutral-850));
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--immersive-accent) var(--color-neutral-800);
+}
+
+.money-detail h2 {
+  margin: 12px 0 28px;
+  font-family: var(--font-family-panchang), sans-serif;
+  font-size: clamp(38px, 5vw, 56px);
+  line-height: 1;
+  text-transform: uppercase;
+  word-spacing: .24em;
+  overflow-wrap: anywhere;
+}
+
+.money-detail p {
+  max-width: 36ch;
+  color: var(--immersive-body);
+  font-size: clamp(22px, 2.45vw, 29px);
+  line-height: 1.36;
+}
+
+.money-detail__intro + .money-detail__intro {
+  margin-top: 10px;
+}
+
+.money-timeline,
+.money-form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.money-timeline__item,
+.money-form {
+  padding: 16px 18px;
+  border: 1px solid var(--layer-border);
+  background: var(--immersive-bg);
+}
+
+.money-timeline__item strong,
+.money-form h3 {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--immersive-ink);
+  font-family: var(--font-family-dm-mono);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.money-timeline__item p,
+.money-form p {
+  max-width: none;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.money-form p + p {
+  margin-top: 8px;
+}
+
+@media (max-width: 760px) {
+  .screen-start,
+  .screen-action {
+    padding: 40px 28px 48px;
+  }
+
+  .start-copy {
+    margin-top: 96px;
+  }
+
+  .money-layout {
+    height: calc(100dvh - 190px);
+    margin-top: 28px;
+    grid-template-columns: 1fr;
+  }
+
+  .money-topic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .money-topic {
+    min-height: 112px;
+  }
+}

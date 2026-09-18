@@ -39,6 +39,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -.01em;
+  word-spacing: .24em;
   line-height: .92;
 }
 
@@ -56,6 +57,25 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+#frame > .station-language-switch {
+  top: clamp(40px, 5vw, 88px);
+  right: clamp(24px, 4vw, 72px);
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+#frame > .station-language-switch .station-language-switch__button {
+  min-width: 48px;
+  min-height: 32px;
+  padding: 0 14px;
+  font-family: var(--font-family-dm-mono);
+  font-size: 13px;
+  letter-spacing: .12em;
 }
 
 .station-marker {
@@ -302,31 +322,35 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .skytale-stage__instruction { top: var(--space-4); }
 .skytale-stage__state { bottom: var(--space-4); color: var(--immersive-accent); }
 
-.mode-switch {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-bottom: 20px;
+.tabs {
+  display: flex;
+  gap: 8px;
   border: 1px solid var(--layer-border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  width: fit-content;
+  margin-bottom: 20px;
 }
 
-.mode-button {
-  min-height: var(--size-control-lg);
-  padding: 0 var(--space-4);
-  border: 0;
-  border-right: 1px solid var(--layer-border);
-  background: var(--layer-surface-raised);
-  color: var(--immersive-muted);
+.tab {
+  min-height: 48px;
+  padding: 8px 28px;
+  cursor: pointer;
   font-family: var(--font-family-dm-mono);
   font-size: var(--font-size-label);
   letter-spacing: .08em;
   text-transform: var(--text-transform-dm-mono);
-  transition: background var(--duration-2) var(--ease-standard), color var(--duration-2) var(--ease-standard);
+  background: transparent;
+  color: var(--immersive-muted);
+  border: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-1) var(--ease-standard),
+              background var(--duration-1) var(--ease-standard);
 }
 
-.mode-button:last-child { border-right: 0; }
-.mode-button.is-active { background: var(--immersive-accent); color: var(--immersive-bg); }
-.mode-button:not(.is-active):hover { background: var(--state-pressed-surface); color: var(--immersive-ink); }
-.mode-button:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: -2px; position: relative; z-index: 1; }
+.tab.active { color: var(--immersive-bg); background: var(--immersive-accent); }
+.tab:not(.active):hover { background: var(--state-pressed-surface); color: var(--immersive-ink); }
+.tab:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
 .field-label {
   display: block;

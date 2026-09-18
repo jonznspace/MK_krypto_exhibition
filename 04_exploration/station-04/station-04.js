@@ -80,18 +80,22 @@
   }
 
   function setTitle(id, value) {
-    const [firstWord, ...remainingWords] = value.split(' ');
     const title = $(id);
     const characterCount = value.replace(/\s/g, '').length;
     title.classList.toggle('title--medium', id === 'startTitle' && characterCount >= 20 && characterCount < 39);
     title.classList.toggle('title--long', id === 'startTitle' && characterCount >= 39);
     title.innerHTML = '';
 
-    const firstWordNode = document.createElement('span');
-    firstWordNode.className = 'title-word';
-    firstWordNode.textContent = firstWord;
-    title.appendChild(firstWordNode);
-    title.appendChild(document.createTextNode(remainingWords.join(' ')));
+    const words = value.split(' ');
+    words.forEach((word, index) => {
+      const wordNode = document.createElement('span');
+      wordNode.className = 'title-word';
+      wordNode.textContent = word;
+      title.appendChild(wordNode);
+      if (index < words.length - 1) {
+        title.appendChild(document.createTextNode(' '));
+      }
+    });
   }
 
   function renderParagraphs(id, paragraphs) {
@@ -152,20 +156,6 @@
 
       keyboard.appendChild(rowNode);
     });
-
-    if (variant === 'keyboard--input') {
-      const spaceRow = document.createElement('div');
-      spaceRow.className = 'key-row key-row--space';
-
-      const spaceKey = document.createElement('button');
-      spaceKey.className = 'key key--space';
-      spaceKey.type = 'button';
-      spaceKey.textContent = 'LEERTASTE';
-      spaceKey.addEventListener('click', () => pressKey(' '));
-
-      spaceRow.appendChild(spaceKey);
-      keyboard.appendChild(spaceRow);
-    }
 
     container.innerHTML = '';
     container.appendChild(keyboard);

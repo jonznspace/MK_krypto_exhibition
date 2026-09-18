@@ -391,10 +391,10 @@
   function setSkytaleMode(mode) {
     skytaleMode = mode;
     const isEncrypting = mode === 'encrypt';
-    $('btnEncrypt').classList.toggle('is-active', isEncrypting);
-    $('btnDecrypt').classList.toggle('is-active', !isEncrypting);
-    $('btnEncrypt').setAttribute('aria-pressed', String(isEncrypting));
-    $('btnDecrypt').setAttribute('aria-pressed', String(!isEncrypting));
+    $('btnEncrypt').classList.toggle('active', isEncrypting);
+    $('btnDecrypt').classList.toggle('active', !isEncrypting);
+    $('btnEncrypt').setAttribute('aria-selected', String(isEncrypting));
+    $('btnDecrypt').setAttribute('aria-selected', String(!isEncrypting));
     $('skyInLabel').textContent = isEncrypting ? 'Lesbare Nachricht' : 'Gefundener Streifen';
     $('skyKeyboard').classList.add('hidden');
     const puzzle = currentPuzzle();
