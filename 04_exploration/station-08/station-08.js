@@ -4,37 +4,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const $ = id => document.getElementById(id);
   const set = (id, value) => { const element = $(id); if (element) element.textContent = value; };
 
-  const sections = [
+  const introSections = [
     {
-      kicker: 'Grundlagen',
+      kicker: '',
       title: 'Was ist Geld?',
-      type: 'text',
       body: 'Geld ist ein Versprechen, das drei Funktionen erfüllen soll: Es dient als Tauschmittel, als Recheneinheit zum Vergleich von Waren und als Wertspeicher zur Erhaltung von Kaufkraft über die Zeit. Diese Funktion kann Geld nur erfüllen, wenn es im Alltag angenommen wird, ohne dass Herausgeber, Deckung oder Einlösbarkeit bei jedem Tausch/Transfer überprüft werden müssen – ein Zustand, der Regeln, Institutionen und Vertrauen voraussetzt. Die Formen des Geldes haben sich über Jahrhunderte verändert, von Muscheln, Münzen über Papierscheine und Buchgeld zum modernen Fiatgeld. Die Fragen, die es aufwirft, sind aber immer dieselben: Wer garantiert den Wert, wer trägt das Risiko, und wer bestimmt die Regeln?'
     },
     {
       kicker: 'Fiatgeld',
       title: 'Fiatgeld',
-      type: 'text',
       body: 'Unser derzeitiges Geldsystem basiert auf sogenanntem Fiatgeld. Dieser Fachbegriff findet kaum Eingang in die Öffentlichkeit. Er stammt vom lateinischen fiat („es werde") und bezeichnet Geld, das seinen Wert nicht aus einem Eigenwert oder einer Edelmetalldeckung bezieht, sondern allein aus staatlicher Anordnung und gesellschaftlichem Vertrauen. Ein heutiger 20-Euro-Schein ist in seiner Nutzung als Papier praktisch wertlos und eine 1-Euro-Münze enthält Metall im Wert weniger Cent. Sie funktionieren aber als Geld, weil der Staat sie zum gesetzlichen Zahlungsmittel erklärt hat und die Zentralbank ihre Stabilität sichert.'
     },
     {
       kicker: 'Vertrauen',
       title: 'Vertrauen',
-      type: 'text',
       body: 'Wir vertrauen, dass andere unser Geld akzeptieren und dieses Vertrauen wird von Staaten, Notenbanken und Banken garantiert, die Geld ausgeben und Konten verwalten.'
     },
     {
       kicker: '1944 bis 1971',
       title: 'Bretton Woods',
-      type: 'text',
       body: 'Von 1944 bis 1971 existierten mit dem Bretton-Woods-Währungssystem internationale Währungen, die über feste Wechselkurse an den Dollar gebunden waren. Dieser war seinerseits zu einem festen Kurs in Gold einlösbar. Mit der Aufhebung der Einlösbarkeit des Dollars in Gold 1971 durch die amerikanische Nixon-Regierung änderte sich das Währungssystem grundlegend.'
     },
     {
       kicker: 'Seit 1990',
       title: 'Digitales Geld',
-      type: 'text',
       body: 'Eine weitere einschneidende Veränderung war die aufkommende Idee von digitalem Geld. Sie entwickelt sich seit den 1990er Jahren mit E-Geld, Online-Banking, Kryptowerten und Stablecoins rapide weiter. Mit China existiert nunmehr das erste Land, welches, neben traditionellen Geldformen, eine Digitalwährung besitzt.'
-    },
+    }
+  ];
+
+  const deepDives = [
     {
       kicker: 'Vertiefung 1',
       title: 'Zäsuren zum Fiatgeld',
@@ -89,16 +87,24 @@ document.addEventListener('DOMContentLoaded', () => {
   $('frame').setAttribute('aria-label', 'Station 8 – Was ist Geld?');
   set('startEyebrow', 'Neue Entwicklungen');
   set('startTitle', 'Was ist Geld?');
-  set('tryLabel', 'Ausprobieren');
+  set('tryLabel', 'Mehr erfahren');
   set('actionEyebrow', 'Neue Entwicklungen');
-  set('actionTitle', 'Was ist Geld?');
+  set('actionTitle', 'Vertiefung');
 
   const intro = $('startIntro');
   if (intro) {
     intro.innerHTML = '';
-    const paragraph = document.createElement('p');
-    paragraph.textContent = sections[0].body;
-    intro.appendChild(paragraph);
+    introSections.forEach(section => {
+      if (section.kicker) {
+        const kicker = document.createElement('span');
+        kicker.className = 'hero-text__kicker';
+        kicker.textContent = section.kicker;
+        intro.append(kicker);
+      }
+      const paragraph = document.createElement('p');
+      paragraph.textContent = section.body;
+      intro.append(paragraph);
+    });
   }
 
   function appendText(section, detail) {
@@ -154,36 +160,44 @@ document.addEventListener('DOMContentLoaded', () => {
     detail.appendChild(grid);
   }
 
-  function showSection(index) {
-    document.querySelectorAll('.money-topic').forEach((button, buttonIndex) => {
-      button.classList.toggle('active', buttonIndex === index);
-      button.setAttribute('aria-pressed', String(buttonIndex === index));
-    });
-    const section = sections[index];
-    const detail = $('moneyDetail');
-    detail.innerHTML = '';
-    const tag = document.createElement('span');
-    tag.className = 'template-tag';
-    tag.textContent = section.kicker;
-    const title = document.createElement('h2');
-    title.textContent = section.title;
-    detail.append(tag, title);
-
-    if (section.type === 'timeline') appendTimeline(section, detail);
-    else if (section.type === 'forms') appendForms(section, detail);
-    else appendText(section, detail);
+  function fillDeepDiveBody(section, body) {
+    if (section.type === 'timeline') appendTimeline(section, body);
+    else if (section.type === 'forms') appendForms(section, body);
+    else appendText(section, body);
   }
 
-  const topics = $('moneyTopics');
-  topics.innerHTML = '';
-  sections.forEach((section, index) => {
-    const button = document.createElement('button');
-    button.className = 'money-topic';
-    button.type = 'button';
-    button.setAttribute('aria-pressed', 'false');
-    button.innerHTML = `<span>${section.kicker}</span><strong>${section.title}</strong>`;
-    button.addEventListener('click', () => showSection(index));
-    topics.appendChild(button);
+  function toggleDeepDive(index) {
+    document.querySelectorAll('.deepdive-item').forEach((item, itemIndex) => {
+      const isOpen = itemIndex === index ? item.classList.toggle('open') : item.classList.remove('open');
+      item.querySelector('.deepdive-header').setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  const list = $('deepdiveList');
+  list.innerHTML = '';
+  deepDives.forEach((section, index) => {
+    const item = document.createElement('section');
+    item.className = 'deepdive-item';
+
+    const header = document.createElement('button');
+    header.className = 'deepdive-header';
+    header.type = 'button';
+    header.setAttribute('aria-expanded', 'false');
+    header.innerHTML = `<span class="deepdive-header-copy"><span>${section.kicker}</span><strong>${section.title}</strong></span><span class="deepdive-chevron">⌄</span>`;
+    header.addEventListener('click', () => toggleDeepDive(index));
+
+    const panel = document.createElement('div');
+    panel.className = 'deepdive-panel';
+    const panelInner = document.createElement('div');
+    panelInner.className = 'deepdive-panel-inner';
+    const body = document.createElement('div');
+    body.className = 'deepdive-body';
+    fillDeepDiveBody(section, body);
+    panelInner.appendChild(body);
+    panel.appendChild(panelInner);
+
+    item.append(header, panel);
+    list.appendChild(item);
   });
-  showSection(0);
 });
+

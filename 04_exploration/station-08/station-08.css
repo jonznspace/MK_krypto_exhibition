@@ -34,6 +34,7 @@ body {
 .start-copy {
   width: 100%;
   margin-top: 180px;
+  padding-bottom: 160px;
 }
 
 .title--hero {
@@ -43,24 +44,38 @@ body {
 
 .hero-text {
   width: 100%;
-  max-height: 540px;
   margin-top: 56px;
   padding-right: 20px;
+  overflow-y: auto !important;
+  scrollbar-gutter: auto;
 }
 
 .hero-text p {
-  max-width: 34ch;
+  max-width: 46ch;
   font-size: 31px;
   line-height: 1.34;
 }
 
 .cta {
+  position: absolute;
+  inset: auto;
   right: 64px;
   bottom: 88px;
+  margin-top: 0;
 }
 
 #frame > .station-language-switch {
-  right: 64px;
+  top: auto;
+  left: 64px;
+  right: auto;
+  bottom: 88px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 56px;
+  bottom: 64px;
+  z-index: 4;
 }
 
 .screen-action {
@@ -68,46 +83,100 @@ body {
 }
 
 .action-hdr .title--compact {
-  max-width: 8ch;
-  font-size: clamp(68px, 10vw, 116px);
+  max-width: 11ch;
+  font-size: clamp(52px, 8vw, 92px);
 }
 
-.close-btn {
-  width: 72px;
-  height: 72px;
+.hero-text__kicker {
+  display: block;
+  margin-top: 26px;
+  font-family: var(--font-family-dm-mono);
+  font-size: 14px;
+  letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-accent);
 }
 
-.money-layout {
+.hero-text__kicker:first-child {
+  margin-top: 0;
+}
+
+.hero-text p + .hero-text__kicker {
+  margin-top: 26px;
+}
+
+.deepdive-list {
   height: calc(100dvh - 250px);
   margin-top: 48px;
-  display: grid;
-  grid-template-columns: 330px minmax(0, 1fr);
-  gap: 32px;
-}
-
-.money-topic-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-content: start;
-  gap: 10px;
-}
-
-.money-topic {
-  min-height: 92px;
-  padding: 16px 18px;
+  padding-right: 12px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--immersive-accent) var(--color-neutral-800);
+}
+
+.deepdive-item {
+  position: relative;
+  margin-bottom: 14px;
+  padding-left: 44px;
+}
+
+.deepdive-item::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: -14px;
+  width: 2px;
+  background: var(--layer-border);
+}
+
+.deepdive-item:last-child::before {
+  bottom: 0;
+}
+
+.deepdive-item::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 24px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--immersive-bg);
+  border: 2px solid var(--immersive-accent);
+  transition: background var(--duration-2) var(--ease-standard);
+}
+
+.deepdive-item.open::after {
+  background: var(--immersive-accent);
+}
+
+.deepdive-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
+  padding: 18px 24px;
   border: 1px solid var(--layer-border);
   background: var(--layer-surface-raised);
   color: var(--immersive-ink);
   text-align: left;
+  cursor: pointer;
   transition: background var(--duration-1) var(--ease-standard), border-color var(--duration-1) var(--ease-standard);
 }
 
-.money-topic span {
+.deepdive-header-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deepdive-header-copy span {
   font-family: var(--font-family-dm-mono);
   font-size: 13px;
   letter-spacing: .16em;
@@ -115,53 +184,71 @@ body {
   color: var(--immersive-muted);
 }
 
-.money-topic strong {
+.deepdive-header-copy strong {
   font-family: var(--font-family-panchang), sans-serif;
-  font-size: clamp(18px, 2.4vw, 26px);
-  line-height: 1;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.05;
   text-transform: uppercase;
   word-spacing: .24em;
 }
 
-.money-topic.active {
+.deepdive-chevron {
+  flex: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--immersive-muted);
+  transition: transform var(--duration-2) var(--ease-standard);
+}
+
+.deepdive-item.open .deepdive-header {
   border-color: var(--immersive-accent);
   background: color-mix(in srgb, var(--immersive-accent) 16%, var(--layer-surface-raised));
 }
 
-.money-topic:focus-visible {
+.deepdive-item.open .deepdive-chevron {
+  transform: rotate(180deg);
+}
+
+.deepdive-header:focus-visible {
   outline: 2px solid var(--immersive-focus);
   outline-offset: 3px;
 }
 
-.money-detail {
+.deepdive-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-4) var(--ease-standard);
+}
+
+.deepdive-item.open .deepdive-panel {
+  grid-template-rows: 1fr;
+}
+
+.deepdive-panel-inner {
   min-height: 0;
-  padding: 34px 38px;
+  overflow: hidden;
+}
+
+.deepdive-body {
+  padding: 30px 6px 8px;
   border: 1px solid var(--layer-border);
+  border-top: none;
   background: color-mix(in srgb, var(--immersive-bg) 88%, var(--color-neutral-850));
-  overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--immersive-accent) var(--color-neutral-800);
 }
 
-.money-detail h2 {
-  margin: 12px 0 28px;
-  font-family: var(--font-family-panchang), sans-serif;
-  font-size: clamp(38px, 5vw, 56px);
-  line-height: 1;
-  text-transform: uppercase;
-  word-spacing: .24em;
-  overflow-wrap: anywhere;
-}
-
-.money-detail p {
-  max-width: 36ch;
+.deepdive-body p {
+  max-width: 60ch;
   color: var(--immersive-body);
-  font-size: clamp(22px, 2.45vw, 29px);
-  line-height: 1.36;
+  font-size: clamp(24px, 2.8vw, 32px);
+  line-height: 1.4;
+  padding: 0 20px;
 }
 
-.money-detail__intro + .money-detail__intro {
+.deepdive-body .money-detail__intro {
+  padding: 0 20px;
+}
+
+.deepdive-body .money-detail__intro + .money-detail__intro {
   margin-top: 10px;
 }
 
@@ -169,13 +256,41 @@ body {
 .money-form-grid {
   display: grid;
   gap: 14px;
+  margin-top: 16px;
+  padding: 0 20px 20px 44px;
+  position: relative;
+}
+
+.money-timeline::before,
+.money-form-grid::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--layer-border);
 }
 
 .money-timeline__item,
 .money-form {
+  position: relative;
   padding: 16px 18px;
   border: 1px solid var(--layer-border);
   background: var(--immersive-bg);
+}
+
+.money-timeline__item::before,
+.money-form::before {
+  content: '';
+  position: absolute;
+  left: -30px;
+  top: 22px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--immersive-bg);
+  border: 2px solid var(--immersive-accent);
 }
 
 .money-timeline__item strong,
@@ -184,7 +299,7 @@ body {
   margin-bottom: 10px;
   color: var(--immersive-ink);
   font-family: var(--font-family-dm-mono);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -194,7 +309,8 @@ body {
 .money-timeline__item p,
 .money-form p {
   max-width: none;
-  font-size: 18px;
+  padding: 0;
+  font-size: 24px;
   line-height: 1.45;
 }
 
@@ -212,17 +328,9 @@ body {
     margin-top: 96px;
   }
 
-  .money-layout {
+  .deepdive-list {
     height: calc(100dvh - 190px);
     margin-top: 28px;
-    grid-template-columns: 1fr;
-  }
-
-  .money-topic-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .money-topic {
-    min-height: 112px;
   }
 }
+
