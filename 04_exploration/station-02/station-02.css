@@ -89,7 +89,7 @@ html, body {
 .station-marker__topic {
   display: flex; align-items: center; height: 32px; padding: 0 14px;
 }
-.station-marker__station { background: var(--immersive-accent); color: var(--immersive-ink); }
+.station-marker__station { background: #ed8003; color: var(--color-neutral-850); }
 .station-marker__topic { background: var(--color-neutral-850); }
 
 .start-copy {

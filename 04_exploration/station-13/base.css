@@ -40,7 +40,7 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
 .title { word-spacing: .24em; }
 .station-marker__station,
 .station-marker__topic { display: flex; align-items: center; height: 32px; padding: 0 14px; }
-.station-marker__station { background: var(--immersive-accent); color: var(--immersive-ink); }
+.station-marker__station { background: #ed8003; color: var(--color-neutral-850); }
 .station-marker__topic { background: var(--color-neutral-850); }
 
 #frame > .station-language-switch {

@@ -1,3 +1,5 @@
+/* Bundled stylesheet for Station 09 — concatenation of base + station overrides */
+/* --- base.css --- */
 /* Base layout for station pages — reuse across stations.
    Keeps spacing consistent with design-system tokens and other stations.
 */
@@ -11,6 +13,8 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
 /* Start screen common */
 .screen-start{position:relative;height:100dvh;min-height:0;padding:clamp(40px,5vw,88px) clamp(24px,4vw,72px);display:flex;flex-direction:column;overflow:hidden}
 .station-marker{display:inline-flex;align-items:stretch;position:relative;z-index:2;font-family:var(--font-family-dm-mono);font-size:15px;letter-spacing:.18em;text-transform:var(--text-transform-dm-mono);color:var(--immersive-body)}
+.station-marker__station{background:#ed8003;color:var(--color-neutral-850);padding:0 14px;display:flex;align-items:center;height:32px}
+.station-marker__topic{background:var(--color-neutral-850);color:inherit;padding:0 14px;display:flex;align-items:center;height:32px}
 .start-copy{flex:1;min-height:0;position:relative;z-index:2;margin-top:clamp(72px,12vh,130px);display:flex;flex-direction:column;overflow:hidden}
 .eyebrow{display:block;font-family:var(--font-family-dm-mono);font-size:15px;letter-spacing:.18em;text-transform:var(--text-transform-dm-mono);color:var(--immersive-body)}
 .title{font-family:var(--font-family-panchang),sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;line-height:.92}
@@ -36,67 +40,32 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
 @media (max-width:1100px){.start-copy{width:100%;max-width:100%;margin-top:64px}.hero-text{width:100%;max-height:none;padding-right:0;overflow-y:visible;scrollbar-gutter:auto}.start-visual{position:relative;inset:auto;width:min(92vw,760px);margin:-80px -24px 0 auto}.cta{position:relative;inset:auto;align-self:flex-end;margin-top:-24px}.action-layout{grid-template-columns:1fr}}
 @media (max-width:760px){.title--hero{font-size:clamp(42px,14vw,72px)}.template-card p{font-size:19px}.close-btn{width:60px;height:60px}.cta{width:100%;margin-top:8px}.cta-label{flex:1;min-height:60px;padding-inline:20px;font-size:18px}.cta-icon{width:60px;height:60px}}
 
-/* Shared station language and module treatment. */
-.title { word-spacing: .24em; }
-.station-marker__station,
-.station-marker__topic { display: flex; align-items: center; height: 32px; padding: 0 14px; }
-.station-marker__station { background: #ed8003; color: var(--color-neutral-850); }
-.station-marker__topic { background: var(--color-neutral-850); }
+/* --- station-01.css --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+.title-word { display: inline-block; max-width: 100%; margin-right: .16em; overflow-wrap: anywhere; }
+.title--hero.title--medium { font-size: 88px; }
+.title--hero.title--long { font-size: 68px; }
+.title--compact { font-size: 68px; margin-top: 10px; max-width: 12ch; white-space: normal; }
+.hero-text { width: 760px; max-width: 100%; max-height: 460px; margin-top: 22px; padding: 18px 28px 20px 0; display: flex; flex-direction: column; gap: 14px; overflow-y: scroll; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--immersive-accent) color-mix(in srgb, var(--immersive-body) 18%, transparent); scrollbar-gutter: stable; }
+.hero-text::-webkit-scrollbar { width: 8px; }
+.hero-text::-webkit-scrollbar-track { background: color-mix(in srgb, var(--immersive-body) 18%, transparent); }
+.hero-text::-webkit-scrollbar-thumb { background: var(--immersive-accent); border: 2px solid var(--immersive-bg); }
+.template-card--wide { grid-column: 1 / -1; min-height: 220px; }
+.template-tag { display: inline-block; margin-bottom: 14px; font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .16em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted); }
+.template-card h2 { font-family: var(--font-family-panchang), sans-serif; font-size: 34px; text-transform: uppercase; line-height: 1; margin-bottom: 14px; }
+.template-card p { font-size: 22px; line-height: 1.46; color: var(--immersive-body); max-width: 70ch; }
 
-#frame > .station-language-switch {
-   top: clamp(40px, 5vw, 88px);
-   right: clamp(24px, 4vw, 72px);
-   gap: 0;
-   padding: 0;
-   border: 0;
-   background: transparent;
-   backdrop-filter: none;
-}
-#frame > .station-language-switch .station-language-switch__button {
-   min-width: 48px;
-   min-height: 32px;
-   padding: 0 14px;
-   font-family: var(--font-family-dm-mono);
-   font-size: 13px;
-   letter-spacing: .12em;
-}
+@media (max-width: 1100px) { .start-copy { width: 100%; max-width: 100%; margin-top: 64px; } }
 
-.screen-action { height: 100dvh; overflow: hidden; }
-.template-grid {
-   margin-top: clamp(32px, 5vh, 56px);
-   display: grid;
-   grid-template-columns: 1.35fr 1fr;
-   gap: 24px;
-   align-items: stretch;
-}
-.tabs {
-   display: flex;
-   gap: 8px;
-   margin-top: 28px;
-   border: 1px solid var(--layer-border);
-   border-radius: var(--radius-md);
-   padding: 6px;
-   width: fit-content;
-}
-.tab {
-   min-height: 48px;
-   padding: 8px 28px;
-   cursor: pointer;
-   border: 0;
-   border-radius: var(--radius-sm);
-   background: transparent;
-   color: var(--immersive-muted);
-   font-family: var(--font-family-dm-mono);
-   font-size: var(--font-size-label);
-   letter-spacing: .08em;
-   text-transform: var(--text-transform-dm-mono);
-   transition: color var(--duration-1) var(--ease-standard), background var(--duration-1) var(--ease-standard);
-}
-.tab.active { color: var(--immersive-bg); background: var(--immersive-accent); }
-.tab:not(.active):hover { color: var(--immersive-ink); background: var(--state-pressed-surface); }
-.tab:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
-.module-panel.hidden { display: none; }
+/* --- station-08 overrides --- */
+.start-visual { right: -40px; opacity: 0.9 }
 
-@media (max-width: 1100px) {
-   .template-grid { grid-template-columns: 1fr; }
-}
+/* --- station-09 overrides (same as 08 for now) --- */
+.start-visual { right: -40px; opacity: 0.9 }
+
+@media (max-width: 760px) { .title--hero { font-size: clamp(42px, 14vw, 72px); } }
+
+/* Remove frame/background of shared language switch for this station */
+.station-language-switch { border: 0 !important; background: transparent !important; backdrop-filter: none !important; padding: 0 !important; }
+

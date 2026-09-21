@@ -3,21 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Station 8 · Vorlage</title>
+<title>Station 11 · Verordnetes Vertrauen</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="base.css">
-<link rel="stylesheet" href="station-08.css">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
+<link rel="stylesheet" href="station-09.bundle.css?v=2">
 </head>
 <body>
 
 <div id="scaler">
-  <main id="frame" aria-label="Station 8 – Vorlage">
+  <main id="frame" aria-label="Station 11 – Verordnetes Vertrauen">
 
     <section class="screen screen-start" id="screenStart">
-      <div class="station-marker" aria-label="Station 8 - Neue Entwicklungen">
-        <span class="station-marker__station">Station 8</span>
-        <span class="station-marker__topic">Neue Entwicklungen</span>
+      <div class="station-marker" aria-label="Station 11 - Verordnetes Vertrauen">
+        <span class="station-marker__station">Station 11</span>
+        <span class="station-marker__topic">Verordnetes Vertrauen</span>
       </div>
 
       <div class="start-copy">
@@ -30,47 +29,20 @@
         <img src="../station-04/img/eknigma02.png" alt="" class="station-image" id="startImage">
       </div>
 
-      <button class="cta" id="btnTry" type="button">
-        <span class="cta-label" id="tryLabel"></span>
-        <span class="cta-icon">
-          <img src="../../00_design-system/symbols/brand-apple-arcade.svg" alt="">
-        </span>
-      </button>
-    </section>
-
-    <section class="screen screen-action hidden" id="screenAction">
-      <header class="action-hdr">
-        <div class="action-hdr-copy">
-          <span class="eyebrow" id="actionEyebrow"></span>
-          <h1 class="title title--compact" id="actionTitle"></h1>
-        </div>
-        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
-      </header>
-
-      <div class="tabs" role="tablist" aria-label="Stationsmodule">
-        <button class="tab active" id="tabModuleA" type="button" role="tab" aria-selected="true">Modul A</button>
-        <button class="tab" id="tabModuleB" type="button" role="tab" aria-selected="false">Modul B</button>
-        <button class="tab" id="tabModuleC" type="button" role="tab" aria-selected="false">Modul C</button>
+      <div class="start-actions">
+        <button class="cta" id="btnDeepen" type="button">
+          <span class="cta-label">Vertiefung</span>
+          <span class="cta-icon"><img src="../../00_design-system/symbols/bulb.svg" alt=""></span>
+        </button>
       </div>
 
-      <div class="template-grid">
-        <section class="template-card template-card--wide module-panel" id="moduleA" role="tabpanel">
-          <span class="template-tag">Modul A</span>
-          <h2>Ausprobieren</h2>
-          <p id="actionDescription"></p>
-        </section>
-
-        <section class="template-card module-panel hidden" id="moduleB" role="tabpanel">
-          <span class="template-tag">Modul B</span>
-          <h2>Interaktion</h2>
-          <p>Platzhalter für das interaktive Element dieser Station.</p>
-        </section>
-
-        <section class="template-card module-panel hidden" id="moduleC" role="tabpanel">
-          <span class="template-tag" id="deepeningTag"></span>
-          <h2 id="deepeningTitle"></h2>
-          <div id="deepeningBody"></div>
-        </section>
+      <div class="overlay" id="overlay" aria-hidden="true">
+        <div class="ov-card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+          <button class="ov-close" id="ovClose" aria-label="Schließen" type="button">✕</button>
+          <span class="ov-tag" id="ovTag"></span>
+          <h2 id="ovTitle"></h2>
+          <div id="ovBody"></div>
+        </div>
       </div>
     </section>
 
@@ -78,7 +50,6 @@
 </div>
 
 <script src="../../shared/js/station-language-switch.js"></script>
-<script src="base.js" defer></script>
-<script src="station-08.js" defer></script>
+<script src="station-09.bundle.js?v=2" defer></script>
 </body>
 </html>
