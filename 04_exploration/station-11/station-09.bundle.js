@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 (function () {
   const STATION_CONTENT = {
     meta: {
-      title: 'Station 11 · Verordnetes Vertrauen',
-      ariaLabel: 'Station 11 – Verordnetes Vertrauen'
+      title: 'Station 9 · Verordnetes Vertrauen',
+      ariaLabel: 'Station 9 – Verordnetes Vertrauen'
     },
     start: {
       eyebrow: 'Verordnetes Vertrauen',

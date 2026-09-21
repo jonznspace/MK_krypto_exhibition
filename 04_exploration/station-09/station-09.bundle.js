@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 (function () {
   const STATION_CONTENT = {
     meta: {
-      title: 'Station 9 · neue Entwicklungen',
-      ariaLabel: 'Station 9 – neue Entwicklungen'
+      title: 'Station 7 · neue Entwicklungen',
+      ariaLabel: 'Station 7 – neue Entwicklungen'
     },
     start: {
       eyebrow: 'Geheime Botschaften in der Antike',

@@ -113,8 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.title = 'Station 13 · Die Free-Banking-Era';
-  $('frame').setAttribute('aria-label', 'Station 13 – Die Free-Banking-Era');
+  document.title = 'Station 11 · Die Free-Banking-Era';
+  $('frame').setAttribute('aria-label', 'Station 11 – Die Free-Banking-Era');
   setText('startEyebrow', 'Als jeder sein eigenes Geld druckte');
   setTitle('Die „Free-Banking-Era“ (1836–1862)');
   setText('actionEyebrow', 'Vertiefungen');

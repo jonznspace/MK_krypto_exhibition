@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 (function () {
   const STATION_CONTENT = {
     meta: {
-      title: 'Station 12 · Firmengeld',
-      ariaLabel: 'Station 12 – Firmengeld'
+      title: 'Station 10 · Firmengeld',
+      ariaLabel: 'Station 10 – Firmengeld'
     },
     start: {
       eyebrow: 'Firmengeld',

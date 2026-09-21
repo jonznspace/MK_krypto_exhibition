@@ -83,8 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  document.title = 'Station 8 · Was ist Geld?';
-  $('frame').setAttribute('aria-label', 'Station 8 – Was ist Geld?');
+  document.title = 'Station 6 · Was ist Geld?';
+  $('frame').setAttribute('aria-label', 'Station 6 – Was ist Geld?');
   set('startEyebrow', 'Neue Entwicklungen');
   set('startTitle', 'Was ist Geld?');
   set('tryLabel', 'Mehr erfahren');

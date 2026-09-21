@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 (function () {
   const STATION_CONTENT = {
     meta: {
-      title: 'Station 10 · Scheitern ohne Regeln',
-      ariaLabel: 'Station 10 – Scheitern ohne Regeln'
+      title: 'Station 8 · Scheitern ohne Regeln',
+      ariaLabel: 'Station 8 – Scheitern ohne Regeln'
     },
     start: {
       eyebrow: 'Scheitern ohne Regeln',
