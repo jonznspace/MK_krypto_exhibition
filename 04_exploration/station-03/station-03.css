@@ -590,7 +590,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .challenge-feedback.is-correct { color: var(--immersive-ink); }
 .challenge-feedback.is-wrong { color: var(--immersive-body); }
-}
+
 
 @media (max-width: 1100px) {
   .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }

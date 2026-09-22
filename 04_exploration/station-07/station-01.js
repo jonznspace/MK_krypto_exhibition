@@ -14,7 +14,7 @@
         'Hier kannst du jetzt die Inhalte und Interaktionen der nächsten Station einbauen.'
       ],
       image: {
-        src: 'dither-output.png',
+        src: '../station-04/img/eknigma02.png',
         alt: ''
       },
       ctaLabel: 'Ausprobieren'

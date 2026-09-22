@@ -704,21 +704,46 @@ html, body {
   display: none;
 }
 #devbar {
-  position: fixed; left: 0; right: 0; bottom: 0;
+  position: fixed; top: 0; right: 0; bottom: 0;
   display: none;
-  align-items: center; gap: var(--space-4);
-  padding: var(--space-3) var(--space-4);
+  flex-direction: column; align-items: stretch; gap: var(--space-4);
+  width: min(360px, calc(100vw - var(--space-5)));
+  padding: 76px var(--space-4) var(--space-4);
   background: var(--layer-surface-elevated);
-  border-top: var(--film-line) solid var(--border-surface-raised);
+  border-left: var(--film-line) solid var(--border-surface-raised);
+  box-shadow: -18px 0 40px rgba(0, 0, 0, 0.28);
   font-family: var(--font-family-dm-mono), monospace;
   font-size: var(--font-size-caption-m);
   text-transform: var(--text-transform-dm-mono);
   letter-spacing: 0.08em;
   color: var(--immersive-body);
   z-index: var(--layer-500);
+  overflow-y: auto;
 }
 body.dev #devbar { display: flex; }
 body.dev #devCue { display: block; }
+#devToggle {
+  position: fixed; top: var(--space-4); right: var(--space-4);
+  z-index: calc(var(--layer-500) + 1);
+  font: var(--font-size-caption-m) var(--font-family-dm-mono), monospace;
+  text-transform: var(--text-transform-dm-mono); letter-spacing: 0.08em;
+  color: var(--immersive-ink);
+  background: var(--layer-surface-elevated);
+  border: var(--film-line) solid var(--layer-border);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+}
+#devToggle:hover, #devbar button:hover { border-color: var(--immersive-accent); }
+#devbar .panel-title {
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--immersive-ink);
+  font-size: var(--font-size-caption-l);
+}
+#devbar .panel-title button { padding: var(--space-1) var(--space-2); }
+#devbar .transport { display: flex; align-items: center; gap: var(--space-3); }
+#devbar .transport .time { flex: 1; }
+#devbar .control-label { color: var(--immersive-muted); }
+#devbar .hint { line-height: 1.5; }
 #devbar button {
   font: inherit; text-transform: inherit; letter-spacing: inherit;
   color: var(--immersive-ink);
@@ -727,11 +752,12 @@ body.dev #devCue { display: block; }
   padding: var(--space-2) var(--space-3);
   cursor: pointer;
 }
-#devbar input[type=range] { flex: 1; accent-color: var(--immersive-accent); }
+#devbar input[type=range] { width: 100%; accent-color: var(--immersive-accent); }
 #devbar .time { color: var(--immersive-ink); min-width: 14ch; }
-#devbar .cue { color: var(--immersive-focus); min-width: 22ch; }
+#devbar .cue { color: var(--immersive-focus); min-height: 2.4em; }
 #devbar .hint { color: var(--immersive-muted); }
 #devbar select {
+  width: 100%;
   font: inherit; text-transform: inherit; letter-spacing: inherit;
   color: var(--immersive-ink);
   background: var(--layer-surface-raised);
@@ -803,17 +829,19 @@ body.dev #clickMarker { display: block; }
 </div>
 
 <div id="devbar">
-  <button id="devPlay" type="button">Play</button>
-  <span class="time" id="devTime">00:00.00 / 00:00.00</span>
-  <span id="devChapter">K1</span>
+  <div class="panel-title"><span>Film Debug</span><button id="devClose" type="button" aria-label="Debug-Menü schließen">Close</button></div>
+  <div class="transport"><button id="devPlay" type="button">Play</button><span class="time" id="devTime">00:00.00 / 00:00.00</span><span id="devChapter">K1</span></div>
   <span class="cue" id="devCueName"></span>
   <input id="devScrub" type="range" min="0" max="1" step="0.04" value="0">
+  <span class="control-label">Kapitel</span>
   <select id="devChapterSelect" aria-label="Kapitel auswählen"></select>
+  <span class="control-label">Cue / Szene</span>
   <select id="devCueSelect" aria-label="Step auswählen"></select>
   <button id="devJump" type="button">Jump</button>
   <button id="devClickMode" type="button">Click: on</button>
   <span class="hint">D Dev · Leertaste Play · 1 bis 4 Kapitel · Pfeile 1s · Shift 1 Frame</span>
 </div>
+<button id="devToggle" type="button" aria-expanded="false" aria-controls="devbar">Debug</button>
 
 <script>
 /* =====================================================================
@@ -1463,7 +1491,7 @@ body.dev #clickMarker { display: block; }
   const stage = $("stage");
   function fit() {
     const vw = window.innerWidth;
-    const vh = window.innerHeight - (devOn ? dev.bar.offsetHeight : 0); /* Dev-Leiste nimmt Platz, Bühne bleibt vollständig sichtbar */
+    const vh = window.innerHeight; /* Das Debug-Menü liegt als Overlay über der Bühne. */
     const scale = Math.min(vw / G.w, vh / G.h);
     const x = (vw - G.w * scale) / 2, y = (vh - G.h * scale) / 2;
     stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
@@ -1505,7 +1533,7 @@ body.dev #clickMarker { display: block; }
     bar: $("devbar"), play: $("devPlay"), time: $("devTime"), chapter: $("devChapter"),
     cue: $("devCueName"), scrub: $("devScrub"), chapterSelect: $("devChapterSelect"),
     cueSelect: $("devCueSelect"), jump: $("devJump"), clickMode: $("devClickMode"),
-    marker: $("clickMarker"),
+    marker: $("clickMarker"), toggle: $("devToggle"), close: $("devClose"),
   };
   dev.scrub.max = String(total);
   dev.scrub.step = String(1 / SCRIPT.fps);
@@ -1588,6 +1616,8 @@ body.dev #clickMarker { display: block; }
   function setDev(on) {
     devOn = on;
     document.body.classList.toggle("dev", on);
+    dev.toggle.setAttribute("aria-expanded", String(on));
+    dev.toggle.textContent = on ? "Close debug" : "Debug";
     fit();
     devUpdate();
     syncDevNavigation();
@@ -1595,6 +1625,8 @@ body.dev #clickMarker { display: block; }
   let clickInspectionOn = true;
   window.addEventListener("resize", fit);
   fit();
+  dev.toggle.addEventListener("click", () => setDev(!devOn));
+  dev.close.addEventListener("click", () => setDev(false));
   dev.play.addEventListener("click", () => (playing ? pause() : play()));
   dev.scrub.addEventListener("input", () => { pause(); seek(parseFloat(dev.scrub.value)); });
   dev.chapterSelect.addEventListener("change", () => { pause(); seek(Number(dev.chapterSelect.value)); });
