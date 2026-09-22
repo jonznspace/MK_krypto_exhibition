@@ -15,7 +15,7 @@
         'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.'
       ],
       image: {
-        src: '../station-04/img/eknigma02.png',
+        src: 'dither-output.png',
         alt: ''
       },
       ctaLabel: 'Ausprobieren'

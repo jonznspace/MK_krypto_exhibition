@@ -21,8 +21,9 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
 .title--hero{font-size:108px;margin-top:18px;white-space:normal}
 .hero-text{width:820px;max-width:100%;flex:1 1 auto;min-height:0;margin-top:32px;margin-bottom:0;padding:0 30px 0 0;display:flex;flex-direction:column;gap:20px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--immersive-accent) color-mix(in srgb,var(--immersive-body) 18%,transparent);position:relative}
 .hero-text p{font-size:24px;line-height:1.42;color:var(--immersive-body);max-width:68ch}
-.start-visual{position:absolute;right:-60px;top:-20px;bottom:0;width:1180px;display:flex;align-items:flex-end;justify-content:flex-end;z-index:1;pointer-events:none;opacity:.84}
+.start-visual{position:absolute;right:-100px;top:-20px;bottom:0;width:1180px;display:flex;align-items:flex-end;justify-content:flex-end;z-index:1;pointer-events:none;opacity:.84}
 .station-image{width:100%;height:auto;max-height:1020px;object-fit:contain;object-position:bottom right}
+.station-image-placeholder{width:min(72vw,760px);min-height:min(48vw,520px);margin:0 0 72px auto;display:grid;place-items:center;border:2px dashed color-mix(in srgb,var(--immersive-body) 48%,transparent);background:color-mix(in srgb,var(--immersive-bg) 70%,transparent);color:var(--immersive-body);font-family:var(--font-family-dm-mono);font-size:18px;letter-spacing:.16em;text-transform:var(--text-transform-dm-mono)}
 
 /* CTA */
 .cta{position:absolute;right:clamp(24px,4vw,72px);bottom:clamp(40px,5vw,80px);z-index:3;display:flex;align-items:stretch;border:none;background:none}
@@ -37,7 +38,7 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
 .action-layout{margin-top:clamp(44px,8vh,88px);display:grid;grid-template-columns:1.35fr 1fr;gap:24px}
 .template-card{border:1px solid var(--layer-border);background:color-mix(in srgb,var(--immersive-bg) 84%,var(--color-neutral-900));padding:24px;min-height:240px}
 
-@media (max-width:1100px){.start-copy{width:100%;max-width:100%;margin-top:64px}.hero-text{width:100%;max-height:none;padding-right:0;overflow-y:visible;scrollbar-gutter:auto}.start-visual{position:relative;inset:auto;width:min(92vw,760px);margin:-80px -24px 0 auto}.cta{position:relative;inset:auto;align-self:flex-end;margin-top:-24px}.action-layout{grid-template-columns:1fr}}
+@media (max-width:1100px){.start-copy{width:100%;max-width:100%;margin-top:64px}.hero-text{width:100%;max-height:none;padding-right:0;overflow-y:visible;scrollbar-gutter:auto}.start-visual{position:relative;inset:auto;width:min(92vw,760px);margin:-80px -40px 0 auto}.station-image-placeholder{width:100%;min-height:320px;margin-bottom:0}.cta{position:relative;inset:auto;align-self:flex-end;margin-top:-24px}.action-layout{grid-template-columns:1fr}}
 @media (max-width:760px){.title--hero{font-size:clamp(42px,14vw,72px)}.template-card p{font-size:19px}.close-btn{width:60px;height:60px}.cta{width:100%;margin-top:8px}.cta-label{flex:1;min-height:60px;padding-inline:20px;font-size:18px}.cta-icon{width:60px;height:60px}}
 
 /* --- station-01.css --- */
@@ -58,15 +59,16 @@ html, body { min-height: 100%; }
 @media (max-width: 1100px) { .start-copy { width: 100%; max-width: 100%; margin-top: 64px; } }
 
 /* --- station-08 overrides --- */
-.start-visual { right: -40px; opacity: 0.9 }
+.start-visual { right: -80px; opacity: 0.9 }
 
 /* --- station-09 overrides (same as 08 for now) --- */
-.start-visual { right: -40px; opacity: 0.9 }
+.start-visual { right: -80px; opacity: 0.9 }
 
 @media (max-width: 760px) { .title--hero { font-size: clamp(42px, 14vw, 72px); } }
 
 /* Remove frame/background of shared language switch for this station */
 .station-language-switch { border: 0 !important; background: transparent !important; backdrop-filter: none !important; padding: 0 !important; }
+.title { word-spacing: .24em; }
 
 /* Overlay styles (Vertiefung) — blue deep-dive card matching design system */
 .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:1000}

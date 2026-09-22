@@ -35,7 +35,7 @@
         'Die Permutationsscheibe aus dem Jahr 1587 besaß mit ursprünglich 24 einzeln drehbaren Messingscheiben dagegen bereits ein deutlich komplexeres Verschlüsselungsverfahren. Jede der Scheiben war mit 24 Buchstaben (J=I, U=V) versehen, sodass jeder Buchstabe eines zu verschlüsselnden Wortes einen eigenen Verschiebungswert aufweisen konnte. Ohne den „Schlüssel“, also die Information zur Positionierung der Scheiben zueinander (= den Verschiebungscode), war eine Nachricht nur schwerlich zu dekodieren. Das Objekt zeigt damit ein frühes mechanisches Verfahren, Sprache systematisch zu verschlüsseln und wieder zu entschlüsseln.'
       ],
       image: {
-        src: '../station-04/img/eknigma02.png',
+        src: '../station-02/dither-output.png',
         alt: ''
       },
       ctaLabel: 'Ausprobieren'

@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
       type: 'timeline',
       intro: 'Die wichtigsten Zäsuren auf dem Weg zum modernen reinen Fiatgeld',
       items: [
-        ['1914–1918', 'Mit dem Ersten Weltkrieg setzten die meisten europäischen Staaten die Goldein-lösungspflicht ihrer Banknoten aus, um die Kriegsausgaben zu finanzieren. Es kam zu einer vorübergehenden Rückkehr zum Goldstandard in den 1920er Jahren; das endgültige Schei-tern trat in der Weltwirtschaftskrise ab 1931 ein.'],
-        ['1944', 'Die Bretton-Woods-Konferenz etablierte ein neues internationales Währungssystem. Der US-Dollar wurde zur Leitwährung und war zu einem festen Kurs (35 Dollar pro Feinunze) in Gold einlösbar. Dies galt aber nur für Zentralbanken anderer Staaten, nicht für Privatper-sonen. Alle anderen Währungen waren über feste Wechselkurse an den Dollar gebunden. Es war somit eine indirekte, gestufte Goldbindung vorhanden und es existierte kein voller Gold-standard mehr.'],
+        ['1914–1918', 'Mit dem Ersten Weltkrieg setzten die meisten europäischen Staaten die Goldeinlösungspflicht ihrer Banknoten aus, um die Kriegsausgaben zu finanzieren. Es kam zu einer vorübergehenden Rückkehr zum Goldstandard in den 1920er Jahren; das endgültige Scheitern trat in der Weltwirtschaftskrise ab 1931 ein.'],
+        ['1944', 'Die Bretton-Woods-Konferenz etablierte ein neues internationales Währungssystem. Der US-Dollar wurde zur Leitwährung und war zu einem festen Kurs (35 Dollar pro Feinunze) in Gold einlösbar. Dies galt aber nur für Zentralbanken anderer Staaten, nicht für Privatpersonen. Alle anderen Währungen waren über feste Wechselkurse an den Dollar gebunden. Es war somit eine indirekte, gestufte Goldbindung vorhanden und es existierte kein voller Goldstandard mehr.'],
         ['15. August 1971 („Nixon-Schock")', 'US-Präsident Richard Nixon hob die Goldeinlösbarkeit des Dollars auf. Ab diesem Zeitpunkt sind die wichtigsten Weltwährungen reines Fiatgeld – ohne jede Sachwertbindung. Diese Datierung gilt als Geburtsstunde des modernen Fiat-Geldsystems.'],
         ['1973', 'Übergang zu flexiblen Wechselkursen zwischen den großen Währungen.'],
         ['1971 bis heute', 'Alle bedeutenden Währungen weltweit sind Fiatgeld. Ihr Wert beruht auf dem Vertrauen in die ausgebenden Staaten und Zentralbanken, ihre Stabilität auf der Geld-politik (Zinssteuerung, Inflationskontrolle). Diese Epoche dauert nun rund 55 Jahre an – historisch betrachtet eine kurze Phase.']
@@ -52,22 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
       type: 'forms',
       intro: [
         'Chronologische Übersicht der Geldformen',
-        'Jede Geldform lässt sich in zwei Dimensionen beschreiben: ihrer äußeren Gestalt und ih-rer Deckungsart.'
+        'Jede Geldform lässt sich in zwei Dimensionen beschreiben: ihrer äußeren Gestalt und ihrer Deckungsart.'
       ],
       items: [
         ['Warengeld (ab ca. 9000 v. Chr.)', 'Äußere Gestalt: nutzbare Waren (z. B. Vieh, Getreide, Salz, Kakao, Tabak)', 'Deckungsart: Eigenwert – Die Ware ist auch ohne Geldfunktion brauchbar.'],
         ['Frühformen ohne Eigennutzen (ab ca. 1200 v. Chr.)', 'Äußere Gestalt: Kaurimuscheln, Wampum, Rai-Steine', 'Deckungsart: gesellschaftliche Übereinkunft und Knappheit, erstmals wird der Wert allein durch Akzeptanz erzeugt'],
-        ['Edelmetall-Wägegeld (ab ca. 3000 v. Chr.)', 'Äußere Gestalt: unstandardisierte Silber- oder Goldstücke, vor jeder Transaktion wird gewo-gen', 'Deckungsart: Eigenwert des Edelmetalls'],
+        ['Edelmetall-Wägegeld (ab ca. 3000 v. Chr.)', 'Äußere Gestalt: unstandardisierte Silber- oder Goldstücke, vor jeder Transaktion wird gewogen', 'Deckungsart: Eigenwert des Edelmetalls'],
         ['Vollwertige Münzen (ab ca. 600 v. Chr.)', 'Äußere Gestalt: geprägte Münzen mit standardisiertem Gewicht und Feingehalt', 'Deckungsart: Eigenwert des Edelmetalls'],
         ['Edelmetall-gedeckte Banknoten (in China ab 1024, in Europa ab 1661)', 'Äußere Gestalt: bedrucktes Papier', 'Deckungsart: Einlösungsversprechen in Edelmetall – Der Schein selbst ist nahezu wertlos, aber gegen hinterlegtes Gold oder Silber einlösbar.'],
-        ['Scheidemünzen (zunehmend ab dem 19. Jahrhundert)', 'Äußere Gestalt: Münzen aus unedlen Metallen oder mit reduziertem Edelmetallgehalt', 'Deckungsart: staatliche Anordnung und Vertrauen. Der Materialwert liegt teils deutlich un-ter dem Nennwert; eine frühe Form des Fiat-Prinzips bei Münzen.'],
+        ['Scheidemünzen (zunehmend ab dem 19. Jahrhundert)', 'Äußere Gestalt: Münzen aus unedlen Metallen oder mit reduziertem Edelmetallgehalt', 'Deckungsart: staatliche Anordnung und Vertrauen. Der Materialwert liegt teils deutlich unter dem Nennwert; eine frühe Form des Fiat-Prinzips bei Münzen.'],
         ['Goldstandard-Währung (ca. 1870-1914, kurz wiederbelebt 1925-1931)', 'Äußere Gestalt: Banknoten und Buchgeld', 'Deckungsart: feste Goldparität – Währungen sind in Gold einlösbar; Zentralbanken halten Goldreserven.'],
         ['Bretton-Woods-Währungen (1944-1971)', 'Äußere Gestalt: Banknoten und Buchgeld', 'Deckungsart: gestufte Goldbindung über den US-Dollar – Dollar einlösbar in Gold (nur für Zentralbanken), andere Währungen fest an den Dollar gebunden'],
         ['Fiat-Geld (ab 1971 in voller Reinform)', 'Äußere Gestalt: Banknoten und Buchgeld', 'Deckungsart: staatliche Anordnung und Vertrauen in die Zentralbank; keine Einlösung in einen Sachwert; heute die dominierende Geldform weltweit'],
         ['E-Geld (ab den 1990er Jahren)', 'Äußere Gestalt: elektronisch gespeicherte Werteinheiten bei einem zugelassenen E-Geld-Institut', 'Deckungsart: Einlösungsversprechen gegen Fiat-Geld'],
         ['Kryptowerte (ab 2009)', 'Äußere Gestalt: digitale Werteinheiten auf einer Blockchain', 'Deckungsart: algorithmische Knappheit ohne Einlösungsversprechen; seitens der EU keine Einstufung als „Geld“'],
-        ['Stablecoins (ab ca. 2014)', 'Äußere Gestalt: digitale Token auf einer Blockchain', 'Deckungsart: Geldwerte, (Staats-)Anleihen, andere Kryptowerte und Fiat-Geld, Einlösungs-versprechen von einem privaten Emittenten'],
-        ['Digitales Zentralbankgeld / CBDC (in Vorbereitung)', 'Äußere Gestalt: digitale Werteinheiten in einer von der Zentralbank kontrollierten Infrastruk-tur', 'Deckungsart: Fiat-Geld in neuer technischer Form: Wert beruht auf staatlicher Anordnung – aber ohne Umweg über Geschäftsbanken']
+        ['Stablecoins (ab ca. 2014)', 'Äußere Gestalt: digitale Token auf einer Blockchain', 'Deckungsart: Geldwerte, (Staats-)Anleihen, andere Kryptowerte und Fiat-Geld, Einlösungsversprechen von einem privaten Emittenten'],
+        ['Digitales Zentralbankgeld / CBDC (in Vorbereitung)', 'Äußere Gestalt: digitale Werteinheiten in einer von der Zentralbank kontrollierten Infrastruktur', 'Deckungsart: Fiat-Geld in neuer technischer Form: Wert beruht auf staatlicher Anordnung – aber ohne Umweg über Geschäftsbanken']
       ]
     },
     {
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
       type: 'text',
       paragraphs: [
         'Was keine Geldformen sind',
-        'Eine Geldform ist eine eigenständige Werteinheit mit eigener rechtlicher und ökonomischer Stellung. Eine bloße Schnittstelle oder Übertragungstechnologie ist keine Geldform, son-dern eine Zugriffsform auf bereits bestehendes Geld.',
-        'Keine eigenen Geldformen, sondern Zahlungswege oder Zugangstechnologien sind: Wech-selbriefe und Schecks (Zahlungsanweisungen auf hinterlegtes Geld), Kreditkarten und De-bitkarten (Zugriff auf Buchgeld), Überweisungen und Lastschriften (Übertragungswege für Buchgeld), Online-Banking (digitale Oberfläche für Buchgeld), Apple Pay, Google Pay, Alipay und WeChat Pay (Apps, die auf Karten oder Konten zugreifen), kontaktloses Zahlen und QR-Code-Zahlung (Übertragungstechnologien).',
+        'Eine Geldform ist eine eigenständige Werteinheit mit eigener rechtlicher und ökonomischer Stellung. Eine bloße Schnittstelle oder Übertragungstechnologie ist keine Geldform, sondern eine Zugriffsform auf bereits bestehendes Geld.',
+        'Keine eigenen Geldformen, sondern Zahlungswege oder Zugangstechnologien sind: Wechselbriefe und Schecks (Zahlungsanweisungen auf hinterlegtes Geld), Kreditkarten und Debitkarten (Zugriff auf Buchgeld), Überweisungen und Lastschriften (Übertragungswege für Buchgeld), Online-Banking (digitale Oberfläche für Buchgeld), Apple Pay, Google Pay, Alipay und WeChat Pay (Apps, die auf Karten oder Konten zugreifen), kontaktloses Zahlen und QR-Code-Zahlung (Übertragungstechnologien).',
         'Der Unterschied wird besonders deutlich bei PayPal: Eine Zahlung vom verknüpften Bank-konto über PayPal ist ein Zahlungsweg – das Geld bleibt Buchgeld der Bank. Ein PayPal-Guthaben hingegen ist E-Geld – also tatsächlich eine eigene Geldform.'
       ]
     }
@@ -95,12 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (intro) {
     intro.innerHTML = '';
     introSections.forEach(section => {
-      if (section.kicker) {
-        const kicker = document.createElement('span');
-        kicker.className = 'hero-text__kicker';
-        kicker.textContent = section.kicker;
-        intro.append(kicker);
-      }
       const paragraph = document.createElement('p');
       paragraph.textContent = section.body;
       intro.append(paragraph);

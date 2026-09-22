@@ -39,7 +39,7 @@
         'Schon in den 1930er Jahren gelang es polnischen Mathematikern, darunter Marian Rejewski, Jerzy Różycki und Henryk Zygalski, die Funktionsweise der Enigma mathematisch zu analysieren. Auf dieser Grundlage bauten britische Kryptologen in Bletchley Park dann elektromechanische Entschlüsselungsmaschinen. Allen voran entwickelte Alan Turing mit seinem Team die „Turing-Welchman-Bombe“, deren erste Exemplare 1940 in Betrieb gingen und die Technik der Enigma knackten.'
       ],
       image: {
-        src: 'img/eknigma02.png',
+        src: 'dither-output.png',
         alt: ''
       },
       ctaLabel: 'ausprobieren'

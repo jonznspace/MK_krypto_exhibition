@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 (function () {
   const STATION_CONTENT = {
     meta: {
-      title: 'Station 8 · Scheitern ohne Regeln',
-      ariaLabel: 'Station 8 – Scheitern ohne Regeln'
+      title: 'Station 10 · Scheitern ohne Regeln',
+      ariaLabel: 'Station 10 – Scheitern ohne Regeln'
     },
     start: {
       eyebrow: 'Scheitern ohne Regeln',
@@ -101,11 +101,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderStation(STATION_CONTENT);
 })();
 
-/* --- station-08 + station-09 overrides --- */
+/* --- Station 10 start-screen content --- */
 document.addEventListener('DOMContentLoaded',()=>{
   const set = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
   set('startEyebrow','Zu viel Papier, zu wenig Vertrauen');
   set('startTitle','Palmstruch und die Stockholms Banco');
-  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Papiergeld war Menschen einmal genauso ungewohnt und suspekt, wie digitale Token es heute für viele sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten, war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?</p><p>Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) behaupten, als Zahlungsmittel oder Wertträger zu funktionieren. Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern.</p>';
+  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Schweden bezahlte im 17. Jahrhundert mit Kupferplatten. Sie wogen bis zu 20 Kilogramm, was das Problem unmittelbar verdeutlicht: Dieses Geld war schwer, unhandlich und im Alltag kaum zu gebrauchen.</p><p>Johan Palmstruch, ein aus Riga stammender Kaufmann, erhielt 1656 vom schwedischen König die Genehmigung, eine Bank zu gründen. Palmstruchs Idee war progressiv: Statt die schweren Platten herumzutragen, sollten Papierscheine deren Wert verbürgen. Wer Kupfer bei der „Stockholms Banco“ einlagerte, bekam dafür einen Kreditzettel. Damit entstand das erste Papiergeld Europas.</p><p>Anfangs funktionierte das System. Die Zettel waren viel leichter und handlicher als die Platten. Der Zahlungsverkehr konnte zudem schneller abgewickelt werden. Doch es fehlte als essenzieller Bestandteil eine Regulierung der Emissionen: Niemand kontrollierte, wie viele Scheine die Bank ausgab. Palmstruch ließ mehr Zettel drucken, als durch Einlagen gedeckt waren. Als sich das herumsprach, wollten alle gleichzeitig ihre Scheine gegen Kupfer eintauschen. Die Bank konnte diesen Forderungen nicht nachkommen. 1668 brach sie schließlich zusammen. Palmstruch wurde zunächst zum Tode verurteilt, später aber zu einer Gefängnisstrafe begnadigt.</p><p>Aus diesem Scheitern zog Schweden eine Konsequenz: Die Leitung der Nachfolgeeinrichtung der Stockholms Banco, die Riksens Ständers Bank, die heutige Schwedische Nationalbank (Sveriges Riksbank), wurde nicht mehr einem privaten Unternehmer überlassen, sondern unter die Aufsicht des Parlaments gestellt. Sie gilt als älteste noch bestehende Zentralbank der Welt.</p>';
   const img=document.getElementById('startImage'); if(img) img.src='../station-04/img/eknigma02.png';
 });

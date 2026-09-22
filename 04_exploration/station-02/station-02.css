@@ -105,12 +105,12 @@ html, body {
 
 .start-visual {
   position: absolute;
-  right: -60px; top: -20px; bottom: 0;
-  width: 1180px;
+  right: -360px; top: -20px; bottom: -200px;
+  width: 1280px;
   display: flex; align-items: flex-end; justify-content: flex-end;
   z-index: 1;
   pointer-events: none;
-  opacity: .84;
+  opacity: .28;
 }
 .station-image { width: 100%; height: auto; max-height: 1020px; object-fit: contain; object-position: bottom right; }
 

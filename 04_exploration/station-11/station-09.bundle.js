@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded',()=>{
       eyebrow: 'Verordnetes Vertrauen',
       title: 'Das erste Papiergeld im deutschsprachigen Raum',
       intro: [
-        'Was in Schweden scheiterte, gelang wenige Jahrzehnte später in Sachsen. Sachsen gab als erstes deutsches Territorium Papiergeld heraus. Auch hier war die Ausgangslage pragmatisch: Der Staat brauchte Geld, und Münzmetall war knapp. Doch anders als Palmstruch in Stockholm setzte Sachsen nicht allein auf freiwillige Akzeptanz des Geldes seitens der Bevölkerung. Per Verordnung wurde festgelegt, dass bestimmte Zahlungen in der neuen Geldform geleistet werden mussten.',
+        'Was in Schweden scheiterte, gelang wenige Jahrzehnte später in Sachsen.', 
+        'Sachsen gab als erstes deutsches Territorium Papiergeld heraus. Auch hier war die Ausgangslage pragmatisch: Der Staat brauchte Geld, und Münzmetall war knapp. Doch anders als Palmstruch in Stockholm setzte Sachsen nicht allein auf freiwillige Akzeptanz des Geldes seitens der Bevölkerung. Per Verordnung wurde festgelegt, dass bestimmte Zahlungen in der neuen Geldform geleistet werden mussten.',
         'Damit entstand ein Kreislauf. Wer Steuern in Form von Papiergeld zahlen konnte, war auch eher bereit, es als Zahlungsmittel im Handel anzunehmen. Das Vertrauen wuchs nicht aus Begeisterung für die neue Geldform, sondern aus dem alltäglichen Gebrauch und den dahinterstehenden Regeln.'
       ],
       image: { src: '../station-04/img/eknigma02.png', alt: '' },

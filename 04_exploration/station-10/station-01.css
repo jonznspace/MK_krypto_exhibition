@@ -39,6 +39,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -.01em;
+  word-spacing: .24em;
   line-height: .92;
 }
 
@@ -138,21 +139,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   object-position: bottom right;
 }
 
-.station-image-placeholder {
-  width: min(72vw, 760px);
-  min-height: min(48vw, 520px);
-  margin: 0 0 72px auto;
-  display: grid;
-  place-items: center;
-  border: 2px dashed color-mix(in srgb, var(--immersive-body) 48%, transparent);
-  background: color-mix(in srgb, var(--immersive-bg) 70%, transparent);
-  color: var(--immersive-body);
-  font-family: var(--font-family-dm-mono);
-  font-size: 18px;
-  letter-spacing: .16em;
-  text-transform: var(--text-transform-dm-mono);
-}
-
 .cta {
   position: absolute;
   right: clamp(24px, 4vw, 72px);
@@ -218,7 +204,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
-.action-layout {
+.template-grid {
   margin-top: clamp(44px, 8vh, 88px);
   display: grid;
   grid-template-columns: 1.35fr 1fr;
@@ -232,8 +218,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: 240px;
 }
 
-.skytale-module { min-height: 520px; }
-.info-card { min-height: 520px; }
+.template-card--wide {
+  grid-column: 1 / -1;
+  min-height: 220px;
+}
 
 .template-tag {
   display: inline-block;
@@ -260,86 +248,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
   max-width: 70ch;
 }
 
-.module-intro {
-  margin-bottom: 20px;
-}
-
-.field-label {
-  display: block;
-  margin-bottom: 8px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  letter-spacing: .12em;
-  text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-muted);
-}
-
-.field-input {
-  width: 100%;
-  min-height: 56px;
-  margin-bottom: 16px;
-  padding: 0 16px;
-  background: var(--layer-surface-raised);
-  border: 1px solid var(--layer-border);
-  color: var(--immersive-ink);
-  font-family: var(--font-family-dm-mono);
-  font-size: 20px;
-  letter-spacing: .08em;
-  text-transform: var(--text-transform-dm-mono);
-}
-
-#skyCols {
-  width: 100%;
-  margin-bottom: 18px;
-  accent-color: var(--immersive-accent);
-}
-
-.skytale-grid {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.skytale-grid span {
-  min-height: 52px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--layer-border);
-  background: color-mix(in srgb, var(--layer-surface-raised) 84%, var(--immersive-bg));
-  font-family: var(--font-family-dm-mono);
-  font-size: 20px;
-  letter-spacing: .08em;
-  text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-ink);
-}
-
-.io-block {
-  border-top: 1px solid var(--layer-border);
-  padding-top: 14px;
-}
-
-.hashline {
-  min-height: 56px;
-  padding: 12px 14px;
-  border: 1px solid var(--immersive-accent);
-  background: color-mix(in srgb, var(--immersive-accent) 8%, transparent);
-  color: var(--immersive-ink);
-  font-family: var(--font-family-dm-mono);
-  font-size: 22px;
-  letter-spacing: .09em;
-  text-transform: var(--text-transform-dm-mono);
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: thin;
-}
-
 @media (max-width: 1100px) {
   .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
   .hero-text { width: 100%; max-height: none; padding-right: 0; overflow-y: visible; scrollbar-gutter: auto; }
   .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -24px 0 auto; }
-  .station-image-placeholder { width: 100%; min-height: 320px; margin-bottom: 0; }
   .cta { position: relative; inset: auto; align-self: flex-end; margin-top: -24px; }
-  .action-layout { grid-template-columns: 1fr; }
+  .template-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 760px) {

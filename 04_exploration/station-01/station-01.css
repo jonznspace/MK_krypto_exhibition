@@ -147,7 +147,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .start-visual {
   position: absolute;
-  right: -60px;
+  right: -160px;
   top: -20px;
   bottom: 0;
   width: 1180px;
@@ -156,7 +156,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   justify-content: flex-end;
   z-index: 1;
   pointer-events: none;
-  opacity: .84;
+  opacity: .28;
 }
 
 .station-image {
@@ -165,6 +165,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
   max-height: 1020px;
   object-fit: contain;
   object-position: bottom right;
+}
+
+.station-image-placeholder {
+  width: min(72vw, 760px);
+  min-height: min(48vw, 520px);
+  margin: 0 0 72px auto;
+  display: grid;
+  place-items: center;
+  border: 2px dashed color-mix(in srgb, var(--immersive-body) 48%, transparent);
+  background: color-mix(in srgb, var(--immersive-bg) 70%, transparent);
+  color: var(--immersive-body);
+  font-family: var(--font-family-dm-mono);
+  font-size: 18px;
+  letter-spacing: .16em;
+  text-transform: var(--text-transform-dm-mono);
 }
 
 .cta {
@@ -494,7 +509,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 1100px) {
   .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
   .hero-text { width: 100%; max-height: none; padding-right: 0; overflow-y: visible; scrollbar-gutter: auto; }
-  .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -24px 0 auto; }
+  .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -40px 0 auto; }
+  .station-image-placeholder { width: 100%; min-height: 320px; margin-bottom: 0; }
   .cta { position: relative; inset: auto; align-self: flex-end; margin-top: -24px; }
   .screen-action { height: auto; min-height: 100dvh; overflow: visible; }
   .action-layout { grid-template-columns: 1fr; min-height: 0; gap: var(--space-5); }

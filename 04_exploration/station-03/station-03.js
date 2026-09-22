@@ -14,7 +14,7 @@
         'Dieses Prinzip ist heute grundlegend für digitale Technik. Computer verarbeiten Informationen intern in binären Zuständen. Jedes Foto, jede Nachricht, jede Transaktion beruht auf Folgen von Nullen und Einsen.'
       ],
       image: {
-        src: '../station-04/img/eknigma02.png',
+        src: 'dither-output.png',
         alt: ''
       },
       ctaLabel: 'Ausprobieren'
@@ -38,6 +38,10 @@
   const $ = id => document.getElementById(id);
   const HISTORY_KEY = 'mk-krypto-station-03-binary-names';
   const MAX_HISTORY = 8;
+  const SIGNAL_BLOCK_SIZE = 4;
+  const SIGNAL_REVEAL_DELAY = 1200;
+  const SIGNAL_BLOCK_HOLD_DELAY = 2800;
+  const SIGNAL_TRANSITION_DELAY = 900;
   const DEFAULT_NAMES = ['LEIBNIZ', 'ADA LOVELACE', 'ALAN TURING', 'KATHARINA'];
   const BLOCKED_TERMS = [
     // Deutsch
@@ -57,7 +61,7 @@
   ];
   const CHALLENGES = ['CODE', 'IDEA', 'ZERO', 'BYTE', 'LOGIC'];
   let signalIndex = 0;
-  let signalTimer;
+  let signalTimers = [];
   let signalLines = [];
   let challengeIndex = 0;
   const screenStart = $('screenStart');
@@ -189,52 +193,52 @@
     const signal = $('binaryHistory');
     const line = document.createElement('div');
     line.className = 'signal-line';
-    line.style.top = `${slot * 96}px`;
     line.setAttribute('aria-hidden', 'true');
-    const bits = encodeName(name);
-    Array.from(bits).forEach((character, index) => {
-      if (character === ' ') {
-        const gap = document.createElement('span');
-        gap.className = 'signal-gap';
-        signal.appendChild(gap);
-        return;
-      }
-      const bit = document.createElement('span');
-      bit.className = 'signal-bit';
-      bit.textContent = character;
-      line.appendChild(bit);
+    name.split(' ').filter(Boolean).forEach(word => {
+      const wordLine = document.createElement('div');
+      wordLine.className = 'signal-word';
+      Array.from(encodeName(word)).forEach(character => {
+        if (character === ' ') return;
+        const bit = document.createElement('span');
+        bit.className = 'signal-bit';
+        bit.textContent = character;
+        wordLine.appendChild(bit);
+      });
+      line.appendChild(wordLine);
     });
     signal.appendChild(line);
     signalLines.push(line);
   }
 
-  function addSignalLine(name) {
-    if (signalLines.length < 4) {
-      createSignalLine(name, signalLines.length);
-      return;
-    }
-
-    const leaving = signalLines.shift();
-    const slot = Number.parseInt(leaving.style.top, 10) / 96;
-    leaving.classList.add('is-leaving');
-    window.setTimeout(() => {
-      leaving.remove();
-      createSignalLine(name, slot);
-    }, 900);
-  }
-
   function renderHistory() {
     const history = loadHistory();
     const signal = $('binaryHistory');
+    signalTimers.forEach(timer => window.clearTimeout(timer));
+    signalTimers = [];
     signal.innerHTML = '';
     signalLines = [];
     signalIndex = 0;
-    addSignalLine(history[signalIndex]);
-    window.clearInterval(signalTimer);
-    signalTimer = window.setInterval(() => {
-      signalIndex = (signalIndex + 1) % history.length;
-      addSignalLine(history[signalIndex]);
-    }, 2400);
+
+    function showNextBlock() {
+      signal.innerHTML = '';
+      signalLines = [];
+      const block = Array.from({ length: SIGNAL_BLOCK_SIZE }, (_, offset) => history[(signalIndex + offset) % history.length]);
+
+      block.forEach((name, slot) => {
+        signalTimers.push(window.setTimeout(() => createSignalLine(name, slot), slot * SIGNAL_REVEAL_DELAY));
+      });
+
+      const blockDuration = (SIGNAL_BLOCK_SIZE - 1) * SIGNAL_REVEAL_DELAY + SIGNAL_BLOCK_HOLD_DELAY;
+      signalTimers.push(window.setTimeout(() => {
+        signalLines.forEach(line => line.classList.add('is-leaving'));
+        signalTimers.push(window.setTimeout(() => {
+          signalIndex = (signalIndex + SIGNAL_BLOCK_SIZE) % history.length;
+          showNextBlock();
+        }, SIGNAL_TRANSITION_DELAY));
+      }, blockDuration));
+    }
+
+    showNextBlock();
   }
 
   function rememberName(name) {
