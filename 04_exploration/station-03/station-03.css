@@ -224,7 +224,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   position: relative;
   height: 100dvh;
   padding: clamp(24px, 3vw, 40px);
-  min-height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
@@ -288,7 +290,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .binary-tab-panel.hidden { display: none; }
 .binary-tab-panel {
-  height: calc(100dvh - 220px);
+  flex: 1;
+  min-height: 0;
   margin-top: 24px;
   overflow: hidden;
 }
@@ -502,9 +505,28 @@ button { font: inherit; color: inherit; cursor: pointer; }
   align-items: start;
 }
 
+.decode-prompt {
+  position: relative;
+}
+
+.challenge-keyboard {
+  position: absolute;
+  top: 92px;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  margin: 0;
+}
+
+.challenge-keyboard .keyboard-key {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-inline: var(--space-1);
+}
+
 .character-map {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 6px;
 }
 
@@ -514,24 +536,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
   align-items: flex-start;
   justify-content: center;
   gap: 4px;
-  min-height: 52px;
-  padding: 7px;
+  min-height: 58px;
+  padding: 9px;
   border: 1px solid var(--layer-border);
   background: var(--immersive-bg);
   color: var(--immersive-body);
   font-family: var(--font-family-dm-mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .character-map__cell strong {
   color: var(--immersive-ink);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
 }
 
 .character-map__cell span {
   color: var(--immersive-body);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: .02em;
 }
 
@@ -591,6 +613,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .challenge-feedback.is-correct { color: var(--immersive-ink); }
 .challenge-feedback.is-wrong { color: var(--immersive-body); }
 
+.challenge-feedback.is-correct::after,
+.challenge-feedback.is-wrong::after {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.challenge-feedback.is-correct::after {
+  content: '✓';
+  color: var(--color-success-strong, #36c978);
+}
+
+.challenge-feedback.is-wrong::after {
+  content: '✕';
+  color: var(--color-error-strong, #ff5c5c);
+}
+
 
 @media (max-width: 1100px) {
   .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
@@ -610,7 +650,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .action-hdr .title--compact { font-size: 56px; }
   .close-btn { width: 64px; height: 64px; }
   .tabs { margin-top: 16px; }
-  .binary-tab-panel { height: calc(100dvh - 176px); margin-top: 16px; }
+  .binary-tab-panel { margin-top: 16px; }
   .template-card { padding: 18px; }
   .binary-challenge h2 { font-size: 30px; margin-bottom: 10px; }
   .binary-challenge h3 { font-size: 20px; margin-bottom: 8px; }

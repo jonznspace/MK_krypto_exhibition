@@ -63,6 +63,7 @@ html, body { min-height: 100%; }
 
 /* --- station-09 overrides (same as 08 for now) --- */
 .start-visual { right: -90px; bottom: -90px; opacity: 0.28 }
+#startTitle { font-size: 64px; }
 
 @media (max-width: 760px) { .title--hero { font-size: clamp(42px, 14vw, 72px); } }
 

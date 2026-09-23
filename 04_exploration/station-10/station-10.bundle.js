@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const bind = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
   // Default demo content (override in station-specific script)
   bind('startEyebrow',' ');
-  bind('startTitle','Titel der Station 10');
+  bind('startTitle','Titel der Station 08');
   const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Ein einführender Text für Station 08. Ersetze diesen Inhalt mit station-spezifischem JS.</p>';
 });
 
@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 (function () {
   const STATION_CONTENT = {
     meta: {
-      title: 'Station 10 · Scheitern ohne Regeln',
-      ariaLabel: 'Station 10 – Scheitern ohne Regeln'
+      title: 'Station 08 · Scheitern ohne Regeln',
+      ariaLabel: 'Station 08 – Scheitern ohne Regeln'
     },
     start: {
       eyebrow: 'Scheitern ohne Regeln',
-      title: 'Tablet 8 [Station 10] – Zu viel Papier, zu wenig Vertrauen: Palmstruch und die Stockholms Banco',
+      title: 'Tablet 8 [Station 08] – Zu viel Papier, zu wenig Vertrauen: Palmstruch und die Stockholms Banco',
       intro: [
         'Schweden bezahlte im 17. Jahrhundert mit Kupferplatten. Sie wogen bis zu 20 Kilogramm, was das Problem unmittelbar verdeutlicht: Dieses Geld war schwer, unhandlich und im Alltag kaum zu gebrauchen.',
         'Johan Palmstruch, ein aus Riga stammender Kaufmann, erhielt 1656 vom schwedischen König die Genehmigung, eine Bank zu gründen. Palmstruchs Idee war progressiv: Statt die schweren Platten herumzutragen, sollten Papierscheine deren Wert verbürgen. Wer Kupfer bei der „Stockholms Banco“ einlagerte, bekam dafür einen Kreditzettel. Damit entstand das erste Papiergeld Europas.',

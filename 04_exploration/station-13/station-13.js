@@ -70,9 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function toggleDeepDive(index) {
+    const list = $('deepdiveList');
+    let openItem = null;
+
     document.querySelectorAll('.deepdive-item').forEach((item, itemIndex) => {
-      const isOpen = itemIndex === index ? item.classList.toggle('open') : item.classList.remove('open');
+      const isOpen = itemIndex === index ? !item.classList.contains('open') : false;
+      item.classList.toggle('open', isOpen);
       item.querySelector('.deepdive-header').setAttribute('aria-expanded', String(isOpen));
+      item.querySelector('.deepdive-panel').hidden = !isOpen;
+      if (isOpen) openItem = item;
+    });
+
+    if (!list) return;
+    if (!openItem) {
+      list.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const offset = Math.max(openItem.offsetTop - list.offsetTop - 8, 0);
+      list.scrollTo({ top: offset, behavior: 'smooth' });
     });
   }
 
@@ -101,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const panel = document.createElement('div');
       panel.className = 'deepdive-panel';
+      panel.hidden = true;
       const panelInner = document.createElement('div');
       panelInner.className = 'deepdive-panel-inner';
       const body = document.createElement('div');
@@ -113,12 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const stationTitle = 'Die „Free-Banking-Era“ (1836–1862)';
+
   document.title = 'Station 11 · Die Free-Banking-Era';
   $('frame').setAttribute('aria-label', 'Station 11 – Die Free-Banking-Era');
   setText('startEyebrow', 'Als jeder sein eigenes Geld druckte');
-  setTitle('Die „Free-Banking-Era“ (1836–1862)');
+  setTitle(stationTitle);
   setText('actionEyebrow', 'Vertiefungen');
-  setText('actionTitle', 'Drei Wege zur Ordnung');
+  setText('actionTitle', stationTitle);
   const introElement = $('startIntro');
   renderParagraphs(introElement, intro);
   const image = $('startImage');

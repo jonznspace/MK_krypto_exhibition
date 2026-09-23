@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Station 3 · Leibniz-Rechenmaschine</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="station-03.css">
+<link rel="stylesheet" href="station-03.css?v=5">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
+<link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
 </head>
 <body>
 
@@ -83,9 +84,18 @@
           <span class="template-tag">Entschlüsseln</span>
           <h2 id="challengeTitle">Binär entschlüsseln</h2>
           <div class="decode-layout">
-            <div>
+            <div class="decode-prompt">
               <h3>Was steht hier?</h3>
               <div class="challenge-code" id="challengeCode"></div>
+              <div class="binary-keyboard challenge-keyboard hidden" id="challengeKeyboard" aria-label="Bildschirmtastatur für die Lösung">
+                <div class="keyboard-row" id="challengeKeyboardRowA"></div>
+                <div class="keyboard-row" id="challengeKeyboardRowB"></div>
+                <div class="keyboard-row keyboard-row--bottom" id="challengeKeyboardRowC"></div>
+                <div class="keyboard-row keyboard-row--actions">
+                  <button class="keyboard-key keyboard-key--wide" id="btnChallengeBackspace" type="button">Löschen</button>
+                  <button class="keyboard-key keyboard-key--wide" id="btnChallengeDone" type="button">Fertig</button>
+                </div>
+              </div>
             </div>
             <div class="character-map" id="characterMap" aria-label="Buchstaben und ihre 8-Bit-Codes"></div>
           </div>
@@ -104,6 +114,8 @@
 </div>
 
 <script src="../../shared/js/station-language-switch.js"></script>
-<script src="station-03.js"></script>
+<script src="../../shared/js/station-idle-reload.js"></script>
+<script src="../../shared/js/vendor/profanity-filter.js"></script>
+<script src="station-03.js?v=14"></script>
 </body>
 </html>

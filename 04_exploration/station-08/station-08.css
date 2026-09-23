@@ -39,7 +39,7 @@ body {
 
 .title--hero {
   max-width: 9ch;
-  font-size: clamp(96px, 15vw, 164px);
+  font-size: clamp(80px, 12vw, 132px);
 }
 
 .hero-text {
@@ -130,7 +130,7 @@ body {
   padding-right: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: safe center;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
@@ -139,6 +139,7 @@ body {
 
 .deepdive-item {
   position: relative;
+  flex: 0 0 auto;
   margin-bottom: 14px;
   padding-left: 44px;
 }
@@ -234,13 +235,11 @@ body {
 }
 
 .deepdive-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--duration-4) var(--ease-standard);
+  display: none;
 }
 
 .deepdive-item.open .deepdive-panel {
-  grid-template-rows: 1fr;
+  display: block;
 }
 
 .deepdive-panel-inner {

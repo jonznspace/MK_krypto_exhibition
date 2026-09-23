@@ -18,8 +18,41 @@
   const angleOf = i => -90 + i * STEP;
   const polar = (r, i) => [CX + r * Math.cos(rad(angleOf(i))), CY + r * Math.sin(rad(angleOf(i)))];
 
-  const ENC_WORDS = ['DRESDEN', 'SACHSEN', 'ZIRKEL', 'GEHEIMNIS', 'SCHEIBE', 'KRYPTO'];
-  const CRACK_WORDS = ['GEHEIM', 'SCHATZ', 'TALER', 'DUKAT', 'SILBER', 'DRESDEN'];
+  const EXAMPLES = {
+    de: {
+      encrypt: ['DRESDEN', 'SACHSEN', 'ZIRKEL', 'GEHEIMNIS', 'SCHEIBE', 'KRYPTO'],
+      crack: ['GEHEIM', 'SCHATZ', 'TALER', 'DUKAT', 'SILBER', 'DRESDEN']
+    },
+    en: {
+      encrypt: ['SECRET', 'CIPHER', 'MESSAGE', 'ENIGMA', 'HIDDEN', 'CRYPTO'],
+      crack: ['SECRET', 'TREASURE', 'COIN', 'GOLD', 'SILVER', 'LONDON']
+    }
+  };
+
+  const ACTION_COPY = {
+    de: {
+      eyebrow: 'Verschlüsseln mit System', title: 'Permutationsscheibe', close: 'Zur Startansicht', key: 'Schlüssel',
+      encrypt: 'Verschlüsseln', crack: 'Knacken', encryptHint: 'Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.',
+      plaintext: 'Klartext', ciphertext: 'Geheim', letters: 'Buchstaben eingeben', clear: 'Leeren',
+      crackHint: 'Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.', intercepted: 'Abgefangen',
+      decrypted: 'Entschlüsselt', turnKey: 'Schlüssel drehen …', cracked: 'GEKNACKT · Schlüssel A → ', newMessage: 'Neue Botschaft',
+      more: 'Weitere Verschlüsselungsverfahren', deepTag: 'Vertiefung', deepTitle: 'Weitere Verschlüsselungsverfahren',
+      deepText: 'Weitere Hilfsmittel machten Verschlüsselung komplexer. Dazu gehörten Chiffriertabellen oder Codebücher, sogenannte Nomenklatoren, in denen Namen, Orte oder ganze Wörter durch andere Zeichen ersetzt wurden. Solche Verfahren prägten seit dem 15. Jahrhundert besonders die europäische Diplomatie, die auf dichte Netzwerke reisender Boten und Gesandter angewiesen war. In „schwarzen Kammern“ chiffrierten und dechiffrierten die Höfe abgefangene Nachrichten. Auch am sächsischen Hof gab es eine „schwarze Kammer“, die direkt in der Poststelle untergebracht war, um ein- bzw. ausgehende Schreiben zu kontrollieren. Noch zu DDR-Zeiten, zur Zeit des sogenannten Kalten Krieges, waren diese Verfahren gang und gäbe. In unserer heutigen Verfassung ist das Postgeheimnis klar geregelt, was durch die Digitalisierung und Privatisierung dieses Bereiches allerdings aufgeweicht wird.',
+      attract: 'Drehe die Scheibe', solvedToast: 'Botschaft geknackt', disc: 'Kryptografischer Zirkel: äußere und innere Alphabetscheibe. Innere Scheibe drehbar.',
+      rotateLeft: 'Innere Scheibe eine Stellung nach links', rotateRight: 'Innere Scheibe eine Stellung nach rechts', closeOverlay: 'Schließen'
+    },
+    en: {
+      eyebrow: 'Encrypting systematically', title: 'Permutation disc', close: 'Back to start', key: 'Key',
+      encrypt: 'Encrypt', crack: 'Crack', encryptHint: 'Choose a word or enter your own letters. Set the key by turning the disc.',
+      plaintext: 'Plaintext', ciphertext: 'Ciphertext', letters: 'Enter letters', clear: 'Clear',
+      crackHint: 'An intercepted message. Turn the disc until a meaningful word appears.', intercepted: 'Intercepted',
+      decrypted: 'Decrypted', turnKey: 'Turn the key ...', cracked: 'CRACKED · Key A → ', newMessage: 'New message',
+      more: 'More encryption methods', deepTag: 'Deep dive', deepTitle: 'More encryption methods',
+      deepText: 'Other tools made encryption more complex. These included cipher tables and codebooks, known as nomenclators, in which names, places or entire words were replaced by other symbols. From the fifteenth century onward, such methods shaped European diplomacy, which relied on dense networks of travelling messengers and envoys. Courts encrypted and decrypted intercepted messages in so-called black chambers. The Saxon court also had a black chamber located directly in the post office to inspect incoming and outgoing letters. These methods were still common during the Cold War in East Germany. Today, postal privacy is protected by the constitution, although digitisation and privatisation have weakened this protection.',
+      attract: 'Turn the disc', solvedToast: 'Message cracked', disc: 'Cryptographic disc with outer and inner alphabets. The inner disc can be rotated.',
+      rotateLeft: 'Turn the inner disc one step left', rotateRight: 'Turn the inner disc one step right', closeOverlay: 'Close'
+    }
+  };
 
   const STATION_CONTENT = {
     meta: {
@@ -42,7 +75,7 @@
     },
     action: {
       eyebrow: 'Verschlüsseln mit System',
-      title: 'kryptografischer Zirkel & Permutationsscheibe',
+      title: 'Permutationsscheibe',
       closedLabel: 'Zur Startansicht',
       deepening: {
         tag: 'Vertiefung',
@@ -58,6 +91,15 @@
   let mode = 'encrypt';
   let plain = 'DRESDEN';
   let crackIdx = [], crackSecret = 0, crackWord = '';
+  let appliedLanguage = null;
+
+  function currentLanguage() {
+    return document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  }
+
+  function currentCopy() {
+    return ACTION_COPY[currentLanguage()];
+  }
 
   function setText(id, value) {
     $(id).textContent = value;
@@ -92,14 +134,9 @@
     });
   }
 
-  function setDeepeningTitle() {
+  function setDeepeningTitle(value = STATION_CONTENT.action.deepening.title) {
     const title = $('ovTitle');
-    title.innerHTML = '';
-    title.append(
-      document.createTextNode('Weitere Verschlüsselungs-'),
-      document.createElement('br'),
-      document.createTextNode('verfahren')
-    );
+    title.textContent = value;
   }
 
   function renderStation(content) {
@@ -238,14 +275,19 @@
 
   function setPlain(w) { plain = w.toUpperCase().slice(0, 12); renderPlain(); }
 
-  // Chips + A–Z aufbauen
-  (function buildEncryptUI() {
+  function buildWordChips() {
     const chips = $('wordChips');
-    ENC_WORDS.forEach(w => {
+    chips.innerHTML = '';
+    EXAMPLES[currentLanguage()].encrypt.forEach(w => {
       const b = document.createElement('button'); b.className = 'chip'; b.dataset.w = w; b.textContent = w;
       b.onclick = () => { Sound.tick(); setPlain(w); };
       chips.appendChild(b);
     });
+  }
+
+  // Chips + A–Z aufbauen
+  (function buildEncryptUI() {
+    buildWordChips();
     const az = $('azStrip');
     AL.forEach(ch => {
       const b = document.createElement('button'); b.textContent = ch;
@@ -257,7 +299,8 @@
 
   /* ---------------- Modus: Knacken ---------------- */
   function newMessage() {
-    crackWord = CRACK_WORDS[Math.floor(Math.random() * CRACK_WORDS.length)];
+    const words = EXAMPLES[currentLanguage()].crack;
+    crackWord = words[Math.floor(Math.random() * words.length)];
     crackSecret = 1 + Math.floor(Math.random() * (N - 1));
     crackIdx = crackWord.split('').map(ch => enc(AL.indexOf(ch), crackSecret));
     const box = $('crackCipher'); box.innerHTML = '';
@@ -269,19 +312,60 @@
     const box = $('crackPlain'); box.innerHTML = '';
     crackIdx.forEach(c => box.appendChild(tile(AL[dec(c, key)])));
     const status = $('crackStatus');
+    const copy = currentCopy();
     if (key === crackSecret) {
-      status.textContent = 'GEKNACKT · Schlüssel A → ' + AL[key];
+      status.textContent = copy.cracked + AL[key];
       status.classList.add('solved');
       box.querySelectorAll('.tile').forEach(t => t.classList.add('active'));
-      if (!crackSolvedFlag) { crackSolvedFlag = true; Sound.confirm(); toast('Botschaft geknackt'); }
+      if (!crackSolvedFlag) { crackSolvedFlag = true; Sound.confirm(); toast(copy.solvedToast); }
     } else {
-      status.textContent = 'Schlüssel drehen …';
+      status.textContent = copy.turnKey;
       status.classList.remove('solved');
       crackSolvedFlag = false;
     }
   }
   let crackSolvedFlag = false;
   $('newMsg').onclick = () => { Sound.tick(); crackSolvedFlag = false; newMessage(); };
+
+  function applyActionLanguage() {
+    const language = currentLanguage();
+    if (language === appliedLanguage) return;
+    appliedLanguage = language;
+    const copy = currentCopy();
+
+    setText('actionEyebrow', copy.eyebrow);
+    setTitle('actionTitle', copy.title);
+    btnClose.setAttribute('aria-label', copy.close);
+    svg.setAttribute('aria-label', copy.disc);
+    $('rotL').setAttribute('aria-label', copy.rotateLeft);
+    $('rotR').setAttribute('aria-label', copy.rotateRight);
+    setText('keyReadLabel', copy.key);
+    setText('tabEncrypt', copy.encrypt);
+    setText('tabCrack', copy.crack);
+    setText('encryptHint', copy.encryptHint);
+    setText('plainLabel', copy.plaintext);
+    setText('cipherLabel', copy.ciphertext);
+    $('azStrip').setAttribute('aria-label', copy.letters);
+    setText('clearBtn', copy.clear);
+    setText('crackHint', copy.crackHint);
+    setText('interceptedLabel', copy.intercepted);
+    setText('decryptedLabel', copy.decrypted);
+    setText('newMsg', copy.newMessage);
+    setText('vertBtnLabel', copy.more);
+    setText('ovTag', copy.deepTag);
+    setDeepeningTitle(copy.deepTitle);
+    renderParagraphs('ovBody', [copy.deepText]);
+    $('ovClose').setAttribute('aria-label', copy.closeOverlay);
+    setText('attract', copy.attract);
+
+    plain = EXAMPLES[language].encrypt[0];
+    buildWordChips();
+    renderPlain();
+    crackIdx = [];
+    crackSolvedFlag = false;
+    if (mode === 'crack') newMessage();
+    else $('crackStatus').textContent = copy.turnKey;
+  }
 
   /* ---------------- Modus-Umschaltung ---------------- */
   function switchMode(m) {
@@ -386,6 +470,10 @@
   renderStation(STATION_CONTENT);
   renderPlain();
   switchMode('encrypt');
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyActionLanguage();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+  applyActionLanguage();
   kick();
 
 })();

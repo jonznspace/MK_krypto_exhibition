@@ -159,7 +159,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* =========================================================================
    Actionbereich
    ========================================================================= */
-.screen-action { position: relative; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; }
+.screen-action {
+  position: relative;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 .screen-action::before {
   content: ""; position: absolute; inset: 0;
   background: url("img/eknigma01.png") right center / auto 1240px no-repeat;
@@ -376,16 +384,27 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* Eingabe-Box + Zurücksetzen-Button (Zeile 3) */
 .row-side { grid-column: 3; grid-row: 3; align-self: start; }
 
-@media (max-width: 1500px) {
+@media (max-width: 1600px) {
   .title--hero { font-size: clamp(64px, 7vw, 108px); white-space: normal; }
-  .start-visual { width: 65vw; opacity: .72; }
+  .start-visual { width: 65vw; opacity: .28; }
 
   .action-grid {
     grid-template-columns: 190px minmax(580px, 1fr) 220px;
-    grid-template-rows: auto auto auto auto;
   }
   .action-grid::before { left: 190px; }
   .connector { display: none; }
+}
+
+@media (min-width: 1101px) and (max-height: 900px) {
+  .screen-action { padding: 32px 40px; }
+  .action-grid {
+    margin-top: 24px;
+    grid-template-columns: 190px minmax(580px, 700px) 220px minmax(0, 1fr);
+    grid-template-rows: 176px 214px 242px;
+    column-gap: 24px;
+    row-gap: 12px;
+  }
+  .action-grid::before { display: none; }
 }
 
 @media (max-width: 1100px) {
@@ -412,7 +431,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .title-word { display: block; margin: 0 0 .12em; }
   .start-copy { width: 100%; margin-top: 48px; }
   .hero-text p { font-size: 18px; }
-  .start-visual { width: calc(100% + 40px); margin-right: -16px; margin-top: -20px; opacity: .55; }
+  .start-visual { width: calc(100% + 40px); margin-right: -16px; margin-top: -20px; opacity: .28; }
   .cta { width: 100%; margin-top: 8px; }
   .cta-label { flex: 1; min-height: 60px; padding-inline: 20px; font-size: 18px; }
   .cta-icon { width: 60px; height: 60px; }

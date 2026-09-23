@@ -42,30 +42,71 @@
   const SIGNAL_REVEAL_DELAY = 1200;
   const SIGNAL_BLOCK_HOLD_DELAY = 2800;
   const SIGNAL_TRANSITION_DELAY = 900;
-  const DEFAULT_NAMES = ['LEIBNIZ', 'ADA LOVELACE', 'ALAN TURING', 'KATHARINA'];
-  const BLOCKED_TERMS = [
-    // Deutsch
-    'arsch', 'scheiss', 'scheiße', 'hurensohn', 'wichser', 'idiot',
-    'nazi', 'kanake', 'zigeuner', 'schwuchtel',
-    // Englisch
-    'fuck', 'fucking', 'shit', 'bitch', 'bastard', 'cunt', 'dickhead',
-    'faggot', 'retard',
-    // Französisch
-    'merde', 'putain', 'connard', 'salope',
-    // Spanisch
-    'puta', 'puto', 'mierda', 'coño', 'maricon',
-    // Italienisch
-    'cazzo', 'merda', 'puttana', 'stronzo',
-    // Niederländisch
-    'kanker', 'tering', 'hoer', 'klootzak'
-  ];
-  const CHALLENGES = ['CODE', 'IDEA', 'ZERO', 'BYTE', 'LOGIC'];
+  const DEFAULT_NAMES = {
+    de: ['LEIBNIZ', 'ADA LOVELACE', 'ALAN TURING', 'KATHARINA'],
+    en: ['LEIBNIZ', 'ADA LOVELACE', 'ALAN TURING', 'GRACE HOPPER']
+  };
+
+  const CHALLENGES = {
+    de: ['CODE', 'IDEE', 'NULL', 'BYTE', 'LOGIK'],
+    en: ['CODE', 'IDEA', 'ZERO', 'BYTE', 'LOGIC']
+  };
+  const ACTION_COPY = {
+    de: {
+      eyebrow: 'Die Maschine rechnet',
+      title: 'Dein Name in Binär',
+      namesTab: 'Dein Name in Binär',
+      decodeTab: 'Binär entschlüsseln',
+      tag: 'Binärcode',
+      binaryTitle: 'Dein Name in Binär',
+      description: 'Gib deinen Namen ein und sieh, wie eine Maschine jedes Zeichen als Folge von Nullen und Einsen speichert.',
+      binaryLabel: 'Eingabe (maximal 12 Zeichen)',
+      decodeTag: 'Entschlüsseln',
+      decodeTitle: 'Binär entschlüsseln',
+      question: 'Was steht hier?',
+      solutionLabel: 'Deine Lösung',
+      check: 'Prüfen',
+      next: 'Neue Folge',
+      delete: 'Löschen',
+      done: 'Fertig',
+      correct: 'Richtig entschlüsselt.',
+      wrong: 'Noch nicht. Versuch es weiter.'
+    },
+    en: {
+      eyebrow: 'The machine calculates',
+      title: 'Your name in binary',
+      namesTab: 'Your name in binary',
+      decodeTab: 'Decode binary',
+      tag: 'Binary code',
+      binaryTitle: 'Your name in binary',
+      description: 'Enter your name and see how a machine stores each character as a sequence of zeros and ones.',
+      binaryLabel: 'Input (maximum 12 characters)',
+      decodeTag: 'Decode',
+      decodeTitle: 'Decode binary',
+      question: 'What does this say?',
+      solutionLabel: 'Your answer',
+      check: 'Check',
+      next: 'New sequence',
+      delete: 'Delete',
+      done: 'Done',
+      correct: 'Correctly decoded.',
+      wrong: 'Not yet. Keep trying.'
+    }
+  };
   let signalIndex = 0;
   let signalTimers = [];
   let signalLines = [];
   let challengeIndex = 0;
   const screenStart = $('screenStart');
   const screenAction = $('screenAction');
+
+  function currentLanguage() {
+    return document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  }
+
+  function currentChallenges() {
+    return CHALLENGES[currentLanguage()];
+  }
 
   function setText(id, value) {
     $(id).textContent = value;
@@ -135,8 +176,7 @@
   }
 
   function isBlocked(name) {
-    const normalized = name.toLowerCase();
-    return BLOCKED_TERMS.some(term => normalized.includes(term));
+    return window.ProfanityFilter ? window.ProfanityFilter.test(name) : false;
   }
 
   function encodeName(name) {
@@ -147,9 +187,12 @@
   }
 
   function renderChallenge() {
-    const answer = CHALLENGES[challengeIndex];
+    const challenges = currentChallenges();
+    challengeIndex %= challenges.length;
+    const answer = challenges[challengeIndex];
+    const input = $('challengeInput');
     $('challengeCode').textContent = encodeName(answer);
-    $('challengeInput').value = '';
+    input.value = '';
     $('challengeFeedback').textContent = '';
     $('challengeFeedback').className = 'challenge-feedback';
   }
@@ -162,6 +205,8 @@
       const cell = document.createElement('div');
       cell.className = 'character-map__cell';
       cell.innerHTML = `<strong>${character}</strong><span>${code}</span>`;
+      cell.style.cursor = 'pointer';
+      cell.addEventListener('click', () => typeChallengeCharacter(character));
       map.appendChild(cell);
     });
   }
@@ -176,9 +221,9 @@
         if (valid.length) return [...new Set(valid)].slice(0, MAX_HISTORY);
       }
     } catch (error) {
-      return DEFAULT_NAMES;
+      return DEFAULT_NAMES[currentLanguage()];
     }
-    return DEFAULT_NAMES;
+    return DEFAULT_NAMES[currentLanguage()];
   }
 
   function saveHistory(history) {
@@ -252,13 +297,36 @@
   function checkChallenge() {
     const input = normalizeName($('challengeInput').value);
     const feedback = $('challengeFeedback');
-    if (input === CHALLENGES[challengeIndex]) {
-      feedback.textContent = 'Richtig entschlüsselt.';
+    const copy = ACTION_COPY[currentLanguage()];
+    if (input === currentChallenges()[challengeIndex]) {
+      feedback.textContent = copy.correct;
       feedback.className = 'challenge-feedback is-correct';
     } else {
-      feedback.textContent = 'Noch nicht. Versuch es weiter.';
+      feedback.textContent = copy.wrong;
       feedback.className = 'challenge-feedback is-wrong';
     }
+  }
+
+  function applyActionLanguage() {
+    const language = currentLanguage();
+    const copy = ACTION_COPY[language];
+    setText('actionEyebrow', copy.eyebrow);
+    setTitle('actionTitle', copy.title);
+    setText('tabNames', copy.namesTab);
+    setText('tabDecode', copy.decodeTab);
+    setText('binaryTag', copy.tag);
+    setText('binaryTitle', copy.binaryTitle);
+    setText('actionDescription', copy.description);
+    setText('binaryLabel', copy.binaryLabel);
+    document.querySelector('#binaryDecodePanel .template-tag').textContent = copy.decodeTag;
+    setText('challengeTitle', copy.decodeTitle);
+    document.querySelector('.binary-challenge h3').textContent = copy.question;
+    document.querySelector('label[for="challengeInput"]').textContent = copy.solutionLabel;
+    setText('challengeCheck', copy.check);
+    setText('challengeNext', copy.next);
+    setText('btnChallengeBackspace', copy.delete);
+    setText('btnChallengeDone', copy.done);
+    renderChallenge();
   }
 
   function renderBinary(infoMessage = '') {
@@ -326,6 +394,56 @@
     });
   }
 
+  function typeChallengeCharacter(character) {
+    const input = $('challengeInput');
+    input.focus();
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? start;
+    const nextLength = input.value.length - (end - start) + character.length;
+    if (nextLength > Number(input.maxLength)) return;
+    input.setRangeText(character, start, end, 'end');
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function handleChallengeInput() {
+    const input = $('challengeInput');
+    $('challengeKeyboard').classList.remove('hidden');
+    const normalized = normalizeName(input.value);
+    input.value = normalized;
+    const feedback = $('challengeFeedback');
+    feedback.textContent = '';
+    feedback.className = 'challenge-feedback';
+  }
+
+  function buildChallengeKeyboard() {
+    const rows = [
+      ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'],
+      ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+      ['Y', 'X', 'C', 'V', 'B', 'N', 'M']
+    ];
+
+    const pressVirtualKey = letter => {
+      typeChallengeCharacter(letter);
+    };
+
+    rows.forEach((letters, index) => {
+      const row = $(['challengeKeyboardRowA', 'challengeKeyboardRowB', 'challengeKeyboardRowC'][index]);
+      letters.forEach(letter => {
+        const key = document.createElement('button');
+        key.className = 'keyboard-key';
+        key.type = 'button';
+        key.textContent = letter;
+        key.setAttribute('aria-label', `Buchstabe ${letter}`);
+        key.addEventListener('pointerdown', event => {
+          event.preventDefault();
+          pressVirtualKey(letter);
+        });
+        key.addEventListener('click', () => pressVirtualKey(letter));
+        row.appendChild(key);
+      });
+    });
+  }
+
   $('btnTry').addEventListener('click', () => {
     screenStart.classList.add('hidden');
     screenAction.classList.remove('hidden');
@@ -351,6 +469,7 @@
   renderChallenge();
   renderCharacterMap();
   buildKeyboard();
+  buildChallengeKeyboard();
   $('binaryInput').addEventListener('input', handleBinaryInput);
   $('binaryInput').addEventListener('focus', () => $('binaryKeyboard').classList.remove('hidden'));
   $('binaryInput').addEventListener('blur', () => $('binaryKeyboard').classList.add('hidden'));
@@ -371,11 +490,42 @@
   $('tabDecode').addEventListener('click', () => setBinaryMode('decode'));
   $('challengeCheck').addEventListener('click', checkChallenge);
   $('challengeNext').addEventListener('click', () => {
-    challengeIndex = (challengeIndex + 1) % CHALLENGES.length;
+    challengeIndex = (challengeIndex + 1) % currentChallenges().length;
     renderChallenge();
   });
   $('challengeInput').addEventListener('keydown', event => {
     if (event.key === 'Enter') checkChallenge();
+    if (event.key === 'Backspace') {
+      event.preventDefault();
+      const input = $('challengeInput');
+      input.value = input.value.slice(0, -1);
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      return;
+    }
+    if (event.key === ' ' || /^[a-zA-Z]$/.test(event.key)) {
+      event.preventDefault();
+      typeChallengeCharacter(event.key.toUpperCase());
+    }
   });
+  $('challengeInput').addEventListener('input', handleChallengeInput);
+  $('challengeInput').addEventListener('focusin', () => $('challengeKeyboard').classList.remove('hidden'));
+  $('challengeInput').addEventListener('click', () => $('challengeKeyboard').classList.remove('hidden'));
+  $('challengeInput').addEventListener('blur', () => $('challengeKeyboard').classList.add('hidden'));
+  $('btnChallengeBackspace').addEventListener('click', () => {
+    const input = $('challengeInput');
+    input.value = input.value.slice(0, -1);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.focus();
+  });
+  $('btnChallengeDone').addEventListener('click', () => {
+    $('challengeKeyboard').classList.add('hidden');
+    $('challengeInput').blur();
+  });
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) {
+      applyActionLanguage();
+    }
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+  applyActionLanguage();
   handleBinaryInput();
 })();

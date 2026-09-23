@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>station 05</title>
+    <style>
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: black;
+    }
+
+    .station-frame {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 864px;
+        height: 1536px;
+        overflow: hidden;
+        background: black;
+        transform-origin: top left;
+    }
+
+    .station-frame iframe {
+        display: block;
+        width: 864px;
+        height: 1536px;
+        border: 0;
+    }
+    </style>
+</head>
+<body>
+    <div class="station-frame" id="stationFrame">
+        <iframe src="https://applications.skd.museum/MK/crypto/stations/04_exploration/station-07/" scrolling="no"></iframe>
+    </div>
+    <script>
+    (function () {
+        const designWidth = 864;
+        const designHeight = 1536;
+        const frame = document.getElementById('stationFrame');
+
+        function fitStation() {
+            const scale = Math.min(
+                window.innerWidth / designWidth,
+                window.innerHeight / designHeight,
+                1
+            );
+            const width = designWidth * scale;
+            const height = designHeight * scale;
+
+            frame.style.left = `${(window.innerWidth - width) / 2}px`;
+            frame.style.top = `${(window.innerHeight - height) / 2}px`;
+            frame.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', fitStation);
+        fitStation();
+    })();
+    </script>
+</body>
+</html>

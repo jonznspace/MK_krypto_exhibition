@@ -1,43 +1,56 @@
 ﻿'use strict';
 (function () {
   const STATION_CONTENT = {
-    meta: {
-      title: 'Station 1 · Vorlage',
-      ariaLabel: 'Station 1 – Vorlage'
-    },
-    start: {
-      eyebrow: 'Geheime Botschaften in der Antike',
-      title: 'Verschlüsseln & versiegeln',
-      intro: [
-        'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“.  Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
-        'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.',
-        'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.', 
-        'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.'
-      ],
-      image: {
-        src: 'dither-output.png',
-        alt: ''
+    de: {
+      meta: { title: 'Station 1 · Kryptografie', ariaLabel: 'Station 1 – Kryptografie' },
+      start: {
+        eyebrow: 'Geheime Botschaften in der Antike',
+        title: 'Verschlüsseln & versiegeln',
+        intro: [
+          'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“. Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
+          'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.',
+          'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.',
+          'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.'
+        ],
+        image: { src: 'dither-output.png', alt: '' },
+        ctaLabel: 'Ausprobieren'
       },
-      ctaLabel: 'Ausprobieren'
+      action: {
+        eyebrow: '',
+        title: 'Skytale ausprobieren',
+        skytaleDefaultText: 'TREFFEN BEI MONDLICHT',
+        skytaleDefaultCols: 5,
+        skytalePuzzles: [
+          { plain: 'BOTE KOMMT IN DREI TAGEN', cols: 5, startCols: 4 },
+          { plain: 'DER SCHLUESSEL LIEGT IM HAFEN', cols: 5, startCols: 3 }
+        ],
+        closeLabel: 'Zur Startansicht'
+      }
     },
-    action: {
-      eyebrow: 'Vorlage',
-      title: 'Skytale ausprobieren',
-      description: 'Wickle den Lederstreifen gedanklich um einen Stab. Beim Abwickeln wird aus derselben Nachricht eine neue Buchstabenfolge.',
-      skytaleDefaultText: 'TREFFEN BEI MONDLICHT',
-      skytaleDefaultCols: 5,
-      skytalePuzzles: [
-        { plain: 'BOTE KOMMT IN DREI TAGEN', cols: 5, startCols: 4 },
-        { plain: 'DER SCHLUESSEL LIEGT IM HAFEN', cols: 5, startCols: 3 }
-      ],
-      closeLabel: 'Zur Startansicht',
-      deepening: {
-        tag: 'Vertiefung',
-        title: 'Prinzip',
-        paragraphs: [
-          'Die Skytale verschlüsselt nicht durch neue Buchstaben, sondern durch eine neue Reihenfolge.',
-          'Nur mit einem Stab gleichen Durchmessers lässt sich die Nachricht wieder richtig anordnen.'
-        ]
+    en: {
+      meta: { title: 'Station 1 · Cryptography', ariaLabel: 'Station 1 – Cryptography' },
+      start: {
+        eyebrow: 'Geheime Botschaften in der Antike',
+        title: 'Verschlüsseln & versiegeln',
+        intro: [
+          'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“. Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
+          'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.',
+          'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.',
+          'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.'
+        ],
+        image: { src: 'dither-output.png', alt: '' },
+        ctaLabel: 'Try it out'
+      },
+      action: {
+        eyebrow: '',
+        title: 'Try the skytale',
+        skytaleDefaultText: 'MEET AT MIDNIGHT',
+        skytaleDefaultCols: 5,
+        skytalePuzzles: [
+          { plain: 'MEET ME AT THE OLD HARBOR', cols: 5, startCols: 4 },
+          { plain: 'THE KEY IS UNDER THE OLD BRIDGE', cols: 5, startCols: 3 }
+        ],
+        closeLabel: 'Back to start'
       }
     }
   };
@@ -45,10 +58,53 @@
   const $ = id => document.getElementById(id);
   const screenStart = $('screenStart');
   const screenAction = $('screenAction');
+  const UI_COPY = {
+    de: {
+      topic: 'Kryptografie', templateTag: 'Zum Ausprobieren', encrypt: 'Verschlüsseln', decrypt: 'Entschlüsseln',
+      readableMessage: 'Lesbare Nachricht', recoveredStrip: 'Gefundener Streifen', diameter: 'Stabdurchmesser (Wicklungen): ',
+      unwrap: 'Streifen abwickeln', wrap: 'Um den Stab wickeln', readingDirection: 'Leserichtung',
+      outputEncrypt: 'Abgewickelter Geheimtext', outputDecrypt: 'Entschlüsselte Nachricht', next: 'Nächste Skytale',
+      drag: 'Ziehen zum Drehen', wrapped: 'Gewickelt · lesbar längs des Stabs',
+      unwrapped: 'Abgewickelt · Buchstabenfolge auf dem Streifen', notReadable: 'NOCH NICHT LESBAR',
+      space: 'Leerzeichen', delete: 'Löschen', done: 'Fertig', keyboard: 'Bildschirmtastatur', mode: 'Arbeitsmodus',
+      marker: 'Station 1 - Kryptografie', intro: 'Einführungstext zur Station', stage: 'Interaktive Skytale',
+      model: 'Drehbares Modell einer Skytale'
+    },
+    en: {
+      topic: 'Cryptography', templateTag: 'Try it out', encrypt: 'Encrypt', decrypt: 'Decrypt',
+      readableMessage: 'Readable message', recoveredStrip: 'Recovered strip', diameter: 'Rod diameter (turns): ',
+      unwrap: 'Unwrap strip', wrap: 'Wrap around rod', readingDirection: 'Reading direction',
+      outputEncrypt: 'Unwrapped ciphertext', outputDecrypt: 'Decoded message', next: 'Next skytale',
+      drag: 'Drag to rotate', wrapped: 'Wrapped · readable along the rod',
+      unwrapped: 'Unwrapped · letter sequence on the strip', notReadable: 'NOT READABLE YET',
+      space: 'Space', delete: 'Delete', done: 'Done', keyboard: 'On-screen keyboard', mode: 'Mode',
+      marker: 'Station 1 - Cryptography', intro: 'Introduction to the station', stage: 'Interactive skytale',
+      model: 'Rotatable model of a skytale'
+    }
+  };
   let skytaleMode = 'encrypt';
   let skytaleWrapped = true;
   let showReadDirection = true;
   let puzzleIndex = 0;
+  let updateHeroScrollbar = () => {};
+  let appliedLanguage = null;
+
+  function currentLanguage() {
+    return document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  }
+
+  function currentContent() {
+    return STATION_CONTENT[currentLanguage()];
+  }
+
+  function currentCopy() {
+    return UI_COPY[currentLanguage()];
+  }
+
+  document.addEventListener('gesturestart', event => event.preventDefault());
+  document.addEventListener('touchmove', event => {
+    if (event.touches.length > 1) event.preventDefault();
+  }, { passive: false });
 
   function compactMessage(value) {
     return normUp(value).replace(/[^A-Z]/g, '');
@@ -67,7 +123,7 @@
   }
 
   function currentPuzzle() {
-    const puzzle = STATION_CONTENT.action.skytalePuzzles[puzzleIndex];
+    const puzzle = currentContent().action.skytalePuzzles[puzzleIndex];
     return { ...puzzle, strip: encodeStrip(compactMessage(puzzle.plain), puzzle.cols).replaceAll('·', '') };
   }
 
@@ -379,6 +435,65 @@
     $('btnClose').setAttribute('aria-label', content.action.closeLabel);
   }
 
+  function initHeroScrollbar() {
+    const scroller = $('startIntro');
+    const track = $('startScrollbar');
+    const thumb = $('startScrollbarThumb');
+    let dragOffset = 0;
+    let lastTouchY = 0;
+
+    function update() {
+      const trackHeight = track.clientHeight;
+      const scrollRange = scroller.scrollHeight - scroller.clientHeight;
+      const thumbHeight = scrollRange > 0
+        ? Math.max(40, trackHeight * scroller.clientHeight / scroller.scrollHeight)
+        : trackHeight;
+      const thumbRange = Math.max(0, trackHeight - thumbHeight);
+      const thumbTop = scrollRange > 0 ? scroller.scrollTop / scrollRange * thumbRange : 0;
+
+      thumb.style.height = `${thumbHeight}px`;
+      thumb.style.transform = `translateY(${thumbTop}px)`;
+      track.hidden = scrollRange <= 0;
+    }
+
+    updateHeroScrollbar = update;
+
+    function scrollToPointer(clientY) {
+      const trackRect = track.getBoundingClientRect();
+      const thumbRange = track.clientHeight - thumb.offsetHeight;
+      const thumbTop = Math.max(0, Math.min(thumbRange, clientY - trackRect.top - dragOffset));
+      const scrollRange = scroller.scrollHeight - scroller.clientHeight;
+      scroller.scrollTop = thumbRange > 0 ? thumbTop / thumbRange * scrollRange : 0;
+    }
+
+    scroller.addEventListener('scroll', update, { passive: true });
+    scroller.addEventListener('wheel', event => {
+      event.preventDefault();
+      scroller.scrollTop += event.deltaY;
+    }, { passive: false });
+    scroller.addEventListener('touchstart', event => {
+      if (event.touches.length === 1) lastTouchY = event.touches[0].clientY;
+    }, { passive: true });
+    scroller.addEventListener('touchmove', event => {
+      if (event.touches.length !== 1) return;
+      event.preventDefault();
+      const currentY = event.touches[0].clientY;
+      scroller.scrollTop += lastTouchY - currentY;
+      lastTouchY = currentY;
+    }, { passive: false });
+    track.addEventListener('pointerdown', event => {
+      const thumbRect = thumb.getBoundingClientRect();
+      dragOffset = event.target === thumb ? event.clientY - thumbRect.top : thumb.offsetHeight / 2;
+      track.setPointerCapture(event.pointerId);
+      scrollToPointer(event.clientY);
+    });
+    track.addEventListener('pointermove', event => {
+      if (track.hasPointerCapture(event.pointerId)) scrollToPointer(event.clientY);
+    });
+    new ResizeObserver(update).observe(scroller);
+    update();
+  }
+
   function normUp(value) {
     return value
       .toUpperCase()
@@ -391,22 +506,25 @@
   function setSkytaleMode(mode) {
     skytaleMode = mode;
     const isEncrypting = mode === 'encrypt';
+    const action = currentContent().action;
+    const copy = currentCopy();
     $('btnEncrypt').classList.toggle('active', isEncrypting);
     $('btnDecrypt').classList.toggle('active', !isEncrypting);
     $('btnEncrypt').setAttribute('aria-selected', String(isEncrypting));
     $('btnDecrypt').setAttribute('aria-selected', String(!isEncrypting));
-    $('skyInLabel').textContent = isEncrypting ? 'Lesbare Nachricht' : 'Gefundener Streifen';
+    $('skyInLabel').textContent = isEncrypting ? copy.readableMessage : copy.recoveredStrip;
+    $('skyOutLabel').textContent = isEncrypting ? copy.outputEncrypt : copy.outputDecrypt;
     $('skyKeyboard').classList.add('hidden');
     const puzzle = currentPuzzle();
     $('skyIn').value = isEncrypting
-      ? STATION_CONTENT.action.skytaleDefaultText
+      ? action.skytaleDefaultText
       : puzzle.strip;
     $('skyCols').value = String(isEncrypting
-      ? STATION_CONTENT.action.skytaleDefaultCols
+      ? action.skytaleDefaultCols
       : puzzle.startCols);
     skytaleModel.setWrapped(skytaleWrapped);
-    $('btnWrap').textContent = 'Streifen abwickeln';
-    $('skyStageState').textContent = 'Gewickelt · lesbar längs des Stabs';
+    $('btnWrap').textContent = copy.unwrap;
+    $('skyStageState').textContent = copy.wrapped;
     skytaleRender();
   }
 
@@ -447,7 +565,7 @@
     const puzzle = currentPuzzle();
     const solvedPuzzle = skytaleMode === 'decrypt' && raw === puzzle.strip && cols === puzzle.cols;
     $('skyOut').textContent = skytaleMode === 'decrypt'
-      ? (solvedPuzzle ? puzzle.plain : 'NOCH NICHT LESBAR')
+      ? (solvedPuzzle ? puzzle.plain : currentCopy().notReadable)
       : (output || '...');
     $('skyOut').classList.toggle('is-solved', solvedPuzzle);
     $('btnNextPuzzle').classList.toggle('hidden', !solvedPuzzle);
@@ -481,6 +599,36 @@
     });
   }
 
+  function applyLanguage() {
+    const language = currentLanguage();
+    if (language === appliedLanguage) return;
+    appliedLanguage = language;
+    const content = currentContent();
+    const copy = currentCopy();
+    renderStation(content);
+    document.querySelector('.station-marker__topic').textContent = copy.topic;
+    document.querySelector('.station-marker').setAttribute('aria-label', copy.marker);
+    $('startIntro').setAttribute('aria-label', copy.intro);
+    $('skyStage').setAttribute('aria-label', copy.stage);
+    $('skyCanvas').setAttribute('aria-label', copy.model);
+    document.querySelector('.template-tag').textContent = copy.templateTag;
+    document.querySelector('.skytale-stage__instruction').textContent = copy.drag;
+    document.querySelector('.tabs').setAttribute('aria-label', copy.mode);
+    $('skyKeyboard').setAttribute('aria-label', copy.keyboard);
+    $('btnEncrypt').textContent = copy.encrypt;
+    $('btnDecrypt').textContent = copy.decrypt;
+    $('skyColsLabel').firstChild.textContent = copy.diameter;
+    $('btnReadDirection').textContent = copy.readingDirection;
+    $('btnNextPuzzle').textContent = copy.next;
+    $('btnKeyboardSpace').textContent = copy.space;
+    $('btnKeyboardBackspace').textContent = copy.delete;
+    $('btnKeyboardDone').textContent = copy.done;
+    puzzleIndex = 0;
+    setSkytaleMode(skytaleMode);
+    $('startIntro').scrollTop = 0;
+    window.requestAnimationFrame(updateHeroScrollbar);
+  }
+
   $('btnTry').addEventListener('click', () => {
     screenStart.classList.add('hidden');
     screenAction.classList.remove('hidden');
@@ -495,15 +643,15 @@
   $('skyIn').addEventListener('focus', () => {
     if (skytaleMode === 'encrypt') $('skyKeyboard').classList.remove('hidden');
   });
-  $('skyIn').addEventListener('blur', () => $('skyKeyboard').classList.add('hidden'));
   $('skyCols').addEventListener('input', skytaleRender);
   $('btnEncrypt').addEventListener('click', () => setSkytaleMode('encrypt'));
   $('btnDecrypt').addEventListener('click', () => setSkytaleMode('decrypt'));
   $('btnWrap').addEventListener('click', () => {
     skytaleWrapped = !skytaleWrapped;
+    const copy = currentCopy();
     skytaleModel.setWrapped(skytaleWrapped);
-    $('btnWrap').textContent = skytaleWrapped ? 'Streifen abwickeln' : 'Um den Stab wickeln';
-    $('skyStageState').textContent = skytaleWrapped ? 'Gewickelt · lesbar längs des Stabs' : 'Abgewickelt · Buchstabenfolge auf dem Streifen';
+    $('btnWrap').textContent = skytaleWrapped ? copy.unwrap : copy.wrap;
+    $('skyStageState').textContent = skytaleWrapped ? copy.wrapped : copy.unwrapped;
   });
   $('btnReadDirection').addEventListener('click', () => {
     showReadDirection = !showReadDirection;
@@ -521,12 +669,16 @@
     $('skyIn').blur();
   });
   $('btnNextPuzzle').addEventListener('click', () => {
-    puzzleIndex = (puzzleIndex + 1) % STATION_CONTENT.action.skytalePuzzles.length;
+    puzzleIndex = (puzzleIndex + 1) % currentContent().action.skytalePuzzles.length;
     setSkytaleMode('decrypt');
   });
 
-  renderStation(STATION_CONTENT);
+  renderStation(currentContent());
+  initHeroScrollbar();
   buildKeyboard();
   const skytaleModel = new SkytaleModel($('skyCanvas'));
-  skytaleRender();
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyLanguage();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+  applyLanguage();
 })();

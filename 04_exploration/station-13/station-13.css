@@ -1,6 +1,5 @@
 /* Station 13 presentation overrides */
-.title--hero.title--long { font-size: 88px; }
-.title--hero.title--medium { font-size: 88px; }
+#startTitle { font-size: 64px; }
 
 .start-copy {
   margin-top: clamp(120px, 16vh, 180px);
@@ -124,12 +123,10 @@
 .deepdive-header:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
 .deepdive-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--duration-4) var(--ease-standard);
+  display: none;
 }
-.deepdive-item.open .deepdive-panel { max-height: 1000dvh; }
-.deepdive-panel-inner { min-height: 0; overflow: visible; }
+.deepdive-item.open .deepdive-panel { display: block; }
+.deepdive-panel-inner { min-height: 0; overflow: hidden; }
 .deepdive-body {
   padding: 30px 6px 8px;
   border: 1px solid var(--layer-border);

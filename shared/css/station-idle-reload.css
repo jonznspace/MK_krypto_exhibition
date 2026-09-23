@@ -1,0 +1,46 @@
+.station-idle-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease;
+  text-align: center;
+}
+
+.station-idle-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.station-idle-overlay__panel {
+  max-width: min(560px, 80vw);
+  padding: clamp(32px, 4vw, 56px);
+  border: 1px solid var(--color-neutral-700, rgba(255, 255, 255, 0.2));
+  background: var(--color-neutral-875, #0b0b0f);
+}
+
+.station-idle-overlay__title {
+  margin: 0 0 16px;
+  font: 600 clamp(24px, 3vw, 34px)/1.2 var(--font-family-panchang, var(--font-sans, sans-serif));
+  color: var(--color-neutral-0, #fff);
+}
+
+.station-idle-overlay__body {
+  margin: 0 0 12px;
+  font: 400 clamp(16px, 1.6vw, 20px)/1.5 var(--font-family-switzer, var(--font-sans, sans-serif));
+  color: var(--color-neutral-300, #c7cbd3);
+}
+
+.station-idle-overlay__hint {
+  margin: 0;
+  font: 500 13px/1.4 var(--font-mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-600, #ed8003);
+}

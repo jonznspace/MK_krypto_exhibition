@@ -23,6 +23,40 @@
   let rotorPositions = INITIAL_POSITIONS.slice();
   let inputText = '';
   let outputText = '';
+  let appliedLanguage = null;
+
+  const ACTION_COPY = {
+    de: {
+      eyebrow: 'Maschinen verschlüsseln',
+      title: 'Die Enigma',
+      close: 'Zur Startansicht',
+      rotorRow: 'Walzen müssen korrekt eingesetzt und kalibriert werden',
+      rotorLabels: ['Walze I', 'Walze II', 'Walze III'],
+      rotorNote: 'Bei jedem Tastendruck dreht die rechte Walze weiter',
+      outputRow: 'Anzeige des unverschlüsselten Ergebnisses',
+      outputBox: 'Ausgabe:',
+      inputRow: 'Eingabe der verschlüsselten Buchstaben',
+      inputBox: 'Eingabe:',
+      emptyInput: 'Auto',
+      reset: 'Zurücksetzen',
+      letter: 'Buchstabe'
+    },
+    en: {
+      eyebrow: 'Machine encryption',
+      title: 'The Enigma',
+      close: 'Back to start',
+      rotorRow: 'Rotors must be correctly installed and calibrated',
+      rotorLabels: ['Rotor I', 'Rotor II', 'Rotor III'],
+      rotorNote: 'The right-hand rotor advances with every keystroke',
+      outputRow: 'Display of the unencrypted result',
+      outputBox: 'Output:',
+      inputRow: 'Input of encrypted letters',
+      inputBox: 'Input:',
+      emptyInput: 'Ready',
+      reset: 'Reset',
+      letter: 'Letter'
+    }
+  };
 
   const STATION_CONTENT = {
     meta: {
@@ -74,6 +108,14 @@
   const screenStart = $('screenStart');
   const screenAction = $('screenAction');
   const frame = $('frame');
+
+  function currentLanguage() {
+    return document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  }
+
+  function currentCopy() {
+    return ACTION_COPY[currentLanguage()];
+  }
 
   function setText(id, value) {
     $(id).textContent = value;
@@ -242,7 +284,7 @@
     document.querySelectorAll('#lampKeyboard .key').forEach(key => {
       key.classList.toggle('key--lit', key.textContent === activeLetter);
     });
-    setText('inputValue', inputText || 'Auto');
+    setText('inputValue', inputText || currentCopy().emptyInput);
     setText('outputValue', outputText || '');
 
     $('inputValue').scrollLeft = $('inputValue').scrollWidth;
@@ -302,6 +344,31 @@
     setText('resetButton', content.action.resetLabel);
   }
 
+  function applyActionLanguage() {
+    const language = currentLanguage();
+    if (language === appliedLanguage) return;
+    appliedLanguage = language;
+    const copy = currentCopy();
+
+    setText('actionEyebrow', copy.eyebrow);
+    setTitle('actionTitle', copy.title);
+    $('btnClose').setAttribute('aria-label', copy.close);
+    setText('rotorRowLabel', copy.rotorRow);
+    document.querySelectorAll('#rotorList .rotor-lbl').forEach((label, index) => {
+      label.textContent = copy.rotorLabels[index];
+    });
+    setText('rotorNote', copy.rotorNote);
+    setText('outputRowLabel', copy.outputRow);
+    setText('outputBoxLabel', copy.outputBox);
+    setText('inputRowLabel', copy.inputRow);
+    setText('inputBoxLabel', copy.inputBox);
+    setText('resetButton', copy.reset);
+    document.querySelectorAll('.keyboard--input .key, .keyboard--lamp .key').forEach(key => {
+      key.setAttribute('aria-label', `${copy.letter} ${key.textContent}`);
+    });
+    updateMachine('');
+  }
+
   renderStation(STATION_CONTENT);
 
   $('resetButton').addEventListener('click', resetMachine);
@@ -317,4 +384,8 @@
   });
 
   resetMachine();
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyActionLanguage();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+  applyActionLanguage();
 })();

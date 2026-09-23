@@ -465,6 +465,27 @@ html, body {
 #discInner.free, #discInnerLetters.free { transition: none; }
 #discInnerLetters.free .disc-letter.inner { transition: none; }
 
+@media (max-height: 900px) {
+  .title--compact { font-size: 58px; }
+
+  .stage {
+    grid-template-columns: 760px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+    padding-top: 20px;
+  }
+
+  .disk-col { gap: 16px; }
+  #disc { width: 500px; height: 500px; }
+
+  .panel { gap: 14px; max-width: none; }
+  .mode { gap: 12px; }
+  .chips { gap: 8px; }
+  .io { gap: 10px; }
+  .tile { height: 50px; }
+  .vert-btn { margin-top: 0; }
+}
+
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, #discInner { transition: none !important; animation: none !important; }

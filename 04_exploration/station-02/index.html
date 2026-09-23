@@ -6,8 +6,9 @@
 <title>Station 2 · Zirkel &amp; Permutationsscheibe</title>
 <!-- Design-System-Tokens (zieht per @import auch die self-hosted Fonts) -->
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="station-02.css">
+<link rel="stylesheet" href="station-02.css?v=3">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
+<link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
 </head>
 <body>
 
@@ -61,7 +62,7 @@
         <div class="disk-ctrl">
           <button class="btn ghost" id="rotL" aria-label="Innere Scheibe eine Stellung nach links">◀</button>
           <div class="keyread">
-            <span class="keyread-lbl">Schlüssel</span>
+            <span class="keyread-lbl" id="keyReadLabel">Schlüssel</span>
             <b id="keyRead">A → A</b>
           </div>
           <button class="btn ghost" id="rotR" aria-label="Innere Scheibe eine Stellung nach rechts">▶</button>
@@ -77,11 +78,11 @@
 
         <!-- Modus: Verschlüsseln -->
         <div class="mode" id="modeEncrypt" role="tabpanel">
-          <p class="hint">Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.</p>
+          <p class="hint" id="encryptHint">Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.</p>
           <div class="chips" id="wordChips"></div>
           <div class="io">
-            <div class="io-row"><span class="io-lbl">Klartext</span><div class="tiles" id="plainTiles"></div></div>
-            <div class="io-row"><span class="io-lbl">Geheim</span><div class="tiles cipher" id="cipherTiles"></div></div>
+            <div class="io-row"><span class="io-lbl" id="plainLabel">Klartext</span><div class="tiles" id="plainTiles"></div></div>
+            <div class="io-row"><span class="io-lbl" id="cipherLabel">Geheim</span><div class="tiles cipher" id="cipherTiles"></div></div>
           </div>
           <div class="az" id="azStrip" aria-label="Buchstaben eingeben"></div>
           <div class="row">
@@ -92,17 +93,17 @@
 
         <!-- Modus: Knacken -->
         <div class="mode hidden" id="modeCrack" role="tabpanel">
-          <p class="hint">Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.</p>
+          <p class="hint" id="crackHint">Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.</p>
           <div class="io">
-            <div class="io-row"><span class="io-lbl">Abgefangen</span><div class="tiles cipher" id="crackCipher"></div></div>
-            <div class="io-row"><span class="io-lbl">Entschlüsselt</span><div class="tiles" id="crackPlain"></div></div>
+            <div class="io-row"><span class="io-lbl" id="interceptedLabel">Abgefangen</span><div class="tiles cipher" id="crackCipher"></div></div>
+            <div class="io-row"><span class="io-lbl" id="decryptedLabel">Entschlüsselt</span><div class="tiles" id="crackPlain"></div></div>
           </div>
           <div class="crack-status" id="crackStatus">Schlüssel drehen …</div>
           <div class="row"><button class="btn ghost" id="newMsg">Neue Botschaft</button></div>
         </div>
 
         <button class="vert-btn" id="vertBtn">
-          <span class="vert-dot"></span> Weitere Verschlüsselungsverfahren
+          <span class="vert-dot"></span><span id="vertBtnLabel">Weitere Verschlüsselungsverfahren</span>
         </button>
       </div>
     </section>
@@ -128,6 +129,7 @@
 </div>
 
 <script src="../../shared/js/station-language-switch.js"></script>
-<script src="station-02.js"></script>
+<script src="../../shared/js/station-idle-reload.js"></script>
+<script src="station-02.js?v=4"></script>
 </body>
 </html>
