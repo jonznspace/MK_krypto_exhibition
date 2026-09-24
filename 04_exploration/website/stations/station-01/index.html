@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Station 1 · Kryptografie</title>
+<!-- Website-Kopie: Einbettung als Overlay (?embed) -->
+<script src="../embed.js"></script>
+<link rel="stylesheet" href="../embed.css">
+<link rel="stylesheet" href="../../assets/design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-01.css?v=3">
+<link rel="stylesheet" href="../../assets/shared/css/station-language-switch.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" aria-label="Station 1 – Kryptografie">
+
+    <section class="screen screen-start" id="screenStart">
+      <div class="station-marker" aria-label="Station 1 - Kryptografie">
+        <span class="station-marker__station">Station 1</span>
+        <span class="station-marker__topic">Kryptografie</span>
+      </div>
+
+      <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
+        <h1 class="title title--hero" id="startTitle"></h1>
+        <div class="hero-scroll">
+          <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+          <div class="hero-scrollbar" id="startScrollbar" aria-hidden="true">
+            <div class="hero-scrollbar__thumb" id="startScrollbarThumb"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img class="station-image" id="startImage" alt="">
+      </div>
+
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label" id="tryLabel"></span>
+        <span class="cta-icon">
+          <img src="../../assets/design-system/symbols/brand-apple-arcade.svg" alt="">
+        </span>
+      </button>
+    </section>
+
+    <section class="screen screen-action hidden" id="screenAction">
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow" id="actionEyebrow"></span>
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <div class="action-layout">
+        <section class="skytale-stage" id="skyStage" aria-label="Interaktive Skytale">
+            <div class="skytale-canvas" id="skyCanvas" aria-label="Drehbares Modell einer Skytale"></div>
+            <span class="skytale-stage__instruction">Ziehen zum Drehen</span>
+            <span class="skytale-stage__state" id="skyStageState">Gewickelt · lesbar längs des Stabs</span>
+        </section>
+
+        <section class="skytale-controls">
+          <span class="template-tag">Zum Ausprobieren</span>
+          <div class="tabs" role="tablist" aria-label="Arbeitsmodus">
+            <button class="tab active" id="btnEncrypt" type="button" role="tab" aria-selected="true">Verschlüsseln</button>
+            <button class="tab" id="btnDecrypt" type="button" role="tab" aria-selected="false">Entschlüsseln</button>
+          </div>
+
+          <label class="field-label" for="skyIn" id="skyInLabel">Lesbare Nachricht</label>
+          <input class="field-input" type="text" id="skyIn" maxlength="36" autocomplete="off">
+
+          <div class="skytale-keyboard hidden" id="skyKeyboard" aria-label="Bildschirmtastatur">
+            <div class="keyboard-row" id="keyboardRowA"></div>
+            <div class="keyboard-row" id="keyboardRowB"></div>
+            <div class="keyboard-row keyboard-row--bottom" id="keyboardRowC"></div>
+            <div class="keyboard-row keyboard-row--actions">
+              <button class="keyboard-key keyboard-key--wide" id="btnKeyboardSpace" type="button">Leerzeichen</button>
+              <button class="keyboard-key keyboard-key--wide" id="btnKeyboardBackspace" type="button">Löschen</button>
+              <button class="keyboard-key keyboard-key--wide" id="btnKeyboardDone" type="button">Fertig</button>
+            </div>
+          </div>
+
+          <label class="field-label" for="skyCols" id="skyColsLabel">Stabdurchmesser (Wicklungen): <b id="skyColsVal">5</b></label>
+          <input type="range" id="skyCols" min="2" max="7" value="5">
+
+          <div class="skytale-actions">
+            <button class="wrap-button" id="btnWrap" type="button">Streifen abwickeln</button>
+            <button class="read-button" id="btnReadDirection" type="button" aria-pressed="true">Leserichtung</button>
+          </div>
+
+          <div class="io-block">
+            <span class="field-label" id="skyOutLabel">Abgewickelter Geheimtext</span>
+            <div class="hashline" id="skyOut">...</div>
+            <button class="next-puzzle hidden" id="btnNextPuzzle" type="button">Nächste Skytale</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="../../assets/shared/js/vendor/three.min.js"></script>
+<script src="../../assets/shared/js/station-language-switch.js"></script>
+<script src="station-01.js?v=10"></script>
+</body>
+</html>

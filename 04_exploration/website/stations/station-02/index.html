@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station 2 · Zirkel &amp; Permutationsscheibe</title>
+<!-- Website-Kopie: Einbettung als Overlay (?embed) -->
+<script src="../embed.js"></script>
+<link rel="stylesheet" href="../embed.css">
+<!-- Design-System-Tokens (zieht per @import auch die self-hosted Fonts) -->
+<link rel="stylesheet" href="../../assets/design-system/tokens/tokens.css">
+<link rel="stylesheet" href="station-02.css?v=3">
+<link rel="stylesheet" href="../../assets/shared/css/station-language-switch.css">
+</head>
+<body>
+
+<div id="scaler">
+  <main id="frame" aria-label="Station 2 – Verschlüsseln mit System">
+
+    <!-- ---------- Startscreen ---------- -->
+    <section class="screen screen-start" id="screenStart">
+      <div class="station-marker" aria-label="Station 2 - Kryptografie">
+        <span class="station-marker__station">Station 2</span>
+        <span class="station-marker__topic">Kryptografie</span>
+      </div>
+
+      <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
+        <h1 class="title title--hero" id="startTitle"></h1>
+        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+      </div>
+
+      <div class="start-visual" aria-hidden="true">
+        <img src="../station-04/img/eknigma02.png" alt="" class="station-image" id="startImage">
+      </div>
+
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label" id="tryLabel"></span>
+        <span class="cta-icon">
+          <img src="../../assets/design-system/symbols/brand-apple-arcade.svg" alt="">
+        </span>
+      </button>
+    </section>
+
+    <!-- ---------- Interaktion ---------- -->
+    <section class="screen screen-action hidden" id="screenAction">
+
+      <!-- ---------- Header (LAYER/300) ---------- -->
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <span class="eyebrow" id="actionEyebrow"></span>
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <!-- ---------- Bühne ---------- -->
+      <section class="stage">
+
+      <!-- Scheibe -->
+      <div class="disk-col">
+        <svg id="disc" viewBox="0 0 760 760" role="img"
+             aria-label="Kryptografischer Zirkel: äußere und innere Alphabetscheibe. Innere Scheibe drehbar."></svg>
+        <div class="disk-ctrl">
+          <button class="btn ghost" id="rotL" aria-label="Innere Scheibe eine Stellung nach links">◀</button>
+          <div class="keyread">
+            <span class="keyread-lbl" id="keyReadLabel">Schlüssel</span>
+            <b id="keyRead">A → A</b>
+          </div>
+          <button class="btn ghost" id="rotR" aria-label="Innere Scheibe eine Stellung nach rechts">▶</button>
+        </div>
+      </div>
+
+      <!-- Panel -->
+      <div class="panel">
+        <div class="tabs" role="tablist">
+          <button class="tab active" id="tabEncrypt" data-mode="encrypt" role="tab" aria-selected="true">Verschlüsseln</button>
+          <button class="tab" id="tabCrack" data-mode="crack" role="tab" aria-selected="false">Knacken</button>
+        </div>
+
+        <!-- Modus: Verschlüsseln -->
+        <div class="mode" id="modeEncrypt" role="tabpanel">
+          <p class="hint" id="encryptHint">Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.</p>
+          <div class="chips" id="wordChips"></div>
+          <div class="io">
+            <div class="io-row"><span class="io-lbl" id="plainLabel">Klartext</span><div class="tiles" id="plainTiles"></div></div>
+            <div class="io-row"><span class="io-lbl" id="cipherLabel">Geheim</span><div class="tiles cipher" id="cipherTiles"></div></div>
+          </div>
+          <div class="az" id="azStrip" aria-label="Buchstaben eingeben"></div>
+          <div class="row">
+           
+            <button class="btn ghost" id="clearBtn">Leeren</button>
+          </div>
+        </div>
+
+        <!-- Modus: Knacken -->
+        <div class="mode hidden" id="modeCrack" role="tabpanel">
+          <p class="hint" id="crackHint">Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.</p>
+          <div class="io">
+            <div class="io-row"><span class="io-lbl" id="interceptedLabel">Abgefangen</span><div class="tiles cipher" id="crackCipher"></div></div>
+            <div class="io-row"><span class="io-lbl" id="decryptedLabel">Entschlüsselt</span><div class="tiles" id="crackPlain"></div></div>
+          </div>
+          <div class="crack-status" id="crackStatus">Schlüssel drehen …</div>
+          <div class="row"><button class="btn ghost" id="newMsg">Neue Botschaft</button></div>
+        </div>
+
+        <button class="vert-btn" id="vertBtn">
+          <span class="vert-dot"></span><span id="vertBtnLabel">Weitere Verschlüsselungsverfahren</span>
+        </button>
+      </div>
+    </section>
+
+        <!-- ---------- Vertiefung (LAYER/400, blau markiert) ---------- -->
+        <div class="overlay" id="overlay" aria-hidden="true">
+          <div class="ov-card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+            <button class="ov-close" id="ovClose" aria-label="Schließen">✕</button>
+            <span class="ov-tag" id="ovTag"></span>
+            <h2 id="ovTitle"></h2>
+            <div id="ovBody"></div>
+          </div>
+        </div>
+
+      <!-- Attract-Hinweis -->
+      <div class="attract" id="attract" aria-hidden="true">Drehe die Scheibe</div>
+      <!-- Toast -->
+      <div class="toast" id="toast" role="status"></div>
+
+    </section>
+
+  </main>
+</div>
+
+<script src="../../assets/shared/js/station-language-switch.js"></script>
+<script src="station-02.js?v=4"></script>
+</body>
+</html>

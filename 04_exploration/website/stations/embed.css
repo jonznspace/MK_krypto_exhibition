@@ -1,0 +1,9 @@
+/*
+  Einbettung als Overlay (?embed): nur die Mitmach-Ansicht.
+  Startansicht und Schließen-Button der Station entfallen,
+  das Overlay des Onepagers hat einen eigenen Schließen-Button.
+*/
+.is-embedded #screenStart,
+.is-embedded #btnClose {
+  display: none !important;
+}
