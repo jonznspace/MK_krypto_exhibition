@@ -29,8 +29,8 @@
      action   was passiert (siehe Liste)
      hold     Stehzeit in Sekunden (bei text und term)
      dur      Dauer: bei point, camera, type, rewrite in Sekunden;
-              bei show/hide ein Dauer-Token ("d1" bis "d6") oder 0 = sofort,
-              Standard ist "d6"
+              bei show/hide ein Dauer-Token ("d1" bis "d6"), eine Zahl in Sekunden
+              oder 0 = sofort, Standard ist "d6"
 
    Aktionen:
      text     Textzeile unten mittig.   text, hold
@@ -43,7 +43,10 @@
               Titel, Fortschritt und Punkt sind nie betroffen.
      dim      Einzelnes Element dimmen. target (dimmed-opacity, duration-4), älter als focus
      undim    Einzelnes Element zurück. target
-     move     Element verschieben.      target, to: {x, y} (Versatz zur Grundposition), dur (Sekunden), linear
+     zone     Element wechselt die Zone. target, to (left|mid|right|wait), dur (Token wie bei show);
+              die Opazität folgt danach dem Fokus der neuen Zone (z. B. fliegender Schlüssel)
+     move     Element verschieben.      target, to: {x, y, s} (Versatz zur Grundposition; s optional,
+              Skalierung um data-origin, Standard 1), dur (Sekunden), linear
      draw     Linie zeichnet sich.      target, dur (Sekunden), linear
      type     Text schreibt sich.       target, text, dur (Sekunden)
      rewrite  Text schreibt sich um.    target, from, to, dur (Sekunden)
@@ -62,12 +65,14 @@
      Kapitel 1: k1Carola, k1Albert, k1Phone, k1PhoneLabel, k1PhoneLabelText,
      k1List, k1ListLine, k1Bank
      Kapitel 2: privateKey (Schlüssel links, beweglich), k2Engraving,
-     k2Wallet, k2Signature, k2PublicKey, k2Check, k2Link, waitArea, k2KeyPair
-     (Wallet-Übersicht zu Kapitelbeginn: zweiter, öffentlicher Schlüssel neben
-     privateKey mit Beschriftung, gebaut in buildK2)
+     k2Wallet, k2Signature, k2PubKey (öffentlicher Schlüssel links neben privateKey,
+     beweglich), k2PublicKey (Beschriftung über dem Netzwerk), k2Check, k2Link, waitArea,
+     k2WalletZoom (große Wallet-Nahansicht zu Kapitelbeginn, skalierbar per move),
+     k2KeyPair (privater und öffentlicher Schlüssel mit Beschriftung in der Nahansicht)
      Kapitel 3: k3Slip1 bis k3Slip4 (Zettel im Wartebereich), k3Block (der
      neue Block, zeichnet sich), k3BlockLines, k3BlockLabel, k3Dice
-     (Zahlen auf den Kopien), k3Link (Gewinner schreibt), k3Coin
+     (Zahlen auf den Kopien), k3Link (Gewinner schreibt), k3Coin (neue Bitcoin),
+     k3Fee (Transaktionsgebühr, Akzentfarbe), beide beweglich
      Kapitel 4: k4Block (Block mit Zahn, ersetzt k3Block), k4Tooth (Zahn,
      zeichnet sich), k4OldValue (Zahl im alten Block), k4Hand, k4Break0 bis
      k4Break3 (orange Bruch an den Fugen von unten nach oben), k4New1 bis
@@ -78,19 +83,19 @@
 const SCRIPT = {
   fps: 25,
   chapters: [
-    { id: 1, title: "Durchführung von zentralen und dezentralen Zahlungen",                        start: 0,     duration: 40 },
-    { id: 2, title: "Wie startet eine Transaktion?",  start: 40,    duration: 62.5 },
-    { id: 3, title: "Wie funktioniert Mining?",            start: 102.5, duration: 35 },
-    { id: 4, title: "Wie ist die Blockchain abgesichert?", start: 137.5, duration: 50 },
+    { id: 1, title: "Durchführung von zentralen und dezentralen Zahlungen",                        start: 0,     duration: 46 },
+    { id: 2, title: "Wie startet eine Transaktion?",  start: 46,    duration: 62.5 },
+    { id: 3, title: "Wie funktioniert Mining?",            start: 108.5, duration: 35 },
+    { id: 4, title: "Wie ist die Blockchain abgesichert?", start: 143.5, duration: 40 },
   ],
   cues: [
-    /* =================== Kapitel 1: Kein Zentrum (0 bis 40) =================== */
+    /* =================== Kapitel 1: Kein Zentrum (0 bis 46) =================== */
     /* Ausgangslage: Kamera auf der dezentralen Seite, Karte noch unsichtbar */
     { t: 0,    ch: 1, name: "k1-start",         action: "camera", to: { scale: 0.5, x: 0, y: -12 }, dur: 0 },
     { t: 0,    ch: 1, name: "k1-zonen-weg",     action: "hide",   target: "zoneLeft", dur: 0 },
     { t: 0,    ch: 1, name: "k1-zonen-weg-2",   action: "hide",   target: "zoneRight", dur: 0 },
     { t: 0,    ch: 1, name: "k1-rail-weg",      action: "hide",   target: "rail", dur: 0 },
-    { t: 0,    ch: 1, name: "k1-slip-text",     action: "type",   target: "slipEntry", text: "Carola → Albert: 3€", dur: 0 },
+    { t: 0,    ch: 1, name: "k1-slip-text",     action: "type",   target: "slipEntry", text: "Carola → Albert: 3 ₿", dur: 0 },
     /* Sehen 1: Alltagsmoment, geschriebene Zeile, Bank in der Mitte */
     { t: 1,    ch: 1, name: "k1-carola",        action: "show",   target: "k1Carola" },
     { t: 1,    ch: 1, name: "k1-albert",        action: "show",   target: "k1Albert" },
@@ -116,134 +121,161 @@ const SCRIPT = {
     { t: 29,   ch: 1, name: "k1-albert-weg",    action: "hide",   target: "k1Albert" },
     { t: 29,   ch: 1, name: "k1-handy-weg",     action: "hide",   target: "k1Phone" },
     { t: 29,   ch: 1, name: "k1-sendet-weg",    action: "hide",   target: "k1PhoneLabel" },
-    { t: 33,   ch: 1, name: "k1-karte-links",   action: "show",   target: "zoneLeft" },
-    { t: 33,   ch: 1, name: "k1-karte-rechts",  action: "show",   target: "zoneRight" },
-    { t: 33,   ch: 1, name: "k1-karte-rail",    action: "show",   target: "rail" },
-    /* Sehen 4: Fokus auf den Zettel, die Namen bleiben hier noch im Klartext */
+    /* Die übrige Karte blendet sanft während des Kamera-Zooms ein */
+    { t: 31.5, ch: 1, name: "k1-karte-links",   action: "show",   target: "zoneLeft", dur: 3.5 },
+    { t: 31.5, ch: 1, name: "k1-karte-rechts",  action: "show",   target: "zoneRight", dur: 3.5 },
+    { t: 31.5, ch: 1, name: "k1-karte-rail",    action: "show",   target: "rail", dur: 3.5 },
+    /* Sehen 4: Fokus auf den Zettel. Der Satz steht erst in Ruhe, danach werden beide Namen nacheinander zu Kürzeln.
+       Der Betrag steht ab der dezentralen Ansicht schon in Bitcoin (nur die Bank-Liste zeigt Euro). */
     { t: 35.5, ch: 1, name: "k1-fokus-zettel",  action: "focus",  target: "left" },
-    { t: 36.5, ch: 1, name: "k1-text-4",        action: "text",   text: "Transaktionen werden mittels Schlüssel durchgeführt, die Klarnamen ersetzen. Daher ist Bitcoin pseudonym, aber nicht anonym.", hold: 6 },
-    /* =================== Kapitel 2: Wie funktioniert eine Transaktion? (40 bis 102.5) =================== */
-    /* Sehen 0: Wallet-Übersicht, der Betrag wird als Bitcoin ausgewiesen, das Schlüsselpaar wird gezeigt */
-    { t: 41,   ch: 2, name: "k2-btc-zeichen",       action: "rewrite", target: "slipEntry", from: "Carola → Albert: 3€", to: "Carola → Albert: 3 ₿", dur: 1.2 },
-    { t: 41.5, ch: 2, name: "k2-wallet-zeigen",     action: "show",   target: "k2Wallet" },
-    { t: 42.5, ch: 2, name: "k2-schluesselpaar",    action: "show",   target: "k2KeyPair" },
-    { t: 43,   ch: 2, name: "k2-text-0",            action: "text",   text: "Zur Verwahrung der Schlüssel dient eine digitale Wallet. Sie enthält einen öffentlichen und einen privaten Schlüssel.", hold: 6 },
-    { t: 49,   ch: 2, name: "k2-schluesselpaar-weg", action: "hide",  target: "k2KeyPair" },
-    /* Sehen 1: Fokus auf die Signier-Zone (Dimmen statt Zoom), beide Namen werden nacheinander zu Kürzeln, Private Key aus der Wallet, Unterschrift */
-    { t: 49,   ch: 2, name: "k2-fokus-links",   action: "dim",    target: "zoneMid" },
-    { t: 49,   ch: 2, name: "k2-fokus-links-2", action: "dim",    target: "zoneRight" },
-    { t: 49,   ch: 2, name: "k2-fokus-links-3", action: "dim",    target: "rail" },
-    { t: 49,   ch: 2, name: "k2-fokus-1",       action: "focus",  target: "left" },
-    { t: 49.5, ch: 2, name: "k2-kuerzel-albert", action: "rewrite", target: "slipEntry", from: "Carola → Albert: 3 ₿", to: "Carola → 1A2b...: 3 ₿", dur: 1.4 },
-    { t: 51.2, ch: 2, name: "k2-kuerzel-carola", action: "rewrite", target: "slipEntry", from: "Carola → 1A2b...: 3 ₿", to: "3Cq8... → 1A2b...: 3 ₿", dur: 1.4 },
-    { t: 53,   ch: 2, name: "k2-text-privat",   action: "text",   text: "Ein privater Schlüssel ist geheim. Nur Carola besitzt ihn.", hold: 4.5 },
-    { t: 54,   ch: 2, name: "k2-gravur",        action: "show",   target: "k2Engraving" },
-    { t: 55,   ch: 2, name: "k2-key-raus",      action: "move",   target: "privateKey", to: { x: 217, y: -82 }, dur: 2 },
-    { t: 58,   ch: 2, name: "k2-unterschrift",  action: "draw",   target: "k2Signature", dur: 2 },
-    { t: 60.5, ch: 2, name: "k2-text-1",        action: "text",   text: "Mit diesem privaten Schlüssel wird eine Transaktion unterschrieben und verifiziert.", hold: 5 },
+    { t: 36.5, ch: 1, name: "k1-text-4",        action: "text",   text: "Transaktionen werden mittels Schlüssel durchgeführt, die Klarnamen ersetzen. Daher ist Bitcoin pseudonym, aber nicht anonym.", hold: 9.5 },
+    { t: 42,   ch: 1, name: "k1-kuerzel-carola", action: "rewrite", target: "slipEntry", from: "Carola → Albert: 3 ₿", to: "3Cq8... → Albert: 3 ₿", dur: 1.4 },
+    { t: 43.6, ch: 1, name: "k1-kuerzel-albert", action: "rewrite", target: "slipEntry", from: "3Cq8... → Albert: 3 ₿", to: "3Cq8... → 1A2b...: 3 ₿", dur: 1.4 },
+    /* =================== Kapitel 2: Wie funktioniert eine Transaktion? (46 bis 108.5) =================== */
+    /* Sehen 0: Wallet-Übersicht, die Wallet wächst groß heraus
+       und zeigt das Schlüsselpaar in ihrem Inneren, dann schrumpft sie zurück an ihren Platz.
+       Startlage der Nahansicht = kleine Wallet: y 261.76 unter der Mitte, s = 3/22 (Icon-Faktor klein/groß). */
+    { t: 46,   ch: 2, name: "k2-wallet-zoom-start", action: "move",   target: "k2WalletZoom", to: { x: 0, y: 261.76, s: 0.1364 }, dur: 0 },
+    { t: 47.5, ch: 2, name: "k2-wallet-zeigen",     action: "show",   target: "k2Wallet" },
+    { t: 48.3, ch: 2, name: "k2-wallet-gross",      action: "show",   target: "k2WalletZoom", dur: 0 },
+    { t: 48.3, ch: 2, name: "k2-wallet-klein-weg",  action: "hide",   target: "k2Wallet", dur: 0 },
+    { t: 48.3, ch: 2, name: "k2-key-weg",           action: "hide",   target: "privateKey" },
+    { t: 48.3, ch: 2, name: "k2-wallet-zoom",       action: "move",   target: "k2WalletZoom", to: { x: 0, y: 0, s: 1 }, dur: 1.5 },
+    { t: 49,   ch: 2, name: "k2-text-0",            action: "text",   text: "Zur Verwahrung der Schlüssel dient eine digitale Wallet. Sie enthält einen öffentlichen und einen privaten Schlüssel.", hold: 6 },
+    { t: 49.8, ch: 2, name: "k2-schluesselpaar",    action: "show",   target: "k2KeyPair" },
+    { t: 53.6, ch: 2, name: "k2-schluesselpaar-weg", action: "hide",  target: "k2KeyPair" },
+    { t: 54,   ch: 2, name: "k2-wallet-zurueck",    action: "move",   target: "k2WalletZoom", to: { x: 0, y: 261.76, s: 0.1364 }, dur: 1.2 },
+    { t: 54.4, ch: 2, name: "k2-key-zurueck",       action: "show",   target: "privateKey" },
+    { t: 54.4, ch: 2, name: "k2-pubkey-zurueck",    action: "show",   target: "k2PubKey" },
+    { t: 55.2, ch: 2, name: "k2-wallet-klein",      action: "show",   target: "k2Wallet", dur: 0 },
+    { t: 55.2, ch: 2, name: "k2-wallet-gross-weg",  action: "hide",   target: "k2WalletZoom", dur: 0 },
+    /* Sehen 1: Fokus auf die Signier-Zone (Dimmen statt Zoom), Private Key aus der Wallet, Unterschrift */
+    { t: 55,   ch: 2, name: "k2-fokus-links",   action: "dim",    target: "zoneMid" },
+    { t: 55,   ch: 2, name: "k2-fokus-links-2", action: "dim",    target: "zoneRight" },
+    { t: 55,   ch: 2, name: "k2-fokus-links-3", action: "dim",    target: "rail" },
+    { t: 55,   ch: 2, name: "k2-fokus-1",       action: "focus",  target: "left" },
+    { t: 59,   ch: 2, name: "k2-text-privat",   action: "text",   text: "Ein privater Schlüssel ist geheim. Nur Carola besitzt ihn.", hold: 4.5 },
+    { t: 60,   ch: 2, name: "k2-gravur",        action: "show",   target: "k2Engraving" },
+    { t: 61,   ch: 2, name: "k2-key-raus",      action: "move",   target: "privateKey", to: { x: 217, y: -82 }, dur: 2 },
+    { t: 64,   ch: 2, name: "k2-unterschrift",  action: "draw",   target: "k2Signature", dur: 2 },
+    { t: 66.5, ch: 2, name: "k2-text-1",        action: "text",   text: "Mit diesem privaten Schlüssel wird eine Transaktion unterschrieben und verifiziert.", hold: 5 },
     /* Sehen 2: die unterschriebene Transaktion geht ins Netzwerk, ein Public Key prüft, Häkchen */
-    { t: 66,   ch: 2, name: "k2-netz-an",       action: "undim",  target: "zoneMid" },
-    { t: 66,   ch: 2, name: "k2-rail-an",       action: "undim",  target: "rail" },
-    { t: 66,   ch: 2, name: "k2-fokus-2",       action: "focus",  target: "mid" },
-    { t: 66,   ch: 2, name: "k2-punkt",         action: "show",   target: "point", dur: "d4" },
-    { t: 66.5, ch: 2, name: "k2-punkt-netz",    action: "point",  from: "left", to: "mid", dur: 3 },
-    { t: 69.5, ch: 2, name: "k2-public-key",    action: "show",   target: "k2PublicKey" },
-    { t: 71,   ch: 2, name: "k2-haken",         action: "show",   target: "k2Check", dur: "d3" },
-    { t: 71,   ch: 2, name: "k2-text-2",        action: "text",   text: "Geht dieser private Schlüssel verloren, ist der Zugang zur Wallet und somit zu den Werten auf der Blockchain nicht möglich.", hold: 6.5 },
-    { t: 79.2, ch: 2, name: "k2-text-3",        action: "text",   text: "Nun kommt der öffentliche Schlüssel zum Einsatz: über ihn prüft das Netzwerk die Transaktionsanfrage und deren Berechtigung.", hold: 7 },
+    { t: 72,   ch: 2, name: "k2-text-2",        action: "text",   text: "Geht dieser private Schlüssel verloren, ist der Zugang zur Wallet und somit zu den Werten auf der Blockchain nicht möglich.", hold: 6.5 },
+    { t: 79.5, ch: 2, name: "k2-netz-an",       action: "undim",  target: "zoneMid" },
+    { t: 79.5, ch: 2, name: "k2-rail-an",       action: "undim",  target: "rail" },
+    { t: 79.5, ch: 2, name: "k2-fokus-2",       action: "focus",  target: "mid" },
+    { t: 79.5, ch: 2, name: "k2-punkt",         action: "show",   target: "point", dur: "d4" },
+    { t: 80,   ch: 2, name: "k2-punkt-netz",    action: "point",  from: "left", to: "mid", dur: 3 },
+    /* der öffentliche Schlüssel fliegt aus der Wallet über das Netzwerk (Versatz siehe buildK2) */
+    { t: 83.2, ch: 2, name: "k2-pubkey-hell",   action: "zone",   target: "k2PubKey", to: "mid", dur: "d4" },
+    { t: 83.2, ch: 2, name: "k2-pubkey-fliegt", action: "move",   target: "k2PubKey", to: { x: 688, y: -433.76 }, dur: 2 },
+    { t: 85.2, ch: 2, name: "k2-public-key",    action: "show",   target: "k2PublicKey" },
+    { t: 85.2, ch: 2, name: "k2-text-3",        action: "text",   text: "Nun kommt der öffentliche Schlüssel zum Einsatz: über ihn prüft das Netzwerk die Transaktionsanfrage und deren Berechtigung.", hold: 7 },
+    { t: 86,   ch: 2, name: "k2-haken",         action: "show",   target: "k2Check", dur: "d3" },
     /* Sehen 3: Linie vom Schlüssel zum Eintrag, Transaktion wandert in den Wartebereich */
-    { t: 81,   ch: 2, name: "k2-linie",         action: "draw",   target: "k2Link", dur: 2 },
-    { t: 83,   ch: 2, name: "k2-kette-an",      action: "undim",  target: "zoneRight" },
-    { t: 83,   ch: 2, name: "k2-wartebereich",  action: "show",   target: "waitArea" },
-    { t: 83,   ch: 2, name: "k2-fokus-3",       action: "focus",  target: ["mid", "wait"] },
-    { t: 84,   ch: 2, name: "k2-punkt-warte",   action: "point",  from: "mid", to: "wait", dur: 3 },
-    { t: 87,   ch: 2, name: "k2-text-4",        action: "text",   text: "Die Transaktion wird digital verzeichnet.", hold: 4 },
-    { t: 89,   ch: 2, name: "k2-pubkey-weg",    action: "hide",   target: "k2PublicKey" },
-    { t: 89,   ch: 2, name: "k2-haken-weg",     action: "hide",   target: "k2Check" },
-    { t: 89,   ch: 2, name: "k2-linie-weg",     action: "hide",   target: "k2Link" },
+    { t: 87,   ch: 2, name: "k2-linie",         action: "draw",   target: "k2Link", dur: 2 },
+    { t: 89,   ch: 2, name: "k2-kette-an",      action: "undim",  target: "zoneRight" },
+    { t: 89,   ch: 2, name: "k2-wartebereich",  action: "show",   target: "waitArea" },
+    { t: 89,   ch: 2, name: "k2-fokus-3",       action: "focus",  target: ["mid", "wait"] },
+    { t: 90,   ch: 2, name: "k2-punkt-warte",   action: "point",  from: "mid", to: "wait", dur: 3 },
+    { t: 93,   ch: 2, name: "k2-text-4",        action: "text",   text: "Die Transaktion wird digital verzeichnet.", hold: 4 },
+    { t: 95,   ch: 2, name: "k2-pubkey-weg",    action: "hide",   target: "k2PublicKey" },
+    { t: 95,   ch: 2, name: "k2-pubkey-heim",   action: "move",   target: "k2PubKey", to: { x: 0, y: 0 }, dur: 2 },
+    { t: 95,   ch: 2, name: "k2-pubkey-dunkel", action: "zone",   target: "k2PubKey", to: "left", dur: "d6" },
+    { t: 95,   ch: 2, name: "k2-haken-weg",     action: "hide",   target: "k2Check" },
+    { t: 95,   ch: 2, name: "k2-linie-weg",     action: "hide",   target: "k2Link" },
     /* Sehen 4: Carolas Transaktion sammelt sich mit anderen im Wartebereich (Übergang zu Kapitel 3) */
-    { t: 92,   ch: 2, name: "k2-fokus-warte",   action: "focus",  target: "wait" },
-    { t: 92.5, ch: 2, name: "k2-zettel-1",      action: "show",   target: "k3Slip1", dur: "d4" },
-    { t: 93.5, ch: 2, name: "k2-zettel-2",      action: "show",   target: "k3Slip2", dur: "d4" },
-    { t: 94.5, ch: 2, name: "k2-zettel-3",      action: "show",   target: "k3Slip3", dur: "d4" },
-    { t: 95.5, ch: 2, name: "k2-zettel-4",      action: "show",   target: "k3Slip4", dur: "d4" },
-    { t: 96.5, ch: 2, name: "k2-text-warte",    action: "text",   text: "Carolas Transaktion wartet mit anderen auf ihre Verarbeitung zu einem sogenannten Block.", hold: 5.5 },
-    /* =================== Kapitel 3: Wie funktioniert Mining? (102.5 bis 137.5) =================== */
+    { t: 98,   ch: 2, name: "k2-fokus-warte",   action: "focus",  target: "wait" },
+    { t: 98.5, ch: 2, name: "k2-zettel-1",      action: "show",   target: "k3Slip1", dur: "d4" },
+    { t: 99.5, ch: 2, name: "k2-zettel-2",      action: "show",   target: "k3Slip2", dur: "d4" },
+    { t: 100.5, ch: 2, name: "k2-zettel-3",      action: "show",   target: "k3Slip3", dur: "d4" },
+    { t: 101.5, ch: 2, name: "k2-zettel-4",      action: "show",   target: "k3Slip4", dur: "d4" },
+    { t: 102.5, ch: 2, name: "k2-text-warte",    action: "text",   text: "Carolas Transaktion wartet mit anderen auf ihre Verarbeitung zu einem sogenannten Block.", hold: 5.5 },
+    /* =================== Kapitel 3: Wie funktioniert Mining? (108.5 bis 143.5) =================== */
     /* Sehen 1: die Zahlungen aus dem Wartebereich werden zu einem Block gebündelt (die Zettel selbst erscheinen schon am Ende von Kapitel 2) */
-    { t: 102.5, ch: 3, name: "k3-fokus-block",   action: "focus",  target: ["wait", "right"] },
-    { t: 102.5, ch: 3, name: "k3-block-an",      action: "show",   target: "k3Block", dur: 0 },
-    { t: 102.5, ch: 3, name: "k3-block-zeichnen", action: "draw",  target: "k3Block", dur: 2 },
-    { t: 102.5, ch: 3, name: "k3-buendel-1",     action: "move",   target: "k3Slip1", to: { x: 128, y: 184 }, dur: 2 },
-    { t: 102.5, ch: 3, name: "k3-buendel-2",     action: "move",   target: "k3Slip2", to: { x: 76,  y: 184 }, dur: 2 },
-    { t: 102.5, ch: 3, name: "k3-buendel-3",     action: "move",   target: "k3Slip3", to: { x: -76, y: 184 }, dur: 2 },
-    { t: 102.5, ch: 3, name: "k3-buendel-4",     action: "move",   target: "k3Slip4", to: { x: -128, y: 184 }, dur: 2 },
-    { t: 102.5, ch: 3, name: "k3-punkt-block",   action: "point",  from: "wait", to: "right", dur: 2 },
-    { t: 104.5, ch: 3, name: "k3-zettel-weg-1",  action: "hide",   target: "k3Slip1", dur: "d3" },
-    { t: 104.5, ch: 3, name: "k3-zettel-weg-2",  action: "hide",   target: "k3Slip2", dur: "d3" },
-    { t: 104.5, ch: 3, name: "k3-zettel-weg-3",  action: "hide",   target: "k3Slip3", dur: "d3" },
-    { t: 104.5, ch: 3, name: "k3-zettel-weg-4",  action: "hide",   target: "k3Slip4", dur: "d3" },
-    { t: 104.5, ch: 3, name: "k3-block-inhalt",  action: "show",   target: "k3BlockLines", dur: "d4" },
-    { t: 104.5, ch: 3, name: "k3-block-label",   action: "show",   target: "k3BlockLabel", dur: "d4" },
-    { t: 104.5, ch: 3, name: "k3-block-label-text", action: "type", target: "k3BlockLabelText", text: "Block", dur: 0 },
-    { t: 105.5, ch: 3, name: "k3-text-1",        action: "text",   text: "Die Transaktionsblöcke werden von spezialisierten Rechnern zusammengefügt, als Teil des sogenannten Minings.", hold: 6 },
+    { t: 108.5, ch: 3, name: "k3-fokus-block",   action: "focus",  target: ["wait", "right"] },
+    { t: 108.5, ch: 3, name: "k3-block-an",      action: "show",   target: "k3Block", dur: 0 },
+    { t: 108.5, ch: 3, name: "k3-block-zeichnen", action: "draw",  target: "k3Block", dur: 2 },
+    { t: 108.5, ch: 3, name: "k3-buendel-1",     action: "move",   target: "k3Slip1", to: { x: 128, y: 184 }, dur: 2 },
+    { t: 108.5, ch: 3, name: "k3-buendel-2",     action: "move",   target: "k3Slip2", to: { x: 76,  y: 184 }, dur: 2 },
+    { t: 108.5, ch: 3, name: "k3-buendel-3",     action: "move",   target: "k3Slip3", to: { x: -76, y: 184 }, dur: 2 },
+    { t: 108.5, ch: 3, name: "k3-buendel-4",     action: "move",   target: "k3Slip4", to: { x: -128, y: 184 }, dur: 2 },
+    { t: 108.5, ch: 3, name: "k3-punkt-block",   action: "point",  from: "wait", to: "right", dur: 2 },
+    { t: 110.5, ch: 3, name: "k3-zettel-weg-1",  action: "hide",   target: "k3Slip1", dur: "d3" },
+    { t: 110.5, ch: 3, name: "k3-zettel-weg-2",  action: "hide",   target: "k3Slip2", dur: "d3" },
+    { t: 110.5, ch: 3, name: "k3-zettel-weg-3",  action: "hide",   target: "k3Slip3", dur: "d3" },
+    { t: 110.5, ch: 3, name: "k3-zettel-weg-4",  action: "hide",   target: "k3Slip4", dur: "d3" },
+    { t: 110.5, ch: 3, name: "k3-block-inhalt",  action: "show",   target: "k3BlockLines", dur: "d4" },
+    { t: 110.5, ch: 3, name: "k3-block-label",   action: "show",   target: "k3BlockLabel", dur: "d4" },
+    { t: 110.5, ch: 3, name: "k3-block-label-text", action: "type", target: "k3BlockLabelText", text: "Block", dur: 0 },
+    { t: 111.5, ch: 3, name: "k3-text-1",        action: "text",   text: "Die Transaktionsblöcke werden von spezialisierten Rechnern zusammengefügt, als Teil des sogenannten Minings.", hold: 6 },
     /* Sehen 2: viele Rechner würfeln gleichzeitig an einer Zahl, einer trifft zuerst und leuchtet auf (kurz gehalten, ein Text) */
-    { t: 112,   ch: 3, name: "k3-fokus-netz",   action: "focus",  target: "mid" },
-    { t: 113,   ch: 3, name: "k3-wuerfeln",      action: "dice",   until: 121, hit: 118, winner: 7 },
-    { t: 113,   ch: 3, name: "k3-zahlen-an",     action: "show",   target: "k3Dice", dur: "d3" },
-    { t: 113.5, ch: 3, name: "k3-text-2",       action: "text",   text: "Im Miningprozess stellt ein Algorithmus Aufgaben.", hold: 5 },
+    { t: 118,   ch: 3, name: "k3-fokus-netz",   action: "focus",  target: "mid" },
+    { t: 119,   ch: 3, name: "k3-wuerfeln",      action: "dice",   until: 143.5, hit: 124, winner: 7 },   /* Ergebnisse bleiben bis Kapitelende stehen */
+    { t: 119,   ch: 3, name: "k3-zahlen-an",     action: "show",   target: "k3Dice", dur: "d3" },
+    { t: 119.5, ch: 3, name: "k3-text-2",       action: "text",   text: "Im Miningprozess stellt ein Algorithmus Aufgaben.", hold: 5 },
     /* Sehen 3: der Gewinner schreibt den nächsten Block und bekommt eine neue Münze, dann beginnt das Würfeln von vorn */
-    { t: 121.5, ch: 3, name: "k3-fokus-gewinner", action: "focus", target: ["mid", "right"] },
-    { t: 121.5, ch: 3, name: "k3-schreibt",      action: "draw",   target: "k3Link", dur: 1.5 },
-    { t: 123,   ch: 3, name: "k3-muenze",       action: "show",   target: "k3Coin" },
-    { t: 123.5, ch: 3, name: "k3-text-3",        action: "text",   text: "Löst ein Rechner im Bitcoin-Netzwerk diese Aufgabe, wird ein Block erstellt. Carolas Transaktion wird gegen eine Gebühr ausgelöst.", hold: 6 },
-    { t: 130,   ch: 3, name: "k3-text-4",        action: "text",   text: "Der \"Miner\" wird im Anschluss durch neue Bitcoin und Transaktionsgebühren entlohnt.", hold: 5 },
-    { t: 135.5, ch: 3, name: "k3-von-vorn",      action: "dice",   until: 137.5, winner: 7 },
-    { t: 135.5, ch: 3, name: "k3-linie-weg",     action: "hide",   target: "k3Link", dur: "d3" },
-    { t: 135.5, ch: 3, name: "k3-muenze-weg",    action: "hide",   target: "k3Coin" },
-    { t: 137.1, ch: 3, name: "k3-zahlen-weg",   action: "hide",   target: "k3Dice", dur: "d3" },
-    /* =================== Kapitel 4: Wie ist die Blockchain abgesichert? (137.5 bis 187.5) =================== */
+    { t: 127.5, ch: 3, name: "k3-fokus-gewinner", action: "focus", target: ["mid", "right"] },
+    { t: 127.5, ch: 3, name: "k3-schreibt",      action: "draw",   target: "k3Link", dur: 1.5 },
+    { t: 129.5, ch: 3, name: "k3-text-3",        action: "text",   text: "Löst ein Rechner im Bitcoin-Netzwerk diese Aufgabe, wird ein Block erstellt. Carolas Transaktion wird gegen eine Gebühr ausgelöst.", hold: 6 },
+    /* Belohnung: neue Bitcoin (k3Coin) und Gebühr (k3Fee, Akzentfarbe) wandern aus dem Block zum Gewinner.
+       Startversatz = Mitte des neuen Blocks, gemessen von der Ruhelage der jeweiligen Münze neben der Gewinner-Kopie. */
+    { t: 135.5, ch: 3, name: "k3-muenze-start",  action: "move",   target: "k3Coin", to: { x: 338.16, y: 129.62 }, dur: 0 },
+    { t: 135.5, ch: 3, name: "k3-gebuehr-start", action: "move",   target: "k3Fee",  to: { x: 310.16, y: 113.62 }, dur: 0 },
+    { t: 136,   ch: 3, name: "k3-text-4",        action: "text",   text: "Der \"Miner\" wird im Anschluss durch neue Bitcoin und Transaktionsgebühren entlohnt.", hold: 5 },
+    { t: 136.3, ch: 3, name: "k3-muenze",        action: "show",   target: "k3Coin", dur: "d4" },
+    { t: 136.6, ch: 3, name: "k3-muenze-wandert", action: "move",  target: "k3Coin", to: { x: 0, y: 0 }, dur: 2 },
+    { t: 137.2, ch: 3, name: "k3-gebuehr",       action: "show",   target: "k3Fee", dur: "d4" },
+    { t: 137.5, ch: 3, name: "k3-gebuehr-wandert", action: "move", target: "k3Fee",  to: { x: 0, y: 0 }, dur: 2 },
+    { t: 141.5, ch: 3, name: "k3-linie-weg",     action: "hide",   target: "k3Link", dur: "d3" },
+    { t: 141.5, ch: 3, name: "k3-muenze-weg",    action: "hide",   target: "k3Coin" },
+    { t: 141.5, ch: 3, name: "k3-gebuehr-weg",   action: "hide",   target: "k3Fee" },
+    { t: 143.1, ch: 3, name: "k3-zahlen-weg",   action: "hide",   target: "k3Dice", dur: "d3" },
+    /* =================== Kapitel 4: Wie ist die Blockchain abgesichert? (143.5 bis 183.5) =================== */
     /* Sehen 1: der neue Block bekommt unten eine verzahnte Kante und rastet in den nächsten Block ein */
-    { t: 137.5, ch: 4, name: "k4-fokus-kette",   action: "focus",  target: "right" },
-    { t: 137.5, ch: 4, name: "k4-warte-weg",     action: "hide",   target: "waitArea" },
-    { t: 138,   ch: 4, name: "k4-block-tausch", action: "hide",   target: "k3Block", dur: 0 },
-    { t: 138,   ch: 4, name: "k4-block-an",     action: "show",   target: "k4Block", dur: 0 },
-    { t: 138,   ch: 4, name: "k4-zahn",         action: "draw",   target: "k4Tooth", dur: 1 },
-    { t: 139.5, ch: 4, name: "k4-einrasten",     action: "move",   target: "k4Block", to: { x: 0, y: 48 }, dur: 0.8 },
-    { t: 139.5, ch: 4, name: "k4-einrasten-2",   action: "move",   target: "k3BlockLines", to: { x: 0, y: 48 }, dur: 0.8 },
-    { t: 139.5, ch: 4, name: "k4-einrasten-3",   action: "move",   target: "k3BlockLabel", to: { x: 0, y: 48 }, dur: 0.8 },
-    { t: 139.5, ch: 4, name: "k4-punkt-mit",     action: "point",  from: "right", to: "chained", dur: 0.8 },
-    { t: 140,   ch: 4, name: "k4-text-1",       action: "text",   text: "Der Block mit Carolas Transaktion ist über einen Verweis mit dem vorherigen Block verbunden. Diese Verkettung gilt für alle Blöcke.", hold: 5 },
-    { t: 140.5, ch: 4, name: "k4-blockchain-label", action: "rewrite", target: "k3BlockLabelText", from: "Block", to: "Blockchain", dur: 1.2 },
-    { t: 143.5, ch: 4, name: "k4-punkt-weg",     action: "hide",   target: "point" },
+    { t: 143.5, ch: 4, name: "k4-fokus-kette",   action: "focus",  target: "right" },
+    { t: 143.5, ch: 4, name: "k4-warte-weg",     action: "hide",   target: "waitArea" },
+    { t: 144,   ch: 4, name: "k4-block-tausch", action: "hide",   target: "k3Block", dur: 0 },
+    { t: 144,   ch: 4, name: "k4-block-an",     action: "show",   target: "k4Block", dur: 0 },
+    { t: 144,   ch: 4, name: "k4-zahn",         action: "draw",   target: "k4Tooth", dur: 1 },
+    { t: 145.5, ch: 4, name: "k4-einrasten",     action: "move",   target: "k4Block", to: { x: 0, y: 48 }, dur: 0.8 },
+    { t: 145.5, ch: 4, name: "k4-einrasten-2",   action: "move",   target: "k3BlockLines", to: { x: 0, y: 48 }, dur: 0.8 },
+    { t: 145.5, ch: 4, name: "k4-einrasten-3",   action: "move",   target: "k3BlockLabel", to: { x: 0, y: 48 }, dur: 0.8 },
+    { t: 145.5, ch: 4, name: "k4-punkt-mit",     action: "point",  from: "right", to: "chained", dur: 0.8 },
+    { t: 146,   ch: 4, name: "k4-text-1",       action: "text",   text: "Der Block mit Carolas Transaktion ist über einen Verweis mit dem vorherigen Block verbunden. Diese Verkettung gilt für alle Blöcke.", hold: 5 },
+    /* erst lesen lassen, dann wird aus "Block" die "Blockchain" */
+    { t: 151.5, ch: 4, name: "k4-blockchain-label", action: "rewrite", target: "k3BlockLabelText", from: "Block", to: "Blockchain", dur: 1.2 },
+    { t: 152,   ch: 4, name: "k4-punkt-weg",     action: "hide",   target: "point" },
     /* Sehen 2 (Bruch): eine Hand ändert eine Zahl in einem alten Block, seine Kante passt nicht mehr, orange Bruch */
-    { t: 151.5, ch: 4, name: "k4-alte-zahl",     action: "type",   target: "k4OldValue", text: "1A2b...: 3", dur: 0 },
-    { t: 151.5, ch: 4, name: "k4-alte-zahl-an",  action: "show",   target: "k4OldValueBox", dur: "d4" },
-    { t: 152,   ch: 4, name: "k4-hand",         action: "show",   target: "k4Hand" },
-    { t: 153.5, ch: 4, name: "k4-aendern",       action: "rewrite", target: "k4OldValue", from: "1A2b...: 3", to: "1A2b...: 8", dur: 0.8 },
-    { t: 154.5, ch: 4, name: "k4-bruch-0",       action: "show",   target: "k4Break0", dur: "d2" },
-    { t: 155,   ch: 4, name: "k4-text-2",       action: "text",   text: "Würde theoretisch ein älterer Block verändert werden, passte er nicht mehr zu den nachfolgenden Blöcken. Dadurch würde eine Manipulation auffallen.", hold: 8.5 },
+    { t: 154.5, ch: 4, name: "k4-alte-zahl",     action: "type",   target: "k4OldValue", text: "1A2b...: 3", dur: 0 },
+    { t: 154.5, ch: 4, name: "k4-alte-zahl-an",  action: "show",   target: "k4OldValueBox", dur: "d4" },
+    { t: 155,   ch: 4, name: "k4-hand",         action: "show",   target: "k4Hand" },
+    { t: 156.5, ch: 4, name: "k4-aendern",       action: "rewrite", target: "k4OldValue", from: "1A2b...: 3", to: "1A2b...: 8", dur: 0.8 },
+    { t: 157.5, ch: 4, name: "k4-bruch-0",       action: "show",   target: "k4Break0", dur: "d2" },
+    { t: 158,   ch: 4, name: "k4-text-2",       action: "text",   text: "Würde theoretisch ein älterer Block verändert werden, passte er nicht mehr zu den nachfolgenden Blöcken. Dadurch würde eine Manipulation auffallen.", hold: 8.5 },
     /* Sehen 3: die Hand müsste alle Folgeblöcke neu formen, oben hängt die Welt schneller neue Blöcke an */
-    { t: 163.5, ch: 4, name: "k4-hand-1",        action: "move",   target: "k4Hand", to: { x: 0, y: -72 }, dur: 3 },
-    { t: 164,   ch: 4, name: "k4-label-weg",    action: "hide",   target: "k3BlockLabel", dur: "d3" },
-    { t: 169.5, ch: 4, name: "k4-text-4",        action: "text",   text: "Das bedeutet, dass bestätigte Transaktionen unumkehrbar und mit der derzeitigen Technologie nicht manipulierbar sind.", hold: 5.5 },
-    { t: 164.5, ch: 4, name: "k4-neu-1",         action: "show",   target: "k4New1", dur: "d4" },
-    { t: 165.5, ch: 4, name: "k4-bruch-0-weg",   action: "hide",   target: "k4Break0", dur: "d2" },
-    { t: 165.5, ch: 4, name: "k4-bruch-1",       action: "show",   target: "k4Break1", dur: "d2" },
-    { t: 167,   ch: 4, name: "k4-neu-2",        action: "show",   target: "k4New2", dur: "d4" },
-    { t: 168.5, ch: 4, name: "k4-hand-2",        action: "move",   target: "k4Hand", to: { x: 0, y: -144 }, dur: 3 },
-    { t: 169.5, ch: 4, name: "k4-neu-3",         action: "show",   target: "k4New3", dur: "d4" },
-    { t: 171.5, ch: 4, name: "k4-bruch-1-weg",   action: "hide",   target: "k4Break1", dur: "d2" },
-    { t: 171.5, ch: 4, name: "k4-bruch-2",       action: "show",   target: "k4Break2", dur: "d2" },
-    { t: 172,   ch: 4, name: "k4-neu-4",        action: "show",   target: "k4New4", dur: "d4" },
-    { t: 174.5, ch: 4, name: "k4-hand-3",        action: "move",   target: "k4Hand", to: { x: 0, y: -216 }, dur: 3 },
-    { t: 177.5, ch: 4, name: "k4-bruch-2-weg",   action: "hide",   target: "k4Break2", dur: "d2" },
-    { t: 177.5, ch: 4, name: "k4-bruch-3",       action: "show",   target: "k4Break3", dur: "d2" },
-    /* Loop-Naht: Karte ausblenden, Fokus zurücksetzen, Kamera auf den Startwert von Kapitel 1 */
+    { t: 166.5, ch: 4, name: "k4-hand-1",        action: "move",   target: "k4Hand", to: { x: 0, y: -72 }, dur: 3 },
+    { t: 167,   ch: 4, name: "k4-label-weg",    action: "hide",   target: "k3BlockLabel", dur: "d3" },
+    { t: 167.5, ch: 4, name: "k4-neu-1",         action: "show",   target: "k4New1", dur: "d4" },
+    { t: 168.5, ch: 4, name: "k4-bruch-0-weg",   action: "hide",   target: "k4Break0", dur: "d2" },
+    { t: 168.5, ch: 4, name: "k4-bruch-1",       action: "show",   target: "k4Break1", dur: "d2" },
+    { t: 170,   ch: 4, name: "k4-neu-2",        action: "show",   target: "k4New2", dur: "d4" },
+    /* Sehen 4 (Scheitern): schon am 2. Block kommt die Hand nicht mehr hinterher, oranges Kreuz, sie rutscht ab
+       und verblasst, oben wächst die Kette weiter. Danach ist die Kette wieder wie vorher: alte Zahl zurück, kein Bruch mehr. */
+    { t: 170,   ch: 4, name: "k4-kreuz-an",      action: "show",   target: "k4Fail", dur: 0 },
+    { t: 170,   ch: 4, name: "k4-kreuz",         action: "draw",   target: "k4Fail", dur: 0.8 },
+    { t: 171.8, ch: 4, name: "k4-hand-rutscht",  action: "move",   target: "k4Hand", to: { x: 0, y: -30 }, dur: 1.5 },
+    { t: 171.8, ch: 4, name: "k4-hand-verblasst", action: "hide",  target: "k4Hand", dur: 1.5 },
+    { t: 172.5, ch: 4, name: "k4-neu-3",         action: "show",   target: "k4New3", dur: "d4" },
+    { t: 173.5, ch: 4, name: "k4-zahl-zurueck",  action: "rewrite", target: "k4OldValue", from: "1A2b...: 8", to: "1A2b...: 3", dur: 0.8 },
+    { t: 174.3, ch: 4, name: "k4-bruch-1-weg",   action: "hide",   target: "k4Break1", dur: "d4" },
+    { t: 175.5, ch: 4, name: "k4-alte-zahl-weg", action: "hide",   target: "k4OldValueBox", dur: "d4" },
+    { t: 175,   ch: 4, name: "k4-text-4",        action: "text",   text: "Das bedeutet, dass bestätigte Transaktionen unumkehrbar und mit der derzeitigen Technologie nicht manipulierbar sind.", hold: 5.5 },
+    /* Loop-Naht: erst die intakte Kette stehen lassen, dann Karte ausblenden, Fokus zurücksetzen, Kamera auf den Startwert von Kapitel 1 */
     { t: 181,   ch: 4, name: "k4-karte-weg",    action: "hide",   target: "map" },
-    { t: 182.5, ch: 4, name: "k4-fokus-reset",   action: "focus",  target: ["left", "mid", "right", "wait"], dur: 0 },
-    { t: 182.5, ch: 4, name: "k4-kamera-start",  action: "camera", to: { scale: 0.5, x: 0, y: -12 }, dur: 0 },
-    { t: 182.5, ch: 4, name: "k4-hand-weg",      action: "hide",   target: "k4Hand", dur: 0 },
-    { t: 182.5, ch: 4, name: "k4-bruch-3-weg",   action: "hide",   target: "k4Break3", dur: 0 },
+    { t: 183,   ch: 4, name: "k4-fokus-reset",   action: "focus",  target: ["left", "mid", "right", "wait"], dur: 0 },
+    { t: 183,   ch: 4, name: "k4-kamera-start",  action: "camera", to: { scale: 0.5, x: 0, y: -12 }, dur: 0 },
+    { t: 183,   ch: 4, name: "k4-kreuz-weg",     action: "hide",   target: "k4Fail", dur: 0 },
   ],
 };
 </script>
@@ -728,7 +760,9 @@ html, body {
 }
 body.dev #devbar { display: flex; }
 body.dev #devCue { display: block; }
+body.dev #devToggle { display: block; }
 #devToggle {
+  display: none; /* unsichtbar im Ausstellungsbetrieb; Debug über Taste D oder ?dev in der URL */
   position: fixed; top: var(--space-4); right: var(--space-4);
   z-index: calc(var(--layer-500) + 1);
   font: var(--font-size-caption-m) var(--font-family-dm-mono), monospace;
@@ -1093,20 +1127,33 @@ body.dev #clickMarker { display: block; }
   (function buildK2() {
     const cam = $("camera");
     const grp = (id, zone) => svg("g", { id, "data-target": id, "data-default": "0", "data-zone": zone }, cam);
-    /* Wallet unter dem Schlüssel */
+    /* Wallet unter dem Schlüssel, mit Abstand zur Gravur des privaten Schlüssels */
     const gW = grp("k2Wallet", "left");
-    icon("wallet", G.keyPos.x, G.keyPos.y + SP[7] + SP[5], 3, gW);
-    /* Schlüsselpaar-Übersicht am Anfang von Kapitel 2: zweiter (öffentlicher) Schlüssel neben dem privaten,
-       beide beschriftet. Wird danach wieder ausgeblendet, der private Schlüssel bleibt bestehen. */
-    const gKP = grp("k2KeyPair", "left");
-    const pubKeyX = G.keyPos.x + 96, pubKeyY = G.keyPos.y;
-    icon("key", pubKeyX, pubKeyY, 3, gKP);
-    const privLbl = svg("text", { x: G.keyPos.x - 48, y: G.keyPos.y + 5, class: "caption", "text-anchor": "end" }, gKP); privLbl.textContent = "privat";
-    const pubLbl = svg("text", { x: pubKeyX + 48, y: pubKeyY + 5, class: "caption", "text-anchor": "start" }, gKP); pubLbl.textContent = "öffentlich";
-    /* Public Key über dem Netzwerk */
+    icon("wallet", G.keyPos.x, G.keyPos.y + SP[7] + SP[7] + SP[5], 3, gW);
+    /* Wallet-Nahansicht am Anfang von Kapitel 2: dieselbe Wallet groß über der linken Zone, darin das
+       Schlüsselpaar (privat oben, öffentlich unten, links neben der Lasche). Wächst per move mit s aus
+       der kleinen Wallet heraus (Ursprung data-origin = Mitte der Nahansicht) und schrumpft wieder zurück. */
+    const zf = 22, zs = tokNum("--size-icon-lg") * zf, zu = zs / 24;   /* zu: Pixel pro Einheit im 24er Raster */
+    const zx = G.anchor.left, zy = G.railY - SP[1];
+    const zl = zx - zs / 2, zt = zy - zs / 2;
+    const gZ = svg("g", { id: "k2WalletZoom", "data-target": "k2WalletZoom", "data-default": "0", "data-zone": "left", "data-origin": `${zx} ${zy}` }, cam);
+    svg("rect", { x: zl + 4 * zu, y: zt + 4 * zu, width: 16 * zu, height: 16 * zu, rx: 2 * zu, style: "fill: var(--immersive-bg)" }, gZ); /* deckt Zettel und Fahrbahn ab */
+    icon("wallet", zx, zy, zf, gZ);
+    const gKP = svg("g", { "data-target": "k2KeyPair", "data-default": "0" }, gZ);
+    const zkx = zl + 7.5 * zu, zlx = zkx + SP[6] + SP[4];
+    for (const [zky, label] of [[zt + 10.5 * zu, "Private Key"], [zt + 17.5 * zu, "Public Key"]]) {
+      icon("key", zkx, zky, 2.5, gKP);
+      /* gleicher Stil wie die Beschriftung "Public Key" über dem Netzwerk, nur linksbündig */
+      const l = svg("text", { x: zlx, y: zky + SP[1] + 2, class: "zone-label", style: "text-anchor: start" }, gKP); l.textContent = label;
+    }
+    /* Öffentlicher Schlüssel: liegt ab der Nahansicht links neben dem privaten Schlüssel über der Wallet
+       (beweglich, Target k2PubKey) und fliegt zum Prüfen über das Netzwerk. Dort erscheint die
+       Beschriftung (Target k2PublicKey). Versatz für move bis dorthin: x 688, y -433.76. */
+    const gPK = grp("k2PubKey", "left");
+    const pkx = G.keyPos.x - SP[9], pky = G.keyPos.y;
+    icon("key", pkx, pky, 3, gPK);
     const gP = grp("k2PublicKey", "mid");
     const px = G.anchor.mid, py = G.mapTop + SP[3];
-    icon("key", px, py, 3, gP);
     const pl = svg("text", { x: px, y: py - SP[7], class: "zone-label" }, gP); pl.textContent = "Public Key";
     /* Häkchen neben dem Transaktionspunkt in der Lücke des Geflechts */
     const gC = grp("k2Check", "mid");
@@ -1137,6 +1184,10 @@ body.dev #clickMarker { display: block; }
     /* Die Hand (Tabler "hand-finger"), links neben dem ältesten Block, beweglich */
     const gH = grp("k4Hand", "0");
     icon("hand", old.x - SP[8], old.y + old.h / 2, 4, gH);
+    /* Scheitern: oranges Kreuz über der Hand (zeichnet sich, Target k4Fail), wandert mit der Hand */
+    const gX = svg("g", { "data-target": "k4Fail", "data-default": "0" }, gH);
+    const hx = old.x - SP[8], hy = old.y + old.h / 2, xr = SP[6] + SP[1];
+    svg("path", { d: `M ${hx - xr} ${hy - xr} L ${hx + xr} ${hy + xr} M ${hx + xr} ${hy - xr} L ${hx - xr} ${hy + xr}`, class: "line accent", pathLength: "1", "data-draw": "k4Fail" }, gX);
     /* Brüche an den Fugen, von unten nach oben (nach dem Einrasten): die Oberkante des veränderten
        Blocks wird in Orange neu gezeichnet, ihre Kerbe ist verschoben, der Zahn des Blocks darüber
        passt nicht mehr hinein. Die alte Kerbe wird dafür schwarz abgedeckt. */
@@ -1190,8 +1241,13 @@ body.dev #clickMarker { display: block; }
     const gC = svg("g", { id: "k3Coin", "data-target": "k3Coin", "data-default": "0", "data-zone": "mid" }, cam);
     /* Münze: eigene Line-Art (zwei Kreise), kein Währungszeichen laut Briefing */
     const mx = wc.x + cw / 2 + SP[5], my = wc.y - ch / 2;
-    svg("circle", { cx: mx, cy: my, r: SP[5] / 2, class: "line ink", style: "fill: var(--immersive-bg)" }, gC);
-    svg("circle", { cx: mx, cy: my, r: SP[4] / 2, class: "line ink" }, gC);
+    svg("circle", { cx: mx, cy: my, r: SP[6] / 2 + SP[1] / 2, class: "line ink", style: "fill: var(--immersive-bg)" }, gC);
+    svg("circle", { cx: mx, cy: my, r: SP[4] / 2 + SP[1], class: "line ink" }, gC);
+    /* Gebühr: kleinere Münze in Akzentfarbe (wie Carolas Transaktion), liegt schräg unter der Belohnung */
+    const gF = svg("g", { id: "k3Fee", "data-target": "k3Fee", "data-default": "0", "data-zone": "mid" }, cam);
+    const fx = mx + SP[6] - SP[1], fy = my + SP[4];
+    svg("circle", { cx: fx, cy: fy, r: SP[5] / 2, class: "line accent", style: "fill: var(--immersive-bg)" }, gF);
+    svg("circle", { cx: fx, cy: fy, r: SP[3] / 2 + SP[1] / 4, class: "line accent" }, gF);
     const gL = svg("g", { id: "k3Link", "data-target": "k3Link", "data-zone": "right" }, cam);
     svg("line", { x1: wc.x + cw / 2 + SP[2], y1: wc.y, x2: G.newBlock.x, y2: G.newBlock.y + G.newBlock.h / 2, class: "line ink", pathLength: "1", "data-draw": "k3Link" }, gL);
   })();
@@ -1275,6 +1331,7 @@ body.dev #clickMarker { display: block; }
       draws: {},
       moves: {},
       focus: {},
+      zoneMix: {},
       dice: { on: false },
       cue: "",
     };
@@ -1288,7 +1345,7 @@ body.dev #clickMarker { display: block; }
   function track(start, dur, ease, apply) {
     tracks.push({ start, dur, ease, apply, order: order++ });
   }
-  const durOf = (v) => (v === undefined ? D.d6 : v === 0 ? 0 : D[v] ?? D.d6);
+  const durOf = (v) => (v === undefined ? D.d6 : typeof v === "number" ? v : D[v] ?? D.d6);   /* Token oder Sekunden */
   function fadeIn(key, start, dur) { track(start, durOf(dur), E.entrance, (s, p) => { s.opacity[key] = p; }); }
   function fadeOut(key, start, dur) { track(start, durOf(dur), E.exit, (s, p) => { s.opacity[key] = 1 - p; }); }
   const lerp = (a, b, p) => a + (b - a) * p;
@@ -1307,6 +1364,7 @@ body.dev #clickMarker { display: block; }
   const usedTerms = new Map();
   let lastPoint = G.points.left;
   const lastMove = {};
+  const lastZone = {};
   let lastCam = { scale: 1, x: 0, y: 0 };
   let lastFocus = {}; for (const z of ZONES) lastFocus[z] = 1;
   for (const c of cues) {
@@ -1340,8 +1398,15 @@ body.dev #clickMarker { display: block; }
       }
       case "rewrite": {
         if (!textNodes[c.target]) console.warn(`Unbekanntes Textelement "${c.target}" (${c.name})`);
-        const n = Math.max(c.from.length, c.to.length);
-        track(c.t, c.dur, E.mechanical, (s, p) => { const k = Math.round(p * n); s.texts[c.target] = c.to.slice(0, k) + c.from.slice(k); });
+        /* nur der Teil, der sich unterscheidet, schreibt sich um; gleicher Anfang und gleiches Ende bleiben stehen */
+        let pre = 0;
+        while (pre < c.from.length && pre < c.to.length && c.from[pre] === c.to[pre]) pre++;
+        let suf = 0;
+        while (suf < c.from.length - pre && suf < c.to.length - pre && c.from[c.from.length - 1 - suf] === c.to[c.to.length - 1 - suf]) suf++;
+        const head = c.from.slice(0, pre), tail = c.from.slice(c.from.length - suf);
+        const fm = c.from.slice(pre, c.from.length - suf), tm = c.to.slice(pre, c.to.length - suf);
+        const n = Math.max(fm.length, tm.length);
+        track(c.t, c.dur, E.mechanical, (s, p) => { const k = Math.round(p * n); s.texts[c.target] = head + tm.slice(0, k) + fm.slice(k) + tail; });
         break;
       }
       case "point": {
@@ -1371,11 +1436,18 @@ body.dev #clickMarker { display: block; }
         track(c.t, durOf(c.dur), E.standard, (s, p) => { for (const z of ZONES) if (z !== "rail") s.focus[z] = lerp(from[z], to[z], p); });
         break;
       }
+      case "zone": {
+        if (!zoneOfTarget[c.target] || !ZONES.includes(c.to)) console.warn(`zone: unbekanntes Target oder Zone (${c.name})`);
+        const from = lastZone[c.target] || zoneOfTarget[c.target], to = c.to;
+        lastZone[c.target] = to;
+        track(c.t, durOf(c.dur), E.standard, (s, p) => { s.zoneMix[c.target] = { from, to, p }; });
+        break;
+      }
       case "move": {
-        const from = lastMove[c.target] || { x: 0, y: 0 };
-        const to = c.to;
+        const from = lastMove[c.target] || { x: 0, y: 0, s: 1 };
+        const to = { x: c.to.x, y: c.to.y, s: c.to.s ?? 1 };
         lastMove[c.target] = to;
-        track(c.t, c.dur, E.mechanical, (s, p) => { s.moves[c.target] = { x: lerp(from.x, to.x, p), y: lerp(from.y, to.y, p) }; });
+        track(c.t, c.dur, E.mechanical, (s, p) => { s.moves[c.target] = { x: lerp(from.x, to.x, p), y: lerp(from.y, to.y, p), s: lerp(from.s, to.s, p) }; });
         break;
       }
       case "draw":
@@ -1458,8 +1530,9 @@ body.dev #clickMarker { display: block; }
       if (cache["lit:" + i] !== lit) { cache["lit:" + i] = lit; copyRects[i].classList.toggle("winner", lit); }
     }
     for (const t of targets) {
-      const z = zoneOfTarget[t];
-      const v = String((s.opacity[t] * (z ? s.focus[z] : 1)).toFixed(3));
+      const z = zoneOfTarget[t], zm = s.zoneMix[t];
+      const f = zm ? lerp(s.focus[zm.from], s.focus[zm.to], zm.p) : (z ? s.focus[z] : 1);
+      const v = String((s.opacity[t] * f).toFixed(3));
       if (cache["op:" + t] === v) continue;
       cache["op:" + t] = v;
       for (const n of targetNodes[t]) n.style.opacity = v;
@@ -1467,11 +1540,21 @@ body.dev #clickMarker { display: block; }
     for (const id in textNodes) setIf("txt:" + id, textNodes[id], "textContent", s.texts[id] || "");
     for (const id in drawNodes) setStyle("draw:" + id, drawNodes[id], "strokeDashoffset", String((1 - (s.draws[id] || 0)).toFixed(4)));
     for (const t of targets) {
-      const m = s.moves[t] || { x: 0, y: 0 };
-      const v = `translate(${m.x.toFixed(2)} ${m.y.toFixed(2)})`;
+      const m = s.moves[t] || { x: 0, y: 0, s: 1 };
+      const sc = m.s ?? 1;
+      const v = `translate(${m.x.toFixed(2)} ${m.y.toFixed(2)})` + (sc === 1 ? "" : ` scale(${sc.toFixed(4)})`) + `|${s.camera.scale.toFixed(4)}`;
       if (cache["mv:" + t] === v) continue;
       cache["mv:" + t] = v;
-      if (m.x !== 0 || m.y !== 0 || cache["mvset:" + t]) { cache["mvset:" + t] = true; for (const n of targetNodes[t]) n.setAttribute("transform", v); }
+      if (m.x !== 0 || m.y !== 0 || sc !== 1 || cache["mvset:" + t]) {
+        cache["mvset:" + t] = true;
+        for (const n of targetNodes[t]) {
+          /* Skalierung um data-origin; --cam-scale mitskalieren, damit die Linienstärke gleich bleibt */
+          const o = (n.getAttribute("data-origin") || "0 0").split(" ").map(Number);
+          n.setAttribute("transform", `translate(${m.x.toFixed(2)} ${m.y.toFixed(2)})` +
+            (sc === 1 ? "" : ` translate(${o[0]} ${o[1]}) scale(${sc.toFixed(4)}) translate(${-o[0]} ${-o[1]})`));
+          if (n.hasAttribute("data-origin")) n.style.setProperty("--cam-scale", (s.camera.scale * sc).toFixed(4));
+        }
+      }
     }
     setStyle("op:title", el.title, "opacity", String(s.opacity.title.toFixed(3)));
     setStyle("op:text", el.text, "opacity", String(s.opacity.text.toFixed(3)));
