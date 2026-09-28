@@ -32,11 +32,11 @@ Alle Zeiten stehen zentral in `timing` in `timeline.js`.
 
 **Spur.** Die Timeline startet komplett grau. Ein weißes Quadrat (16 × 16 px) fährt auf den originalen Bézierkurven aus `assets/47829.svg` und hinterlässt eine orange Spur, die immer genau bis zu seiner Mitte reicht. Dafür ersetzt ein eigener SVG-Pfad mit identischer Geometrie die vier Linien-Exporte. Jeder der sechs Pfeile bekommt beim Start eine orange Kopie, die eingeblendet wird, sobald das Quadrat ihn passiert. Das Quadrat dreht sich tangential zur Fahrtrichtung und liegt beim Halt deckungsgleich auf dem Stationspunkt.
 
-**Fahrt.** Konstante Durchschnittsgeschwindigkeit `speed: 150` px/s mit weichem Anfahren und Abbremsen je Strecke (`cubic-bezier(0.42, 0, 0.58, 1)`). Die Überleitung von der oberen zur unteren Zeile (`hashcash` → `bmoney`) hat eine feste Dauer von `transfer: 4768` ms.
+**Fahrt.** Konstante Durchschnittsgeschwindigkeit `speed: 75` px/s mit weichem Anfahren und Abbremsen je Strecke (`cubic-bezier(0.42, 0, 0.58, 1)`). Die Überleitung von der oberen zur unteren Zeile (`hashcash` → `bmoney`) hat eine feste Dauer von `transfer: 9536` ms.
 
-**Station.** 300 ms Halt, dann vier Herzschlag-Pulse in 2.400 ms (Weiß → Orange → Weiß). Nach der Abfahrt färbt sich der Stationspunkt in 240 ms orange (`settle`).
+**Station.** 600 ms Halt, dann vier Herzschlag-Pulse in 4.800 ms: Jeder Schlag ist 0,7-mal so lang wie der vorige (Weiß → Orange → Weiß; `pulse`, `beats`, `beatRatio`). Nach der Abfahrt färbt sich der Stationspunkt in 480 ms orange (`settle`). Gesetzte Piktogramme blenden danach in 4.000 ms ein (`reveal`).
 
-**Loop-Ende.** Nach der Ausfahrt bleibt das fertige Bild 4 s stehen (`rest`), blendet in 2 s zurück auf Grau bzw. Weiß (`fade`), nach 1,5 s leerer Timeline (`idle`) fährt das Quadrat neu herein. Loop-Dauer rund **49,8 s**.
+**Loop-Ende.** Nach der Ausfahrt bleibt das fertige Bild 8 s stehen (`rest`), blendet in 4 s zurück auf Grau bzw. Weiß (`fade`), nach 3 s leerer Timeline (`idle`) fährt das Quadrat neu herein. Loop-Dauer rund **100 s** (85 s Fahrt, 15 s Loop-Ende).
 
 `window.timeline` stellt `dots`, `traveler`, `ready`, `timing`, `duration`, `travelEnd`, `segments` und die Stopps bereit; `pause()`, `play()` und `seek(milliseconds)` erlauben die gezielte Vorschau.
 

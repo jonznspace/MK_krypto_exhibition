@@ -18,7 +18,7 @@
     settle: 480, reveal: 4000, rest: 8000, fade: 4000, idle: 3000,
   });
   // Test only: plays the whole loop this many times faster. Set back to 1.
-  const playbackRate = 3;
+  const playbackRate = 1;
   let duration = 0;
   let travelEnd = 0;
   let stops = [];
