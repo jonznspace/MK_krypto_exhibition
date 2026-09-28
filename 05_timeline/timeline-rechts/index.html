@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=1920, initial-scale=1">
   <title>Krypto, was? — Timeline rechte Wand</title>
-  <link rel="stylesheet" href="../00_design-system/tokens/tokens.css">
+  <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
   <link rel="stylesheet" href="timeline.css">
   <script src="timeline.js" defer></script>
 </head>
@@ -17,12 +17,16 @@
       <img class="artwork artwork--turns" src="assets/ffcb5.svg" alt="" data-node-id="1357:13657">
       <img class="artwork artwork--line-bottom-start" src="assets/1ede7.svg" alt="" data-node-id="1357:13612">
       <img class="artwork artwork--line-bottom-end" src="assets/03da8.svg" alt="" data-node-id="1357:13660">
-      <img class="artwork artwork--arrow-top-end" src="assets/744b9.svg" alt="" data-node-id="1357:13755">
-      <img class="artwork artwork--arrow-bottom-end" src="assets/d9ea7.svg" alt="" data-node-id="1357:13771">
-      <img class="artwork artwork--arrow-top-start" src="assets/d9ea7.svg" alt="" data-node-id="1357:13768">
-      <img class="artwork artwork--arrow-middle-end" src="assets/6193e.svg" alt="" data-node-id="1357:13756">
-      <img class="artwork artwork--arrow-middle-start" src="assets/e77db.svg" alt="" data-node-id="1357:13759">
-      <img class="artwork artwork--arrow-bottom-start" src="assets/744b9.svg" alt="" data-node-id="1357:13765">
+      <svg class="timeline__trail" id="timeline-trail" fill="none">
+        <path class="timeline__trail-base"/>
+        <path class="timeline__trail-progress"/>
+      </svg>
+      <img class="artwork artwork--arrow-top-end" src="assets/744b9.svg" data-trail-src="assets/d9ea7.svg" alt="" data-node-id="1357:13755">
+      <img class="artwork artwork--arrow-bottom-end" src="assets/744b9.svg" data-trail-src="assets/d9ea7.svg" alt="" data-node-id="1357:13771">
+      <img class="artwork artwork--arrow-top-start" src="assets/744b9.svg" data-trail-src="assets/d9ea7.svg" alt="" data-node-id="1357:13768">
+      <img class="artwork artwork--arrow-middle-end" src="assets/6193e.svg" data-trail-src="assets/d9ea7.svg" alt="" data-node-id="1357:13756">
+      <img class="artwork artwork--arrow-middle-start" src="assets/e77db.svg" data-trail-src="assets/d9ea7.svg" alt="" data-node-id="1357:13759">
+      <img class="artwork artwork--arrow-bottom-start" src="assets/744b9.svg" data-trail-src="assets/d9ea7.svg" alt="" data-node-id="1357:13765">
     </div>
 
     <h1 id="timeline-title" class="timeline__title" data-node-id="1357:13370">Ausgewählte   Ereignisse   der   Krypto-Entwicklung</h1>
@@ -38,6 +42,7 @@
           <h2>Altcoins, Silk Road, Mt. Gox</h2>
           <p>Zwischen Spekulation, Schwarzmarkt und Börsencrash</p>
         </div>
+        <svg class="event__icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><path d="M7 8l4 4 3-2 5 5"/><path d="M15 15h4v-4"/></svg>
       </li>
       <li class="event event--ethereum" data-event="ethereum" data-node-id="1357:13542">
         <div class="event__meta">
@@ -71,6 +76,7 @@
           <h2>China: Kryptoverbot und e-CNY</h2>
           <p>Kryptogeschäftsverbot, staatliches Digitalgeld</p>
         </div>
+        <svg class="event__icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>
       </li>
       <li class="event event--crime" data-event="crime" data-node-id="1357:13624">
         <div class="event__meta">
@@ -93,6 +99,7 @@
           <h2>Bitcoin-ETFs, MiCA (EU), GENIUS Act (US)</h2>
           <p>Krypto rückt ins Finanzsystem</p>
         </div>
+        <svg class="event__icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v17"/><path d="M7 20h10"/><path d="M6 6l6-1 6 1"/><path d="M9 12L6 6l-3 6a3 3 0 0 0 6 0z"/><path d="M21 12l-3-6-3 6a3 3 0 0 0 6 0z"/></svg>
       </li>
       <li class="event event--outlook" data-event="outlook" data-node-id="1357:13646">
         <div class="event__meta">
@@ -104,8 +111,12 @@
           <h2>Stablecoins und Digitalwährungen</h2>
           <p>Wer kontrolliert digitales Geld und die Zahlungswege?</p>
         </div>
+        <svg class="event__icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M10.3 10.3a1.8 1.8 0 1 1 2.6 1.6c-.6.3-.9.8-.9 1.4v.3"/><circle cx="12" cy="15.3" r="0.6" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12" r="0.6" fill="currentColor" stroke="none"/><circle cx="17.5" cy="12" r="0.6" fill="currentColor" stroke="none"/></svg>
       </li>
     </ol>
+    <div class="timeline__motion" aria-hidden="true">
+      <span class="timeline__dot timeline__traveler" id="timeline-traveler"></span>
+    </div>
   </main>
 </body>
 </html>
