@@ -1,0 +1,464 @@
+/* =========================================================================
+   Station 4 — Die Enigma
+  Immersiver Screen-Kontext, responsiv von Kiosk bis Mobile.
+   Erste optische Umsetzung der Figma-Vorlagen (figmavorlagen/). Funktionen folgen.
+   Kein border-radius bei UI-Elementen (radius/*-Tokens = 0) — Ausnahme sind die
+   runden Enigma-Tasten, die bewusst ein physisches Tastenfeld nachbilden.
+   DM Mono immer uppercase. Buttons im Label-Textstyle (font-size/label).
+   ========================================================================= */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  background: #000;
+  font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
+  color: var(--immersive-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#scaler {
+  min-height: 100dvh;
+  background: #000;
+}
+
+/* Fluid station shell shared by start and interactive screens. */
+#frame {
+  width: 100%; min-height: 100dvh;
+  background: var(--immersive-bg);
+  position: relative;
+  overflow-x: clip;
+}
+
+.screen { min-height: 100dvh; }
+.screen.hidden { display: none; }
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ---------- gemeinsame Textbausteine ---------- */
+.eyebrow {
+  display: block;
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
+}
+.title {
+  font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
+  text-transform: uppercase; letter-spacing: -.01em; word-spacing: .24em; line-height: .92;
+}
+.title-word { display: inline-block; max-width: 100%; margin-right: .16em; overflow-wrap: anywhere; }
+.title--hero { width: 100%; max-width: 100%; font-size: 108px; margin-top: 18px; white-space: normal; }
+.title--hero.title--medium { font-size: 88px; }
+.title--hero.title--long { font-size: 68px; }
+.title--compact { font-size: 68px; margin-top: 10px; }
+
+/* =========================================================================
+   Startbildschirm
+   ========================================================================= */
+.screen-start {
+  position: relative;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 72px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#frame > .station-language-switch {
+  top: clamp(40px, 5vw, 88px);
+  right: clamp(24px, 4vw, 72px);
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+#frame > .station-language-switch .station-language-switch__button {
+  min-width: 48px;
+  min-height: 32px;
+  padding: 0 14px;
+  font-family: var(--font-family-dm-mono);
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+
+.station-marker {
+  display: inline-flex; align-items: stretch;
+  position: relative; z-index: 2;
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
+}
+.station-marker__station,
+.station-marker__topic { display: flex; align-items: center; height: 32px; padding: 0 14px; }
+.station-marker__station { background: #ed8003; color: var(--color-neutral-850); }
+.station-marker__topic { background: var(--color-neutral-850); }
+
+.start-copy {
+  flex: 1; min-height: 0;
+  position: relative; z-index: 2;
+  margin-top: clamp(72px, 12vh, 130px);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-text {
+  width: 820px; max-width: 100%; max-height: none;
+  flex: 1; min-height: 0;
+  margin-top: 32px; padding-right: 30px;
+  display: flex; flex-direction: column; gap: 20px;
+  overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--immersive-accent) color-mix(in srgb, var(--immersive-body) 18%, transparent);
+  scrollbar-gutter: stable;
+}
+.hero-text::-webkit-scrollbar { width: 8px; }
+.hero-text::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--immersive-body) 18%, transparent);
+}
+.hero-text::-webkit-scrollbar-thumb {
+  background: var(--immersive-accent);
+  border: 2px solid var(--immersive-bg);
+}
+.hero-text:focus-visible { outline: 1px solid var(--immersive-accent); outline-offset: 8px; }
+.hero-text p { font-size: 24px; line-height: 1.42; color: var(--immersive-body); max-width: 68ch; }
+
+.start-visual {
+  position: absolute;
+  right: -100px; top: -20px; bottom: 0;
+  width: 1180px;
+  display: flex; align-items: flex-end; justify-content: flex-end;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .28;
+}
+.enigma-img { width: 100%; height: auto; max-height: 1020px; object-fit: contain; object-position: bottom right; }
+
+.cta {
+  position: absolute; right: clamp(24px, 4vw, 72px); bottom: clamp(40px, 5vw, 80px); z-index: 3;
+  display: flex; align-items: stretch;
+  border: none; background: none;
+}
+.cta-label {
+  display: flex; align-items: center;
+  min-height: 68px; padding: 0 32px;
+  font-family: var(--font-family-panchang), sans-serif; font-size: 22px; font-weight: 700; letter-spacing: .02em;
+  text-transform: uppercase;
+  background: var(--color-neutral-800); color: var(--immersive-ink);
+  transition: background var(--duration-1) var(--ease-standard);
+}
+.cta-icon {
+  display: grid; place-items: center;
+  width: 68px; height: 68px;
+  background: var(--immersive-focus); color: var(--immersive-ink);
+}
+.cta-icon img { width: 40px; height: 40px; filter: brightness(0) invert(1); }
+.cta:hover .cta-label { background: var(--color-neutral-700); }
+.cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }
+
+/* =========================================================================
+   Actionbereich
+   ========================================================================= */
+.screen-action {
+  position: relative;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.screen-action::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("img/eknigma01.png") right center / auto 1240px no-repeat;
+  opacity: .28; pointer-events: none;
+}
+
+.action-hdr { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; }
+
+.close-btn {
+  width: 80px; height: 80px; flex: none;
+  display: grid; place-items: center;
+  font-size: 32px; font-weight: 300; color: var(--immersive-ink);
+  background: var(--color-neutral-800); border: none;
+  transition: border-color var(--duration-1) var(--ease-standard);
+}
+.close-btn:hover { border-color: var(--immersive-accent); }
+.close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
+
+/* ---------- Grid ----------
+  Spalten: Beschriftung (250px) | Bühne (700px) | Ausgabe/Eingabe-Boxen (220px) | Freiraum
+   Zeilen: Walzen / Anzeige / Eingabe. Divider trennt Bühne von der Seitenspalte. */
+.action-grid {
+  position: relative; z-index: 1;
+  flex: 1; min-height: 0; margin-top: clamp(56px, 10vh, 108px);
+  display: grid;
+  grid-template-columns: 240px minmax(580px, 700px) 250px minmax(300px, 1fr);
+  grid-template-rows: 210px 220px 250px;
+  column-gap: 32px; row-gap: 16px;
+}
+.action-grid::before {
+  content: ""; position: absolute; top: 0; bottom: 0;
+  left: 240px;
+  width: 2px;
+  background:
+    linear-gradient(var(--immersive-body), var(--immersive-body)) 0 0 / 2px 210px no-repeat,
+    linear-gradient(var(--immersive-body), var(--immersive-body)) 0 226px / 2px 220px no-repeat,
+    linear-gradient(var(--immersive-body), var(--immersive-body)) 0 462px / 2px 250px no-repeat;
+}
+.connector {
+  position: absolute; width: 34px; height: 36px;
+  border-left: 1px solid var(--immersive-accent);
+  pointer-events: none;
+}
+.connector::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 34px; height: 1px; background: var(--immersive-accent);
+}
+.connector--output { left: 972px; top: 276px; }
+.connector--input { left: 972px; top: 374px; }
+
+.row-label {
+  grid-column: 1; align-self: center;
+  padding-right: 20px;
+  font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.35;
+  letter-spacing: .1em; text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted); text-align: right;
+}
+.row-content { grid-column: 2; align-self: center; min-width: 0; }
+#inputKeyboard { margin-top: 28px; }
+.row-note {
+  grid-column: 3; align-self: center; margin: 0;
+  font-family: var(--font-family-dm-mono); font-size: 14px; line-height: 1.5;
+  letter-spacing: .08em; text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted);
+}
+.row-side { align-self: center; display: flex; flex-direction: column; gap: 18px; }
+
+/* ---------- Walzen ---------- */
+.rotors { display: flex; justify-content: center; gap: 24px; }
+.rotor { width: 144px; height: 176px; padding: 18px 16px 16px; border: 1px solid var(--layer-border); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.rotor-lbl {
+  font-family: var(--font-family-dm-mono); font-size: 14px; letter-spacing: .14em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
+}
+.rotor-box {
+  width: 112px; height: 112px;
+  display: grid; place-items: center;
+  border: 1px solid var(--layer-border);
+  font-family: var(--font-family-dm-mono); font-size: 34px; font-weight: 500;
+  color: var(--immersive-ink);
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transform-origin: center center;
+}
+
+.rotor-roll {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rotor-digit {
+  flex: 0 0 100%;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.rotor-box.spin {
+  animation: rotor-flash 360ms linear;
+}
+
+.rotor-box.spin .rotor-roll {
+  animation: rotor-slot 360ms cubic-bezier(.22, .7, .2, 1);
+}
+
+@keyframes rotor-slot {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes rotor-flash {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.06);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+/* ---------- Tastenfelder ---------- */
+.keyboard { display: flex; flex-direction: column; gap: 14px; }
+.key-row { display: flex; gap: 14px; }
+.key-row--offset { margin-left: 40px; }
+.key-row--space { margin-top: 4px; justify-content: center; }
+
+.key {
+  width: 62px; height: 62px; flex: none;
+  border-radius: 50%; /* Ausnahme: physisches Rundtasten-Layout der Enigma */
+  border: none;
+  display: grid; place-items: center;
+  font-family: var(--font-family-dm-mono); font-size: 20px; font-weight: 500;
+  text-transform: var(--text-transform-dm-mono);
+  transition: background var(--duration-1) var(--ease-standard),
+              color var(--duration-1) var(--ease-standard);
+}
+
+.keyboard--lamp .key { background: var(--color-neutral-800); color: var(--immersive-muted); }
+.keyboard--lamp .key.key--lit { background: var(--color-primary-200); color: var(--color-neutral-900); }
+
+.keyboard--input .key { background: var(--color-primary-50); color: var(--color-neutral-900); }
+.keyboard--input .key.key--pressed { background: var(--immersive-accent); color: var(--immersive-ink); }
+.keyboard--input .key--space {
+  width: 286px;
+  border-radius: 0;
+  height: 54px;
+  font-size: 15px;
+  letter-spacing: .14em;
+}
+
+/* ---------- Ein-/Ausgabe-Boxen ---------- */
+.io-box {
+  border: 1px solid var(--immersive-body);
+  height: 64px; padding: 0 18px;
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  min-width: 180px;
+}
+.io-lbl {
+  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .14em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+}
+.io-val {
+  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .1em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-ink);
+  flex: 1;
+  min-width: 0;
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color var(--duration-1) var(--ease-standard);
+}
+.io-val:hover,
+.io-val:focus-visible {
+  scrollbar-color: color-mix(in srgb, var(--immersive-body) 65%, transparent) transparent;
+}
+.io-val::-webkit-scrollbar { height: 4px; }
+.io-val::-webkit-scrollbar-track { background: transparent; }
+.io-val::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+}
+.io-val:hover::-webkit-scrollbar-thumb,
+.io-val:focus-visible::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--immersive-body) 65%, transparent);
+}
+
+.reset-btn {
+  min-height: 64px; min-width: 180px;
+  padding: 14px 20px;
+  background: var(--color-neutral-800); color: var(--immersive-ink);
+  border: none;
+  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .08em;
+  text-transform: var(--text-transform-dm-mono);
+  transition: background var(--duration-1) var(--ease-standard);
+}
+.reset-btn:hover { background: var(--color-neutral-700); }
+
+/* Ausgabe-Box (Zeile 2) sitzt direkt in Spalte 3, neben der Vertiefungskarte */
+.action-grid > .io-box { grid-column: 3; grid-row: 2; align-self: start; }
+/* Eingabe-Box + Zurücksetzen-Button (Zeile 3) */
+.row-side { grid-column: 3; grid-row: 3; align-self: start; }
+
+@media (max-width: 1600px) {
+  .title--hero { font-size: clamp(64px, 7vw, 108px); white-space: normal; }
+  .start-visual { width: 65vw; opacity: .28; }
+
+  .action-grid {
+    grid-template-columns: 190px minmax(580px, 1fr) 220px;
+  }
+  .action-grid::before { left: 190px; }
+  .connector { display: none; }
+}
+
+@media (min-width: 1101px) and (max-height: 900px) {
+  .screen-action { padding: 32px 40px; }
+  .action-grid {
+    margin-top: 24px;
+    grid-template-columns: 190px minmax(580px, 700px) 220px minmax(0, 1fr);
+    grid-template-rows: 176px 214px 242px;
+    column-gap: 24px;
+    row-gap: 12px;
+  }
+  .action-grid::before { display: none; }
+}
+
+@media (max-width: 1100px) {
+  .screen-start { padding-bottom: 48px; }
+  .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
+  .hero-text { width: 100%; max-height: none; padding-right: 0; overflow-y: visible; scrollbar-gutter: auto; }
+  .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -40px 0 auto; }
+  .cta { position: relative; inset: auto; align-self: flex-end; margin-top: -24px; }
+
+  .screen-action { overflow: hidden; }
+  .action-grid {
+    grid-template-columns: 150px minmax(0, 1fr) 200px;
+    grid-template-rows: repeat(4, auto);
+    margin-top: 56px;
+  }
+  .action-grid::before { display: none; }
+  .row-content { overflow-x: auto; padding-block: 4px 12px; }
+  .rotors { justify-content: flex-start; }
+}
+
+@media (max-width: 760px) {
+  .title--hero { font-size: clamp(42px, 14vw, 72px); }
+  .title--compact { font-size: clamp(38px, 11vw, 56px); }
+  .title-word { display: block; margin: 0 0 .12em; }
+  .start-copy { width: 100%; margin-top: 48px; }
+  .hero-text p { font-size: 18px; }
+  .start-visual { width: calc(100% + 40px); margin-right: -16px; margin-top: -20px; opacity: .28; }
+  .cta { width: 100%; margin-top: 8px; }
+  .cta-label { flex: 1; min-height: 60px; padding-inline: 20px; font-size: 18px; }
+  .cta-icon { width: 60px; height: 60px; }
+
+  .close-btn { width: 60px; height: 60px; }
+  .action-grid { display: flex; flex-direction: column; gap: 18px; margin-top: 44px; }
+  .row-label { align-self: stretch; padding: 0; text-align: left; color: var(--immersive-body); }
+  .row-note { order: 2; }
+  #rotorRowLabel { order: 0; }
+  #rotorList { order: 1; }
+  #outputRowLabel { order: 3; }
+  #lampKeyboard { order: 4; }
+  .action-grid > .io-box { order: 5; align-self: stretch; }
+  #inputRowLabel { order: 6; }
+  #inputKeyboard { order: 7; }
+  #inputKeyboard { margin-top: 12px; }
+  .row-side { order: 8; align-self: stretch; }
+  .row-content { width: 100%; }
+  .keyboard { width: max-content; }
+  .rotor { width: 124px; height: 156px; }
+  .rotor-box { width: 96px; height: 96px; }
+  .key { width: 54px; height: 54px; }
+  .key-row { gap: 10px; }
+  .key-row--offset { margin-left: 32px; }
+}
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

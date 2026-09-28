@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       english: {
         museumLabel: ['Left Pedestal', 'United States of America', 'BitChimney with Antminer S19j Pro hashboard', '2024 onward'],
         museumDetails: ['Enclosure design: Altair Technology, United States of America (Creative Commons, noncommercial)', 'Lender: “WantClue” (pseudonym)'],
-        title: 'A heater that computes.',
+        title: 'BitChimney with Antminer S19j Pro hashboard',
+        storyTitle: 'A heater that computes.',
         body: 'Inside the BitChimney is a single computing board, known as a hashboard, taken from an industrial Bitcoin miner, the S19j Pro. In the original miner, three of these boards sit side by side in one enclosure; industrial mining facilities house thousands of such machines. When these devices are retired, their individual components are often sold, giving them a second life in devices such as the BitChimney. Almost all the electricity consumed by the miner is converted into heat, which flows out through the “chimney” at the top. A conventional fan heater consuming the same 650 watts would also have heated the room, just not mining bitcoin at the same time. Whether this is an ideal use of electricity or a clever justification for consuming energy remains a subject of debate.'
       }
     },

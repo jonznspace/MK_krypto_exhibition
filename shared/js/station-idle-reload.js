@@ -6,7 +6,7 @@
  * visitor can dismiss it with any interaction.
  */
 (function () {
-  const IDLE_TIMEOUT_MS = 30000;
+  const IDLE_TIMEOUT_MS = 60000;
   const COUNTDOWN_SECONDS = 15;
   const OVERLAY_ID = 'stationIdleReloadOverlay';
   const ACTIVITY_EVENTS = ['pointerdown', 'pointermove', 'touchstart', 'mousemove', 'wheel', 'keydown', 'scroll'];
