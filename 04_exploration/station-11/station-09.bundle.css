@@ -59,10 +59,11 @@ html, body { min-height: 100%; }
 @media (max-width: 1100px) { .start-copy { width: 100%; max-width: 100%; margin-top: 64px; } }
 
 /* --- station-08 overrides --- */
-.start-visual { right: -40px; opacity: 0.9 }
+.start-visual { right: -40px; opacity: 0.24 }
 
 /* --- station-09 overrides (same as 08 for now) --- */
-.start-visual { right: -40px; opacity: 0.9 }
+.start-visual { right: -500px; opacity: 0.24 }
+.station-image { transform: translateY(-30px); }
 #startTitle { font-size: 64px; }
 
 @media (max-width: 760px) { .title--hero { font-size: clamp(42px, 14vw, 72px); } }

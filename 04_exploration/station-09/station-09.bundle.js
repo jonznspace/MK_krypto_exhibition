@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Simple content binding helpers for the template
   const bind = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
   // Default demo content (override in station-specific script)
-  bind('startEyebrow',' ');
   bind('startTitle','Titel der Station 08');
   const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Ein einführender Text für Station 08. Ersetze diesen Inhalt mit station-spezifischem JS.</p>';
   // basic UI: toggle screens (no CTA button for this station)
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         'Startscreen, Ausprobieren-Ansicht und Schließen sind bereits fertig verdrahtet.',
         'Hier kannst du jetzt die Inhalte und Interaktionen der nächsten Station einbauen.'
       ],
-      image: { src: '../station-04/img/eknigma02.png', alt: '' },
       ctaLabel: 'Ausprobieren'
     },
     action: {
@@ -99,15 +97,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
     renderParagraphs('startIntro', content.start.intro);
 
-    const startImage = $('startImage');
-    startImage.src = content.start.image.src;
-    startImage.alt = content.start.image.alt;
-
-    setText('actionEyebrow', content.action.eyebrow);
     setTitle('actionTitle', content.action.title);
     setText('actionDescription', content.action.description);
     $('btnClose').setAttribute('aria-label', content.action.closeLabel);
@@ -124,8 +116,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 /* --- station-08 + station-09 overrides --- */
 document.addEventListener('DOMContentLoaded',()=>{
   const set = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
-  set('startEyebrow',' ');
   set('startTitle','Neue Entwicklungen, bekannte Herausforderungen');
-  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Papiergeld war Menschen einmal genauso ungewohnt und suspekt, wie digitale Token es heute für viele sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten, war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?</p><p>Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) behaupten, als Zahlungsmittel oder Wertträger zu funktionieren. Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern.</p>';
-  const img=document.getElementById('startImage'); if(img) img.src='../station-04/img/eknigma02.png';
+  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Papiergeld war Menschen einmal genauso ungewohnt und suspekt, wie digitale Token es heute für viele sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten, war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?</p><p>Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) werden mit dem Anspruch angeboten, als Zahlungsmittel oder Wertträger zu dienen.</p><p>Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern</p>';
 });

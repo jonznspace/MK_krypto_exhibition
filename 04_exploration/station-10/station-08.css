@@ -1,8 +1,0 @@
-/* Station-08 specific overrides. Keep minimal — prefer tokens and base.css.
-   Use this file for station-08 visual adjustments only.
-*/
-
-/* Example: adjust the start image source size or offset for this station */
-.start-visual { right: -40px; opacity: 0.9 }
-
-/* Add any station-specific spacing tweaks here */

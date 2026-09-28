@@ -7,10 +7,10 @@
         eyebrow: 'Geheime Botschaften in der Antike',
         title: 'Verschlüsseln & versiegeln',
         intro: [
-          'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“. Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
+          'Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Diese Frage stellten sich Menschen wohl schon immer. Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel aus Bienenwachs zu „versiegeln“.  Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
           'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.',
           'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.',
-          'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.'
+          'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitale Bezahlung und digitales Geld aufbauen wird.'
         ],
         image: { src: 'dither-output.png', alt: '' },
         ctaLabel: 'Ausprobieren'
@@ -31,12 +31,12 @@
       meta: { title: 'Station 1 · Cryptography', ariaLabel: 'Station 1 – Cryptography' },
       start: {
         eyebrow: 'Geheime Botschaften in der Antike',
-        title: 'Verschlüsseln & versiegeln',
+        title: 'Encryption and Seals',
         intro: [
-          'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“. Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
-          'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.',
-          'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.',
-          'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.'
+          'How can messages be sent so that others cannot understand them? People have probably always asked this question. In antiquity, one solution was to secure a message with a beeswax seal. A broken seal indicated that the message had been read. Other solutions were also developed: texts, or the letters within them, were altered so that only the intended recipients could read them.',
+          'The scytale is a documented example of this approach from ancient Sparta. A strip of leather was wound around a wooden rod in a spiral, and the message was written across the turns of the strip. Once unwound, the message became unreadable. Only by wrapping the strip around a rod of the same diameter could the letters be arranged in the correct order again.',
+          'The so-called Caesar cipher, whose invention is attributed to Julius Caesar, works even more simply: each letter is shifted to a fixed number of places in the alphabet. For example, A becomes D, and B becomes E. Anyone who knows the “key”, which means the number of places to shift, can decode the message.',
+          'Both methods are easy to crack. Yet they demonstrate a principle that still applies today: information can be transformed so that only those who know how to decode it can understand it. This principle is called cryptography. It is the first of three foundations on which digital payments and digital money would later be built.'
         ],
         image: { src: 'dither-output.png', alt: '' },
         ctaLabel: 'Try it out'
@@ -419,7 +419,6 @@
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
     renderParagraphs('startIntro', content.start.intro);
     setText('tryLabel', content.start.ctaLabel);
@@ -428,7 +427,6 @@
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
 
-    setText('actionEyebrow', content.action.eyebrow);
     setTitle('actionTitle', content.action.title);
     $('skyIn').value = content.action.skytaleDefaultText;
     $('skyCols').value = String(content.action.skytaleDefaultCols);

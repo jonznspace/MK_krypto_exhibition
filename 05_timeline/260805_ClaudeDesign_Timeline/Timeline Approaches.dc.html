@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#141417;font-family:Archivo,system-ui,sans-serif}
+a{color:#ED8003}a:hover{color:#FFA53D}
+.dv-turn{padding:44px 48px 36px;scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:12px;margin:0 0 10px}
+.dv-tid{font:600 11px 'IBM Plex Mono',monospace;padding:4px 9px;background:#fff;color:#000;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 15px/1.2 Archivo,sans-serif;color:#fff}
+.dv-sub{margin:0 0 28px;font:400 13.5px/1.55 Archivo,sans-serif;color:#8A8F98;max-width:1000px}
+.dv-opts{display:flex;flex-wrap:wrap;gap:64px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}
+.dv-oid{font:600 11px 'IBM Plex Mono',monospace;padding:4px 9px;background:rgba(255,255,255,.14);color:#fff;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:10px;font:400 13.5px/1.5 Archivo,sans-serif;color:#9BA1AA;max-width:1400px}
+.dv-oname{font:600 14px Archivo,sans-serif;color:#fff;white-space:nowrap}
+.dv-card{max-width:100%;background:#000;border:1px solid #2C2C31;border-radius:8px;overflow:hidden}
+.dv-opt:target .dv-oid{background:#ED8003;color:#000}
+.dv-next{margin:28px 0 0;font:13px/1.5 Archivo,sans-serif;color:#8A8F98}
+</style>
+</helmet>
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Refined matrix &mdash; <a class="dv-oid" href="#2c">2c</a> with more room to breathe</span></div>
+<p class="dv-sub">Epoch numbers dropped, header compressed (&minus;40px), event titles 22&rarr;19px. The freed space goes to the rows (270&rarr;290px) &mdash; the crowded corner (Vernetzung &times; 20. Jahrhundert) now has clear air between all three levels.</p>
+<div class="dv-opts">
+<div class="dv-opt" id="3a">
+<div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a><span class="dv-oname">Matrix refined</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="3a Matrix refined">
+<sc-for list="{{zones3a}}" as="z" hint-placeholder-count="3">
+<div style="position:absolute;left:{{z.x}}px;top:40px;font:800 23px Archivo,sans-serif;font-stretch:112%;color:#fff;letter-spacing:.03em;">{{z.name}}</div>
+<div style="position:absolute;left:{{z.x}}px;top:76px;font:400 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.06em;white-space:nowrap;">{{z.meta}}<span style="color:#ED8003;">&nbsp;&nbsp;{{z.fs}}</span></div>
+</sc-for>
+<sc-for list="{{rowLabels3a}}" as="rl" hint-placeholder-count="3">
+<div style="position:absolute;left:40px;top:{{rl.y}}px;font:500 13px 'IBM Plex Mono',monospace;color:#ED8003;">{{rl.idx}}</div>
+<div style="position:absolute;left:40px;top:{{rl.ny}}px;width:186px;font:800 18px/1.15 Archivo,sans-serif;font-stretch:112%;color:#fff;letter-spacing:.04em;">{{rl.label}}</div>
+</sc-for>
+<sc-for list="{{cellsE3a}}" as="c" hint-placeholder-count="3">
+<div style="position:absolute;left:{{c.x}}px;top:{{c.y}}px;width:{{c.w}}px;height:290px;border:1px dashed #1E1E24;"></div>
+</sc-for>
+<sc-for list="{{cellsF3a}}" as="c" hint-placeholder-count="6">
+<div style="position:absolute;left:{{c.x}}px;top:{{c.y}}px;width:{{c.w}}px;height:290px;background:#0B0B0F;border:1px solid #2A2A2F;"></div>
+<div style="position:absolute;left:{{c.lx}}px;top:{{c.lane}}px;width:{{c.lw}}px;height:2px;background:#3A3F45;"></div>
+</sc-for>
+<sc-for list="{{ranges3a}}" as="r" hint-placeholder-count="2">
+<div style="position:absolute;left:{{r.x}}px;top:{{r.y}}px;width:{{r.w}}px;height:6px;background:#0040FF;border-radius:3px;z-index:2;"></div>
+</sc-for>
+<sc-for list="{{leaders3a}}" as="d" hint-placeholder-count="4">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:2px;height:{{d.h}}px;background:#3A3F45;"></div>
+</sc-for>
+<sc-for list="{{events3a}}" as="e" hint-placeholder-count="5">
+<div style="position:absolute;left:{{e.mx}}px;top:{{e.my}}px;width:12px;height:12px;background:#fff;transform:translate(-50%,-50%);z-index:3;"></div>
+<div style="position:absolute;{{e.st}};z-index:2;">
+<div style="font:500 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.04em;">{{e.date}}</div>
+<div style="font:650 19px/1.15 Archivo,sans-serif;color:#fff;margin:3px 0 5px;text-wrap:pretty;">{{e.title}}</div>
+<div style="font:400 13.5px/1.4 'IBM Plex Mono',monospace;color:#7E858E;letter-spacing:.02em;">{{e.desc}}</div>
+</div>
+</sc-for>
+<sc-for list="{{gapstamps2c}}" as="g" hint-placeholder-count="2">
+<div style="position:absolute;left:{{g.x}}px;top:330px;height:500px;display:flex;align-items:center;justify-content:center;">
+<span style="writing-mode:vertical-rl;font:500 11.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.22em;">{{g.label}}</span>
+</div>
+</sc-for>
+<sc-for list="{{ruler2c}}" as="s" hint-placeholder-count="3">
+<div style="position:absolute;left:{{s.x}}px;top:1044px;width:{{s.w}}px;height:2px;background:#565B63;"></div>
+</sc-for>
+<sc-for list="{{ticks3a}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:{{t.y}}px;width:2px;height:{{t.h}}px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{tickLabels2c}}" as="t" hint-placeholder-count="4">
+<div style="position:absolute;{{t.st}};top:1056px;font:400 12.5px 'IBM Plex Mono',monospace;color:#6F757D;letter-spacing:.04em;white-space:nowrap;">{{t.t}}</div>
+</sc-for>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;left:40px;top:10px;font:400 11.5px 'IBM Plex Mono',monospace;color:#5F656D;letter-spacing:.08em;">GESTRICHELT = NOCH KEINE EREIGNISSE &middot; TEILSTRICH = 25 JAHRE</div>
+</sc-if>
+</div>
+</div>
+</div>
+</div>
+<p class="dv-next">Try next: &bdquo;<a class="dv-oid" href="#3a">3a</a> ultra-wide f&uuml;r die Projektionsfl&auml;che&ldquo; &middot; &bdquo;Zeilen-Nummern links auch entfernen&ldquo; &middot; &bdquo;Export als PNG/PDF&ldquo;</p>
+</section>
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Round 2 — epoch scales &times; sub-timelines, calmer hierarchy, strands clearly separated</span></div>
+<p class="dv-sub">Combines the keepers: named epochs with declared scales (<a class="dv-oid" href="#1a">1a</a>) + sub-timelines at different scales (<a class="dv-oid" href="#1c">1c</a>). Quieter type: orange only on the epoch/wayfinding system, dates and explainers recede into two grays, legend and shape-coding dropped &mdash; the strands are now separated structurally. Blue is out of running text; it survives only as thin duration bars.</p>
+<div class="dv-opts">
+<div class="dv-opt" id="2a">
+<div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a><span class="dv-oname">Zonen &times; B&auml;nder</span><span>Soft separation: a tinted full-width band per strand, epoch zones with scale factor above, one shared 25-year ruler below.</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="2a Zonen x Baender">
+<sc-for list="{{bands2a}}" as="b" hint-placeholder-count="3">
+<sc-if value="{{b.tint}}" hint-placeholder-val="{{false}}"><div style="position:absolute;left:0;top:{{b.y}}px;width:1920px;height:270px;background:#0C0C10;"></div></sc-if>
+<div style="position:absolute;left:0;top:{{b.y}}px;width:1920px;height:1px;background:#26262B;"></div>
+<div style="position:absolute;left:40px;top:{{b.ly}}px;font:800 20px Archivo,sans-serif;font-stretch:116%;color:#fff;letter-spacing:.05em;">{{b.label}}</div>
+</sc-for>
+<div style="position:absolute;left:0;top:986px;width:1920px;height:1px;background:#26262B;"></div>
+<sc-for list="{{zones2a}}" as="z" hint-placeholder-count="3">
+<div style="position:absolute;left:{{z.x}}px;top:74px;display:flex;align-items:baseline;gap:12px;">
+<span style="font:500 14px 'IBM Plex Mono',monospace;color:#ED8003;">{{z.num}}</span>
+<span style="font:800 23px Archivo,sans-serif;font-stretch:112%;color:#fff;letter-spacing:.03em;">{{z.name}}</span>
+</div>
+<div style="position:absolute;left:{{z.x}}px;top:112px;font:400 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.06em;white-space:nowrap;">{{z.meta}}<span style="color:#ED8003;">&nbsp;&nbsp;{{z.fs}}</span></div>
+</sc-for>
+<sc-for list="{{lanes2a}}" as="L" hint-placeholder-count="3">
+<div style="position:absolute;left:40px;top:{{L.y}}px;width:1840px;height:2px;background:#3A3F45;"></div>
+</sc-for>
+<sc-for list="{{ranges2a}}" as="r" hint-placeholder-count="2">
+<div style="position:absolute;left:{{r.x}}px;top:{{r.y}}px;width:{{r.w}}px;height:6px;background:#0040FF;border-radius:3px;z-index:2;"></div>
+</sc-for>
+<sc-for list="{{leaders2a}}" as="d" hint-placeholder-count="3">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:2px;height:{{d.h}}px;background:#3A3F45;"></div>
+</sc-for>
+<sc-for list="{{events2a}}" as="e" hint-placeholder-count="5">
+<div style="position:absolute;left:{{e.mx}}px;top:{{e.my}}px;width:12px;height:12px;background:#fff;transform:translate(-50%,-50%);z-index:3;"></div>
+<div style="position:absolute;{{e.st}};z-index:2;">
+<div style="font:500 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.04em;">{{e.date}}</div>
+<div style="font:650 24px/1.12 Archivo,sans-serif;color:#fff;margin:3px 0 5px;text-wrap:pretty;">{{e.title}}</div>
+<div style="font:400 13.5px/1.4 'IBM Plex Mono',monospace;color:#7E858E;letter-spacing:.02em;">{{e.desc}}</div>
+</div>
+</sc-for>
+<sc-for list="{{glyphs2a}}" as="g" hint-placeholder-count="4">
+<div style="position:absolute;left:{{g.x}}px;top:{{g.y}}px;width:30px;height:26px;background:#000;transform:translate(-50%,-50%);z-index:4;display:flex;gap:6px;align-items:center;justify-content:center;">
+<div style="width:3px;height:22px;background:#7E848C;transform:skewX(-28deg);"></div>
+<div style="width:3px;height:22px;background:#7E848C;transform:skewX(-28deg);"></div>
+</div>
+</sc-for>
+<sc-for list="{{ruler2a}}" as="s" hint-placeholder-count="3">
+<div style="position:absolute;left:{{s.x}}px;top:1006px;width:{{s.w}}px;height:2px;background:#565B63;"></div>
+</sc-for>
+<sc-for list="{{ticks2a}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:{{t.y}}px;width:2px;height:{{t.h}}px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{tickLabels2a}}" as="t" hint-placeholder-count="4">
+<div style="position:absolute;{{t.st}};top:1018px;font:400 12.5px 'IBM Plex Mono',monospace;color:#6F757D;letter-spacing:.04em;white-space:nowrap;">{{t.t}}</div>
+</sc-for>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;left:40px;top:1046px;font:400 11.5px 'IBM Plex Mono',monospace;color:#5F656D;letter-spacing:.08em;">ALLE TEILSTRICHE = 25 JAHRE &middot; // = ZEITSPRUNG &middot; GRAU = KURZERKL&Auml;RUNG</div>
+</sc-if>
+</div>
+</div>
+</div>
+<div class="dv-opt" id="2b">
+<div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a><span class="dv-oname">Epochen-Fenster</span><span>Framed sub-timelines under a quiet true-scale master line. Inside each window the strands are tinted rows &mdash; empty rows show honestly when a strand hasn&rsquo;t started yet.</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="2b Epochen-Fenster">
+<div style="position:absolute;left:130px;top:58px;font:500 12.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.14em;">GESAMTE ZEITSPANNE &middot; MASSSTABSGETREU</div>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;right:130px;top:58px;font:400 12.5px 'IBM Plex Mono',monospace;color:#6F757D;letter-spacing:.08em;">FENSTER UNTEN: AUSSCHNITTE, AUF LESBARKEIT GEDEHNT</div>
+</sc-if>
+<div style="position:absolute;left:130px;top:111px;width:1660px;height:2px;background:#7E848C;"></div>
+<sc-for list="{{mticks2b}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:114px;width:2px;height:{{t.h}}px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{mlabels2b}}" as="m" hint-placeholder-count="6">
+<div style="position:absolute;left:{{m.x}}px;top:136px;transform:translateX(-50%);font:400 12.5px 'IBM Plex Mono',monospace;color:#6F757D;white-space:nowrap;">{{m.label}}</div>
+</sc-for>
+<sc-for list="{{regions2b}}" as="rg" hint-placeholder-count="3">
+<div style="position:absolute;left:{{rg.x}}px;top:94px;width:{{rg.w}}px;height:10px;border-top:2px solid #ED8003;border-left:2px solid #ED8003;border-right:2px solid #ED8003;"></div>
+</sc-for>
+<sc-for list="{{mdots2b}}" as="d" hint-placeholder-count="6">
+<div style="position:absolute;left:{{d.x}}px;top:111px;width:8px;height:8px;background:#fff;border:2px solid #000;border-radius:50%;transform:translate(-50%,-50%);z-index:2;"></div>
+</sc-for>
+<svg style="position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;" viewBox="0 0 1920 1080">
+<sc-for list="{{cones2b}}" as="cn" hint-placeholder-count="3"><polygon points="{{cn.pts}}" fill="rgba(237,128,3,.05)" stroke="#ED8003" stroke-width="1.5" stroke-opacity=".8"></polygon></sc-for>
+</svg>
+<sc-for list="{{wins2b}}" as="w" hint-placeholder-count="3">
+<div style="position:absolute;left:{{w.x}}px;top:200px;width:{{w.w}}px;height:820px;background:#060608;border:1px solid #2A2A2F;"></div>
+<div style="position:absolute;left:{{w.nx}}px;top:222px;display:flex;align-items:baseline;gap:12px;">
+<span style="font:500 12.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.1em;">{{w.num}}</span>
+<span style="font:800 22px Archivo,sans-serif;font-stretch:112%;color:#fff;letter-spacing:.03em;">{{w.name}}</span>
+</div>
+<div style="position:absolute;right:{{w.crx}}px;top:226px;font:400 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.05em;">{{w.meta}}</div>
+</sc-for>
+<sc-if value="{{faktoren}}" hint-placeholder-val="{{true}}">
+<sc-for list="{{wins2b}}" as="w" hint-placeholder-count="3">
+<div style="position:absolute;right:{{w.crx}}px;top:248px;font:500 13px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.05em;">{{w.factor}}</div>
+</sc-for>
+</sc-if>
+<sc-for list="{{rows2b}}" as="rw" hint-placeholder-count="6">
+<sc-if value="{{rw.tint}}" hint-placeholder-val="{{false}}"><div style="position:absolute;left:{{rw.x}}px;top:{{rw.y}}px;width:{{rw.w}}px;height:{{rw.h}}px;background:#0C0C10;"></div></sc-if>
+<div style="position:absolute;left:{{rw.x}}px;top:{{rw.y}}px;width:{{rw.w}}px;height:1px;background:#1F1F24;"></div>
+<div style="position:absolute;left:{{rw.lx}}px;top:{{rw.ty}}px;font:500 11.5px 'IBM Plex Mono',monospace;color:{{rw.lc}};letter-spacing:.14em;">{{rw.label}}</div>
+</sc-for>
+<sc-for list="{{lanes2b}}" as="L" hint-placeholder-count="4">
+<div style="position:absolute;left:{{L.x}}px;top:{{L.y}}px;width:{{L.w}}px;height:1.5px;background:#33383E;"></div>
+</sc-for>
+<sc-for list="{{ranges2b}}" as="r" hint-placeholder-count="2">
+<div style="position:absolute;left:{{r.x}}px;top:{{r.y}}px;width:{{r.w}}px;height:5px;background:#0040FF;border-radius:2.5px;z-index:2;"></div>
+</sc-for>
+<sc-for list="{{leaders2b}}" as="d" hint-placeholder-count="1">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:2px;height:{{d.h}}px;background:#33383E;"></div>
+</sc-for>
+<sc-for list="{{dots2b}}" as="d" hint-placeholder-count="5">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:11px;height:11px;background:#fff;transform:translate(-50%,-50%);z-index:3;"></div>
+</sc-for>
+<sc-for list="{{events2b}}" as="e" hint-placeholder-count="5">
+<div style="position:absolute;{{e.st}};z-index:2;">
+<div style="font:500 12.5px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.04em;">{{e.date}}</div>
+<div style="font:650 19px/1.12 Archivo,sans-serif;color:#fff;margin:2px 0 4px;text-wrap:pretty;">{{e.title}}</div>
+<div style="font:400 13px/1.4 'IBM Plex Mono',monospace;color:#7A818A;letter-spacing:.02em;">{{e.desc}}</div>
+</div>
+</sc-for>
+<sc-for list="{{axTicks2b}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:980px;width:2px;height:{{t.h}}px;background:#33373D;"></div>
+</sc-for>
+<sc-for list="{{axLabels2b}}" as="t" hint-placeholder-count="4">
+<div style="position:absolute;left:{{t.x}}px;top:996px;transform:translateX(-50%);font:400 11.5px 'IBM Plex Mono',monospace;color:#6F757D;white-space:nowrap;">{{t.t}}</div>
+</sc-for>
+</div>
+</div>
+</div>
+<div class="dv-opt" id="2c">
+<div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a><span class="dv-oname">Matrix</span><span>Hardest separation: strand rows &times; epoch columns, every occupied cell framed, empty cells dashed &mdash; the grid itself tells where history happened. Rotated stamps mark the time jumps.</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="2c Matrix">
+<sc-for list="{{zones2c}}" as="z" hint-placeholder-count="3">
+<div style="position:absolute;left:{{z.x}}px;top:64px;display:flex;align-items:baseline;gap:12px;">
+<span style="font:500 14px 'IBM Plex Mono',monospace;color:#ED8003;">{{z.num}}</span>
+<span style="font:800 23px Archivo,sans-serif;font-stretch:112%;color:#fff;letter-spacing:.03em;">{{z.name}}</span>
+</div>
+<div style="position:absolute;left:{{z.x}}px;top:102px;font:400 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.06em;white-space:nowrap;">{{z.meta}}<span style="color:#ED8003;">&nbsp;&nbsp;{{z.fs}}</span></div>
+</sc-for>
+<sc-for list="{{rowLabels2c}}" as="rl" hint-placeholder-count="3">
+<div style="position:absolute;left:40px;top:{{rl.y}}px;font:500 13px 'IBM Plex Mono',monospace;color:#ED8003;">{{rl.idx}}</div>
+<div style="position:absolute;left:40px;top:{{rl.ny}}px;width:186px;font:800 18px/1.15 Archivo,sans-serif;font-stretch:112%;color:#fff;letter-spacing:.04em;">{{rl.label}}</div>
+</sc-for>
+<sc-for list="{{cellsE2c}}" as="c" hint-placeholder-count="3">
+<div style="position:absolute;left:{{c.x}}px;top:{{c.y}}px;width:{{c.w}}px;height:270px;border:1px dashed #1E1E24;"></div>
+</sc-for>
+<sc-for list="{{cellsF2c}}" as="c" hint-placeholder-count="6">
+<div style="position:absolute;left:{{c.x}}px;top:{{c.y}}px;width:{{c.w}}px;height:270px;background:#0B0B0F;border:1px solid #2A2A2F;"></div>
+<div style="position:absolute;left:{{c.lx}}px;top:{{c.lane}}px;width:{{c.lw}}px;height:2px;background:#3A3F45;"></div>
+</sc-for>
+<sc-for list="{{ranges2c}}" as="r" hint-placeholder-count="2">
+<div style="position:absolute;left:{{r.x}}px;top:{{r.y}}px;width:{{r.w}}px;height:6px;background:#0040FF;border-radius:3px;z-index:2;"></div>
+</sc-for>
+<sc-for list="{{leaders2c}}" as="d" hint-placeholder-count="4">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:2px;height:{{d.h}}px;background:#3A3F45;"></div>
+</sc-for>
+<sc-for list="{{events2c}}" as="e" hint-placeholder-count="5">
+<div style="position:absolute;left:{{e.mx}}px;top:{{e.my}}px;width:12px;height:12px;background:#fff;transform:translate(-50%,-50%);z-index:3;"></div>
+<div style="position:absolute;{{e.st}};z-index:2;">
+<div style="font:500 13px 'IBM Plex Mono',monospace;color:#8F959D;letter-spacing:.04em;">{{e.date}}</div>
+<div style="font:650 22px/1.12 Archivo,sans-serif;color:#fff;margin:3px 0 5px;text-wrap:pretty;">{{e.title}}</div>
+<div style="font:400 13.5px/1.4 'IBM Plex Mono',monospace;color:#7E858E;letter-spacing:.02em;">{{e.desc}}</div>
+</div>
+</sc-for>
+<sc-for list="{{gapstamps2c}}" as="g" hint-placeholder-count="2">
+<div style="position:absolute;left:{{g.x}}px;top:340px;height:520px;display:flex;align-items:center;justify-content:center;">
+<span style="writing-mode:vertical-rl;font:500 11.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.22em;">{{g.label}}</span>
+</div>
+</sc-for>
+<sc-for list="{{ruler2c}}" as="s" hint-placeholder-count="3">
+<div style="position:absolute;left:{{s.x}}px;top:1030px;width:{{s.w}}px;height:2px;background:#565B63;"></div>
+</sc-for>
+<sc-for list="{{ticks2c}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:{{t.y}}px;width:2px;height:{{t.h}}px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{tickLabels2c}}" as="t" hint-placeholder-count="4">
+<div style="position:absolute;{{t.st}};top:1042px;font:400 12.5px 'IBM Plex Mono',monospace;color:#6F757D;letter-spacing:.04em;white-space:nowrap;">{{t.t}}</div>
+</sc-for>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;left:1300px;top:1046px;font:400 11.5px 'IBM Plex Mono',monospace;color:#5F656D;letter-spacing:.08em;">GESTRICHELT = NOCH KEINE EREIGNISSE &middot; TEILSTRICH = 25 JAHRE</div>
+</sc-if>
+</div>
+</div>
+</div>
+</div>
+<p class="dv-next">Try next: &bdquo;merge the <a class="dv-oid" href="#2c">2c</a> grid with <a class="dv-oid" href="#2b">2b</a>&rsquo;s master line&ldquo; &middot; &bdquo;event titles bigger&ldquo; &middot; &bdquo;one of these ultra-wide&ldquo;</p>
+</section>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Three approaches: making compressed &amp; stretched time legible</span></div>
+<p class="dv-sub">All frames 1920 × 1080 for beamer projection in a dark room: big type, no hairlines, black stays black (unlit wall). Orange #ED8003 = wayfinding + time apparatus, blue #0040FF = deeper-info layer (short explainers), white = events. The three strands K / R / V are coded by marker shape (square / circle / diamond) so both accent colors stay reserved for their semantic jobs.</p>
+<div class="dv-opts">
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a><span class="dv-oname">Tempo zones</span><span>One continuous axis, three declared scales. Every ruler tick = 25 years — tick density makes compression visible at a glance; orange chips state the factor (×13 / ×6 / ×1), double slashes mark the time jumps.</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="1a Tempo-Zonen">
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;right:44px;top:44px;text-align:right;z-index:5;">
+<div style="font:500 15px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.05em;">JEDER TEILSTRICH = <span style="color:#ED8003;">25 JAHRE</span> — JE DICHTER, DESTO ST&Auml;RKER GERAFFT</div>
+<div style="font:500 13.5px 'IBM Plex Mono',monospace;color:#8A9099;letter-spacing:.05em;margin-top:10px;"><span style="display:inline-block;width:10px;height:10px;background:#ED8003;margin-right:8px;"></span>ORIENTIERUNG<span style="display:inline-block;width:10px;height:10px;background:#0040FF;margin:0 8px 0 26px;"></span>VERTIEFUNG</div>
+</div>
+</sc-if>
+<sc-for list="{{bandsA}}" as="b" hint-placeholder-count="3">
+<div style="position:absolute;left:{{b.x}}px;top:118px;">
+<div style="font:500 13.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.16em;">{{b.num}}</div>
+<div style="font:800 25px Archivo,sans-serif;font-stretch:110%;color:#fff;letter-spacing:.03em;margin-top:5px;">{{b.name}}</div>
+<div style="font:400 15px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.08em;margin-top:7px;">{{b.span}}</div>
+</div>
+</sc-for>
+<sc-if value="{{faktoren}}" hint-placeholder-val="{{true}}">
+<sc-for list="{{bandsA}}" as="b" hint-placeholder-count="3">
+<div style="position:absolute;left:{{b.x}}px;top:930px;border:1.5px solid #ED8003;color:#ED8003;font:500 13px 'IBM Plex Mono',monospace;letter-spacing:.1em;padding:5px 10px 4px;border-radius:3px;">{{b.factor}}</div>
+</sc-for>
+</sc-if>
+<sc-for list="{{lanesA}}" as="L" hint-placeholder-count="3">
+<div style="position:absolute;left:40px;top:{{L.y}}px;width:1840px;height:2px;background:#33383F;"></div>
+<div style="position:absolute;left:40px;top:{{L.ly}}px;font:800 22px Archivo,sans-serif;font-stretch:116%;color:#fff;letter-spacing:.05em;background:#000;padding-right:16px;z-index:2;">{{L.label}}</div>
+</sc-for>
+<sc-for list="{{rangesA}}" as="r" hint-placeholder-count="2">
+<div style="position:absolute;left:{{r.x}}px;top:{{r.y}}px;width:{{r.w}}px;height:6px;background:#0040FF;border-radius:3px;z-index:2;"></div>
+</sc-for>
+<sc-for list="{{dropsA}}" as="d" hint-placeholder-count="1">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:2px;height:{{d.h}}px;background:#4A4F57;"></div>
+</sc-for>
+<sc-for list="{{eventsA}}" as="e" hint-placeholder-count="5">
+<div style="position:absolute;left:{{e.x}}px;top:{{e.y}}px;width:13px;height:13px;background:#fff;transform:translate(-50%,-50%);clip-path:{{e.clip}};z-index:3;"></div>
+<div style="position:absolute;{{e.anchor}};width:{{e.w}}px;z-index:2;">
+<div style="font:500 16px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.05em;">{{e.date}}</div>
+<div style="font:650 23px/1.14 Archivo,sans-serif;color:#fff;margin:6px 0 9px;text-wrap:pretty;">{{e.title}}</div>
+<div style="font:400 15px/1.45 'IBM Plex Mono',monospace;color:#7E97FF;letter-spacing:.03em;">{{e.desc}}</div>
+</div>
+</sc-for>
+<sc-for list="{{gapGlyphs}}" as="g" hint-placeholder-count="4">
+<div style="position:absolute;left:{{g.x}}px;top:{{g.y}}px;width:30px;height:26px;background:#000;transform:translate(-50%,-50%);z-index:4;display:flex;gap:6px;align-items:center;justify-content:center;">
+<div style="width:3px;height:22px;background:#9DA3AD;transform:skewX(-28deg);"></div>
+<div style="width:3px;height:22px;background:#9DA3AD;transform:skewX(-28deg);"></div>
+</div>
+</sc-for>
+<sc-for list="{{rulerA}}" as="s" hint-placeholder-count="3">
+<div style="position:absolute;left:{{s.x}}px;top:1000px;width:{{s.w}}px;height:2px;background:#6A7078;"></div>
+</sc-for>
+<sc-for list="{{ticksA}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:{{t.y}}px;width:2px;height:{{t.h}}px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{tickLabelsA}}" as="t" hint-placeholder-count="4">
+<div style="position:absolute;left:{{t.x}}px;top:1014px;transform:translateX(-50%);font:400 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.04em;white-space:nowrap;">{{t.label}}</div>
+</sc-for>
+<sc-for list="{{gapLabelsA}}" as="g" hint-placeholder-count="2">
+<div style="position:absolute;left:{{g.x}}px;top:948px;transform:translateX(-50%);text-align:center;font:500 12.5px/1.5 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.08em;z-index:4;">{{g.l1}}<br>{{g.l2}}</div>
+</sc-for>
+</div>
+</div>
+</div>
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><span class="dv-oname">Equal chapters, true map</span><span>Five equal-width chapters give crowded decades as much room as whole eras. The orange funnels project every chapter onto the true-scale bar below — the distortion itself becomes the picture.</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="1b Kapitel-Raster">
+<div style="position:absolute;left:70px;top:42px;display:flex;gap:28px;align-items:center;z-index:2;">
+<div style="display:flex;align-items:center;gap:9px;"><div style="width:20px;height:20px;border:1.5px solid #fff;border-radius:2px;display:flex;align-items:center;justify-content:center;font:700 10px Archivo,sans-serif;color:#fff;">K</div><span style="font:500 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.06em;">KRYPTOGRAFIE</span></div>
+<div style="display:flex;align-items:center;gap:9px;"><div style="width:20px;height:20px;border:1.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 10px Archivo,sans-serif;color:#fff;">R</div><span style="font:500 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.06em;">RECHENTECHNIK</span></div>
+<div style="display:flex;align-items:center;gap:9px;"><div style="width:20px;height:20px;border:1.5px solid #fff;border-radius:2px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;font:700 10px Archivo,sans-serif;color:#fff;"><span style="transform:rotate(-45deg);">V</span></div><span style="font:500 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.06em;">VERNETZUNG</span></div>
+</div>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;right:70px;top:46px;font:500 15px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.05em;z-index:2;">GLEICHE SPALTE &ne; GLEICHE DAUER — DIE <span style="color:#ED8003;">KARTE UNTEN</span> ZEIGT DIE WAHREN L&Auml;NGEN</div>
+</sc-if>
+<div style="position:absolute;left:399px;top:100px;color:#ED8003;font:700 20px Archivo,sans-serif;">&#9656;</div>
+<div style="position:absolute;left:754px;top:100px;color:#ED8003;font:700 20px Archivo,sans-serif;">&#9656;</div>
+<div style="position:absolute;left:1109px;top:100px;color:#ED8003;font:700 20px Archivo,sans-serif;">&#9656;</div>
+<div style="position:absolute;left:1464px;top:100px;color:#ED8003;font:700 20px Archivo,sans-serif;">&#9656;</div>
+<sc-for list="{{colsB}}" as="c" hint-placeholder-count="5">
+<div style="position:absolute;left:{{c.x}}px;top:96px;width:330px;">
+<div style="font:500 13.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.16em;">{{c.num}}</div>
+<div style="font:800 27px Archivo,sans-serif;font-stretch:116%;color:#fff;letter-spacing:.02em;margin-top:5px;">{{c.name}}</div>
+<div style="font:400 15px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.08em;margin-top:6px;">{{c.span}}</div>
+<div style="height:2px;background:#2E2E33;margin-top:14px;"></div>
+<sc-for list="{{c.events}}" as="e" hint-placeholder-count="3">
+<div style="padding:15px 0 13px;border-bottom:1px solid #202024;">
+<div style="display:flex;align-items:center;gap:10px;">
+<div style="width:20px;height:20px;flex:none;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff;border-radius:{{e.rad}};transform:{{e.ct}};font:700 10px Archivo,sans-serif;color:#fff;"><span style="transform:{{e.lt}};">{{e.t}}</span></div>
+<div style="font:500 16px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.05em;">{{e.date}}</div>
+</div>
+<div style="font:650 22px/1.15 Archivo,sans-serif;color:#fff;margin:8px 0 6px;text-wrap:pretty;">{{e.title}}</div>
+<div style="font:400 15px/1.45 'IBM Plex Mono',monospace;color:#7E97FF;letter-spacing:.03em;">{{e.desc}}</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<svg style="position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;" viewBox="0 0 1920 1080">
+<sc-for list="{{trapsB}}" as="p" hint-placeholder-count="5"><polygon points="{{p.pts}}" fill="rgba(237,128,3,.08)" stroke="#ED8003" stroke-width="1.5" stroke-opacity=".85"></polygon></sc-for>
+</svg>
+<div style="position:absolute;left:70px;top:928px;width:1750px;height:16px;background:#1E1F23;"></div>
+<sc-for list="{{axisB}}" as="a" hint-placeholder-count="6">
+<div style="position:absolute;left:{{a.x}}px;top:922px;width:2px;height:28px;background:#6A7078;"></div>
+<div style="position:absolute;left:{{a.x}}px;top:958px;transform:translateX(-50%);font:400 14px 'IBM Plex Mono',monospace;color:#B7BCC4;white-space:nowrap;">{{a.label}}</div>
+</sc-for>
+<sc-for list="{{segsB}}" as="s" hint-placeholder-count="5">
+<div style="position:absolute;left:{{s.x}}px;top:928px;width:{{s.w}}px;height:16px;background:#ED8003;"></div>
+</sc-for>
+<sc-if value="{{faktoren}}" hint-placeholder-val="{{true}}">
+<sc-for list="{{countsB}}" as="c" hint-placeholder-count="5">
+<div style="position:absolute;left:{{c.x}}px;top:869px;transform:translateX(-50%);font:500 14.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.08em;white-space:nowrap;">{{c.label}}</div>
+</sc-for>
+</sc-if>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;left:0;right:0;top:1008px;text-align:center;font:500 14px 'IBM Plex Mono',monospace;color:#8A9099;letter-spacing:.08em;">WAHRE ZEITSKALA — JEDES KAPITEL GLEICH BREIT ERZ&Auml;HLT, ABER UNGLEICH LANG</div>
+</sc-if>
+</div>
+</div>
+</div>
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><span class="dv-oname">True scale + magnifiers</span><span>The top axis is honest: 2,500 years to scale, events piling up at the right edge. Orange projection cones lift three regions into detail windows, each labeled with how much it stretches time.</span></div>
+<div class="dv-card" style="width:1920px">
+<div style="position:relative;width:1920px;height:1080px;background:#000;overflow:hidden;" data-screen-label="1c Echte Skala + Lupen">
+<div style="position:absolute;left:130px;top:42px;display:flex;gap:28px;align-items:center;z-index:2;">
+<div style="display:flex;align-items:center;gap:9px;"><div style="width:20px;height:20px;border:1.5px solid #fff;border-radius:2px;display:flex;align-items:center;justify-content:center;font:700 10px Archivo,sans-serif;color:#fff;">K</div><span style="font:500 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.06em;">KRYPTOGRAFIE</span></div>
+<div style="display:flex;align-items:center;gap:9px;"><div style="width:20px;height:20px;border:1.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 10px Archivo,sans-serif;color:#fff;">R</div><span style="font:500 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.06em;">RECHENTECHNIK</span></div>
+<div style="display:flex;align-items:center;gap:9px;"><div style="width:20px;height:20px;border:1.5px solid #fff;border-radius:2px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;font:700 10px Archivo,sans-serif;color:#fff;"><span style="transform:rotate(-45deg);">V</span></div><span style="font:500 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.06em;">VERNETZUNG</span></div>
+</div>
+<sc-if value="{{lesehilfen}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;right:60px;top:46px;font:500 15px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.05em;z-index:2;">OBEN: <span style="color:#ED8003;">ECHTE ZEITSKALA</span> &middot; UNTEN: DREI AUSSCHNITTE, UNTERSCHIEDLICH STARK GEDEHNT</div>
+</sc-if>
+<div style="position:absolute;left:130px;top:96px;font:500 15px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.14em;">ECHTE ZEITSKALA &middot; ALLE ABST&Auml;NDE MASSSTABSGETREU</div>
+<div style="position:absolute;left:130px;top:209px;width:1660px;height:2px;background:#9DA3AD;"></div>
+<sc-for list="{{masterTicks}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:212px;width:2px;height:{{t.h}}px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{masterLabels}}" as="m" hint-placeholder-count="6">
+<div style="position:absolute;left:{{m.x}}px;top:238px;transform:translateX(-50%);font:400 14px 'IBM Plex Mono',monospace;color:#B7BCC4;white-space:nowrap;">{{m.label}}</div>
+</sc-for>
+<sc-for list="{{regionsC}}" as="rg" hint-placeholder-count="3">
+<div style="position:absolute;left:{{rg.x}}px;top:190px;width:{{rg.w}}px;height:12px;border-top:2px solid #ED8003;border-left:2px solid #ED8003;border-right:2px solid #ED8003;"></div>
+</sc-for>
+<sc-for list="{{regionChipsC}}" as="rc" hint-placeholder-count="3">
+<div style="position:absolute;left:{{rc.x}}px;top:148px;transform:translateX(-50%);width:26px;height:26px;background:#ED8003;color:#000;display:flex;align-items:center;justify-content:center;font:700 14px Archivo,sans-serif;">{{rc.letter}}</div>
+</sc-for>
+<sc-for list="{{masterDots}}" as="d" hint-placeholder-count="6">
+<div style="position:absolute;left:{{d.x}}px;top:210px;width:8px;height:8px;background:#fff;border:2px solid #000;border-radius:50%;transform:translate(-50%,-50%);z-index:2;"></div>
+</sc-for>
+<svg style="position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;" viewBox="0 0 1920 1080">
+<sc-for list="{{conesC}}" as="cn" hint-placeholder-count="3"><polygon points="{{cn.pts}}" fill="rgba(237,128,3,.06)" stroke="#ED8003" stroke-width="1.5" stroke-opacity=".9"></polygon></sc-for>
+</svg>
+<sc-for list="{{winsC}}" as="w" hint-placeholder-count="3">
+<div style="position:absolute;left:{{w.x}}px;top:380px;width:{{w.w}}px;height:620px;background:#050507;border:1px solid #2E2E33;"></div>
+<div style="position:absolute;left:{{w.cx}}px;top:402px;width:26px;height:26px;background:#ED8003;color:#000;display:flex;align-items:center;justify-content:center;font:700 14px Archivo,sans-serif;">{{w.letter}}</div>
+<div style="position:absolute;left:{{w.nx}}px;top:402px;font:700 21px Archivo,sans-serif;font-stretch:110%;color:#fff;letter-spacing:.02em;">{{w.name}}</div>
+<div style="position:absolute;left:{{w.nx}}px;top:432px;font:400 14px 'IBM Plex Mono',monospace;color:#B7BCC4;letter-spacing:.08em;">{{w.span}}</div>
+<div style="position:absolute;left:{{w.sx}}px;top:464px;width:2px;height:512px;background:#6A7078;"></div>
+</sc-for>
+<sc-if value="{{faktoren}}" hint-placeholder-val="{{true}}">
+<sc-for list="{{winsC}}" as="w" hint-placeholder-count="3">
+<div style="position:absolute;right:{{w.crx}}px;top:402px;border:1.5px solid #ED8003;color:#ED8003;font:500 12.5px 'IBM Plex Mono',monospace;letter-spacing:.08em;padding:5px 10px 4px;border-radius:3px;">{{w.factor}}</div>
+</sc-for>
+</sc-if>
+<sc-for list="{{cTicks}}" as="t" hint-placeholder-count="8">
+<div style="position:absolute;left:{{t.x}}px;top:{{t.y}}px;width:{{t.w}}px;height:2px;background:{{t.c}};"></div>
+</sc-for>
+<sc-for list="{{cTickLabels}}" as="t" hint-placeholder-count="6">
+<div style="position:absolute;left:{{t.x}}px;top:{{t.y}}px;width:46px;text-align:right;font:400 12.5px 'IBM Plex Mono',monospace;color:#8A9099;">{{t.label}}</div>
+</sc-for>
+<svg style="position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;" viewBox="0 0 1920 1080">
+<sc-for list="{{cLeaders}}" as="l" hint-placeholder-count="6"><polyline points="{{l.pts}}" fill="none" stroke="#5A6068" stroke-width="1.5"></polyline></sc-for>
+</svg>
+<sc-for list="{{cRanges}}" as="rr" hint-placeholder-count="2">
+<div style="position:absolute;left:{{rr.x}}px;top:{{rr.y}}px;width:5px;height:{{rr.h}}px;background:#0040FF;border-radius:2.5px;"></div>
+</sc-for>
+<sc-for list="{{cDots}}" as="d" hint-placeholder-count="6">
+<div style="position:absolute;left:{{d.x}}px;top:{{d.y}}px;width:10px;height:10px;background:#fff;border:2px solid #000;border-radius:50%;transform:translate(-50%,-50%);z-index:2;"></div>
+</sc-for>
+<sc-for list="{{cRows}}" as="rw" hint-placeholder-count="6">
+<div style="position:absolute;left:{{rw.x}}px;top:{{rw.y}}px;width:{{rw.w}}px;">
+<div style="display:flex;align-items:center;gap:9px;">
+<div style="width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff;border-radius:{{rw.rad}};transform:{{rw.ct}};font:700 9.5px Archivo,sans-serif;color:#fff;"><span style="transform:{{rw.lt}};">{{rw.t}}</span></div>
+<span style="font:500 14.5px 'IBM Plex Mono',monospace;color:#ED8003;letter-spacing:.04em;white-space:nowrap;">{{rw.date}}</span>
+<span style="font:650 20px/1.1 Archivo,sans-serif;color:#fff;flex:1 1 auto;min-width:0;">{{rw.title}}</span>
+</div>
+<div style="font:400 14.5px/1.35 'IBM Plex Mono',monospace;color:#7E97FF;letter-spacing:.02em;margin:4px 0 0 27px;">{{rw.desc}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+<p class="dv-next">Try next: &bdquo;zone chips from <a class="dv-oid" href="#1a">1a</a> on <a class="dv-oid" href="#1c">1c</a>&ldquo; &middot; &bdquo;re-flow one of these to the ultra-wide ratio of the original exploration&ldquo; &middot; &bdquo;new directions&ldquo;</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lesehilfen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Overlays&quot;},&quot;faktoren&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Overlays&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const r = v => Math.round(v * 10) / 10;
+    const lesehilfen = this.props.lesehilfen ?? true;
+    const faktoren = this.props.faktoren ?? true;
+    const EV = [
+      {t:'K',y:-500,date:'CA. 500 V. CHR.',title:'Skytale',desc:'GEHEIMSCHRIFT DER ANTIKE'},
+      {t:'K',y:-50,date:'CA. 50 V. CHR.',title:'Caesar-Chiffre',desc:'BUCHSTABEN VERSCHIEBEN'},
+      {t:'K',y:1400,y2:1700,date:'15-17 JH.',title:'Geheimzirkel / Permutationsscheibe',desc:'VERSCHL\u00dcSSELN MIT DREHSCHEIBEN'},
+      {t:'K',y:1918,date:'1918',title:'Enigma',desc:'VERSCHL\u00dcSSELUNG WIRD MASCHINE'},
+      {t:'K',y:1938,y2:1940,date:'1938-1940',title:'Turing-Welchman-Bombe',desc:'MASCHINE KNACKT MASCHINE'},
+      {t:'K',y:1976,date:'1976',title:'Public-Key-Verfahren',desc:'ZWEI SCHL\u00dcSSEL STATT GEHEIMNIS'},
+      {t:'R',y:1492,y2:1559,date:'1492-1559',title:'Adam Ries',desc:'RECHNEN F\u00dcR ALLE'},
+      {t:'R',y:1694,date:'1694',title:'Leibniz-Rechenmaschine',desc:'RECHNEN WIRD MECHANISCH'},
+      {t:'R',y:1703,date:'1703',title:'Bin\u00e4rsystem',desc:'RECHNEN MIT 0 UND 1'},
+      {t:'R',y:1941,date:'1941',title:'Zuse Z3',desc:'ERSTER PROGRAMMIERBARER COMPUTER'},
+      {t:'R',y:1946,date:'1946',title:'ENIAC',desc:'ELEKTRONISCHES RECHNEN'},
+      {t:'R',y:1971,date:'1971',title:'Mikroprozessor',desc:'COMPUTER AUF EINEM CHIP'},
+      {t:'V',y:1969,date:'1969',title:'ARPANET',desc:'VIER RECHNER, EIN NETZ'},
+      {t:'V',y:1983,date:'1983',title:'TCP/IP',desc:'EINE GEMEINSAME SPRACHE'},
+      {t:'V',y:1991,y2:1993,date:'1991/93',title:'World Wide Web',desc:'DAS NETZ F\u00dcR ALLE'}];
+    const CLIP = {K:'none', R:'circle(50% at 50% 50%)', V:'polygon(50% 0,100% 50%,50% 100%,0 50%)'};
+    const SH = {K:{rad:'2px',ct:'none',lt:'none'}, R:{rad:'50%',ct:'none',lt:'none'}, V:{rad:'2px',ct:'rotate(45deg)',lt:'rotate(-45deg)'}};
+    // ---- 1a Tempo-Zonen ----
+    const bandsA = [
+      {y0:-550,y1:0,x:260,w:320,num:'ZONE 01',name:'ANTIKE',span:'500 V. CHR. \u2013 0',factor:'ZEIT 13\u00d7 GERAFFT'},
+      {y0:1400,y1:1750,x:640,w:420,num:'ZONE 02',name:'FR\u00dcHE NEUZEIT',span:'1400 \u2013 1750',factor:'ZEIT 6\u00d7 GERAFFT'},
+      {y0:1900,y1:2000,x:1120,w:760,num:'ZONE 03',name:'20. JAHRHUNDERT',span:'1900 \u2013 2000',factor:'MASSSTAB \u00d71 \u00b7 REFERENZ'}];
+    const xA = y => {const b = bandsA.find(b => y >= b.y0 && y <= b.y1); return b.x + (y - b.y0) / (b.y1 - b.y0) * b.w;};
+    const laneYs = {K:330, R:545, V:760};
+    const lanesA = [{y:330,ly:319,label:'KRYPTOGRAFIE'},{y:545,ly:534,label:'RECHENTECHNIK'},{y:760,ly:749,label:'VERNETZUNG'}];
+    const posA = {'Caesar-Chiffre':'a','Turing-Welchman-Bombe':'a','Public-Key-Verfahren':'a','Leibniz-Rechenmaschine':'a','ENIAC':'a','Mikroprozessor':'a','TCP/IP':'a','World Wide Web':'d'};
+    const wsA = {'Geheimzirkel / Permutationsscheibe':260,'Public-Key-Verfahren':182,'ENIAC':180,'Mikroprozessor':180,'ARPANET':150,'TCP/IP':140,'World Wide Web':170};
+    const eventsA = EV.map(e => {
+      const x = r(xA(e.y)), Y = laneYs[e.t], p = posA[e.title] || 'b';
+      const anchor = p === 'a' ? `left:${x}px;bottom:${1080 - Y + 16}px` : p === 'd' ? `right:64px;top:${Y + 124}px` : `left:${x}px;top:${Y + 20}px`;
+      return {x, y:Y, clip:CLIP[e.t], date:e.date, title:e.title, desc:e.desc, anchor, w:wsA[e.title] || 190};
+    });
+    const dropsA = [{x:r(xA(1991)), y:laneYs.V + 8, h:116}];
+    const rangesA = EV.filter(e => e.y2).map(e => ({x:r(xA(e.y)), y:laneYs[e.t] - 3, w:r(Math.max(xA(e.y2) - xA(e.y), 12))}));
+    const ticksA = [], tickLabelsA = [];
+    const labelYrs = [[-500,0],[1400,1500,1600,1700],[1900,1950,2000]];
+    bandsA.forEach((b,i) => {
+      for (let yr = b.y0; yr <= b.y1; yr += 25) {
+        const maj = yr % 100 === 0;
+        ticksA.push({x:r(xA(yr)), y:maj ? 982 : 990, h:maj ? 18 : 10, c:maj ? '#9DA3AD' : '#4A4F57'});
+      }
+      labelYrs[i].forEach(yr => tickLabelsA.push({x:r(xA(yr)), label:yr < 0 ? `${-yr} V. CHR.` : `${yr}`}));
+    });
+    const rulerA = bandsA.map(b => ({x:b.x, w:b.w}));
+    const gapGlyphs = [];
+    [610,1090].forEach(gx => [330,545,760,1000].forEach(gy => gapGlyphs.push({x:gx, y:gy})));
+    const gapLabelsA = [{x:610,l1:'+1400',l2:'JAHRE'},{x:1090,l1:'+150',l2:'JAHRE'}];
+    // ---- 1b Kapitel-Raster ----
+    const colsBdef = [
+      {num:'KAPITEL 01',name:'ANTIKE',span:'500 V. CHR. \u2013 0',y0:-500,y1:0,count:'\u2259 500 JAHRE'},
+      {num:'KAPITEL 02',name:'FR\u00dcHE NEUZEIT',span:'1400 \u2013 1750',y0:1400,y1:1750,count:'\u2259 350 JAHRE'},
+      {num:'KAPITEL 03',name:'MASCHINENZEIT',span:'1900 \u2013 1950',y0:1900,y1:1950,count:'\u2259 50 JAHRE'},
+      {num:'KAPITEL 04',name:'ELEKTRONIK',span:'1950 \u2013 1980',y0:1950,y1:1980,count:'\u2259 30 JAHRE'},
+      {num:'KAPITEL 05',name:'VERNETZTE WELT',span:'1980 \u2013 2000',y0:1980,y1:2000,count:'\u2259 20 JAHRE'}];
+    const mx = y => 70 + (y + 550) / 2550 * 1750;
+    const colsB = colsBdef.map((c,i) => ({...c, x:70 + i * 355,
+      events: EV.filter(e => e.y >= c.y0 && e.y < c.y1 + (i === 4 ? 1 : 0)).sort((a,b) => a.y - b.y).map(e => ({t:e.t, date:e.date, title:e.title, desc:e.desc, ...SH[e.t]}))}));
+    const segsB = colsBdef.map(c => ({x:r(mx(c.y0)), w:r(Math.max(mx(c.y1) - mx(c.y0) - 2, 3))}));
+    const trapsB = colsBdef.map((c,i) => {const cx = 70 + i * 355; return {pts:`${cx},858 ${cx + 330},858 ${r(mx(c.y1))},926 ${r(mx(c.y0))},926`};});
+    const axisB = [-500,0,500,1000,1500,2000].map(yr => ({x:r(mx(yr)), label:yr < 0 ? `${-yr} V. CHR.` : `${yr}`}));
+    const countsB = colsBdef.map((c,i) => ({x:70 + i * 355 + 165, label:c.count}));
+    // ---- 1c Echte Skala + Lupen ----
+    const mxc = y => 130 + (y + 550) / 2550 * 1660;
+    const masterTicks = [];
+    for (let yr = -550; yr <= 2000; yr += 50) {
+      const maj = yr % 100 === 0;
+      masterTicks.push({x:r(mxc(yr)), h:maj ? 11 : 7, c:maj ? '#6A7078' : '#3F444B'});
+    }
+    const masterLabels = [-500,0,500,1000,1500,2000].map(yr => ({x:r(mxc(yr)), label:yr < 0 ? `${-yr} V. CHR.` : `${yr}`}));
+    const masterDots = EV.map(e => ({x:r(mxc(e.y))}));
+    const winsDef = [
+      {letter:'A',name:'ANTIKE',span:'500 V. CHR. \u2013 0',y0:-520,y1:0,x:120,w:420,factor:'\u2248 1,5\u00d7 GEDEHNT',step:100,lab:100},
+      {letter:'B',name:'FR\u00dcHE NEUZEIT',span:'1400 \u2013 1750',y0:1400,y1:1750,x:580,w:460,factor:'\u2248 2,2\u00d7 GEDEHNT',step:50,lab:100},
+      {letter:'C',name:'20. JAHRHUNDERT',span:'1900 \u2013 2000',y0:1900,y1:2000,x:1080,w:720,factor:'\u2248 8\u00d7 GEDEHNT',step:10,lab:20}];
+    const SPY = 464, SPH = 512;
+    const winsC = [], conesC = [], regionsC = [], regionChipsC = [], cTicks = [], cTickLabels = [], cDots = [], cRows = [], cLeaders = [], cRanges = [];
+    winsDef.forEach(wd => {
+      const sx = wd.x + 78, ppy = SPH / (wd.y1 - wd.y0);
+      const rx1 = r(mxc(wd.y0)), rx2 = r(mxc(wd.y1));
+      winsC.push({x:wd.x, w:wd.w, cx:wd.x + 22, nx:wd.x + 62, letter:wd.letter, name:wd.name, span:wd.span, factor:wd.factor, sx, crx:1920 - (wd.x + wd.w) + 18});
+      conesC.push({pts:`${rx1},226 ${rx2},226 ${wd.x + wd.w},380 ${wd.x},380`});
+      regionsC.push({x:rx1, w:r(rx2 - rx1)});
+      regionChipsC.push({x:r((rx1 + rx2) / 2), letter:wd.letter});
+      for (let yr = (wd.y0 === -520 ? -500 : wd.y0); yr <= wd.y1; yr += wd.step) {
+        const y = r(SPY + (yr - wd.y0) * ppy), maj = yr % wd.lab === 0;
+        cTicks.push({x:sx - (maj ? 12 : 7), y:y - 1, w:maj ? 12 : 7, c:maj ? '#6A7078' : '#3F444B'});
+        if (maj) cTickLabels.push({x:sx - 64, y:y - 8, label:yr < 0 ? `\u2212${-yr}` : `${yr}`});
+      }
+      const evs = EV.filter(e => e.y >= wd.y0 && e.y <= wd.y1).sort((a,b) => a.y - b.y);
+      const n = evs.length;
+      evs.forEach((e,i) => {
+        const dotY = r(SPY + (e.y - wd.y0) * ppy);
+        const cy = wd.letter === 'A' ? dotY : r(SPY + i * (SPH - 48) / (n - 1));
+        cDots.push({x:sx, y:dotY});
+        cRows.push({x:sx + 34, y:r(cy - 11), w:wd.x + wd.w - 24 - (sx + 34), t:e.t, date:e.date, title:e.title, desc:e.desc, ...SH[e.t]});
+        cLeaders.push({pts:`${sx + 6},${dotY} ${sx + 17},${dotY} ${sx + 27},${cy}`});
+        if (e.y2) cRanges.push({x:sx + 7, y:dotY, h:r(Math.max((e.y2 - e.y) * ppy, 8))});
+      });
+    });
+    // ===== Runde 2 =====
+    const zones2a = [
+      {x:260,w:320,num:'01',name:'ANTIKE',meta:'500 V. CHR. \u2013 0',factor:'12\u00d7 GERAFFT'},
+      {x:640,w:420,num:'02',name:'FR\u00dcHE NEUZEIT',meta:'1400 \u2013 1750',factor:'6\u00d7 GERAFFT'},
+      {x:1120,w:760,num:'03',name:'20. JAHRHUNDERT',meta:'1900 \u2013 2000',factor:'MASSSTAB \u00d71'}];
+    const zdefs2 = [{y0:-500,y1:0,x:260,w:320},{y0:1400,y1:1750,x:640,w:420},{y0:1900,y1:2000,x:1120,w:760}];
+    const x2a = y => {const z = zdefs2.find(z => y >= z.y0 && y <= z.y1); return z.x + (y - z.y0) / (z.y1 - z.y0) * z.w;};
+    const bands2a = [
+      {y:170,ly:186,label:'KRYPTOGRAFIE',tint:true},
+      {y:443,ly:459,label:'RECHENTECHNIK',tint:false},
+      {y:716,ly:732,label:'VERNETZUNG',tint:true}];
+    const lane2a = {K:230,R:503,V:762};
+    const lanes2a = [{y:230},{y:503},{y:762}];
+    const cfg2a = {
+      'Skytale':[1,'l',200],'Caesar-Chiffre':[2,'l',200],
+      'Geheimzirkel / Permutationsscheibe':[1,'l',420],
+      'Enigma':[1,'l',140],'Turing-Welchman-Bombe':[2,'l',210],'Public-Key-Verfahren':[1,'l',182],
+      'Adam Ries':[1,'l',200],'Bin\u00e4rsystem':[1,'l',200],'Leibniz-Rechenmaschine':[2,'l',210],
+      'Zuse Z3':[1,'l',220],'ENIAC':[2,'l',200],'Mikroprozessor':[1,'l',220],
+      'ARPANET':[1,'r',205],'TCP/IP':[2,'r',205],'World Wide Web':[3,'r',205]};
+    const events2a = [], leaders2a = [];
+    EV.forEach(e => {
+      const [lv,al,w] = cfg2a[e.title], x = r(x2a(e.y)), ly = lane2a[e.t];
+      const off = e.t === 'V' ? [16,86,156][lv-1] : [18,112][lv-1];
+      const st = (al === 'l' ? `left:${x}px` : `left:${r(x-w)}px;text-align:right`) + `;top:${ly+off}px;width:${w}px`;
+      events2a.push({st, mx:x, my:ly, date:e.date, title:e.title, desc:e.desc});
+      if (lv > 1) leaders2a.push({x, y:ly+8, h:off-14});
+    });
+    const ranges2a = EV.filter(e=>e.y2).map(e => ({x:r(x2a(e.y)), y:lane2a[e.t]-3, w:r(Math.max(x2a(e.y2)-x2a(e.y),12))}));
+    const glyphs2a = [];
+    [610,1090].forEach(gx => [230,503,762,1006].forEach(gy => glyphs2a.push({x:gx,y:gy})));
+    const ruler2a = zdefs2.map(z => ({x:z.x,w:z.w}));
+    const ticks2a = [];
+    zdefs2.forEach(z => {for(let yr=z.y0; yr<=z.y1; yr+=25){const maj = yr%100===0; ticks2a.push({x:r(x2a(yr)), y:maj?992:998, h:maj?14:8, c:maj?'#565B63':'#33373D'});}});
+    const tickLabels2a = [
+      {st:'left:260px',t:'500 V. CHR.'},{st:'left:500px;width:80px;text-align:right',t:'0'},
+      {st:'left:640px',t:'1400'},{st:'left:980px;width:80px;text-align:right',t:'1750'},
+      {st:'left:1120px',t:'1900'},{st:'left:1800px;width:80px;text-align:right',t:'2000'}];
+    // -- 2b --
+    const wins2b = [
+      {x:120,w:400,num:'EPOCHE 01',name:'ANTIKE',meta:'500 V. CHR. \u2013 0',factor:'MASSSTAB \u2248 1\u00d7',y0:-500,y1:0,step:100,labs:[[-500,'500 V. CHR.'],[0,'0']]},
+      {x:560,w:500,num:'EPOCHE 02',name:'FR\u00dcHE NEUZEIT',meta:'1400 \u2013 1750',factor:'\u2248 2\u00d7 GEDEHNT',y0:1400,y1:1750,step:50,labs:[[1400,'1400'],[1750,'1750']]},
+      {x:1100,w:720,num:'EPOCHE 03',name:'20. JAHRHUNDERT',meta:'1900 \u2013 2000',factor:'\u2248 10\u00d7 GEDEHNT',y0:1900,y1:2000,step:10,labs:[[1900,'1900'],[1950,'1950'],[2000,'2000']]}];
+    wins2b.forEach(w => {w.crx = 1920-(w.x+w.w)+26; w.nx = w.x+26; w.ix = w.x+40; w.pxy = (w.w-60)/(w.y1-w.y0);});
+    const x2b = (w,y) => w.ix + (y-w.y0)*w.pxy;
+    const mticks2b = [], mlabels2b = [-500,0,500,1000,1500,2000].map(yr => ({x:r(mxc(yr)), label:yr<0?`${-yr} V. CHR.`:`${yr}`}));
+    for (let yr=-500; yr<=2000; yr+=100) mticks2b.push({x:r(mxc(yr)), h:yr%500===0?11:7, c:yr%500===0?'#565B63':'#33373D'});
+    const mdots2b = EV.map(e => ({x:r(mxc(e.y))}));
+    const regions2b = wins2b.map(w => ({x:r(mxc(w.y0)), w:r(mxc(w.y1)-mxc(w.y0))}));
+    const cones2b = wins2b.map(w => ({pts:`${r(mxc(w.y0))},118 ${r(mxc(w.y1))},118 ${w.x+w.w},200 ${w.x},200`}));
+    const laneB = {K:369,R:579,V:774};
+    const rows2b = [], lanes2b = [];
+    wins2b.forEach(w => {
+      [['K','KRYPTOGRAFIE',264,210,true],['R','RECHENTECHNIK',474,210,false],['V','VERNETZUNG',684,296,true]].forEach(([t,label,y,h,tint]) => {
+        const has = EV.some(e => e.t===t && e.y>=w.y0 && e.y<=w.y1);
+        rows2b.push({x:w.x+1, y, w:w.w-2, h, label, tint, lc:has?'#8A9099':'#3E434A', lx:w.x+26, ty:y+14});
+        if (has) lanes2b.push({x:w.x+30, w:w.w-56, y:laneB[t]});
+      });
+    });
+    const cfg2b = {
+      'Skytale':['b','l',170],'Caesar-Chiffre':['a','r',170],
+      'Geheimzirkel / Permutationsscheibe':['b','l',300],
+      'Adam Ries':['b','r',130],'Leibniz-Rechenmaschine':['a','r',200],'Bin\u00e4rsystem':['b','r',158],
+      'Enigma':['b','l',140],'Turing-Welchman-Bombe':['a','l',200],'Public-Key-Verfahren':['b','R',230],
+      'Zuse Z3':['b','l',170],'ENIAC':['a','l',170],'Mikroprozessor':['b','l',180],
+      'ARPANET':['b','l',136],'TCP/IP':['a','R',190],'World Wide Web':['f','R',170]};
+    const events2b = [], dots2b = [], leaders2b = [], ranges2b = [];
+    EV.forEach(e => {
+      const w = wins2b.find(w => e.y >= w.y0 && e.y <= w.y1);
+      const [pos,al,bw] = cfg2b[e.title];
+      const x = r(x2b(w,e.y)), ly = laneB[e.t];
+      const bl = al==='l' ? x : al==='r' ? r(x-bw) : r(w.x+w.w-20-bw);
+      const ta = al==='l' ? '' : ';text-align:right';
+      const st = pos==='a' ? `left:${bl}px;bottom:${1092-ly}px;width:${bw}px${ta}` : `left:${bl}px;top:${ly + (pos==='f'?104:16)}px;width:${bw}px${ta}`;
+      events2b.push({st, date:e.date, title:e.title, desc:e.desc});
+      dots2b.push({x, y:ly});
+      if (pos==='f') leaders2b.push({x, y:ly+7, h:91});
+      if (e.y2) ranges2b.push({x, y:ly-2.5, w:r(Math.max(x2b(w,e.y2)-x,10))});
+    });
+    const axTicks2b = [], axLabels2b = [];
+    wins2b.forEach(w => {
+      for (let yr=w.y0; yr<=w.y1; yr+=w.step) axTicks2b.push({x:r(x2b(w,yr)), h:yr%(w.step*5)===0?10:6});
+      w.labs.forEach(([yr,t]) => axLabels2b.push({x:r(x2b(w,yr)), t}));
+    });
+    // -- 2c --
+    const zones2c = [
+      {x:250,w:300,num:'01',name:'ANTIKE',meta:'500 V. CHR. \u2013 0',factor:'13\u00d7 GERAFFT',y0:-500,y1:0},
+      {x:594,w:420,num:'02',name:'FR\u00dcHE NEUZEIT',meta:'1400 \u2013 1750',factor:'6\u00d7 GERAFFT',y0:1400,y1:1750},
+      {x:1058,w:760,num:'03',name:'20. JAHRHUNDERT',meta:'1900 \u2013 2000',factor:'MASSSTAB \u00d71',y0:1900,y1:2000}];
+    const x2c = y => {const z = zones2c.find(z => y >= z.y0 && y <= z.y1); return z.x + (y - z.y0) / (z.y1 - z.y0) * z.w;};
+    const rows2cDef = [{y:170,t:'K'},{y:455,t:'R'},{y:740,t:'V'}];
+    const rowLabels2c = [{y:274,ny:294,idx:'01',label:'KRYPTOGRAFIE'},{y:559,ny:579,idx:'02',label:'RECHENTECHNIK'},{y:844,ny:864,idx:'03',label:'VERNETZUNG'}];
+    const cellsF2c = [], cellsE2c = [];
+    rows2cDef.forEach(rw => zones2c.forEach(z => {
+      const has = EV.some(e => e.t===rw.t && e.y>=z.y0 && e.y<=z.y1);
+      const cell = {x:z.x-12, y:rw.y, w:z.w+24, lane:rw.y+52, lx:z.x, lw:z.w};
+      (has?cellsF2c:cellsE2c).push(cell);
+    }));
+    const evd2c = {
+      'Skytale':[250,232,200,'l',0],'Caesar-Chiffre':[340,332,180,'r',520],
+      'Geheimzirkel / Permutationsscheibe':[594,232,280,'l',0],
+      'Turing-Welchman-Bombe':[1347,232,200,'l',0],'Public-Key-Verfahren':[1558,232,260,'l',0],'Enigma':[1195,332,140,'l',1194.8],
+      'Adam Ries':[704,513,170,'l',0],'Leibniz-Rechenmaschine':[637,581,310,'r',946.8],'Bin\u00e4rsystem':[768,649,190,'r',957.6],
+      'ENIAC':[1408,517,180,'l',0],'Mikroprozessor':[1598,517,200,'l',0],'Zuse Z3':[1370,617,220,'l',1369.6],
+      'ARPANET':[1377,798,205,'r',0],'TCP/IP':[1484,866,205,'r',1688.8],'World Wide Web':[1545,934,205,'r',1749.6]};
+    const lane2c = {K:222,R:507,V:792};
+    const events2c = [], leaders2c = [];
+    EV.forEach(e => {
+      const [bx,top,w,ta,lx] = evd2c[e.title];
+      const x = r(x2c(e.y)), ly = lane2c[e.t];
+      events2c.push({st:`left:${bx}px;top:${top}px;width:${w}px` + (ta==='r'?';text-align:right':''), mx:x, my:ly, date:e.date, title:e.title, desc:e.desc});
+      if (lx) leaders2c.push({x:lx, y:ly+8, h:top-ly-14});
+    });
+    const ranges2c = EV.filter(e=>e.y2).map(e => ({x:r(x2c(e.y)), y:lane2c[e.t]-3, w:r(Math.max(x2c(e.y2)-x2c(e.y),12))}));
+    const gapstamps2c = [{x:566,label:'+ 1400 JAHRE'},{x:1030,label:'+ 150 JAHRE'}];
+    const ruler2c = zones2c.map(z => ({x:z.x,w:z.w}));
+    const ticks2c = [];
+    zones2c.forEach(z => {for(let yr=z.y0; yr<=z.y1; yr+=25){const maj = yr%100===0; ticks2c.push({x:r(x2c(yr)), y:maj?1016:1022, h:maj?14:8, c:maj?'#565B63':'#33373D'});}});
+    const tickLabels2c = [
+      {st:'left:250px',t:'500 V. CHR.'},{st:'left:470px;width:80px;text-align:right',t:'0'},
+      {st:'left:594px',t:'1400'},{st:'left:934px;width:80px;text-align:right',t:'1750'},
+      {st:'left:1058px',t:'1900'},{st:'left:1738px;width:80px;text-align:right',t:'2000'}];
+    // -- 3a refined matrix --
+    const rows3aDef = [{y:130,t:'K'},{y:435,t:'R'},{y:740,t:'V'}];
+    const rowLabels3a = [{y:244,ny:262,idx:'01',label:'KRYPTOGRAFIE'},{y:549,ny:567,idx:'02',label:'RECHENTECHNIK'},{y:854,ny:872,idx:'03',label:'VERNETZUNG'}];
+    const cellsF3a = [], cellsE3a = [];
+    rows3aDef.forEach(rw => zones2c.forEach(z => {
+      const has = EV.some(e => e.t===rw.t && e.y>=z.y0 && e.y<=z.y1);
+      (has?cellsF3a:cellsE3a).push({x:z.x-12, y:rw.y, w:z.w+24, lane:rw.y+48, lx:z.x, lw:z.w});
+    }));
+    const evd3a = {
+      'Skytale':[250,188,200,'l',0],'Caesar-Chiffre':[340,288,180,'r',520],
+      'Geheimzirkel / Permutationsscheibe':[594,188,420,'l',0],
+      'Turing-Welchman-Bombe':[1347,188,236,'l',0],'Public-Key-Verfahren':[1588,188,230,'l',0],'Enigma':[1195,288,140,'l',1194.8],
+      'Adam Ries':[704,493,170,'l',0],'Leibniz-Rechenmaschine':[697,561,250,'r',946.8],'Bin\u00e4rsystem':[768,629,190,'r',957.6],
+      'ENIAC':[1408,493,180,'l',0],'Mikroprozessor':[1598,493,200,'l',0],'Zuse Z3':[1370,593,220,'l',1369.6],
+      'ARPANET':[1377,798,205,'r',0],'TCP/IP':[1484,866,205,'r',1688.8],'World Wide Web':[1545,934,205,'r',1749.6]};
+    const lane3a = {K:178,R:483,V:788};
+    const events3a = [], leaders3a = [];
+    EV.forEach(e => {
+      const [bx,top,w,ta,lx] = evd3a[e.title];
+      const x = r(x2c(e.y)), ly = lane3a[e.t];
+      events3a.push({st:`left:${bx}px;top:${top}px;width:${w}px` + (ta==='r'?';text-align:right':''), mx:x, my:ly, date:e.date, title:e.title, desc:e.desc});
+      if (lx) leaders3a.push({x:lx, y:ly+8, h:top-ly-14});
+    });
+    const ranges3a = EV.filter(e=>e.y2).map(e => ({x:r(x2c(e.y)), y:lane3a[e.t]-3, w:r(Math.max(x2c(e.y2)-x2c(e.y),12))}));
+    const ticks3a = [];
+    zones2c.forEach(z => {for(let yr=z.y0; yr<=z.y1; yr+=25){const maj = yr%100===0; ticks3a.push({x:r(x2c(yr)), y:maj?1030:1036, h:maj?14:8, c:maj?'#565B63':'#33373D'});}});
+    return {lesehilfen, faktoren,
+      zones3a: zones2c.map(z => ({...z, fs: faktoren ? z.factor : ''})),
+      rowLabels3a, cellsF3a, cellsE3a, events3a, leaders3a, ranges3a, ticks3a,
+      zones2a: zones2a.map(z => ({...z, fs: faktoren ? z.factor : ''})),
+      bands2a, lanes2a, events2a, leaders2a, ranges2a, glyphs2a, ruler2a, ticks2a, tickLabels2a,
+      wins2b, rows2b, lanes2b, mticks2b, mlabels2b, mdots2b, regions2b, cones2b, events2b, dots2b, leaders2b, ranges2b, axTicks2b, axLabels2b,
+      zones2c: zones2c.map(z => ({...z, fs: faktoren ? z.factor : ''})),
+      rowLabels2c, cellsF2c, cellsE2c, events2c, leaders2c, ranges2c, gapstamps2c, ruler2c, ticks2c, tickLabels2c,
+      bandsA, lanesA, eventsA, dropsA, rangesA, ticksA, tickLabelsA, rulerA, gapGlyphs, gapLabelsA,
+      colsB, segsB, trapsB, axisB, countsB,
+      masterTicks, masterLabels, masterDots, winsC, conesC, regionsC, regionChipsC, cTicks, cTickLabels, cDots, cRows, cLeaders, cRanges};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+html, body {
+    scrollbar-width: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+
+mkdir -p ~/hide-scrollbar
+
+nano ~/hide-scrollbar/manifest.json
+
+{
+  "manifest_version": 3,
+  "name": "Hide Scrollbars",
+  "version": "1.0",
+  "description": "Versteckt Scrollleisten im Kiosk-Modus",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["hide-scrollbar.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
+
+nano ~/hide-scrollbar/hide-scrollbar.css
+
+html, body {
+    scrollbar-width: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+DISPLAY=:0 chromium --kiosk --load-extension="$HOME/hide-scrollbar" https://mempool.space/de/mempool-block/0
+
+Exec=chromium --kiosk --load-extension=/home/admin/hide-scrollbar https://mempool.space/de/mempool-block/0

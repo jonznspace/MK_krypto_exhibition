@@ -1,0 +1,58 @@
+KIOSK EINRICHTEN - BEFEHLE ZUM KOPIEREN
+=======================================
+
+Ablauf auf jedem Raspberry:
+  1. Alt + F4          (Browser schliessen, ggf. nochmal)
+  2. Strg + Alt + T    (Terminal oeffnen)
+  3. USB-Stick mit kiosk-setup.sh reinstecken
+  4. EINEN Befehl von unten kopieren und ins Terminal einfuegen
+     (im Terminal einfuegen = Strg + Shift + V), dann Enter
+  5. Warten bis FERTIG erscheint
+  6. Neustart:  sudo reboot
+
+
+--- Mempool Block ---
+bash /media/$USER/*/kiosk-setup.sh https://mempool.space/de/mempool-block/0
+
+--- Timechain Map ---
+bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/
+
+--- Bitcoin Supply ---
+bash /media/$USER/*/kiosk-setup.sh https://bitcoin.now/bitcoin-supply
+
+--- Blockchain.com Mempool ---
+bash /media/$USER/*/kiosk-setup.sh https://www.blockchain.com/de/explorer/mempool/btc
+
+
+--- Neustart ---
+sudo reboot
+
+
+Seite zu gross? Zoom mit Leerzeichen hinten anhaengen, z.B. 80 %:
+bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/ 0.8
+
+Seite ein paar Pixel runterscrollen? Als 3. Wert die Pixel angeben
+(der 2. Wert ist der Zoom, 1 = normal). Beispiel 150 Pixel runter:
+bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/ 1 150
+Mit Zoom UND Scrollen, z.B. 80 % und 150 Pixel:
+bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/ 0.8 150
+
+
+Falls "Datei nicht gefunden":
+  ls /media/$USER/
+  -> zeigt den Namen des Sticks (z.B. USB). Dann im Befehl das * durch
+     diesen Namen ersetzen, z.B.  bash /media/$USER/USB/kiosk-setup.sh ...
+
+Klappt trotzdem was nicht? Dann nach dem Neustart (Alt+F4, Strg+Alt+T,
+Stick rein) diesen Befehl ausfuehren - er kopiert die Logs auf den Stick:
+for d in /media/$USER/*/; do cp ~/kiosk/*.log "$d" && echo "Logs kopiert nach $d"; done
+-> Stick an den PC, die .log- und setup-log-Dateien Claude zeigen.
+
+Maus wieder sichtbar machen (z.B. zum Arbeiten am Pi):
+rm -rf ~/.local/share/icons/kiosk-blank ~/.icons/default && sudo reboot
+-> Wieder unsichtbar: einfach kiosk-setup.sh nochmal ausfuehren.
+
+Falls bei [4/4] "uebersprungen" steht:
+  sudo raspi-config
+  -> System Options -> Boot / Auto Login -> Desktop Autologin
+  -> Display Options -> Screen Blanking -> No

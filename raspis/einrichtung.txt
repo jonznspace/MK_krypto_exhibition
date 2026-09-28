@@ -1,0 +1,20 @@
+[Desktop Entry]
+Type=Application
+Name=Chromium Kiosk
+Exec=chromium --start-fullscreen --force-device-scale-factor=0.8 https://DEINE-WEBSITE.de
+Terminal=false
+X-GNOME-Autostart-enabled=true
+
+https://timechainmap.com/map/
+https://www.blockchain.com/de/explorer/mempool/btc
+https://mempool.space/de/mempool-block/0
+https://bitcoin.now/bitcoin-supply
+
+mkdir -p ~/.config/autostart
+cp ~/chromium-autostart.desktop ~/.config/autostart/
+
+ssh admin@192.168.137.3 'mkdir -p ~/.config/autostart'
+scp ~/chromium-autostart.desktop admin@192.168.137.3:~/.config/autostart/
+
+ssh admin@192.168.137.4 'mkdir -p ~/.config/autostart'
+scp ~/chromium-autostart.desktop admin@192.168.137.4:~/.config/autostart/

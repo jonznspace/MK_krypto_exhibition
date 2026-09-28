@@ -92,7 +92,9 @@
     'chevron-down': ['M6 9l6 6l6 -6'],
     x: ['M18 6l-12 12', 'M6 6l12 12'],
     'external-link': ['M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6', 'M11 13l9 -9', 'M15 4h5v5'],
-    'arrow-up': ['M12 5l0 14', 'M18 11l-6 -6', 'M6 11l6 -6']
+    'arrow-up': ['M12 5l0 14', 'M18 11l-6 -6', 'M6 11l6 -6'],
+    'arrow-down': ['M12 5l0 14', 'M18 13l-6 6', 'M6 13l6 6'],
+    'arrow-right': ['M5 12l14 0', 'M13 18l6 -6', 'M13 6l6 6']
   };
 
   function icon(name, className) {
@@ -426,12 +428,13 @@
 
     const groups = [...new Set(terms.map(term => term.gruppe))];
     const text = (de, en) => ({ de: de || '', en: en || '' });
+    const groupLabel = group => (C.ui.glossaryGroups && C.ui.glossaryGroups[group]) || { de: group, en: '' };
 
     // Mitfahrende Kategorien in der linken Spalte (nur bei „Alle“)
     const index = h('nav', { class: 'glossary__index', 'aria-label': t(C.ui.glossaryCategories) },
       h('p', { class: 'eyebrow', text: C.ui.glossaryCategories }),
       h('ol', null, groups.map(group => h('li', null,
-        h('a', { href: `#${groupId(group)}`, 'data-glossary-group': groupId(group), text: { de: group, en: '' } })))));
+        h('a', { href: `#${groupId(group)}`, 'data-glossary-group': groupId(group), text: groupLabel(group) })))));
 
     const filters = h('div', { class: 'glossary__filters', role: 'group' });
     const list = h('div', { class: 'glossary__groups' });
@@ -442,13 +445,13 @@
       index.hidden = group !== '*';
     }
 
-    [['*', C.ui.glossaryFilterAll], ...groups.map(group => [group, { de: group, en: '' }])].forEach(([group, label]) => {
+    [['*', C.ui.glossaryFilterAll], ...groups.map(group => [group, groupLabel(group)])].forEach(([group, label]) => {
       filters.append(h('button', { class: 'chip', type: 'button', 'data-group': group, 'aria-pressed': String(group === '*'), onclick: () => setFilter(group), text: label }));
     });
 
     groups.forEach(group => {
       list.append(h('div', { class: 'glossary__group', id: groupId(group), 'data-group': group },
-        h('h3', { class: 'glossary__group-title', text: { de: group, en: '' } }),
+        h('h3', { class: 'glossary__group-title', text: groupLabel(group) }),
         h('div', { class: 'glossary__grid' },
           terms.filter(term => term.gruppe === group).map(term => {
             const refs = String(term.querverweise || '').split(';').map(ref => ref.trim()).filter(Boolean);
@@ -457,7 +460,10 @@
               h('span', { class: 'eyebrow', text: C.ui.glossarySeeAlso }),
               refs.map(ref => {
                 const target = lookup.get(ref.toLowerCase());
-                return target ? h('a', { class: 'info-link', href: `#${termId(target)}` }, ref) : h('span', null, ref);
+                // Im Englischen den englischen Begriff des Ziels zeigen
+                return target
+                  ? h('a', { class: 'info-link', href: `#${termId(target)}`, text: text(ref, target.term_en) })
+                  : h('span', null, ref);
               })) : null;
             const hasMore = term.ebene_2_vertiefung_de || refsNode;
             return h('article', { class: 'term', id: termId(term) },
@@ -522,6 +528,7 @@
       : SECTIONS.filter(section => section.type === 'opener').map(section => h('li', null,
         h('a', { class: 'nav-link', href: `#${section.id}`, 'data-nav': section.id },
           section.numeral ? h('span', { class: 'nav-link__nr' }, section.numeral) : null,
+          // Kurzname; beim Überfahren klappt unter der Leiste der volle Titel des Ausstellungsbereichs auf
           h('span', { class: 'nav-link__label', text: section.nav }))));
 
     nav.append(
@@ -529,9 +536,61 @@
         h('a', { class: 'site-nav__brand', href: view === 'spuren' ? urlWith({ spuren: null, spur: null }) : '#top', text: C.site.title }),
         h('nav', { class: `site-nav__parts${view === 'spuren' ? ' is-back' : ''}`, 'aria-label': t(C.ui.chapters) }, h('ul', null, partLinks)),
         languageSwitch()),
-      h('div', { class: 'site-nav__progress', 'aria-hidden': 'true' }, h('span', { id: 'scrollProgress' })));
+      h('div', { class: 'site-nav__progress', 'aria-hidden': 'true' }, h('span', { id: 'scrollProgress' })),
+      h('div', { class: 'site-nav__drop', 'aria-hidden': 'true' }, h('div', { class: 'site-nav__drop-inner' })));
+    initNavExpand(nav);
 
     document.getElementById('skipLink').textContent = t(C.ui.skip);
+  }
+
+  // Überfahrener/fokussierter Navigationspunkt: unter der Leiste klappt ein Band mit dem vollen
+  // Titel des Ausstellungsbereichs auf. Die Wörter fahren nacheinander von unten ein (CSS),
+  // beim Wechsel gleitet der Inhalt unter den neuen Punkt.
+  function initNavExpand(nav) {
+    const list = nav.querySelector('.site-nav__parts ul');
+    const links = [...nav.querySelectorAll('.nav-link[data-nav]')];
+    const drop = nav.querySelector('.site-nav__drop');
+    const inner = drop.querySelector('.site-nav__drop-inner');
+    let current = null;
+
+    const fill = section => {
+      const words = t(section.title).split(/\s+/).filter(Boolean);
+      inner.replaceChildren(
+        h('p', { class: 'eyebrow site-nav__drop-eyebrow' }, `${t(C.ui.part)}${section.numeral ? ` · ${section.numeral}` : ''}`),
+        h('p', { class: 'site-nav__drop-title' }, words.map((word, index) =>
+          h('span', { class: 'site-nav__drop-word', style: `--i: ${index}` }, h('span', null, word)))));
+    };
+
+    // Inhalt unter dem Link ausrichten, aber nie über den rechten Rand hinaus
+    const place = link => {
+      const bar = nav.getBoundingClientRect();
+      const left = link.getBoundingClientRect().left - bar.left;
+      const max = bar.width - inner.offsetWidth - parseFloat(getComputedStyle(drop).paddingRight);
+      inner.style.setProperty('--x', `${Math.max(0, Math.min(left, max))}px`);
+    };
+
+    const open = link => {
+      links.forEach(other => other.classList.toggle('is-open', other === link));
+      nav.classList.toggle('has-drop', Boolean(link));
+      if (!link || link === current) { current = link; return; }
+      const section = SECTIONS.find(item => item.id === link.dataset.nav);
+      if (!current) inner.classList.add('no-slide'); // beim ersten Aufklappen direkt an Ort und Stelle
+      fill(section);
+      place(link);
+      inner.offsetWidth; // Position übernehmen, bevor die Gleitbewegung wieder eingeschaltet wird
+      inner.classList.remove('no-slide');
+      current = link;
+    };
+
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => open(link));
+      link.addEventListener('focus', () => open(link));
+      link.addEventListener('blur', () => open(null));
+      link.addEventListener('click', () => open(null));
+    });
+    list.addEventListener('mouseleave', () => { if (!list.contains(document.activeElement)) open(null); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') open(null); });
+    window.addEventListener('resize', () => { if (current) place(current); });
   }
 
   // Aufklappbare Stationsliste unten rechts (LAYER/300)
@@ -567,31 +626,59 @@
     document.body.append(dock);
   }
 
+  // Footer in drei Zeilen: Ausstellung + Förderer · SKD-Logo mittig · Leiste mit Impressum und „Nach oben“
   function renderFooter(view) {
     const site = C.site;
     const sponsors = site.sponsors;
+    const sponsorTitle = sponsors ? t(sponsors.title).trim() : '';
     document.getElementById('siteFooter').append(
-      sponsors ? h('div', { class: 'sponsors' },
-        h('p', { class: 'eyebrow', text: sponsors.title }),
-        h('ul', { class: 'sponsors__list' }, sponsors.items.map(item => {
-          const content = item.logo
-            ? h('img', { src: item.logo, alt: item.name })
-            : h('span', { class: 'sponsors__placeholder' }, `${t(C.ui.logoPending)} · ${item.name}`);
-          return h('li', { class: 'sponsors__item' },
-            item.url ? h('a', { href: item.url, target: '_blank', rel: 'noopener' }, content) : content);
-        }))) : null,
-      h('div', { class: 'site-footer__grid' },
-        h('div', null,
+      h('div', { class: 'site-footer__top' },
+        h('div', { class: 'site-footer__info' },
           h('p', { class: 'title site-footer__title', text: site.title }),
-          h('p', { text: site.institution }),
-          h('p', { text: site.venue })),
-        h('div', null,
-          h('p', { class: 'eyebrow', text: C.ui.runtime }),
-          h('p', null, `${site.runtime.start} – ${site.runtime.end}`)),
-        h('div', { class: 'site-footer__links' },
+          h('p', { text: site.venue }),
+          h('p', { class: 'site-footer__runtime' },
+            h('span', { class: 'eyebrow', text: C.ui.runtime }),
+            h('span', null, `${site.runtime.start} – ${site.runtime.end}`))),
+        // Förderer & Partner
+        sponsors ? h('div', { class: 'sponsors' },
+          sponsorTitle ? h('p', { class: 'eyebrow', text: sponsors.title }) : null,
+          h('ul', { class: 'sponsors__list' }, sponsors.items.map(item => {
+            const content = item.logo
+              ? h('img', { src: item.logo, alt: t(item.name) })
+              : h('span', { class: 'sponsors__placeholder' }, `${t(C.ui.logoPending)} · ${t(item.name)}`);
+            return h('li', { class: 'sponsors__item' },
+              item.url ? h('a', { href: item.url, target: '_blank', rel: 'noopener' }, content) : content);
+          }))) : null),
+      site.logo ? h('div', { class: 'site-footer__logo' },
+        h('a', { href: site.logo.url || null, target: site.logo.url ? '_blank' : null, rel: site.logo.url ? 'noopener' : null },
+          h('img', { src: site.logo.src, alt: t(site.logo.alt) }))) : null,
+      h('div', { class: 'site-footer__bar' },
+        h('div', { class: 'site-footer__legal' },
+          site.imprint ? h('button', { class: 'site-footer__imprint', type: 'button', onclick: openImprint, text: site.imprint.title }) : null,
           // Versteckter Zugang zu den Schlossspuren: nur hier, nicht in der Navigation
-          SPUREN && view !== 'spuren' ? h('a', { class: 'site-footer__secret', href: urlWith({ spuren: '', spur: null }), text: C.ui.secret }) : null,
-          h('a', { class: 'nav-link', href: '#top' }, icon('arrow-up'), h('span', { text: C.ui.toTop })))));
+          SPUREN && view !== 'spuren' ? h('a', { class: 'site-footer__secret', href: urlWith({ spuren: '', spur: null }), text: C.ui.secret }) : null),
+        h('a', { class: 'nav-link', href: '#top' }, icon('arrow-up'), h('span', { text: C.ui.toTop }))));
+  }
+
+  // Impressum als eigenes Fenster (LAYER/400), Inhalt aus site.imprint
+  let imprintDialog = null;
+
+  function openImprint() {
+    if (!imprintDialog) {
+      const imprint = C.site.imprint;
+      imprintDialog = h('dialog', { class: 'imprint', 'aria-labelledby': 'imprintTitle' },
+        h('div', { class: 'imprint__panel' },
+          h('div', { class: 'imprint__head' },
+            h('h2', { class: 'title imprint__title', id: 'imprintTitle', text: imprint.title }),
+            h('button', { class: 'close-btn', type: 'button', 'aria-label': t(C.ui.close), onclick: () => imprintDialog.close() }, icon('x'))),
+          h('div', { class: 'imprint__body' },
+            imprint.blocks.map(block => h('section', { class: 'imprint__block' },
+              h('p', { class: 'eyebrow', text: block.heading }),
+              h('p', { class: 'imprint__text', text: block.text }))))));
+      imprintDialog.addEventListener('click', event => { if (event.target === imprintDialog) imprintDialog.close(); });
+      document.body.append(imprintDialog);
+    }
+    imprintDialog.showModal();
   }
 
   // ---------------------------------------------------------------- Schlossspuren (versteckt)
@@ -619,7 +706,7 @@
             h('a', { href: `#${spurId(item.nr)}` },
               h('span', { class: 'spuren__index-nr' }, String(item.nr).padStart(2, '0')),
               h('span', { text: item.title }))))))),
-      ...SPUREN.items.map(item => h('section', { class: 'chapter chapter--spur', id: spurId(item.nr), ...draftProps(item.draft) },
+      ...SPUREN.items.map((item, index) => h('section', { class: 'chapter chapter--spur', id: spurId(item.nr), ...draftProps(item.draft) },
         h('div', { class: 'chapter__head' },
           h('div', { class: 'chapter__meta' },
             h('span', { class: 'station-marker' },
@@ -629,11 +716,27 @@
         h('div', { class: 'chapter__visual spur__images' }, (item.images || []).map(spurImage)),
         h('div', { class: 'chapter__main' },
           h('p', { class: 'spur__description', text: item.description }),
-          h('div', { class: 'prose' }, paragraphs(item.text))))));
+          h('div', { class: 'prose' }, paragraphs(item.text)),
+          h('div', { class: 'spur__actions' }, spurWebsiteButton())),
+        spurNext(SPUREN.items[index + 1]))));
 
-    // ?spur=3 springt direkt zur Spur
+    // ?spur=3 springt direkt zur Spur (per QR-Code): ohne Scroll-Animation
     const requested = params.get('spur');
-    if (requested) document.getElementById(spurId(requested))?.scrollIntoView();
+    if (requested) document.getElementById(spurId(requested))?.scrollIntoView({ behavior: 'instant', block: 'start' });
+  }
+
+  // Button zur Ausstellungswebsite unter jeder Spur (Ziel: SPUREN.websiteUrl, sonst dieser Onepager)
+  function spurWebsiteButton() {
+    return h('a', { class: 'cta', href: SPUREN.websiteUrl || urlWith({ spuren: null, spur: null }) },
+      h('span', { class: 'cta__label', text: SPUREN.ui.website }),
+      h('span', { class: 'cta__icon' }, icon('arrow-right')));
+  }
+
+  // Animierter Pfeil am unteren Rand: zur nächsten Spur, nach der letzten zurück zur Übersicht
+  function spurNext(next) {
+    return h('a', { class: `spur__next${next ? '' : ' is-last'}`, href: next ? `#${spurId(next.nr)}` : '#top' },
+      h('span', { class: 'spur__next-label', text: next ? SPUREN.ui.next : SPUREN.ui.toOverview }),
+      icon(next ? 'arrow-down' : 'arrow-up', 'spur__next-icon'));
   }
 
   // Aktiven Teil, aktive Station und aktives Longread-Kapitel markieren
@@ -791,6 +894,8 @@
     document.title = `${t(SPUREN.title)} · ${t(C.site.title)}`;
     renderSpuren(main);
   } else {
+    if (C.site.pageTitle) document.title = t(C.site.pageTitle);
+    if (C.site.description) document.querySelector('meta[name="description"]')?.setAttribute('content', t(C.site.description));
     SECTIONS.forEach((section, index) => {
       const render = renderers[section.type];
       if (!render) { console.warn('Unbekannter Abschnittstyp:', section.type); return; }

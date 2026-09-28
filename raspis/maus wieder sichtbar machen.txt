@@ -1,0 +1,1 @@
+rm -rf ~/.local/share/icons/kiosk-blank ~/.icons/default && sudo reboot

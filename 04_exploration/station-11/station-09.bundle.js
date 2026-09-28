@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         'Sachsen gab als erstes deutsches Territorium Papiergeld heraus. Auch hier war die Ausgangslage pragmatisch: Der Staat brauchte Geld, und Münzmetall war knapp. Doch anders als Palmstruch in Stockholm setzte Sachsen nicht allein auf freiwillige Akzeptanz des Geldes seitens der Bevölkerung. Per Verordnung wurde festgelegt, dass bestimmte Zahlungen in der neuen Geldform geleistet werden mussten.',
         'Damit entstand ein Kreislauf. Wer Steuern in Form von Papiergeld zahlen konnte, war auch eher bereit, es als Zahlungsmittel im Handel anzunehmen. Das Vertrauen wuchs nicht aus Begeisterung für die neue Geldform, sondern aus dem alltäglichen Gebrauch und den dahinterstehenden Regeln.'
       ],
-      image: { src: '../station-04/img/eknigma02.png', alt: '' },
+      image: { src: 'dither-output.png', alt: '' },
       ctaLabel: 'Vertiefung'
     },
     action: {
@@ -38,6 +38,30 @@ document.addEventListener('DOMContentLoaded',()=>{
           'Drei Ansätze, die unterschiedlicher kaum sein könnten: Demokratisch regulieren (EU), den privaten Markt ordnen (USA), staatlich durchsetzen (China). Was sie verbindet, ist die Einsicht, die schon das sächsische Beispiel zeigt: Neue Geldformen setzen sich nicht von allein durch. Sie brauchen einen Rahmen.'
         ]
       }
+    }
+  };
+
+  const ENGLISH_CONTENT = {
+    start: {
+      title: 'Trust by Decree: The First Paper Money in the German-Speaking World',
+      intro: [
+        'What failed in Sweden succeeded a few decades later in Saxony.',
+        'Saxony was the first German territory to issue paper money. Here, too, the reasons were practical: the state needed money, and metal for minting coins was scarce. Unlike Palmstruch in Stockholm, however, Saxony did not rely solely on the public’s voluntary acceptance of the new money. A decree required certain payments to be made in this new form.',
+        'This created a cycle. People who could pay their taxes with paper money were also more willing to accept it as payment in trade. Trust grew through everyday use and the rules supporting it, rather than enthusiasm for the new form of money.'
+      ]
+    },
+    deepening: {
+      tag: 'A Closer Look',
+      title: 'A Framework as a Prerequisite',
+      paragraphs: [
+        'The success of paper money in Saxony was no coincidence. Behind it lay a principle still debated in monetary theory today: the tax theory of money, also known as chartalism, argues that money derives its value not from its material or any intrinsic property, but from the fact that a government accepts it as payment for taxes. This commitment to accept it creates the demand that gives money its value.',
+        'The electoral decree established a framework within which the new money could function. The way this framework was imposed was authoritarian, but the underlying principle is universal: without binding rules, there is no trust; without trust, money cannot function.',
+        'Today, three major economic regions are each taking their own approach to establishing frameworks for digital means of payment.',
+        'In 2023, the European Union adopted the world’s first comprehensive legal framework for crypto assets through its Markets in Crypto-Assets Regulation (MiCA). MiCA distinguishes between different categories of digital tokens and requires their issuers, among other things, to provide evidence of reserves, meet disclosure obligations, and obtain authorization from supervisory authorities. Here, the framework is established through democratic lawmaking in the European Parliament and the Council of the European Union.',
+        'In 2025, the United States passed the GENIUS Act (Guiding and Establishing National Innovation for U.S. Stablecoins), legislation specifically addressing stablecoins. Among other requirements, it stipulates that issuers must hold reserves of at least one US dollar for every stablecoin issued. At the same time, the US government has prohibited the development of a government-issued digital currency, opting instead to rely on private providers. Here, the framework is deliberately confined to the private sector.',
+        'China is following the approach that most closely resembles the structure of Saxony’s 18th-century model. Since 2019, the government has been introducing the digital yuan and actively embedding it in everyday life through public-sector salary payments, integration into government services, and incentive programs. At the same time, the crypto market is entirely prohibited. As in Saxony centuries earlier, the government not only establishes the framework but also determines which means of payment are used—and which are not. Here, the framework is comprehensive and authoritarian.',
+        'These three approaches could hardly be more different: democratic regulation in the EU, rules for the private market in the United States, and state-directed implementation in China. What they share is an insight already illustrated by the Saxon example: new forms of money do not gain acceptance on their own. They need a framework.'
+      ]
     }
   };
 
@@ -73,13 +97,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 
-  function renderStation(content) {
+  function renderStation(content, language) {
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
-    setTitle('startTitle', content.start.title);
-    renderParagraphs('startIntro', content.start.intro);
+    const start = language === 'en' ? ENGLISH_CONTENT.start : content.start;
+    const deepening = language === 'en' ? ENGLISH_CONTENT.deepening : content.action.deepening;
+    setTitle('startTitle', start.title);
+    renderParagraphs('startIntro', start.intro);
 
     const startImage = $('startImage');
     startImage.src = content.start.image.src;
@@ -89,9 +114,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     if (ctaLabel) ctaLabel.textContent = content.start.ctaLabel;
     const ovTag = $('ovTag');
     const ovTitle = $('ovTitle');
-    if (ovTag) ovTag.textContent = content.action.deepening.tag;
-    if (ovTitle) ovTitle.textContent = content.action.deepening.title;
-    renderParagraphs('ovBody', content.action.deepening.paragraphs);
+    if (ovTag) ovTag.textContent = deepening.tag;
+    if (ovTitle) ovTitle.textContent = deepening.title;
+    renderParagraphs('ovBody', deepening.paragraphs);
   }
 
   const openOverlay = () => {
@@ -115,6 +140,17 @@ document.addEventListener('DOMContentLoaded',()=>{
   const overlay = $('overlay');
   if (overlay) overlay.addEventListener('click', event => { if (event.target === overlay) closeOverlay(); });
 
-  renderStation(STATION_CONTENT);
+  let appliedLanguage = null;
+  function applyLanguage() {
+    const language = document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+    if (language === appliedLanguage) return;
+    appliedLanguage = language;
+    renderStation(STATION_CONTENT, language);
+  }
+
+  applyLanguage();
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyLanguage();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
 })();
 

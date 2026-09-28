@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
-<link rel="stylesheet" href="base.css">
-<link rel="stylesheet" href="station-08.css">
-<link rel="stylesheet" href="station-13.css?v=3">
+<link rel="stylesheet" href="station-13.bundle.css?v=5">
 </head>
 <body>
 
@@ -23,14 +21,12 @@
       </div>
 
       <div class="start-copy">
-        <span class="eyebrow" id="startEyebrow"></span>
         <h1 class="title title--hero" id="startTitle"></h1>
         <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
       </div>
 
       <div class="start-visual" aria-hidden="true">
-        <!-- BILDPLATZHALTER: Hier gleich das neue Stationsbild einsetzen. -->
-        <div class="station-image-placeholder" id="startImage">BILDPLATZHALTER</div>
+        <img class="station-image" id="startImage" src="dither-output.png" alt="">
       </div>
 
       <button class="cta" id="btnTry" type="button">
@@ -42,7 +38,6 @@
     <section class="screen screen-action hidden" id="screenAction">
       <header class="action-hdr">
         <div class="action-hdr-copy">
-          <span class="eyebrow" id="actionEyebrow"></span>
           <h1 class="title title--compact" id="actionTitle"></h1>
         </div>
         <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
@@ -56,6 +51,6 @@
 
 <script src="../../shared/js/station-language-switch.js"></script>
 <script src="../../shared/js/station-idle-reload.js"></script>
-<script src="station-13.js?v=3" defer></script>
+<script src="station-13.js?v=5" defer></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Reloads the current station page after a period of visitor inactivity.
+ * Reloads the current station page after inactivity following visitor input.
  * Shows a warning overlay with a countdown before reloading, so an active
  * visitor can dismiss it with any interaction.
  */
@@ -9,7 +9,7 @@
   const IDLE_TIMEOUT_MS = 60000;
   const COUNTDOWN_SECONDS = 15;
   const OVERLAY_ID = 'stationIdleReloadOverlay';
-  const ACTIVITY_EVENTS = ['pointerdown', 'pointermove', 'touchstart', 'mousemove', 'wheel', 'keydown', 'scroll'];
+  const ACTIVITY_EVENTS = ['pointerdown', 'click', 'keydown'];
 
   const ROOT = document.documentElement;
 
@@ -100,7 +100,6 @@
     ACTIVITY_EVENTS.forEach(eventName => {
       window.addEventListener(eventName, resetIdleTimer, { passive: true });
     });
-    resetIdleTimer();
   }
 
   if (document.readyState === 'loading') {

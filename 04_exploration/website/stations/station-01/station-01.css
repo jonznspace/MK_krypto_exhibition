@@ -59,6 +59,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .title--hero { width: 100%; max-width: 100%; font-size: 108px; margin-top: 18px; white-space: normal; }
 .title--hero.title--medium { font-size: 88px; }
 .title--hero.title--long { font-size: 68px; }
+html[data-language="en"] #startTitle { font-size: 88px; }
 .title--compact { font-size: 68px; margin-top: 10px; max-width: 12ch; white-space: normal; }
 
 .screen-start {
@@ -125,7 +126,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 .hero-scroll {
-  width: 820px;
+  width: 760px;
   max-width: 100%;
   flex: 1;
   min-height: 0;
@@ -180,10 +181,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .start-visual {
   position: absolute;
-  right: -160px;
+  right: -430px;
   top: -20px;
   bottom: 0;
-  width: 1180px;
+  width: min(65vw, 950px);
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -198,6 +199,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   max-height: 1020px;
   object-fit: contain;
   object-position: bottom right;
+}
+
+@media (max-width: 1100px) {
+  .start-visual { display: none; }
 }
 
 .station-image-placeholder {

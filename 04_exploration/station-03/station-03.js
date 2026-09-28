@@ -7,7 +7,7 @@
     },
     start: {
       eyebrow: 'Die Maschine rechnet',
-      title: 'Die\u00a0Leibniz- Rechenmaschine',
+      title: 'Die Leibniz-Rechenmaschine',
       intro: [
         'Im 17. Jahrhundert arbeiteten Gelehrte in mehreren Ländern Europas an der Frage, ob sich Rechenvorgänge mechanisieren lassen. Einer von ihnen war der in Leipzig geborene Gottfried Wilhelm Leibniz (1646-1716). Seine mechanische Rechenmaschine zählt zu den bedeutendsten frühen Exemplaren ihrer Art, weil sie alle vier Grundrechenarten ausführen konnte. Ihr Herzstück war die sogenannte Staffelwalze: ein Mechanismus aus ineinandergreifenden Rädern, der Rechenoperationen mechanisch ausführte.',
         'Leibniz beschäftigte sich früh mit dem Binärsystem und schrieb es als einer der Ersten systematisch nieder. Diese Zahlendarstellung verwendet nur zwei Ziffern: 0 und 1. Im Unterschied zum Dezimalsystem mit zehn Ziffern lassen sich Informationen hier mit zwei Zuständen darstellen, etwa wie bei einem Schalter: an oder aus.',
@@ -73,6 +73,12 @@
       wrong: 'Noch nicht. Versuch es weiter.'
     },
     en: {
+      startTitle: 'The Leibniz Calculating Machine',
+      startIntro: [
+        'In the 17th century, scholars in several European countries explored whether calculations could be mechanized. One of them was Gottfried Wilhelm Leibniz (1646–1716), who was born in Leipzig. His mechanical calculating machine ranks among the most significant early examples of its kind because it could perform all four basic arithmetic operations: addition, subtraction, multiplication, and division. At its heart was the so-called stepped drum, part of a mechanism of interlocking gears that performed calculations mechanically.',
+        'Leibniz took an early interest in the binary number system and was among the first to describe it systematically in writing. This way of representing numbers uses only two digits: 0 and 1. Unlike the decimal system, which uses ten digits, the binary system allows information to be represented using just two states, like a switch that is either on or off.',
+        'Today, this principle is fundamental to digital technology. Computers process information internally using binary states. Every photo, every message, and every transaction is represented by sequences of zeros and ones.'
+      ],
       eyebrow: 'The machine calculates',
       title: 'Your name in binary',
       namesTab: 'Your name in binary',
@@ -145,7 +151,6 @@
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
     renderParagraphs('startIntro', content.start.intro);
     setText('tryLabel', content.start.ctaLabel);
@@ -154,7 +159,6 @@
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
 
-    setText('actionEyebrow', content.action.eyebrow);
     setTitle('actionTitle', content.action.title);
     setText('actionDescription', content.action.description);
     $('btnClose').setAttribute('aria-label', content.action.closeLabel);
@@ -310,7 +314,8 @@
   function applyActionLanguage() {
     const language = currentLanguage();
     const copy = ACTION_COPY[language];
-    setText('actionEyebrow', copy.eyebrow);
+    setTitle('startTitle', language === 'en' ? copy.startTitle : STATION_CONTENT.start.title);
+    renderParagraphs('startIntro', language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro);
     setTitle('actionTitle', copy.title);
     setText('tabNames', copy.namesTab);
     setText('tabDecode', copy.decodeTab);
@@ -434,10 +439,6 @@
         key.type = 'button';
         key.textContent = letter;
         key.setAttribute('aria-label', `Buchstabe ${letter}`);
-        key.addEventListener('pointerdown', event => {
-          event.preventDefault();
-          pressVirtualKey(letter);
-        });
         key.addEventListener('click', () => pressVirtualKey(letter));
         row.appendChild(key);
       });
@@ -510,7 +511,13 @@
   $('challengeInput').addEventListener('input', handleChallengeInput);
   $('challengeInput').addEventListener('focusin', () => $('challengeKeyboard').classList.remove('hidden'));
   $('challengeInput').addEventListener('click', () => $('challengeKeyboard').classList.remove('hidden'));
-  $('challengeInput').addEventListener('blur', () => $('challengeKeyboard').classList.add('hidden'));
+  $('challengeInput').addEventListener('blur', event => {
+    if ($('challengeKeyboard').contains(event.relatedTarget)) return;
+    $('challengeKeyboard').classList.add('hidden');
+  });
+  document.querySelectorAll('#challengeKeyboard .keyboard-key').forEach(key => {
+    key.addEventListener('mousedown', event => event.preventDefault());
+  });
   $('btnChallengeBackspace').addEventListener('click', () => {
     const input = $('challengeInput');
     input.value = input.value.slice(0, -1);
@@ -521,10 +528,14 @@
     $('challengeKeyboard').classList.add('hidden');
     $('challengeInput').blur();
   });
-  new MutationObserver(mutations => {
-    if (mutations.some(mutation => mutation.attributeName === 'data-language')) {
-      applyActionLanguage();
-    }
+  // The shared language switch re-sets data-language after every DOM change,
+  // so only re-render when the language actually changed (otherwise the input gets cleared).
+  let appliedLanguage = currentLanguage();
+  new MutationObserver(() => {
+    const language = currentLanguage();
+    if (language === appliedLanguage) return;
+    appliedLanguage = language;
+    applyActionLanguage();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
   applyActionLanguage();
   handleBinaryInput();

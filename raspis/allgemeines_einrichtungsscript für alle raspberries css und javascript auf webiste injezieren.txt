@@ -1,0 +1,119 @@
+#!/bin/bash
+
+set -e
+
+TARGET="$1"
+USER="admin"
+EXTDIR="$HOME/hide-scrollbar"
+
+if [ -z "$TARGET" ]; then
+    echo "Benutzung:"
+    echo "  $0 IP-ADRESSE"
+    echo
+    echo "Beispiel:"
+    echo "  $0 192.168.137.5"
+    exit 1
+fi
+
+echo "======================================"
+echo " Kiosk-Setup für $TARGET"
+echo "======================================"
+
+# Erweiterung auf Pi01 bereitstellen
+mkdir -p "$EXTDIR"
+
+cat > "$EXTDIR/manifest.json" <<'EOF'
+{
+  "manifest_version": 3,
+  "name": "Hide Scrollbars",
+  "version": "1.0",
+  "description": "Versteckt Scrollleisten im Kiosk-Modus",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["hide-scrollbar.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
+EOF
+
+cat > "$EXTDIR/hide-scrollbar.css" <<'EOF'
+html, body {
+    scrollbar-width: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+EOF
+
+echo
+echo "[1/4] Prüfe Verbindung..."
+
+ssh "$USER@$TARGET" 'echo "SSH OK auf $(hostname)"'
+
+echo
+echo "[2/4] Kopiere Scrollbar-Erweiterung..."
+
+ssh "$USER@$TARGET" 'mkdir -p ~/hide-scrollbar'
+
+scp "$EXTDIR/manifest.json" \
+    "$USER@$TARGET:~/hide-scrollbar/manifest.json"
+
+scp "$EXTDIR/hide-scrollbar.css" \
+    "$USER@$TARGET:~/hide-scrollbar/hide-scrollbar.css"
+
+echo
+echo "[3/4] Passe vorhandenen Chromium-Autostart an..."
+
+ssh "$USER@$TARGET" '
+FILE="$HOME/.config/autostart/kiosk.desktop"
+
+if [ ! -f "$FILE" ]; then
+    echo
+    echo "FEHLER:"
+    echo "$FILE wurde nicht gefunden."
+    echo "Es wurde NICHTS am Autostart geändert."
+    exit 1
+fi
+
+if grep -q -- "--load-extension=/home/admin/hide-scrollbar" "$FILE"; then
+    echo "Scrollbar-Erweiterung ist bereits eingetragen."
+else
+    cp "$FILE" "$FILE.backup"
+    sed -i "/^Exec=/ s#chromium #chromium --load-extension=/home/admin/hide-scrollbar #" "$FILE"
+    echo "Autostart angepasst."
+    echo "Backup: $FILE.backup"
+fi
+'
+
+echo
+echo "[4/4] Kontrolle..."
+
+ssh "$USER@$TARGET" '
+echo
+echo "Hostname:"
+hostname
+
+echo
+echo "Chromium:"
+which chromium
+
+echo
+echo "Autostart:"
+grep "^Exec=" ~/.config/autostart/kiosk.desktop
+
+echo
+echo "Erweiterung:"
+ls -l ~/hide-scrollbar/
+'
+
+echo
+echo "======================================"
+echo " FERTIG"
+echo "======================================"
+echo
+echo "Noch KEIN automatischer Reboot."

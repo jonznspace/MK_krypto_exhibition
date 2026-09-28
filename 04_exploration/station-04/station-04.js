@@ -44,6 +44,12 @@
     en: {
       eyebrow: 'Machine encryption',
       title: 'The Enigma',
+      startIntro: [
+        'In the early 20th century, the Enigma rotor cipher machine marked a major leap forward in message encryption.',
+        'The Enigma offered more possible settings than there are stars in our galaxy, over 150 quintillion in the standard military version. German engineer Arthur Scherbius originally developed it as a commercial product for banks and businesses seeking to protect their communications. The military later adopted the technology for its own purposes. The Enigma used rotating wheels, or rotors, that created a new mapping between letters with every keystroke. It was as if a lock changed completely after every letter.',
+        'During World War II (1939–1945), the Enigma was used for military communications by the German armed forces. It formed part of the technical infrastructure of a war waged with contempt for human life that claimed countless millions of victims.',
+        'As early as the 1930s, Polish mathematicians, including Marian Rejewski, Jerzy Różycki, and Henryk Zygalski, succeeded in mathematically analyzing how the Enigma worked. Building on this foundation, British cryptologists at Bletchley Park constructed electromechanical codebreaking machines. Alan Turing played a leading role, developing the “Turing–Welchman Bombe” with his team. The first machines entered service in 1940 and were used to crack Enigma encryption.'
+      ],
       close: 'Back to start',
       rotorRow: 'Rotors must be correctly installed and calibrated',
       rotorLabels: ['Rotor I', 'Rotor II', 'Rotor III'],
@@ -316,7 +322,6 @@
     document.title = content.meta.title;
     frame.setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
     renderParagraphs('startIntro', content.start.intro);
     setText('tryLabel', content.start.ctaLabel);
@@ -325,7 +330,6 @@
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
 
-    setText('actionEyebrow', content.action.eyebrow);
     setTitle('actionTitle', content.action.title);
     setText('rotorRowLabel', content.action.rotorRowLabel);
     setText('rotorNote', content.action.rotorNote);
@@ -350,7 +354,8 @@
     appliedLanguage = language;
     const copy = currentCopy();
 
-    setText('actionEyebrow', copy.eyebrow);
+    setTitle('startTitle', language === 'en' ? copy.title : STATION_CONTENT.start.title);
+    renderParagraphs('startIntro', language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro);
     setTitle('actionTitle', copy.title);
     $('btnClose').setAttribute('aria-label', copy.close);
     setText('rotorRowLabel', copy.rotorRow);

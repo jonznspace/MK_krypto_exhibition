@@ -1,0 +1,89 @@
+#!/bin/bash
+set -e
+
+TARGET="$1"
+USER="admin"
+
+if [ -z "$TARGET" ]; then
+    echo "Benutzung:"
+    echo "  $0 IP-ADRESSE"
+    echo
+    echo "Beispiel:"
+    echo "  $0 192.168.137.3"
+    exit 1
+fi
+
+echo "========================================"
+echo " Netzwerk-Setup für $TARGET"
+echo "========================================"
+
+ssh -t "$USER@$TARGET" '
+set -e
+
+echo
+echo "=== Rechner ==="
+hostname
+
+echo
+echo "=== Interfaces ==="
+nmcli device status
+
+ETHCON=$(nmcli -g GENERAL.CONNECTION device show eth0)
+
+if [ -z "$ETHCON" ] || [ "$ETHCON" = "--" ]; then
+    echo
+    echo "FEHLER: Keine aktive NetworkManager-Verbindung auf eth0 gefunden."
+    exit 1
+fi
+
+echo
+echo "Ethernet-Verbindung gefunden:"
+echo "$ETHCON"
+
+echo
+echo "Setze Ethernet auf never-default..."
+
+sudo nmcli connection modify "$ETHCON" ipv4.never-default yes
+
+echo
+echo "Starte Ethernet-Verbindung neu..."
+
+sudo nmcli connection down "$ETHCON"
+sudo nmcli connection up "$ETHCON"
+
+echo
+echo "=== Neue Routing-Tabelle ==="
+ip route
+
+echo
+echo "=== Internet-Test ==="
+
+if ping -c 3 -W 2 1.1.1.1; then
+    echo
+    echo "INTERNET OK"
+else
+    echo
+    echo "ACHTUNG: 1.1.1.1 nicht erreichbar."
+fi
+
+echo
+echo "=== Ethernet-Pi-Netz ==="
+ip -4 addr show eth0
+
+echo
+echo "========================================"
+echo " Netzwerk-Konfiguration abgeschlossen"
+echo "========================================"
+
+
+
+
+
+
+
+
+chmod +x ~/fix-pi-network.sh
+
+~/fix-pi-network.sh 192.168.137.3
+
+

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ETHCON=$(nmcli -g GENERAL.CONNECTION device show eth0)
+
+echo "Ethernet-Verbindung: $ETHCON"
+
+if [ -z "$ETHCON" ] || [ "$ETHCON" = "--" ]; then
+    echo "Keine aktive Ethernet-Verbindung gefunden."
+    exit 1
+fi
+
+sudo nmcli connection modify "$ETHCON" ipv4.never-default no
+sudo nmcli connection modify "$ETHCON" ipv4.route-metric 100
+
+echo "Ethernet darf jetzt Internet/Default-Route verwenden."
+echo
+echo "Aktuelle Konfiguration:"
+nmcli device status
+ip route

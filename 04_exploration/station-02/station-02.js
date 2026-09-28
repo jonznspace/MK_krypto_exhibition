@@ -42,13 +42,19 @@
       rotateLeft: 'Innere Scheibe eine Stellung nach links', rotateRight: 'Innere Scheibe eine Stellung nach rechts', closeOverlay: 'Schließen'
     },
     en: {
+      startTitle: 'The Cryptographic Dividers and the “Permutation Machine”',
+      startIntro: [
+        'Ancient methods had a drawback: once their underlying principle was known, messages could often be deciphered quickly. This gave rise to a contest between encrypting and decrypting information that continues to this day. New methods aim to make messages ever more secure, while others continually seek ways to decipher their contents.',
+        'One example is the cryptographic dividers of 1633, which use a simple mechanism: each letter of the alphabet could be converted into a line of a specific length by adjusting the distance between the instrument’s points. Sender and recipient each needed an identical instrument, as the message could only be deciphered if both used the same setting.',
+        'The “permutation machine” is a cipher device dating from 1587. Originally equipped with 24 individually rotating brass disks, it used a considerably more complex encryption method. Each disk bore 24 letters (J=I, U=V), allowing each letter in a word to be shifted by a different number of places. Without the “key”, the information specifying the positions of the disks relative to one another, and thus the shifts to apply, a message was difficult to decode. The object demonstrates an early mechanical method for systematically encrypting and decrypting language.'
+      ],
       eyebrow: 'Encrypting systematically', title: 'Permutation disc', close: 'Back to start', key: 'Key',
       encrypt: 'Encrypt', crack: 'Crack', encryptHint: 'Choose a word or enter your own letters. Set the key by turning the disc.',
       plaintext: 'Plaintext', ciphertext: 'Ciphertext', letters: 'Enter letters', clear: 'Clear',
       crackHint: 'An intercepted message. Turn the disc until a meaningful word appears.', intercepted: 'Intercepted',
       decrypted: 'Decrypted', turnKey: 'Turn the key ...', cracked: 'CRACKED · Key A → ', newMessage: 'New message',
-      more: 'More encryption methods', deepTag: 'Deep dive', deepTitle: 'More encryption methods',
-      deepText: 'Other tools made encryption more complex. These included cipher tables and codebooks, known as nomenclators, in which names, places or entire words were replaced by other symbols. From the fifteenth century onward, such methods shaped European diplomacy, which relied on dense networks of travelling messengers and envoys. Courts encrypted and decrypted intercepted messages in so-called black chambers. The Saxon court also had a black chamber located directly in the post office to inspect incoming and outgoing letters. These methods were still common during the Cold War in East Germany. Today, postal privacy is protected by the constitution, although digitisation and privatisation have weakened this protection.',
+      more: 'More encryption methods', deepTag: 'A Closer Look', deepTitle: 'Other Encryption Methods',
+      deepText: 'Other tools made encryption more complex. These included cipher tables and codebooks known as nomenclators, in which names, places, or entire words were replaced with other symbols. From the 15th century onward, such methods played a particularly important role in European diplomacy, which relied on extensive networks of traveling couriers and envoys. In “black chambers,” royal courts encrypted messages and deciphered intercepted correspondence. The Saxon court also had a “black chamber,” located within the postal office itself so that incoming and outgoing letters could be monitored. Such practices remained commonplace in East Germany during the Cold War. Today, the privacy of correspondence is explicitly protected by Germany’s constitution, although digitization and the privatization of postal and communications services are weakening that protection.',
       attract: 'Turn the disc', solvedToast: 'Message cracked', disc: 'Cryptographic disc with outer and inner alphabets. The inner disc can be rotated.',
       rotateLeft: 'Turn the inner disc one step left', rotateRight: 'Turn the inner disc one step right', closeOverlay: 'Close'
     }
@@ -61,11 +67,11 @@
     },
     start: {
       eyebrow: 'Verschlüsseln mit System',
-      title: 'kryptografischer Zirkel & Permutationsscheibe',
+      title: 'Der kryptografische Zirkel und die „Permutationsmaschine“',
       intro: [
-        'Antike Verfahren hatten einen Nachteil: War ihr Prinzip einmal bekannt, ließen sich Nachrichten oft rasch entschlüsseln. Daraus entstand ein Wettbewerb zwischen dem Verbergen und dem Entziffern von Informationen, der bis heute anhält. Neue Methoden sollen Nachrichten stets sicherer machen, zugleich wird aber ständig nach Wegen gesucht, den Inhalt doch zu entschlüsseln.',
+        'Antike Verfahren hatten einen Nachteil: War ihr Prinzip einmal bekannt, ließen sich Nachrichten oft rasch entschlüsseln. Daraus entstand ein Wettbewerb zwischen dem Chiffrieren und dem Dechiffrieren von Informationen, der bis heute anhält. Neue Methoden sollen Nachrichten stets sicherer machen, zugleich wird aber ständig nach Wegen gesucht, den Inhalt doch zu entschlüsseln.',
         'Ein Beispiel hierfür ist der kryptografische Zirkel von 1633, der einen simplen Mechanismus aufweist: Jeder Buchstabe des Alphabets konnte zu einer bestimmten Strichlänge umgewandelt werden, deren Abstand über das Gerät eingestellt wurde. Sender und Empfänger brauchten jeweils ein baugleiches Exemplar, denn nur bei identischer Einstellung ließ sich die Nachricht entschlüsseln.',
-        'Die Permutationsscheibe aus dem Jahr 1587 besaß mit ursprünglich 24 einzeln drehbaren Messingscheiben dagegen bereits ein deutlich komplexeres Verschlüsselungsverfahren. Jede der Scheiben war mit 24 Buchstaben (J=I, U=V) versehen, sodass jeder Buchstabe eines zu verschlüsselnden Wortes einen eigenen Verschiebungswert aufweisen konnte. Ohne den „Schlüssel“, also die Information zur Positionierung der Scheiben zueinander (= den Verschiebungscode), war eine Nachricht nur schwerlich zu dekodieren. Das Objekt zeigt damit ein frühes mechanisches Verfahren, Sprache systematisch zu verschlüsseln und wieder zu entschlüsseln.'
+        'Die „Permutationsmaschine“ ist ein Chiffriergerät aus dem Jahr 1587. Es besaß mit ursprünglich 24 einzeln drehbaren Messingscheiben bereits ein deutlich komplexeres Verschlüsselungsverfahren. Jede der Scheiben war mit 24 Buchstaben (J=I, U=V) versehen, sodass jeder Buchstabe eines zu verschlüsselnden Wortes einen eigenen Verschiebungswert aufweisen konnte. Ohne den „Schlüssel“, also die Information zur Positionierung der Scheiben zueinander (= den Verschiebungscode), war eine Nachricht nur schwerlich zu dekodieren. Das Objekt zeigt damit ein frühes mechanisches Verfahren, Sprache systematisch zu verschlüsseln und wieder zu entschlüsseln.'
       ],
       image: {
         src: '../station-02/dither-output.png',
@@ -143,7 +149,6 @@
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
     renderParagraphs('startIntro', content.start.intro);
     setText('tryLabel', content.start.ctaLabel);
@@ -152,7 +157,6 @@
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
 
-    setText('actionEyebrow', content.action.eyebrow);
     setTitle('actionTitle', content.action.title);
     $('btnClose').setAttribute('aria-label', content.action.closedLabel);
 
@@ -333,7 +337,8 @@
     appliedLanguage = language;
     const copy = currentCopy();
 
-    setText('actionEyebrow', copy.eyebrow);
+    setTitle('startTitle', language === 'en' ? copy.startTitle : STATION_CONTENT.start.title);
+    renderParagraphs('startIntro', language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro);
     setTitle('actionTitle', copy.title);
     btnClose.setAttribute('aria-label', copy.close);
     svg.setAttribute('aria-label', copy.disc);

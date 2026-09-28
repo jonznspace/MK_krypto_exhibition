@@ -1,0 +1,128 @@
+LETZTES FINALES EINRICHTUNGSSCRIPT: 
+
+https://timechainmap.com/map/
+
+https://www.blockchain.com/de/explorer/mempool/btc
+
+https://mempool.space/de/mempool-block/0
+
+https://bitcoin.now/bitcoin-supply
+
+
+
+
+#!/bin/bash
+set -e
+
+URL="$1"
+
+if [ -z "$URL" ]; then
+    echo "FEHLER: Keine URL angegeben."
+    echo "Beispiel:"
+    echo "./setup-kiosk.sh https://timechainmap.com/map/"
+    exit 1
+fi
+
+HOME_DIR="/home/admin"
+EXT_DIR="$HOME_DIR/hide-scrollbar"
+AUTOSTART_DIR="$HOME_DIR/.config/autostart"
+
+echo "========================================"
+echo " Kiosk wird eingerichtet"
+echo " URL: $URL"
+echo "========================================"
+
+# Alte Kiosk-Chromium-Prozesse beenden
+pkill -f "$HOME_DIR/kiosk-profile" 2>/dev/null || true
+
+# --------------------------------------------------
+# 1. Scrollbar-Erweiterung
+# --------------------------------------------------
+
+mkdir -p "$EXT_DIR"
+
+cat > "$EXT_DIR/manifest.json" <<'EOF'
+{
+  "manifest_version": 3,
+  "name": "Hide Scrollbars",
+  "version": "1.0",
+  "description": "Versteckt Scrollleisten im Kiosk-Modus",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["hide-scrollbar.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
+EOF
+
+cat > "$EXT_DIR/hide-scrollbar.css" <<'EOF'
+html, body {
+    scrollbar-width: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+EOF
+
+# --------------------------------------------------
+# 2. Kiosk-Startscript
+# --------------------------------------------------
+
+cat > "$HOME_DIR/kiosk.sh" <<EOF
+#!/bin/bash
+
+URL="$URL"
+
+sleep 3
+
+pkill -f "$HOME_DIR/kiosk-profile" 2>/dev/null || true
+
+sleep 2
+
+exec /usr/bin/chromium \\
+  --user-data-dir="$HOME_DIR/kiosk-profile" \\
+  --load-extension="$EXT_DIR" \\
+  --password-store=basic \\
+  --kiosk \\
+  --noerrdialogs \\
+  "\$URL"
+EOF
+
+chmod +x "$HOME_DIR/kiosk.sh"
+
+# --------------------------------------------------
+# 3. Autostart
+# --------------------------------------------------
+
+mkdir -p "$AUTOSTART_DIR"
+
+cat > "$AUTOSTART_DIR/kiosk.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Museum Kiosk
+Exec=$HOME_DIR/kiosk.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+echo
+echo "========================================"
+echo " FERTIG"
+echo "========================================"
+echo
+echo "Kiosk:"
+cat "$AUTOSTART_DIR/kiosk.desktop"
+echo
+echo "Website:"
+echo "$URL"
+echo
+echo "Scrollbar-Erweiterung:"
+ls -l "$EXT_DIR"
+echo
+echo "Jetzt neu starten mit:"
+echo "sudo reboot"

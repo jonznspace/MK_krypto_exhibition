@@ -1,0 +1,233 @@
+
+===================== Allgemein
+Sun 27 Sep 01:56:29 CEST 2026
+raspi-03
+ 01:56:29 up 2 min,  2 users,  load average: 2.71, 1.62, 0.64
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+User: admin  Session: wayland  Desktop: labwc:wlroots
+/usr/bin/labwc
+/usr/bin/chromium
+/usr/bin/python3
+Chromium 149.0.7827.114 built on Debian GNU/Linux 13 (trixie)
+
+===================== Laufende Prozesse (Browser/Kiosk/Python/Autostart)
+    618     606       02:19 avahi-daemon: chroot helper
+    901     859       02:11 /usr/bin/labwc -m
+    961     901       02:11 /usr/bin/ssh-agent /usr/bin/labwc-pi
+   1085       1       02:07 /bin/bash /home/admin/kiosk/start.sh
+   1392    1085       01:49 python3 /home/admin/kiosk/helper.py
+   1395    1085       01:48 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --use-angle=gles --kiosk --user-data-dir=/home/admin/kiosk/profile --remote-debugging-port=9222 -
+   1421       1       01:43 /usr/lib/chromium/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/admin/.config/chromium/Crash Reports --annotation=channel=built on Debian GNU/Linux 13 (trixie) --annotation=lsb-release=Debian GNU/Linux 13 (trixie) --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=149.0.7827.114 --initial-cl
+   1423       1       01:42 /usr/lib/chromium/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/admin/.config/chromium/Crash Reports --annotation=channel=built on Debian GNU/Linux 13 (trixie) --annotation=lsb-release=Debian GNU/Linux 13 (trixie) --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=149.0.7827.114 --initi
+   1427    1395       01:42 /usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-stack-guard-on-fork=enable
+   1428    1395       01:42 /usr/lib/chromium/chromium --type=zygote --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-stack-guard-on-fork=enable
+   1431    1428       01:40 /usr/lib/chromium/chromium --type=zygote --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-stack-guard-on-fork=enable
+   1477    1431       01:06 /usr/lib/chromium/chromium --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-GB --service-sandbox-type=utility --disable-dev-shm-usage --use-angle=gles --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-
+   1520    1431       01:02 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-stack-guard-on-fork=enable --disable-dev-shm-usage --force-device-scale-factor=1 --remote-debugging-port=9222 --ozone-platform=wayland --lang=en-GB --num-raster-threads=2 --en
+   1529    1395       01:01 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --render-node-override=/dev/dri/renderD128 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-sta
+   1553    1427       01:00 /usr/lib/chromium/chromium --type=gpu-process --disable-dev-shm-usage --enable-gpu-rasterization --ozone-platform=wayland --render-node-override=/dev/dri/renderD128 --use-angle=gles --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --user-data-dir=/home/admin/kiosk/profile --change-stack-guard-on-fork=enable --gpu-pre
+   1556    1553       01:00 /usr/lib/chromium/chromium --type=broker
+   1584    1578       00:00 bash /media/admin/B048-F42F/diagnose.sh
+
+===================== Kiosk-Logs
+total 32
+drwxrwxr-x  3 admin admin 4096 Sep 27 01:40 .
+drwx------ 18 admin admin 4096 Sep 27 01:54 ..
+-rw-rw-r--  1 admin admin 1228 Sep 27 01:56 helper.log
+-rw-rw-r--  1 admin admin 5399 Sep 27 01:38 helper.py
+drwx------ 33 admin admin 4096 Sep 27 01:56 profile
+-rw-rw-r--  1 admin admin 2476 Sep 27 01:55 start.log
+-rwxrwxr-x  1 admin admin 1553 Sep 27 01:38 start.sh
+--- /home/admin/kiosk/start.log
+Sun 27 Sep 01:54:03 CEST 2026 Start
+Sun 27 Sep 01:54:35 CEST 2026 Uhrzeit: yes
+Sun 27 Sep 01:54:37 CEST 2026 Netz-Check fertig
+Sun 27 Sep 01:54:41 CEST 2026 Chromium startet
+
+DevTools listening on ws://127.0.0.1:9222/devtools/browser/4fb4f637-a613-48d8-82b9-a059804be62a
+[1459:1459:0927/015526.114602:ERROR:ui/gl/egl_util.cc:92] EGL Driver message (Error) eglCreateContext: Requested version is not supported
+[1459:1459:0927/015526.115346:ERROR:ui/gl/gl_context_egl.cc:374] eglCreateContext ES 3.0 failed with error EGL_BAD_ATTRIBUTE
+[1459:1459:0927/015526.177645:ERROR:ui/gl/egl_util.cc:92] EGL Driver message (Error) eglCreateContext: Requested version is not supported
+[1459:1459:0927/015526.178090:ERROR:ui/gl/gl_context_egl.cc:363] eglCreateContext ES 3.0 failed with error EGL_BAD_ATTRIBUTE. ES version fallback is disabled.
+[1459:1459:0927/015526.178362:ERROR:gpu/config/gpu_info_collector.cc:100] gl::init::CreateGLContext failed
+[1459:1459:0927/015526.178633:ERROR:gpu/config/gpu_info_collector.cc:602] Could not create context for info collection.
+[1459:1459:0927/015526.178878:ERROR:gpu/ipc/service/gpu_init.cc:117] CollectGraphicsInfo failed.
+[1459:1459:0927/015526.220455:ERROR:components/viz/service/main/viz_main_impl.cc:190] Exiting GPU process due to errors during initialization
+[1395:1395:0927/015528.567649:ERROR:content/browser/network_service_instance_impl.cc:722] Network service crashed or was terminated, restarting service.
+[1526:1526:0927/015529.000982:ERROR:ui/gl/egl_util.cc:92] EGL Driver message (Error) eglCreateContext: Requested version is not supported
+[1526:1526:0927/015529.001490:ERROR:ui/gl/gl_context_egl.cc:374] eglCreateContext ES 3.0 failed with error EGL_BAD_ATTRIBUTE
+[1526:1526:0927/015529.006102:ERROR:ui/gl/egl_util.cc:92] EGL Driver message (Error) eglCreateContext: Requested version is not supported
+[1526:1526:0927/015529.006598:ERROR:ui/gl/gl_context_egl.cc:363] eglCreateContext ES 3.0 failed with error EGL_BAD_ATTRIBUTE. ES version fallback is disabled.
+[1526:1526:0927/015529.006872:ERROR:gpu/config/gpu_info_collector.cc:100] gl::init::CreateGLContext failed
+[1526:1526:0927/015529.007041:ERROR:gpu/config/gpu_info_collector.cc:602] Could not create context for info collection.
+[1526:1526:0927/015529.007214:ERROR:gpu/ipc/service/gpu_init.cc:117] CollectGraphicsInfo failed.
+[1526:1526:0927/015529.014285:ERROR:components/viz/service/main/viz_main_impl.cc:190] Exiting GPU process due to errors during initialization
+--- /home/admin/kiosk/helper.log
+01:54:42 Kiosk-Helfer gestartet
+01:54:42 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:54:45 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:54:48 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:54:51 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:54:54 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:54:57 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:00 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:04 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:07 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:18 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:21 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:24 warte auf Chromium ... URLError <urlopen error [Errno 111] Connection refused>
+01:55:32 verbunden, CSS aktiv
+01:55:47 Start-Reload (F5) gemacht
+01:56:04 Seite: blank (1x)
+01:56:19 Seite: blank (2x)
+01:56:19 neu geladen
+--- /home/admin/kiosk/start.sh
+#!/bin/bash
+URL="https://timechainmap.com/map/"
+ZOOM="1"
+BROWSER="/usr/bin/chromium"
+K="/home/admin/kiosk"
+PROFILE="$K/profile"
+exec > "$K/start.log" 2>&1
+echo "$(date) Start"
+
+# 1) Warten bis die Uhrzeit per Internet gestellt ist (max. 60 s)
+for i in $(seq 1 60); do
+    [ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null)" = "yes" ] && break
+    sleep 1
+done
+echo "$(date) Uhrzeit: $(timedatectl show -p NTPSynchronized --value 2>/dev/null)"
+
+# 2) Warten bis die Website antwortet (max. 60 s)
+for i in $(seq 1 20); do
+    curl -s -o /dev/null --max-time 3 "$URL" && break
+    sleep 1
+done
+echo "$(date) Netz-Check fertig"
+sleep 3
+
+# 3) Helfer starten (Scrollbalken/Maus weg, Auto-F5)
+pkill -f "$K/helper.py" 2>/dev/null
+python3 "$K/helper.py" > "$K/helper.log" 2>&1 &
+
+# 4) Chromium starten - und neu starten, falls er abstuerzt
+while true; do
+    # "Chromium wurde nicht richtig beendet"-Leiste verhindern
+    PREF="$PROFILE/Default/Preferences"
+    [ -f "$PREF" ] && sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]*"/"exit_type":"Normal"/' "$PREF"
+
+    echo "$(date) Chromium startet"
+    "$BROWSER" --kiosk \
+        --user-data-dir="$PROFILE" \
+        --remote-debugging-port=9222 \
+        --hide-scrollbars \
+        --force-device-scale-factor="$ZOOM" \
+        --noerrdialogs --disable-infobars --disable-session-crashed-bubble \
+        --no-first-run --password-store=basic \
+        --check-for-update-interval=31536000 \
+        "$URL"
+    echo "$(date) Chromium beendet (Code $?)"
+    sleep 5
+done
+
+===================== Chromium DevTools (Port 9222)
+[ {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@5be7af702aa73ed64f47858cecc86290e42f2a20/inspector.html?ws=127.0.0.1:9222/devtools/page/9EA38A9BB0B0008D189CC9DF308F1858",
+   "id": "9EA38A9BB0B0008D189CC9DF308F1858",
+   "title": "",
+   "type": "page",
+   "url": "",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/9EA38A9BB0B0008D189CC9DF308F1858"
+} ]
+
+===================== Autostart-Dateien
+total 16
+drwxrwxr-x  2 admin admin 4096 Sep 27 01:38 .
+drwxrwxr-x 18 admin admin 4096 Sep 27 01:39 ..
+-rw-rw-r--  1 admin admin  122 Sep 27 01:38 kiosk.desktop
+-rw-rw-r--  1 admin admin  162 Sep 27 00:07 kiosk.desktop.backup
+--- /home/admin/.config/autostart/kiosk.desktop
+[Desktop Entry]
+Type=Application
+Name=Kiosk
+Exec=/home/admin/kiosk/start.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+--- /etc/xdg/labwc/autostart
+/usr/bin/lwrespawn /usr/bin/pcmanfm-pi &
+/usr/bin/lwrespawn /usr/bin/wf-panel-pi &
+/usr/bin/kanshi &
+/usr/bin/lxsession-xdg-autostart
+total 84
+drwxr-xr-x  2 root root 4096 Jun 18 02:33 .
+drwxr-xr-x 17 root root 4096 Jun 18 02:23 ..
+-rw-r--r--  1 root root  167 Nov  5  2024 autotouch.desktop
+-rw-r--r--  1 root root  204 Jun 12 10:41 env-display.desktop
+-rw-r--r--  1 root root 8877 Mar 20  2025 gnome-keyring-pkcs11.desktop
+-rw-r--r--  1 root root 8341 Mar 20  2025 gnome-keyring-secrets.desktop
+-rw-r--r--  1 root root 6825 Mar 20  2025 gnome-keyring-ssh.desktop
+-rw-r--r--  1 root root 2640 Aug  5  2025 lxpolkit.desktop
+-rw-r--r--  1 root root 7775 Aug 11  2023 polkit-mate-authentication-agent-1.desktop
+-rw-r--r--  1 root root  172 Oct 10  2025 pprompt.desktop
+-rw-r--r--  1 root root  192 Jun 12 10:41 pwrkey.desktop
+-rw-r--r--  1 root root  139 Jun 18 02:24 squeekboard.desktop
+-rw-r--r--  1 root root  118 Jun 12 10:41 xcompmgr.desktop
+-rw-r--r--  1 root root  212 Dec 20  2024 xdg-user-dirs.desktop
+-rw-r--r--  1 root root  184 Jun 12 10:41 xwayauth.desktop
+
+===================== Wo steht sonst noch chromium/kiosk drin?
+/home/admin/.config/autostart/kiosk.desktop
+/home/admin/.config/autostart/kiosk.desktop.backup
+
+===================== crontab / systemd
+no crontab for admin
+  app-org.chromium.Chromium-1395.scope                                                                                             loaded    active   running   app-org.chromium.Chromium-1395.scope
+
+===================== Home-Verzeichnis
+total 12904
+drwx------ 18 admin admin     4096 Sep 27 01:54 .
+drwxr-xr-x  3 root  root      4096 Jun 18 02:34 ..
+-rw-------  1 admin admin     1719 Sep 27 01:39 .bash_history
+-rw-r--r--  1 admin admin      220 Jun 18 02:20 .bash_logout
+-rw-r--r--  1 admin admin     3523 Jun 18 02:20 .bashrc
+drwx------  4 admin admin     4096 Sep 26 23:01 .cache
+-rw-rw-r--  1 admin admin        0 Jul 22 17:20 .cloud-locale-test.skip
+drwxrwxr-x 18 admin admin     4096 Sep 27 01:39 .config
+drwxrwxr-x  2 admin admin     4096 Jun 18 02:34 Desktop
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Documents
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Downloads
+drwxrwxr-x  3 admin admin     4096 Sep 27 01:40 kiosk
+drwxrwxr-x  3 admin admin     4096 Sep 27 01:07 kiosk-backup-20260927-010758
+drwxrwxr-x  3 admin admin     4096 Sep 27 01:20 kiosk-backup-20260927-012020
+drwxrwxr-x  3 admin admin     4096 Sep 27 01:38 kiosk-backup-20260927-013813
+drwx------  4 admin admin     4096 Jun 18 02:34 .local
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Music
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Pictures
+-rw-r--r--  1 admin admin      807 Jun 18 02:20 .profile
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Public
+drwx------  2 admin admin     4096 Sep 26 16:33 .ssh
+-rwxrwxr-x  1 admin admin      437 Jul 22 16:42 start-video.sh
+-rw-r--r--  1 admin admin        0 Jul 22 13:04 .sudo_as_admin_successful
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Templates
+-rw-r--r--  1 admin admin 13099960 Jul 16 14:19 video.mp4
+drwxr-xr-x  2 admin admin     4096 Jun 18 02:34 Videos
+-rw-------  1 admin admin       53 Sep 27 01:54 .Xauthority
+-rw-------  1 admin admin     3643 Sep 27 01:55 .xsession-errors
+-rw-------  1 admin admin     5661 Sep 27 01:53 .xsession-errors.old
+
+===================== Netz / Zeit
+               Local time: Sun 2026-09-27 01:56:31 CEST
+           Universal time: Sat 2026-09-26 23:56:31 UTC
+                 RTC time: n/a
+                Time zone: Europe/Berlin (CEST, +0200)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+    inet 127.0.0.1/8 scope host lo
+    inet 192.168.137.4/24 brd 192.168.137.255 scope global noprefixroute eth0
+    inet 192.168.179.14/24 brd 192.168.179.255 scope global dynamic noprefixroute wlan0
+default via 192.168.179.1 dev wlan0 proto dhcp src 192.168.179.14 metric 600 
+192.168.137.0/24 dev eth0 proto kernel scope link src 192.168.137.4 metric 100 
+192.168.179.0/24 dev wlan0 proto kernel scope link src 192.168.179.14 metric 600 
+HTTP 200 in 0.238652s

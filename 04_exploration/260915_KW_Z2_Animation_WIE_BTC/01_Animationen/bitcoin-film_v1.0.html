@@ -57,8 +57,8 @@
    Targets (Elemente der Karte und der Kapitel):
      map, zoneLeft, zoneMid, zoneRight, rail, point, entry (neuer
      Eintrag auf allen Kopien), slipEntry (Zeile auf dem Zettel links)
-     Kapitel 1: k1Carola, k1Albert, k1Phone, k1PhoneLabel, k1List,
-     k1ListLine, k1Bank
+     Kapitel 1: k1Carola, k1Albert, k1Phone, k1PhoneLabel, k1PhoneLabelText,
+     k1List, k1ListLine, k1Bank
      Kapitel 2: privateKey (Schlüssel links, beweglich), k2Engraving,
      k2Wallet, k2Signature, k2PublicKey, k2Check, k2Link, waitArea
      Kapitel 3: k3Slip1 bis k3Slip4 (Zettel im Wartebereich), k3Block (der
@@ -101,6 +101,7 @@ const SCRIPT = {
     { t: 19,   ch: 1, name: "k1-liste-weg",     action: "hide",   target: "k1List", dur: "d3" },
     { t: 19.2, ch: 1, name: "k1-kopien",        action: "show",   target: "map", dur: 0 },
     { t: 19.2, ch: 1, name: "k1-fokus-netz",    action: "focus",  target: "mid", dur: 0 },
+    { t: 19.2, ch: 1, name: "k1-sendet-btc",    action: "rewrite", target: "k1PhoneLabelText", from: "sendet Geld", to: "sendet Bitcoin", dur: 1 },
     { t: 19.5, ch: 1, name: "k1-text-2",        action: "text",   text: "Als dezentrales System ermöglicht Bitcoin es, Transaktionen ohne eine Bank durchzuführen.", hold: 7 },
     /* Sehen 3: neuer Eintrag auf allen Kopien gleichzeitig, Kamera zoomt in die dezentrale Seite */
     { t: 27.5, ch: 1, name: "k1-eintrag",       action: "show",   target: "entry", dur: "d4" },
@@ -1195,7 +1196,7 @@ body.dev #clickMarker { display: block; }
     const gP = grp("k1Phone");
     icon("mobile", xCarola + SP[9], cy - SP[6], 2.5, gP);
     const gPL = grp("k1PhoneLabel");
-    const lbl = svg("text", { x: xCarola + SP[9] + SP[7], y: cy - SP[6] + SP[2], class: "caption" }, gPL); lbl.textContent = "sendet Geld";
+    const lbl = svg("text", { x: xCarola + SP[9] + SP[7], y: cy - SP[6] + SP[2], class: "caption", id: "k1PhoneLabelText" }, gPL); lbl.textContent = "sendet Geld";
     /* Albert */
     const gA = grp("k1Albert");
     icon("user", xAlbert, cy, 4, gA);

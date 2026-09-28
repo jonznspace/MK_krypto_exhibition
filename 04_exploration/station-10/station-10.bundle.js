@@ -1,16 +1,4 @@
-/* Bundled JS for Station 09 — concatenation of base + station templates */
-/* --- base.js --- */
-// Minimal base behaviors for station pages
-document.addEventListener('DOMContentLoaded',()=>{
-  // Simple content binding helpers for the template
-  const bind = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
-  // Default demo content (override in station-specific script)
-  bind('startEyebrow',' ');
-  bind('startTitle','Titel der Station 08');
-  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Ein einführender Text für Station 08. Ersetze diesen Inhalt mit station-spezifischem JS.</p>';
-});
-
-/* --- station-01.js (rendering + content) --- */
+/* Station 8 content and overlay */
 (function () {
   const STATION_CONTENT = {
     meta: {
@@ -19,21 +7,50 @@ document.addEventListener('DOMContentLoaded',()=>{
     },
     start: {
       eyebrow: 'Scheitern ohne Regeln',
-      title: 'Tablet 8 [Station 08] – Zu viel Papier, zu wenig Vertrauen: Palmstruch und die Stockholms Banco',
+      title: 'Palmstruch und die Stockholms Banco',
       intro: [
         'Schweden bezahlte im 17. Jahrhundert mit Kupferplatten. Sie wogen bis zu 20 Kilogramm, was das Problem unmittelbar verdeutlicht: Dieses Geld war schwer, unhandlich und im Alltag kaum zu gebrauchen.',
-        'Johan Palmstruch, ein aus Riga stammender Kaufmann, erhielt 1656 vom schwedischen König die Genehmigung, eine Bank zu gründen. Palmstruchs Idee war progressiv: Statt die schweren Platten herumzutragen, sollten Papierscheine deren Wert verbürgen. Wer Kupfer bei der „Stockholms Banco“ einlagerte, bekam dafür einen Kreditzettel. Damit entstand das erste Papiergeld Europas.',
-        'Anfangs funktionierte das System. Die Zettel waren viel leichter und handlicher als die Platten. Der Zahlungsverkehr konnte zudem schneller abgewickelt werden. Doch es fehlte als essenzieller Bestandteil eine Regulierung der Emissionen: Niemand kontrollierte, wie viele Scheine die Bank ausgab. Palmstruch ließ mehr Zettel drucken, als durch Einlagen gedeckt waren. Als sich das herumsprach, wollten alle gleichzeitig ihre Scheine gegen Kupfer eintauschen. Die Bank konnte diesen Forderungen nicht nachkommen. 1668 brach sie schließlich zusammen. Palmstruch wurde zunächst zum Tode verurteilt, später aber zu einer Gefängnisstrafe begnadigt.',
+        'Johan Palmstruch (1611-1671), ein aus Riga stammender Kaufmann, erhielt 1656 vom schwedischen König die Genehmigung, eine Bank zu gründen. Ab 1661 gab die Stockholm Banco sogenannte Kreditzettel aus, die ersten Banknoten Europas. Sie erleichterten Zahlungen, ohne dass die schweren Kupferplatten bei jedem Geschäft transportiert und übergeben werden mussten. Die Scheine waren nicht an eine bestimmte Kupfereinlage gebunden, sondern wurden als Kredite ausgegeben. Die Bank versprach, sie auf Verlangen in Münzgeld einzulösen. Damit entstand das erste Papiergeld Europas.',
+        'Anfangs funktionierte das System. Die Zettel waren viel leichter und handlicher als die Platten. Der Zahlungsverkehr konnte zudem schneller abgewickelt werden. Doch es fehlte als essenzieller Bestandteil eine Regulierung der Emissionen: Niemand kontrollierte, wie viele Scheine die Bank ausgab. Palmstruch ließ mehr drucken, als durch Einlagen gedeckt waren. Als sich das herumsprach und das Vertrauen in die Einlösbarkeit schwand, verlangten viele Menschen gleichzeitig Münzgeld für ihre Scheine zurück. Diesen Forderungen konnte die Bank nicht nachkommen. Bereits 1664 ordnete die Regierung an, die ausgegebenen Kredite zurückzufordern und die Banknoten einzuziehen. Palmstruch wurde zunächst zum Tode verurteilt, später aber zu einer Gefängnisstrafe begnadigt.',
         'Aus diesem Scheitern zog Schweden eine Konsequenz: Die Leitung der Nachfolgeeinrichtung der Stockholms Banco, die Riksens Ständers Bank, die heutige Schwedische Nationalbank (Sveriges Riksbank), wurde nicht mehr einem privaten Unternehmer überlassen, sondern unter die Aufsicht des Parlaments gestellt. Sie gilt als älteste noch bestehende Zentralbank der Welt.'
       ],
-      image: { src: '../station-04/img/eknigma02.png', alt: '' }
+      image: { src: 'dither-output.png', alt: '' }
     },
     action: {
       eyebrow: 'Vorlage',
       title: 'Ausprobieren',
       description: 'Platzhalterbereich ohne Zirkel-Logik. Diesen Bereich kannst du als Basis für neue Stationen nutzen.',
       closeLabel: 'Zur Startansicht',
-      deepening: { tag: 'Vertiefung', title: 'Bank Runs – damals und heute', paragraphs: ['Was 1668 in Stockholm geschah, hat einen Namen, der bis heute verwendet wird: Bank Run. So bezeichnet man den Ansturm auf eine Bank, wenn das Vertrauen schwindet und zu viele Menschen gleichzeitig ihr Geld abheben wollen. Das Muster wiederholt sich in der Geschichte des Geldes regelmäßig: Immer dann, wenn mehr Geld produziert wird, als gedeckt ist, und wenn dieses Missverhältnis sichtbar wird, bricht das Vertrauen seitens der Gesellschaft zusammen – oft innerhalb von Stunden.', 'Im Bereich digitaler Token ist dieselbe Dynamik zu beobachten. Im Mai 2022 verlor der sogenannte Stablecoin TerraUSD innerhalb weniger Tage seine Bindung an den US-Dollar. Das System brach zusammen, der zugehörige Token Luna wurde praktisch wertlos. Schätzungen zufolge gingen dabei Vermögenswerte in Höhe von rund 40 Milliarden US-Dollar verloren.', 'Anders als bei Banken gab es bei TerraUSD keine Einlagensicherung, keine Aufsichtsbehörde, die hätte eingreifen können, keinen Staat, der haftete. Es ist einer der Gründe, warum die Europäische Union mit der MiCA-Verordnung inzwischen versucht, regulatorische Rahmen zu schaffen. Dies ist vergleichbar mit der Konsequenz, die Schweden 1668 zog, als es die Bankaufsicht dem Parlament unterstellte.'] }
+      deepening: {
+        tag: 'Vertiefung',
+        title: 'Bank Runs – damals und heute',
+        paragraphs: [
+          'Was in den 1660ern in Stockholm geschah, hat einen Namen, der bis heute verwendet wird: Bank Run. So bezeichnet man den Ansturm auf eine Bank, wenn das Vertrauen schwindet und zu viele Menschen gleichzeitig ihr Geld abheben wollen. Kann die Bank die Forderungen nicht schnell genug erfüllen, verstärkt dies die Verunsicherung.',
+          'Im Bereich digitaler Token ist dieselbe Dynamik zu beobachten. Im Mai 2022 verlor der sogenannte Stablecoin TerraUSD innerhalb weniger Tage seine Bindung an den US-Dollar. Das System brach zusammen, der zugehörige Token Luna wurde praktisch wertlos. Schätzungen zufolge gingen dabei Vermögenswerte in Höhe von rund 45 Milliarden US-Dollar verloren.',
+          'Anders als bei Banken gab es bei TerraUSD jedoch keine Einlagensicherung, keine Aufsichtsbehörde, die hätte eingreifen können, keinen Staat, der haftete. Es ist einer der Gründe, warum die Europäische Union mit der MiCA-Verordnung Regulierungsstrukturen schafft. Dies ist vergleichbar mit der Konsequenz, die Schweden 1668 zog, als es die Bankaufsicht dem Parlament unterstellte.'
+        ]
+      }
+    }
+  };
+
+  const ENGLISH_CONTENT = {
+    start: {
+      title: 'Palmstruch and Stockholms Banco',
+      intro: [
+        'In the 17th century, Sweden used copper plates as money. They weighed up to 20 kilograms, making the problem immediately apparent: this money was heavy, cumbersome, and barely practical for everyday use.',
+        'In 1656, Johan Palmstruch, a merchant from Riga, received permission from the Swedish king to establish a bank. From 1661, Stockholms Banco issued what were known as credit notes; Europe’s first banknotes. They made payments easier, removing the need to transport and hand over heavy copper plates with every transaction. The notes were not tied to a specific copper deposit but were issued as loans. The bank promised to redeem them in coins on demand. This marked the beginning of paper money in Europe.',
+        'At first, the system worked. The notes were much lighter and easier to handle than the plates. Payments could also be processed more quickly. But an essential safeguard was missing: regulation of the issuance of banknotes. No one controlled how many notes the bank issued. Palmstruch had printed more than were backed by deposits. When word spread and confidence in their redeemability declined, many people demanded coins for their notes at the same time. The bank could not meet these demands. As early as 1664, the government ordered the bank to call in its loans and withdraw its banknotes from circulation. Palmstruch was initially sentenced to death, but his sentence was later commuted to imprisonment.',
+        'Sweden drew a lesson from this failure: the management of Stockholms Banco’s successor, Riksens Ständers Bank, today Sweden’s central bank, Sveriges Riksbank, was placed under parliamentary oversight rather than entrusted to a private entrepreneur. It is regarded as the world’s oldest surviving central bank.'
+      ]
+    },
+    deepening: {
+      tag: 'A Closer Look',
+      title: 'Bank Runs—Then and Now',
+      paragraphs: [
+        'What happened in Stockholm in the 1660s has a name still used today: a bank run. This occurs when confidence in a bank declines and too many people try to withdraw their money at the same time. If the bank cannot meet these demands quickly enough, uncertainty intensifies.',
+        'The same dynamic can be observed with digital tokens. In May 2022, the stablecoin TerraUSD lost its peg to the US dollar within a matter of days. The system collapsed, and its associated token, Luna, became virtually worthless. An estimated $45 billion in asset value was lost.',
+        'Unlike banks, however, TerraUSD had no deposit insurance, no supervisory authority that could have intervened, and no government liable for the losses. This is one reason why the European Union is establishing a regulatory framework through its Markets in Crypto-Assets Regulation (MiCA). A parallel can be drawn with Sweden’s response in 1668, when it placed bank oversight under parliament.'
+      ]
     }
   };
 
@@ -70,22 +87,23 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 
-  function renderStation(content) {
+  function renderStation(content, language) {
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setText('startEyebrow', content.start.eyebrow);
-    setTitle('startTitle', content.start.title);
-    renderParagraphs('startIntro', content.start.intro);
+    const start = language === 'en' ? ENGLISH_CONTENT.start : content.start;
+    const deepening = language === 'en' ? ENGLISH_CONTENT.deepening : content.action.deepening;
+    setTitle('startTitle', start.title);
+    renderParagraphs('startIntro', start.intro);
 
     const startImage = $('startImage');
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
 
     // also populate overlay content
-    const ovTag = document.getElementById('ovTag'); if(ovTag) ovTag.textContent = content.action.deepening.tag;
-    const ovTitle = document.getElementById('ovTitle'); if(ovTitle) ovTitle.textContent = content.action.deepening.title;
-    const ovBody = document.getElementById('ovBody'); if(ovBody) { ovBody.innerHTML = ''; content.action.deepening.paragraphs.forEach(p=>{ const el=document.createElement('p'); el.textContent=p; ovBody.appendChild(el); }); }
+    const ovTag = document.getElementById('ovTag'); if(ovTag) ovTag.textContent = deepening.tag;
+    const ovTitle = document.getElementById('ovTitle'); if(ovTitle) ovTitle.textContent = deepening.title;
+    const ovBody = document.getElementById('ovBody'); if(ovBody) { ovBody.innerHTML = ''; deepening.paragraphs.forEach(p=>{ const el=document.createElement('p'); el.textContent=p; ovBody.appendChild(el); }); }
   }
 
   // Deepen button opens the overlay directly over the start screen
@@ -98,14 +116,16 @@ document.addEventListener('DOMContentLoaded',()=>{
     const overlay = document.getElementById('overlay');
     if(overlay){ overlay.addEventListener('click', event=>{ if(event.target === overlay && ovClose) ovClose.click(); }); }
 
-  renderStation(STATION_CONTENT);
-})();
+  let appliedLanguage = null;
+  function applyLanguage() {
+    const language = document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+    if (language === appliedLanguage) return;
+    appliedLanguage = language;
+    renderStation(STATION_CONTENT, language);
+  }
 
-/* --- Station 10 start-screen content --- */
-document.addEventListener('DOMContentLoaded',()=>{
-  const set = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
-  set('startEyebrow','Zu viel Papier, zu wenig Vertrauen');
-  set('startTitle','Palmstruch und die Stockholms Banco');
-  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Schweden bezahlte im 17. Jahrhundert mit Kupferplatten. Sie wogen bis zu 20 Kilogramm, was das Problem unmittelbar verdeutlicht: Dieses Geld war schwer, unhandlich und im Alltag kaum zu gebrauchen.</p><p>Johan Palmstruch, ein aus Riga stammender Kaufmann, erhielt 1656 vom schwedischen König die Genehmigung, eine Bank zu gründen. Palmstruchs Idee war progressiv: Statt die schweren Platten herumzutragen, sollten Papierscheine deren Wert verbürgen. Wer Kupfer bei der „Stockholms Banco“ einlagerte, bekam dafür einen Kreditzettel. Damit entstand das erste Papiergeld Europas.</p><p>Anfangs funktionierte das System. Die Zettel waren viel leichter und handlicher als die Platten. Der Zahlungsverkehr konnte zudem schneller abgewickelt werden. Doch es fehlte als essenzieller Bestandteil eine Regulierung der Emissionen: Niemand kontrollierte, wie viele Scheine die Bank ausgab. Palmstruch ließ mehr Zettel drucken, als durch Einlagen gedeckt waren. Als sich das herumsprach, wollten alle gleichzeitig ihre Scheine gegen Kupfer eintauschen. Die Bank konnte diesen Forderungen nicht nachkommen. 1668 brach sie schließlich zusammen. Palmstruch wurde zunächst zum Tode verurteilt, später aber zu einer Gefängnisstrafe begnadigt.</p><p>Aus diesem Scheitern zog Schweden eine Konsequenz: Die Leitung der Nachfolgeeinrichtung der Stockholms Banco, die Riksens Ständers Bank, die heutige Schwedische Nationalbank (Sveriges Riksbank), wurde nicht mehr einem privaten Unternehmer überlassen, sondern unter die Aufsicht des Parlaments gestellt. Sie gilt als älteste noch bestehende Zentralbank der Welt.</p>';
-  const img=document.getElementById('startImage'); if(img) img.src='../station-04/img/eknigma02.png';
-});
+  applyLanguage();
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyLanguage();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+})();
