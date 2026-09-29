@@ -34,6 +34,7 @@ with sync_playwright() as p:
     page.goto(url)
     page.wait_for_function("window.film && true")
     page.evaluate("film.ready")
+    page.add_style_tag(content="#devToggle { display: none !important; }")  # Debug-Button nicht mitfilmen
     fps = page.evaluate("film.SCRIPT.fps")
     total = page.evaluate("film.total")
     n = round(total * fps)
