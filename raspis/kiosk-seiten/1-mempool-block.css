@@ -1,0 +1,9 @@
+/* URL: https://mempool.space/de/mempool-block/0 */
+
+/* Mempool Block */
+
+/* Navigationsleiste + Blockchain-Leiste ausblenden */
+#navbarCollapse,
+#blockchain-container {
+  display: none !important;
+}

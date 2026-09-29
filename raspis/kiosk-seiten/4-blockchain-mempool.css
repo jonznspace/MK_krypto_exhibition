@@ -1,0 +1,19 @@
+/* URL: https://www.blockchain.com/de/explorer/mempool/btc */
+
+/* Blockchain.com Mempool */
+
+/* Header ausblenden */
+header,
+[role="banner"] {
+  display: none !important;
+}
+
+/* Diese Elemente ausblenden */
+.sc-50cf35c2-0.jntWss {
+  display: none !important;
+}
+
+/* Hintergrund schwarz */
+.sc-aafbd628-0.gduVOf {
+  background-color: #000 !important;
+}

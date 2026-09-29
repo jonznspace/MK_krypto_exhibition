@@ -1,0 +1,20 @@
+/* Zum Testen im eigenen Chrome (z.B. mit Stylus / User CSS)
+   Seite: https://timechainmap.com/map/
+   Auf dem Pi wird kiosk-seiten/2-timechain-map.css benutzt -
+   Aenderungen dort auch eintragen! */
+
+/* Diese Elemente ausblenden */
+.brass-panel.rounded-lg.p-5,
+.hidden.items-center.gap-5.text-mono.text-sm.lg\:flex {
+  display: none !important;
+}
+
+/* Scrollbalken weg (macht der Pi immer automatisch) */
+* {
+  scrollbar-width: none !important;
+}
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

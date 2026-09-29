@@ -1,0 +1,26 @@
+/* Zum Testen im eigenen Chrome (z.B. mit Stylus / User CSS)
+   Seite: https://bitcoin.now/bitcoin-supply
+   Auf dem Pi wird kiosk-seiten/3-bitcoin-supply.css benutzt -
+   Aenderungen dort auch eintragen! */
+
+/* Header ausblenden */
+header,
+[role="banner"] {
+  display: none !important;
+}
+
+/* Diese Elemente ausblenden */
+.google-preferred-source-card,
+.tool-hero.halving-page-hero {
+  display: none !important;
+}
+
+/* Scrollbalken weg (macht der Pi immer automatisch) */
+* {
+  scrollbar-width: none !important;
+}
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

@@ -4,38 +4,49 @@ KIOSK EINRICHTEN - BEFEHLE ZUM KOPIEREN
 Ablauf auf jedem Raspberry:
   1. Alt + F4          (Browser schliessen, ggf. nochmal)
   2. Strg + Alt + T    (Terminal oeffnen)
-  3. USB-Stick mit kiosk-setup.sh reinstecken
+  3. USB-Stick mit kiosk-setup.sh UND dem Ordner kiosk-seiten reinstecken
   4. EINEN Befehl von unten kopieren und ins Terminal einfuegen
      (im Terminal einfuegen = Strg + Shift + V), dann Enter
   5. Warten bis FERTIG erscheint
   6. Neustart:  sudo reboot
 
 
---- Mempool Block ---
-bash /media/$USER/*/kiosk-setup.sh https://mempool.space/de/mempool-block/0
+--- 1  Mempool Block ---
+bash /media/$USER/*/kiosk-setup.sh 1
 
---- Timechain Map ---
-bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/
+--- 2  Timechain Map ---
+bash /media/$USER/*/kiosk-setup.sh 2
 
---- Bitcoin Supply ---
-bash /media/$USER/*/kiosk-setup.sh https://bitcoin.now/bitcoin-supply
+--- 3  Bitcoin Supply ---
+bash /media/$USER/*/kiosk-setup.sh 3
 
---- Blockchain.com Mempool ---
-bash /media/$USER/*/kiosk-setup.sh https://www.blockchain.com/de/explorer/mempool/btc
+--- 4  Blockchain.com Mempool ---
+bash /media/$USER/*/kiosk-setup.sh 4
+
+--- 5  (noch offen - erst URL in kiosk-seiten/5-neue-seite.css eintragen) ---
+bash /media/$USER/*/kiosk-setup.sh 5
 
 
 --- Neustart ---
 sudo reboot
 
 
+URL und CSS jeder Seite stehen im Ordner kiosk-seiten auf dem Stick:
+  1-mempool-block.css, 2-timechain-map.css, ...
+  Erste Zeile = URL, darunter das CSS. Nach einer Aenderung einfach
+  den Befehl oben nochmal ausfuehren und neu starten.
+
 Seite zu gross? Zoom mit Leerzeichen hinten anhaengen, z.B. 80 %:
-bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/ 0.8
+bash /media/$USER/*/kiosk-setup.sh 2 0.8
 
 Seite ein paar Pixel runterscrollen? Als 3. Wert die Pixel angeben
 (der 2. Wert ist der Zoom, 1 = normal). Beispiel 150 Pixel runter:
-bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/ 1 150
+bash /media/$USER/*/kiosk-setup.sh 2 1 150
 Mit Zoom UND Scrollen, z.B. 80 % und 150 Pixel:
-bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/ 0.8 150
+bash /media/$USER/*/kiosk-setup.sh 2 0.8 150
+
+Geht auch noch direkt mit einer URL (dann ohne eigenes CSS):
+bash /media/$USER/*/kiosk-setup.sh https://timechainmap.com/map/
 
 
 Falls "Datei nicht gefunden":

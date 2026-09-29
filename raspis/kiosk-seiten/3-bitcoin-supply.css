@@ -1,0 +1,15 @@
+/* URL: https://bitcoin.now/bitcoin-supply */
+
+/* Bitcoin Supply */
+
+/* Header ausblenden */
+header,
+[role="banner"] {
+  display: none !important;
+}
+
+/* Diese Elemente ausblenden */
+.google-preferred-source-card,
+.tool-hero.halving-page-hero {
+  display: none !important;
+}

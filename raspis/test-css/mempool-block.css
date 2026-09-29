@@ -1,0 +1,20 @@
+/* Zum Testen im eigenen Chrome (z.B. mit Stylus / User CSS)
+   Seite: https://mempool.space/de/mempool-block/0
+   Auf dem Pi wird kiosk-seiten/1-mempool-block.css benutzt -
+   Aenderungen dort auch eintragen! */
+
+/* Navigationsleiste + Blockchain-Leiste ausblenden */
+#navbarCollapse,
+#blockchain-container {
+  display: none !important;
+}
+
+/* Scrollbalken weg (macht der Pi immer automatisch) */
+* {
+  scrollbar-width: none !important;
+}
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

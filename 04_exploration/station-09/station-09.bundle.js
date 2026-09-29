@@ -116,6 +116,21 @@ document.addEventListener('DOMContentLoaded',()=>{
 /* --- station-08 + station-09 overrides --- */
 document.addEventListener('DOMContentLoaded',()=>{
   const set = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
-  set('startTitle','Neue Entwicklungen, bekannte Herausforderungen');
-  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Papiergeld war Menschen einmal genauso ungewohnt und suspekt, wie digitale Token es heute für viele sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten, war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?</p><p>Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) werden mit dem Anspruch angeboten, als Zahlungsmittel oder Wertträger zu dienen.</p><p>Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern</p>';
+  const START_TEXT = {
+    de: {
+      title: 'Neue Entwicklungen, bekannte Herausforderungen',
+      intro: '<p>Papiergeld war in der Vergangenheit für Menschen einmal genauso ungewohnt und suspekt, wie es digitale Token heutzutage sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten (Einführung während der Song Dynastie in China bereits im 11. Jh.), war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?</p><p>Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) werden mit dem Anspruch angeboten, als Zahlungsmittel oder Wertträger zu dienen.</p><p>Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern.</p>'
+    },
+    en: {
+      title: 'New Developments, Familiar Challenges',
+      intro: '<p>In the past, paper money was just as unfamiliar and suspicious to people as digital tokens are today. When the first banknotes appeared in Europe in the 17th century (introduced in Song dynasty China during the 11th century), scepticism ran high: How could a printed piece of paper have the same value as a silver or copper coin?</p><p>In the 21st century, a new level of abstraction has emerged: Digital assets (such as digital tokens, stablecoins, and crypto assets in general) are offered with the claim that they serve as a means of payment or a store of value.</p><p>The history of money demonstrates that new forms of payment have emerged time and time again. Four examples spanning three centuries illustrate the conditions under which new forms of money emerge, and under which they succeed or fail.</p>'
+    }
+  };
+  const renderStart = ()=>{
+    const text = START_TEXT[document.documentElement.dataset.language === 'en' ? 'en' : 'de'];
+    set('startTitle', text.title);
+    const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML=text.intro;
+  };
+  renderStart();
+  new MutationObserver(renderStart).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
 });

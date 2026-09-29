@@ -6,52 +6,26 @@
 #     (nichts wird geloescht, alles landet in ~/kiosk-backup-DATUM)
 #  2. richtet EINEN sauberen Autostart ein:
 #     Chromium im Vollbild, ohne Scrollbalken und ohne Maus
-#  3. stellt das LAN (eth0) auf DHCP (Internet ueber Kabel)
 #
 #  Benutzung (auf dem Pi, als normaler User - NICHT mit sudo):
-#     bash kiosk-setup.sh 1
-#  Die Nummer waehlt eine Datei im Ordner kiosk-seiten/ neben diesem Script
-#  (z.B. kiosk-seiten/1-mempool-block.css). Darin steht die URL
-#  (Zeile "URL: https://...") und das CSS, das auf der Seite eingefuegt wird.
-#
-#  Alternativ direkt eine URL (dann ohne eigenes CSS):
 #     bash kiosk-setup.sh https://mempool.space/de/mempool-block/0
 #
 #  Optional Zoom (z.B. 80%):
-#     bash kiosk-setup.sh 2 0.8
+#     bash kiosk-setup.sh https://timechainmap.com/map/ 0.8
 #
 #  Optional ein paar Pixel runterscrollen (3. Wert, Zoom dann 1 = normal):
-#     bash kiosk-setup.sh 2 1 150
+#     bash kiosk-setup.sh https://timechainmap.com/map/ 1 150
 # ============================================================
 set -u
 
 URL="${1:-}"
 ZOOM="${2:-1}"
 SCROLL="${3:-0}"
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SEITEN="$SCRIPT_DIR/kiosk-seiten"
-CSSFILE=""
 
 if [ -z "$URL" ]; then
-    echo "FEHLER: Keine Nummer oder URL angegeben."
-    echo "Beispiel: bash $0 1"
+    echo "FEHLER: Keine URL angegeben."
+    echo "Beispiel: bash $0 https://mempool.space/de/mempool-block/0"
     exit 1
-fi
-
-# Nummer statt URL -> passende Datei aus kiosk-seiten/ nehmen
-if [[ "$URL" =~ ^[0-9]+$ ]]; then
-    NR="$URL"
-    CSSFILE="$(ls "$SEITEN/$NR"-*.css "$SEITEN/$NR.css" 2>/dev/null | head -n1)"
-    if [ -z "$CSSFILE" ]; then
-        echo "FEHLER: Keine Datei fuer Nummer $NR in $SEITEN gefunden."
-        echo "Vorhanden:"; ls "$SEITEN" 2>/dev/null || echo "  (Ordner kiosk-seiten fehlt neben dem Script)"
-        exit 1
-    fi
-    URL="$(grep -m1 -oE 'URL:[[:space:]]*[^[:space:]*]+' "$CSSFILE" | sed -E 's/^URL:[[:space:]]*//' | tr -d '\r')"
-    if [ -z "$URL" ]; then
-        echo "FEHLER: In $(basename "$CSSFILE") ist noch keine URL eingetragen (Zeile 'URL: https://...')."
-        exit 1
-    fi
 fi
 ZOOM="${ZOOM/,/.}"   # 0,8 -> 0.8
 case "$ZOOM" in
@@ -66,7 +40,7 @@ if [ "$(id -u)" = "0" ]; then
 fi
 
 # Ausgabe zusaetzlich als Log neben das Script (z.B. auf den USB-Stick) schreiben
-LOGFILE="$SCRIPT_DIR/setup-log-$(hostname).txt"
+LOGFILE="$(cd "$(dirname "$0")" && pwd)/setup-log-$(hostname).txt"
 exec > >(tee "$LOGFILE") 2>&1
 
 H="$HOME"
@@ -77,7 +51,6 @@ mkdir -p "$BACKUP"
 echo "=============================================="
 echo " Kiosk-Setup auf $(hostname)"
 echo " URL:  $URL"
-if [ -n "$CSSFILE" ]; then echo " CSS:  $(basename "$CSSFILE")"; else echo " CSS:  keins"; fi
 echo " Zoom: $ZOOM"
 echo " Runterscrollen: $SCROLL Pixel"
 echo " Backup alter Dateien: $BACKUP"
@@ -110,7 +83,7 @@ strip_lines() {
 }
 
 echo
-echo "[1/5] Alte Autostarts aufraeumen..."
+echo "[1/4] Alte Autostarts aufraeumen..."
 
 # XDG-Autostart des Users
 for f in "$H"/.config/autostart/*.desktop; do
@@ -174,18 +147,10 @@ fi
 # 2. Neues, sauberes Kiosk-Setup in ~/kiosk
 # ------------------------------------------------------------
 echo
-echo "[2/5] Neues Kiosk-Setup in $H/kiosk ..."
+echo "[2/4] Neues Kiosk-Setup in $H/kiosk ..."
 
 K="$H/kiosk"
 mkdir -p "$K"
-
-# Eigenes CSS der gewaehlten Seite (Windows-Zeilenenden entfernen)
-if [ -n "$CSSFILE" ]; then
-    tr -d '\r' < "$CSSFILE" > "$K/custom.css"
-    echo "  Eigenes CSS: $(basename "$CSSFILE") -> $K/custom.css"
-else
-    rm -f "$K/custom.css"
-fi
 
 # Helfer: versteckt Scrollbalken + Maus, oeffnet die Website nach dem Start nochmal,
 # und erneut bei weisser/leerer Seite oder Fehlerseite (steuert Chromium ueber Port 9222)
@@ -208,25 +173,15 @@ PORT = int(os.environ.get("KIOSK_PORT", "9222"))
 FIRST_RELOAD = int(os.environ.get("KIOSK_FIRST_RELOAD", "15"))  # Sekunden
 CHECK_EVERY = int(os.environ.get("KIOSK_CHECK_EVERY", "15"))     # Sekunden
 
-# Eigenes CSS der Seite (von kiosk-setup.sh aus kiosk-seiten/ kopiert)
-CSS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "custom.css")
-try:
-    with open(CSS_FILE, encoding="utf-8") as f:
-        EXTRA_CSS = f.read()
-except OSError:
-    EXTRA_CSS = ""
-
 INJECT = r"""(function(){
   var css='*{scrollbar-width:none!important;cursor:none!important}'+
-          '::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}'+
-          __EXTRA__;
+          '::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}';
   function add(){
     if(!document.documentElement||document.getElementById('__kiosk'))return;
     var s=document.createElement('style');s.id='__kiosk';s.textContent=css;
     (document.head||document.documentElement).appendChild(s);
   }
   add();document.addEventListener('DOMContentLoaded',add);
-  setInterval(add,2000);
   var y=__SCROLL__;
   if(y>0){
     var go=function(){window.scrollTo(0,y);};
@@ -235,7 +190,7 @@ INJECT = r"""(function(){
     });
     if(document.readyState==='complete')go();
   }
-})();""".replace("__SCROLL__", str(SCROLL)).replace("__EXTRA__", json.dumps(EXTRA_CSS))
+})();""".replace("__SCROLL__", str(SCROLL))
 
 STATE = r"""(function(){
   var h=location.href;
@@ -370,8 +325,7 @@ def session(url):
 
 
 def main():
-    log("Kiosk-Helfer gestartet, URL:", URL or "(keine)", "Scroll:", SCROLL,
-        "Eigenes CSS:", "%d Zeichen" % len(EXTRA_CSS) if EXTRA_CSS else "keins")
+    log("Kiosk-Helfer gestartet, URL:", URL or "(keine)", "Scroll:", SCROLL)
     while True:
         try:
             url = find_page()
@@ -549,7 +503,7 @@ chmod +x "$K/start.sh"
 # 3. EIN Autostart-Eintrag (funktioniert mit labwc, wayfire und X11)
 # ------------------------------------------------------------
 echo
-echo "[3/5] Autostart eintragen..."
+echo "[3/4] Autostart eintragen..."
 mkdir -p "$H/.config/autostart"
 cat > "$H/.config/autostart/kiosk.desktop" <<EOF
 [Desktop Entry]
@@ -564,7 +518,7 @@ EOF
 # 4. Autologin in den Desktop + Bildschirm nie schwarz
 # ------------------------------------------------------------
 echo
-echo "[4/5] Autologin + Bildschirmschoner aus..."
+echo "[4/4] Autologin + Bildschirmschoner aus..."
 if sudo -n true 2>/dev/null && command -v raspi-config >/dev/null; then
     sudo raspi-config nonint do_boot_behaviour B4 && echo "  Autologin Desktop: an"
     sudo raspi-config nonint do_blanking 1        && echo "  Bildschirm-Abschaltung: aus"
@@ -572,90 +526,13 @@ else
     echo "  uebersprungen (bitte ggf. per 'sudo raspi-config' einstellen)"
 fi
 
-# ------------------------------------------------------------
-# 5. LAN (eth0) auf DHCP: IP, Netzmaske, Gateway und DNS kommen automatisch.
-#    Die eth0-Profile werden ueber NetworkManager selbst gefunden (per UUID),
-#    nie ueber den Namen - der heisst je nach Sprache z.B. "Wired connection 1"
-#    oder "Kabelgebundene Verbindung 1". Alte feste IPs werden entfernt.
-#    WLAN und Hostname werden nicht angefasst.
-# ------------------------------------------------------------
-echo
-echo "[5/5] LAN (eth0) auf DHCP..."
-
-SUDO=""
-sudo -n true 2>/dev/null && SUDO="sudo"
-nmc() { $SUDO env LC_ALL=C nmcli "$@"; }
-
-setup_lan() {
-    command -v nmcli >/dev/null || { echo "  uebersprungen (nmcli fehlt, kein NetworkManager)"; return; }
-    if [ "$(nmc -t -f RUNNING general 2>/dev/null)" != "running" ]; then
-        echo "  uebersprungen (NetworkManager laeuft nicht)"; return
-    fi
-    ip link show eth0 >/dev/null 2>&1 || { echo "  uebersprungen (kein eth0 vorhanden)"; return; }
-    nmc device set eth0 managed yes 2>/dev/null
-
-    # eth0-Profile sammeln: das gerade aktive + alle Ethernet-Profile, die an eth0
-    # oder an kein bestimmtes Interface gebunden sind (damit beim Booten kein altes
-    # Profil mit fester IP gewinnt)
-    local ACTIVE UUIDS="" u t ifn
-    ACTIVE="$(nmc -g GENERAL.CON-UUID device show eth0 2>/dev/null)"
-    [ -n "$ACTIVE" ] && UUIDS="$ACTIVE"
-    while IFS=: read -r u t; do
-        [ "$t" = "802-3-ethernet" ] && [ "$u" != "$ACTIVE" ] || continue
-        ifn="$(nmc -g connection.interface-name connection show uuid "$u")"
-        [ -z "$ifn" ] || [ "$ifn" = "eth0" ] || continue
-        UUIDS="$UUIDS $u"
-    done < <(nmc -g UUID,TYPE connection show)
-
-    # Noch gar kein Profil fuer eth0? Dann eins anlegen
-    if [ -z "$UUIDS" ]; then
-        if nmc connection add type ethernet ifname eth0 con-name kiosk-lan \
-                ipv4.method auto ipv4.never-default no connection.autoconnect yes >/dev/null; then
-            UUIDS="$(nmc -g connection.uuid connection show kiosk-lan)"
-            echo "  kein eth0-Profil gefunden -> neues Profil 'kiosk-lan' angelegt"
-        else
-            echo "  FEHLER: konnte kein LAN-Profil anlegen -> Netzwerk unveraendert"; return
-        fi
-    fi
-
-    # Jedes gefundene Profil auf DHCP stellen, alte feste Werte leeren
-    local FIRST=""
-    for u in $UUIDS; do
-        echo "  Profil: $(nmc -g connection.id connection show uuid "$u")"
-        nmc connection show uuid "$u" > "$BACKUP/eth0-vorher-$u.txt" 2>&1
-        if nmc connection modify uuid "$u" \
-                ipv4.method auto ipv4.addresses "" ipv4.gateway "" ipv4.routes "" \
-                ipv4.dns "" ipv4.ignore-auto-dns no ipv4.never-default no \
-                connection.autoconnect yes; then
-            echo "    -> DHCP (alte feste IP/Gateway/DNS entfernt)"
-            [ -z "$FIRST" ] && FIRST="$u"
-        else
-            echo "    -> FEHLER beim Aendern"
-        fi
-    done
-    [ -z "$FIRST" ] && { echo "  FEHLER: kein Profil geaendert -> Netzwerk unveraendert"; return; }
-
-    # Aktivieren (das bisher aktive Profil, sonst das erste) - wartet auf DHCP
-    if ! nmc connection up uuid "${ACTIVE:-$FIRST}" ifname eth0 >/dev/null; then
-        echo "  gespeichert, wird aktiv sobald das LAN-Kabel steckt"; return
-    fi
-
-    # Kurzer Test ueber eth0 (nur Info, aendert nichts)
-    ip -4 -o addr show eth0 | awk '{print "  IP:    " $4}'
-    ip -4 route show default dev eth0 | sed 's/^/  Route: /'
-    ping -I eth0 -c 2 -W 3 1.1.1.1 >/dev/null 2>&1 && echo "  Test Internet: OK" || echo "  Test Internet: KEINE ANTWORT"
-    getent hosts mempool.space >/dev/null          && echo "  Test DNS:      OK" || echo "  Test DNS:      FEHLER"
-}
-setup_lan
-
 echo
 echo "=============================================="
 echo " FERTIG auf $(hostname)"
 echo "=============================================="
 echo " Einziger Autostart:  ~/.config/autostart/kiosk.desktop"
 echo " Startscript:         ~/kiosk/start.sh"
-echo " Eigenes CSS:         ~/kiosk/custom.css"
-echo " Seite aendern:       einfach dieses Script nochmal mit anderer Nummer starten"
+echo " URL aendern:         einfach dieses Script nochmal mit neuer URL starten"
 echo " Alte Dateien:        $BACKUP"
 echo
 echo " Jetzt neu starten:   sudo reboot"
