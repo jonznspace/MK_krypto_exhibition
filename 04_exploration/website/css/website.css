@@ -554,6 +554,15 @@ ol, ul { padding: 0; list-style: none; }
 
 /* Scharniertext im Banner, unter der Überschrift */
 .opener__hinge { grid-column: var(--content); margin-top: var(--space-4); }
+.opener__hinge-title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-family-dm-mono), monospace;
+  font-size: var(--font-size-label);
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-accent);
+}
 .opener__banner .prose--lead p { color: var(--color-neutral-850); }
 .opener + .chapter { padding-top: var(--space-9); }
 

@@ -255,6 +255,7 @@
             h('span', { class: 'opener__count', 'aria-hidden': 'true' }, count)),
           h('h2', { class: `title opener__title ${titleSize(section.title)}`, text: section.title }),
           section.hinge ? h('div', { class: 'opener__hinge prose prose--lead', ...draftProps(section.hinge.draft) },
+            section.hinge.title ? h('h3', { class: 'opener__hinge-title', text: section.hinge.title }) : null,
             paragraphs(section.hinge.text)) : null));
     },
 

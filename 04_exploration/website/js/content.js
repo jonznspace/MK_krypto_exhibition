@@ -427,6 +427,20 @@ window.KW_CONTENT = {
       "id": "top"
     },
     {
+      "type": "lead",
+      "id": "einfuehrung",
+      "title": {
+        "de": "Einführung",
+        "en": "Introduction"
+      },
+      "text": {
+        "de": [
+          "Was hat ein Chiffriergerät aus dem 16. Jahrhundert mit Bitcoin zu tun? Warum hilft die Geschichte des Papiergeldes, heutige Stablecoins einzuordnen? Was verbirgt sich hinter Begriffen wie Blockchain, Public/Private Key, Wallet und Mining? Die Sonderausstellung „Krypto, was?“ beleuchtet die historischen Wurzeln heutiger Kryptowerte in der Kryptografie, Rechentechnik und globalen Vernetzung. Am Beispiel von Bitcoin werden die Grundzüge eines dezentralen Kryptowertes und die Funktionsweise einer Blockchain erläutert. Zugleich werden historische Geldformen mit gegenwärtigen Entwicklungen von Kryptowerten in Beziehung gesetzt. Aus diesen Analogien ergeben sich überraschende Einsichten, die zu sehr grundsätzlichen Fragen rund ums Geld führen: Worauf beruht ein Wert? Welche Regeln gelten? Wie entsteht Vertrauen? Und wer trägt die Risiken?"
+        ],
+        "en": []
+      }
+    },
+    {
       "type": "opener",
       "id": "teil-1",
       "numeral": "1",
@@ -437,16 +451,6 @@ window.KW_CONTENT = {
       "title": {
         "de": "Kryptografie, Computergeschichte und digitale Vernetzung",
         "en": "Cryptography, Computer History, and Digital Networks"
-      },
-      "hinge": {
-        "draft": true,
-        "text": {
-          "de": [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-          ],
-          "en": []
-        }
       }
     },
     {
@@ -657,11 +661,16 @@ window.KW_CONTENT = {
         "en": "How Does Bitcoin Work?"
       },
       "hinge": {
-        "draft": true,
+        "title": {
+          "de": "Vom Ideal zur Industrie",
+          "en": ""
+        },
         "text": {
           "de": [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            "Als Bitcoin 2009 startete, war das „Mining“ als offener, dezentraler Prozess gedacht: Jede und jeder konnte mit einem Computer am Netzwerk teilnehmen, Transaktionen überprüfen und neue Blöcke erzeugen. Das System versprach Gleichberechtigung – keine zentrale Instanz, keine privilegierten Akteure.",
+            "Inzwischen prägen spezialisierte Hochleistungsgeräte und insbesondere industrielle Mining-Farmen das Bild. In riesigen Hallen arbeiten tausende ASIC-Maschinen rund um die Uhr. Der Wettbewerb um Rechenleistung ist zu einem globalen Geschäft geworden, bestimmt von Strompreisen, Standortvorteilen und Investitionskapital. Einzelne Miner haben kaum noch Chancen, profitabel mitzuhalten.",
+            "Damit verschiebt sich das Kräfteverhältnis: Aus einer technisch dezentral konzipierten Infrastruktur entstand eine zunehmend ökonomisch konzentrierte Landschaft. Der ursprüngliche Anspruch von Gleichheit trifft auf die Logik von Effizienz, Skalierung und Gewinnmaximierung.",
+            "Das Bitcoin-System stellt die bisherige Ordnung unseres globalen kapitalistischen Geld- und Finanzsystems in Frage: Kann ein digitaler Wert als Geld fungieren? Ist dies möglich, sofern er allein von Mathematik, Rechenleistung und einem weltweiten Netzwerk getragen wird und keine zentralen Instanzen wie Staaten und ihre Nationalbanken involviert sind?"
           ],
           "en": []
         }
@@ -676,7 +685,7 @@ window.KW_CONTENT = {
         "en": "How does Bitcoin work?"
       },
       "title": {
-        "de": "Was ist Bitcoin?",
+        "de": "Überblick über das Bitcoin-System",
         "en": "What is Bitcoin?"
       },
       "text": {
@@ -849,7 +858,7 @@ window.KW_CONTENT = {
         {
           "kicker": "03",
           "title": {
-            "de": "Die Einigung durch Rechenarbeit - Mining: Wettbewerb um den nächsten Block",
+            "de": "Die Einigung durch Rechenarbeit – Mining: Wettbewerb um den nächsten Block",
             "en": "Reaching Agreement Through Computational Work – Mining: Competing to Add the Next Block"
           },
           "text": {
@@ -1067,12 +1076,216 @@ window.KW_CONTENT = {
       "groups": [
         {
           "title": {
+            "de": "Mining-Geräte in der Gläsernen Münze",
+            "en": "Mining devices in the Transparent Coin"
+          },
+          "items": [
+            {
+              "kicker": "01",
+              "title": {
+                "de": "QAxe",
+                "en": "QAxe"
+              },
+              "museumLabel": {
+                "de": [
+                  "Gläserne Münze I",
+                  "2024, off. Entwurf von „Pmaxuw“ (Pseudonym)"
+                ],
+                "en": [
+                  "Transparent Coin I",
+                  "2024, open-source design by “Pmaxuw” (pseudonym)"
+                ]
+              },
+              "museumDetails": {
+                "de": [
+                  "Zusammenbau: „Pmaxuw“ (Pseudonym)",
+                  "Leihgeber: „WantClue” (Pseudonym)"
+                ],
+                "en": [
+                  "Assembled by: “Pmaxuw” (pseudonym)",
+                  "Lender: “WantClue” (pseudonym)"
+                ]
+              },
+              "storyTitle": null,
+              "text": {
+                "de": [
+                  "Auf diesem Gerät befinden sich erstmals vier ASIC-Chips auf einer Platine, die zusammen rund 2,4 Billionen Rechenoperationen pro Sekunde ausführen. Bis zu diesem Zeitpunkt trugen die open source, also offene Geräte je einen einzigen Chip. Mehrere Chips zu betreiben ist keine Frage des Nebeneinandersetzens: Sie müssen gemeinsam mit Strom versorgt, gekühlt und in der richtigen Reihenfolge angesteuert werden. Statt fünf Volt setzt dieses Gerät auf zwölf Volt aus einem eigenen Netzteil. Ein kleiner Steuerchip auf der Platine übernimmt die Verwaltung, während die Rechenaufgaben selbst noch von einem angeschlossenen Computer geliefert werden. Erst spätere Geräte wurden davon unabhängig.",
+                  "Zeitgleich dazu verfolgte das Projekt zum Bitaxe Ultra Hex 301 den gleichen Gedanken. Es wurden somit zwei Antworten auf dieselbe Frage in derselben offenen Gemeinschaft entwickelt. Aus dieser Platine ging später der NerdQAxe hervor, einer der meistgebauten offenen Miner überhaupt."
+                ],
+                "en": [
+                  "For the first time, this device brings together four ASIC chips on a single circuit board, performing around 2.4 trillion calculations per second. Until then, open-source devices had each used just one chip. Operating multiple chips involves more than placing them side by side: they need a coordinated power supply, cooling, and control signals in the correct sequence. Instead of five volts, this device uses twelve volts from a dedicated power supply. A small controller chip on the board manages the device, while a connected computer still supplies the computational tasks. Only later devices became independent of an external computer.",
+                  "Simultaneously, the Bitaxe Ultra Hex 301 project pursued a similar idea. Two answers to the same question were thus developed within the same open-source community. This circuit board later evolved into the NerdQAxe, one of the most widely built open-source miners."
+                ]
+              }
+            },
+            {
+              "kicker": "02",
+              "title": {
+                "de": "BitForge Nano (IIa mit, IIb ohne Kühlkörper)",
+                "en": "BitForge Nano (IIa with heat sink, IIb without heat sink)"
+              },
+              "museumLabel": {
+                "de": [
+                  "Gläserne Münze IIa & IIb",
+                  "2025, off. Entwurf von „WantClue” (Pseudonym) und „kliA90“ (Pseudonym)"
+                ],
+                "en": [
+                  "Transparent Coin IIa & IIb",
+                  "2025, open-source design by “WantClue” (pseudonym) and “kliA90” (pseudonym)"
+                ]
+              },
+              "museumDetails": {
+                "de": [
+                  "Zusammenbau: DTV Electronics",
+                  "Leihgeber: „WantClue” (Pseudonym)"
+                ],
+                "en": [
+                  "Assembled by: DTV Electronics",
+                  "Lender: “WantClue” (pseudonym)"
+                ]
+              },
+              "storyTitle": null,
+              "text": {
+                "de": [
+                  "Der BitForge Nano wurde explizit als Bitcoin-Miner für zu Hause entwickelt. Er besitzt zwei ASIC-Chips, die rund 2,6 Billionen Rechenoperationen pro Sekunde rechnen, einen 12 Volt Eingang und ein Gehäuse.",
+                  "Alle übrigen offenen Miner dieser Ausstellung zeigen, was sie sind: nackte Platinen, sichtbare Kühlkörper, blinkende Anzeigen. Dieses Gerät hingegen verbirgt seine Technik. Es hat kein Display und wird über den Browser oder eine App eingerichtet. Der Bitforge Nano ist dafür gemacht, in einer Wohnung dauerhaft zu laufen, ohne dabei aufzufallen. Damit ergab sich ein Wendepunkt: Die offene Mining-Szene begann, nicht nur an Schaltungen zu arbeiten, sondern auch an der visuellen Gestaltung der Geräte. Eine Sonderausführung dieses Modells, die Ghost Edition, die Aluminiumgehäuse und Rauchglasfenster besitzt, wurde 2026 bei den London Design Awards mit Silber ausgezeichnet. Gestaltet wurde sie von Duncan Coombe, wobei „WantClue“ und „kliA90“ mitwirkten.",
+                  "Das Gerät ist Open Source: Schaltpläne und Firmware stehen unter einer Lizenz, die jede Weitergabe zur erneuten Offenlegung verpflichtet."
+                ],
+                "en": [
+                  "The BitForge Nano was designed specifically as a Bitcoin miner for home use. It has two ASIC chips that perform around 2.6 trillion calculations per second, a 12-volt power input, and an enclosure.",
+                  "All the other open-source miners in this exhibition reveal what they are: bare circuit boards, visible heat sinks, and blinking indicators. This device, however, conceals its technology. It has no display and is configured through a web browser or an app. The BitForge Nano is designed to run continuously in a home without drawing attention to itself. This marked a turning point: the open-source mining community began working on the visual design of its devices as well as their circuitry. A special version of this model, the Ghost Edition, with an aluminum enclosure and a smoked-glass window, received a silver award at the 2026 London Design Awards. It was designed by Duncan Coombe, with contributions from “WantClue” and “kliA90.”",
+                  "The device is open source: its circuit diagrams and firmware are available under a license that requires any redistribution to be accompanied by a re-disclosure."
+                ]
+              }
+            },
+            {
+              "kicker": "03",
+              "title": {
+                "de": "ASIC Chip BM1370",
+                "en": "BM1370 ASIC chip"
+              },
+              "museumLabel": {
+                "de": [
+                  "Gläserne Münze III",
+                  "Volksrepublik China, ASIC Chip BM1370 (Application Specific Integrated Circuit, 5-nm Fertigung)",
+                  "2024, Bitmain Technologies"
+                ],
+                "en": [
+                  "Transparent Coin III",
+                  "People’s Republic of China",
+                  "BM1370 ASIC chip (Application-Specific Integrated Circuit, 5 nm manufacturing process)",
+                  "2024, Bitmain Technologies"
+                ]
+              },
+              "museumDetails": {
+                "de": [
+                  "Leihgeber: „WantClue” (Pseudonym)"
+                ],
+                "en": [
+                  "Lender: “WantClue” (pseudonym)"
+                ]
+              },
+              "storyTitle": null,
+              "text": {
+                "de": [
+                  "Der ASIC Chip BM1370 ist ein anwendungsspezifischer Chip, der nur eine einzige Rechenoperation ausführen kann. Diese dient dazu, einen sogenannten Block zu vervollständigen, um mit Bitcoin belohnt zu werden. Eine solche Rechenoperation wird ca. eine Billion Mal pro Sekunde durchgeführt. Der Chip steckt beispielsweise in den Maschinen der industriellen Rechenzentren. Sie schürfen heute den Großteil aller neuen Bitcoin: zu Hunderten in einer Maschine, zu Zehntausenden in einer Halle.",
+                  "2013 leistete ein vergleichbarer Chip ein Zwanzigstel bei gleichem Stromverbrauch. Dieser Innovationswettlauf innerhalb der Chip-Industrie und die Kommerzialisierung des Bitcoin-Systems hat das Bitcoin-Mining aus dem Wohnzimmer in die Industrie verlagert.",
+                  "Über den technischen Aufbau des verwendeten Chips der Herstellerfirma Bitmain ist nichts bekannt, es handelt sich um geschütztes Firmeneigentum. Wer diesen Chip für den Bau eines offenen Miners verwenden wollte, musste erst herausfinden, wie man mit ihm kommunizieren kann."
+                ],
+                "en": [
+                  "The BM1370 ASIC chip is an application-specific chip capable of performing only one type of calculation. This calculation is used to complete a block and earn a Bitcoin reward. The chip performs around one trillion times per second. Chips like these are used in machines at industrial mining facilities, which now mine the vast majority of new bitcoin: hundreds of chips in a single machine, tens of thousands in a single building.",
+                  "In 2013, a comparable chip delivered one-twentieth of this performance while consuming the same amount of electricity. This race for innovation within the chip industry, together with the commercialization of the Bitcoin system, moved Bitcoin mining from living rooms into industrial facilities.",
+                  "The technical architecture of this chip, made by Bitmain, is undisclosed proprietary information. Anyone wishing to use it to build an open-source miner first had to work out how to communicate with it."
+                ]
+              }
+            },
+            {
+              "kicker": "04",
+              "title": {
+                "de": "NerdNOS",
+                "en": "NerdNOS"
+              },
+              "museumLabel": {
+                "de": [
+                  "Gläserne Münze IV",
+                  "OSMU-Gemeinschaft (Open Source Miners United, weltweit)"
+                ],
+                "en": [
+                  "Transparent Coin IV",
+                  "OSMU community (Open Source Miners United, worldwide)"
+                ]
+              },
+              "museumDetails": {
+                "de": [
+                  "2024, off. Entwurf von Benjamin Wilson, „Pmaxuw” (Pseudonym) und „WantClue“ (Pseudonym)",
+                  "Zusammenbau und Leihgeber: „WantClue“ (Pseudonym)"
+                ],
+                "en": [
+                  "2024, open-source design by Benjamin Wilson, “Pmaxuw” (pseudonym), and “WantClue” (pseudonym)",
+                  "Assembled and lent by: “WantClue” (pseudonym)"
+                ]
+              },
+              "storyTitle": null,
+              "text": {
+                "de": [
+                  "Der NerdNOS besteht aus zwei aufeinandergesteckten Platinen. Die Platine mit dem Display ist ein NerdMiner – ein Lerngerät mit buntem Display, das zwar mitrechnet, aber so langsam, dass es nur der reinen Anschauung dient.",
+                  "Die zweite Platine trägt einen echten ASIC-Chip und wird so mit einem Handgriff ressourcensparend zu einem Miner, der rund eine Million Mal schneller rechnen kann und nur eine WLAN-Verbindung benötigt. Damit ein gewöhnliches USB-Ladegerät zur Stromversorgung genügt, ist der Chip gezielt in seiner Leistung auf unter acht Watt gedrosselt. Genau so hat Bitcoin-Mining vor über zehn Jahren begonnen – mit einem Stecker in einer USB-Buchse."
+                ],
+                "en": [
+                  "The NerdNOS consists of two circuit boards plugged into one another. The board with the screen is a NerdMiner — an educational device with a colorful display. It participates in mining calculations but does so at such a slow rate that it serves purely as a demonstration.",
+                  "The second board carries an actual ASIC chip. Simply plugging it in transforms the educational device into a miner that makes efficient use of existing hardware, performs calculations around a million times faster, and needs only a Wi-Fi connection. The chip’s power consumption is deliberately limited to less than eight watts, allowing an ordinary USB charger to supply power. This recalls the early days of ASIC mining more than ten years ago, when small mining devices could simply be plugged into a USB port."
+                ]
+              }
+            },
+            {
+              "kicker": "05",
+              "title": {
+                "de": "Bitfury BF1 „Red Fury”",
+                "en": "Bitfury BF1 “Red Fury”"
+              },
+              "museumLabel": {
+                "de": [
+                  "Gläserne Münze V",
+                  "Vereinigte Staaten von Amerika, Bitfury BF1 „Red Fury”",
+                  "2013, Chip: Bitfury (55 nm), Platine: Big Picture Mining Company"
+                ],
+                "en": [
+                  "Transparent Coin V",
+                  "United States of America",
+                  "Bitfury BF1 “Red Fury”",
+                  "2013, chip: Bitfury (55 nm); circuit board: Big Picture Mining Company"
+                ]
+              },
+              "museumDetails": {
+                "de": [
+                  "Leihgeber: „WantClue” (Pseudonym)"
+                ],
+                "en": [
+                  "Lender: “WantClue” (pseudonym)"
+                ]
+              },
+              "storyTitle": null,
+              "text": {
+                "de": [
+                  "Als 2009 der Bitcoin entstand, konnte ihn jeder gewöhnliche Computer schürfen. Innerhalb weniger Jahre wurden diese Computer von spezialisierten Chips (ASICs) abgelöst, die nur noch eine einzige Rechenaufgabe beherrschten. Der Red Fury gehört zur ersten Generation jener Chips, die auch von Privatpersonen gekauft werden konnten.",
+                  "Dieser Stick wurde lediglich in eine USB-Buchse gesteckt und verbrauchte nur 2,5 Watt – weniger als eine Nachttischlampe. Rechnen konnte dieser aber nicht von allein: Ein angeschlossener Computer musste ihn mit Aufgaben versorgen. Der reihenweise Betrieb der USB-Sticks produzierte Abwärme, sodass sie extra gekühlt werden mussten. 2013 kostete dieser Stick rund 100 US-Dollar und war für kurze Zeit eines der schnellsten Geräte seiner Art. Zum Vergleich: Der 12 Jahre später gebaute ASIC Chip BM1370 rechnet ca. 1200-Mal schneller. Der Red Fury ist ein geschlossenes Produkt: das heißt, Chip und Bauplan sind geschütztes Firmeneigentum. Dies rief die ersten Open-Source-Gegenentwürfe der offenen Mining-Szene hervor."
+                ],
+                "en": [
+                  "When Bitcoin launched in 2009, any ordinary computer could mine it. Within a few years, these computers were superseded by specialized chips known as ASICs, which could perform only one type of computational task. The Red Fury belongs to the first generation of ASIC mining devices available for purchase by private individuals.",
+                  "This USB stick simply plugs into a USB port and consumes just 2.5 watts, which is less than a bedside lamp. However, it could not perform its calculations independently: a connected computer had to supply tasks. Running groups of these USB sticks generated heat, making additional cooling necessary. In 2013, this stick cost around US$100 and was briefly one of the fastest devices of its kind. By comparison, the BM1370 ASIC chip, made twelve years later, performs calculations around 1,200 times faster. The Red Fury is a closed-source product: both the chip and the circuit board design are proprietary. This prompted the open-source mining community to develop its first alternatives."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": {
             "de": "Mining-Geräte auf dem Sockel",
             "en": "Mining devices on the pedestal"
           },
           "items": [
             {
-              "kicker": "01",
+              "kicker": "06",
               "title": {
                 "de": "BitChimney mit Antminer-S19j-Pro_Hashboard",
                 "en": "BitChimney with Antminer S19j Pro hashboard"
@@ -1106,7 +1319,7 @@ window.KW_CONTENT = {
               },
               "text": {
                 "de": [
-                  "Im Inneren des BitChimneys steckt eine einzelne Rechenplatine aus einem industriellen Bitcoin-Miner (S19j Pro). Auf dieser sitzen drei Platinen nebeneinander in einem Gehäuse – in industriellen Rechenzentren stehen tausende solcher Miner nebeneinander. Werden diese Geräte ausgemustert, kommt es oft zum Verkauf einzelner Bauteile. Dadurch erhalten sie beispielsweise im BitChimney ein zweites Leben. Die Energie, die der Miner verbraucht, wird fast vollkommen in Wärme umgewandelt und strömt aus dem oberen „Kamin“. Ein handelsüblicher Heizlüfter hätte mit diesen knapp 650 Watt im selben Raum auch Wärme produziert – nur mit dem Unterschied, dass der BitChimney als Nebenprodukt zur Wärme auch Bitcoin schürfen kann. Ob dies ein idealer Umgang mit Strom oder eine geschickte Rechtfertigung für den Ressourcenverbrauch ist, wird kontrovers diskutiert."
+                  "Im Inneren des BitChimneys steckt eine einzelne Rechenplatine aus einem industriellen Bitcoin-Miner (S19j Pro). Auf dieser sitzen drei Platinen nebeneinander in einem Gehäuse – in industriellen Rechenzentren stehen tausende solcher Miner nebeneinander. Werden diese Geräte ausgemustert, kommt es oft zum Verkauf einzelner Bauteile. Dadurch erhalten sie beispielsweise im BitChimney ein zweites Leben. Die Energie, die der Miner verbraucht, wird fast vollkommen in Wärme umgewandelt und strömt aus dem oberen „Kamin“. Ein handelsüblicher Heizlüfter hätte mit diesen knapp 650 Watt im selben Raum auch Wärme produziert – nur mit dem Unterschied, dass der BitChimney als Nebenprodukt zur Wärme auch Bitcoin schürfen kann. Ob dies ein idealer Umgang mit Strom oder eine geschickte Rechtfertigung ist, wird kontrovers diskutiert."
                 ],
                 "en": [
                   "Inside the BitChimney is a single computing board, known as a hashboard, taken from an industrial Bitcoin miner, the S19j Pro. In the original miner, three of these boards sit side by side in one enclosure; industrial mining facilities house thousands of such machines. When these devices are retired, their individual components are often sold, giving them a second life in devices such as the BitChimney. Almost all the electricity consumed by the miner is converted into heat, which flows out through the “chimney” at the top. A conventional fan heater consuming the same 650 watts would also have heated the room, just not mining bitcoin at the same time. Whether this is an ideal use of electricity or a clever justification for consuming energy remains a subject of debate."
@@ -1114,7 +1327,7 @@ window.KW_CONTENT = {
               }
             },
             {
-              "kicker": "02",
+              "kicker": "07",
               "title": {
                 "de": "Bitaxe Ultra Hex 301, 2024",
                 "en": "Bitaxe Ultra Hex 301, 2024"
@@ -1145,7 +1358,10 @@ window.KW_CONTENT = {
               "storyTitle": null,
               "text": {
                 "de": [
-                  "Der Bitaxe Ultra Hex 301 besteht aus sechs ASIC-Chips auf einer Platine und ist das erste Mehrchip-Gerät aus der Bitaxe-Reihe. Hier sind es zwei Gruppen zu je drei Chips, die mit zwölf Volt versorgt werden. Sie sind an ein Netzteil angeschlossen, was sechs Rechenwerke versorgt, statt an sechs einzelne Netzteile. Was in den industriellen Maschinen längst Serienstand war, kam damit erstmals in einem offenen, dokumentierten Entwurf an. Unabhängig davon verfolgte parallel ein anderes Mitglied der Entwicklergemeinschaft das gleiche Konzept mit dem QAxe. Gegen die industriellen Rechenzentren, die heute den Großteil des Schürfens von Bitcoin übernehmen, haben diese Geräte rechnerisch kaum eine Chance. Es gibt jedoch Ausnahmen: Erst im Juli 2026 hat ein Bitaxe den Block 957.382 der Bitcoin-Blockchain hinzugefügt."
+                  "Der Bitaxe Ultra Hex 301 besteht aus sechs ASIC-Chips auf einer Platine und ist das erste Mehrchip-Gerät aus der Bitaxe-Reihe.",
+                  "Hier sind es zwei Gruppen zu je drei Chips, die mit zwölf Volt versorgt werden. Sie sind an ein Netzteil angeschlossen, was sechs Rechenwerke versorgt, statt an sechs einzelne Netzteile.",
+                  "Was in den industriellen Maschinen längst Serienstand war, kam damit erstmals in einem offenen, dokumentierten Entwurf an. Unabhängig davon verfolgte parallel ein anderes Mitglied der Entwicklergemeinschaft das gleiche Konzept mit dem QAxe.",
+                  "Gegen die industriellen Rechenzentren, die heute den Großteil des Schürfens von Bitcoin übernehmen, haben diese Geräte rechnerisch kaum eine Chance. Es gibt jedoch Ausnahmen: Erst im Juli 2026 hat ein Bitaxe den Block 957.382 der Bitcoin-Blockchain hinzugefügt."
                 ],
                 "en": [
                   "The Bitaxe Ultra Hex 301 has six ASIC chips on a single circuit board and is the first multichip device in the Bitaxe series.",
@@ -1156,7 +1372,7 @@ window.KW_CONTENT = {
               }
             },
             {
-              "kicker": "03",
+              "kicker": "08",
               "title": {
                 "de": "Antminer S19",
                 "en": "Antminer S19"
@@ -1187,209 +1403,14 @@ window.KW_CONTENT = {
               "storyTitle": null,
               "text": {
                 "de": [
-                  "Der Antminer S19 führt 95 Billionen Rechenoperationen pro Sekunde durch bei einem Strombedarf von 3.250 Watt. Er kann insgesamt bis zu 16 kg (je nach Ausstattung mit Dashboards) wiegen und ist mit einer Lautstärke von 75 Dezibel lauter als ein Staubsauger. Das Gerät ist für den Dauerbetrieb vorgesehen, weshalb es nicht im Wohnzimmer, sondern in Hallen, zwischen Tausenden baugleicher Geräte, aufgestellt werden sollte. Abgeschaltet wird der Antminer nur, wenn er sich wirtschaftlich nicht mehr rechnet. Alle kleineren, in dieser Ausstellung präsentierten Geräte stammen von ihm ab: Ihre Chips wurden aus ausgemusterten Maschinen wie dieser aufgelötet. Weil es sich um ein kommerzielles Produkt handelte, waren keinerlei Daten über diese Maschinen veröffentlicht. So war es notwendig, die Ansteuerung der Chips zunächst rückzuentwickeln. Selbst die Anzahl an Chips pro Platine musste nachgezählt werden. Als 2020 der Antminer S19 erschien, war er das effizienteste luftgekühlte Gerät seiner Art. Nur sechs Jahre später leistet ein einzelner Chip der neusten Generation ein Vielfaches bei einem Bruchteil des Strombedarfs. Dies ist der Grund, warum Maschinen wie diese heute ausgemustert werden – und warum ihre Bauteile in den Bastelstuben landen, aus denen teilweise auch die übrigen Mining-Geräte dieser Ausstellung hergestellt wurden."
+                  "Der Antminer S19 führt 95 Billionen Rechenoperationen pro Sekunde durch bei einem Strombedarf von 3.250 Watt. Er kann insgesamt bis zu 16 kg (je nach Ausstattung mit Dashboards) wiegen und ist mit einer Lautstärke von 75 Dezibel lauter als ein Staubsauger. Das Gerät ist für den Dauerbetrieb vorgesehen, weshalb es nicht im Wohnzimmer, sondern in Hallen, zwischen Tausenden baugleicher Geräte, aufgestellt werden sollte. Abgeschaltet wird der Antminer nur, wenn er sich wirtschaftlich nicht mehr rechnet.",
+                  "Alle kleineren, in dieser Ausstellung präsentierten Geräte stammen von ihm ab: Ihre Chips wurden aus ausgemusterten Maschinen wie dieser aufgelötet. Weil es sich um ein kommerzielles Produkt handelte, waren keinerlei Daten über diese Maschinen veröffentlicht. So war es notwendig, die Ansteuerung der Chips zunächst rückzuentwickeln. Selbst die Anzahl an Chips pro Platine musste nachgezählt werden.",
+                  "Als 2020 der Antminer S19 erschien, war er das effizienteste luftgekühlte Gerät seiner Art. Nur sechs Jahre später leistet ein einzelner Chip der neusten Generation ein Vielfaches bei einem Bruchteil des Strombedarfs. Dies ist der Grund, warum Maschinen wie diese heute ausgemustert werden – und warum ihre Bauteile in den Bastelstuben landen, aus denen teilweise auch die übrigen Mining-Geräte dieser Ausstellung hergestellt wurden."
                 ],
                 "en": [
                   "The Antminer S19 performs 95 trillion calculations per second while consuming 3,250 watts of electricity. Depending on its configuration, including the installed hashboards, it may weigh up to 16 kg. Its noise level of around 75 decibels can make it louder than a household vacuum cleaner. Designed for continuous operation, it is intended for industrial buildings alongside thousands of identical devices. Such machines generally remain in operation for as long as they are profitable to run.",
                   "Several of the smaller devices presented in this exhibition use the same types of specialized chips found in industrial miners. These chips can be recovered by desoldering them from retired machines. Building open-source devices around proprietary chips presented a challenge: where the necessary technical documentation was unavailable, developers had to reverse-engineer the way the chips were controlled. Even basic details, such as the number of chips on each board, could require direct inspection.",
                   "When the Antminer S19 was released in 2020, it was among the most efficient air-cooled devices of its kind. Just six years later, a chip of a newer generation may deliver several times the computing performance of an earlier chip while consuming substantially less electricity for the same amount of computation. Improvements of this kind can make older machines uneconomical to operate. Their components may then find their way into home workshops, where they can be reused in devices such as some of the smaller miners presented here."
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "title": {
-            "de": "Mining-Geräte in der Gläsernen Münze",
-            "en": "Mining devices in the Transparent Coin"
-          },
-          "items": [
-            {
-              "kicker": "04",
-              "title": {
-                "de": "QAxe",
-                "en": "QAxe"
-              },
-              "museumLabel": {
-                "de": [
-                  "Gläserne Münze I",
-                  "2024, off. Entwurf von „Pmaxuw“ (Pseudonym)"
-                ],
-                "en": [
-                  "Transparent Coin I",
-                  "2024, open-source design by “Pmaxuw” (pseudonym)"
-                ]
-              },
-              "museumDetails": {
-                "de": [
-                  "Zusammenbau: „Pmaxuw“ (Pseudonym)",
-                  "Leihgeber: „WantClue” (Pseudonym)"
-                ],
-                "en": [
-                  "Assembled by: “Pmaxuw” (pseudonym)",
-                  "Lender: “WantClue” (pseudonym)"
-                ]
-              },
-              "storyTitle": null,
-              "text": {
-                "de": [
-                  "Auf diesem Gerät befinden sich erstmals vier ASIC-Chips auf einer Platine, die zusammen rund 2,4 Billionen Rechenoperationen pro Sekunde ausführen. Bis zu diesem Zeitpunkt trugen offene Geräte (open source) je einen einzigen Chip. Mehrere Chips zu betreiben ist keine Frage des Nebeneinandersetzens: Sie müssen gemeinsam mit Strom versorgt, gekühlt und in der richtigen Reihenfolge angesteuert werden. Statt fünf Volt setzt dieses Gerät auf zwölf Volt aus einem eigenen Netzteil. Ein kleiner Steuerchip auf der Platine übernimmt die Verwaltung, während die Rechenaufgaben selbst noch von einem angeschlossenen Computer geliefert werden. Erst spätere Geräte wurden davon unabhängig. Zeitgleich dazu verfolgte das Projekt zum Bitaxe Ultra Hex 301 den gleichen Gedanken. Es wurden somit zwei Antworten auf dieselbe Frage in derselben offenen Gemeinschaft entwickelt. Aus dieser Platine ging später der NerdQAxe hervor, einer der meistgebauten offenen Miner überhaupt."
-                ],
-                "en": [
-                  "For the first time, this device brings together four ASIC chips on a single circuit board, performing around 2.4 trillion calculations per second. Until then, open-source devices had each used just one chip. Operating multiple chips involves more than placing them side by side: they need a coordinated power supply, cooling, and control signals in the correct sequence. Instead of five volts, this device uses twelve volts from a dedicated power supply. A small controller chip on the board manages the device, while a connected computer still supplies the computational tasks. Only later devices became independent of an external computer.",
-                  "Simultaneously, the Bitaxe Ultra Hex 301 project pursued a similar idea. Two answers to the same question were thus developed within the same open-source community. This circuit board later evolved into the NerdQAxe, one of the most widely built open-source miners."
-                ]
-              }
-            },
-            {
-              "kicker": "05",
-              "title": {
-                "de": "BitForge Nano (IIa mit, IIb ohne Kühlkörper)",
-                "en": "BitForge Nano (IIa with heat sink, IIb without heat sink)"
-              },
-              "museumLabel": {
-                "de": [
-                  "Gläserne Münze IIa & IIb",
-                  "2025, off. Entwurf von „WantClue” (Pseudonym) und „kliA90“ (Pseudonym)"
-                ],
-                "en": [
-                  "Transparent Coin IIa & IIb",
-                  "2025, open-source design by “WantClue” (pseudonym) and “kliA90” (pseudonym)"
-                ]
-              },
-              "museumDetails": {
-                "de": [
-                  "Zusammenbau: DTV Electronics",
-                  "Leihgeber: „WantClue” (Pseudonym)"
-                ],
-                "en": [
-                  "Assembled by: DTV Electronics",
-                  "Lender: “WantClue” (pseudonym)"
-                ]
-              },
-              "storyTitle": null,
-              "text": {
-                "de": [
-                  "Der BitForge Nano wurde explizit als Bitcoin-Miner für zu Hause entwickelt. Er besitzt zwei ASIC-Chips, die rund 2,6 Billionen Rechenoperationen pro Sekunde rechnen, einen 12 Volt Eingang und ein Gehäuse. Alle übrigen offenen Miner dieser Ausstellung zeigen, was sie sind: nackte Platinen, sichtbare Kühlkörper, blinkende Anzeigen. Dieses Gerät hingegen verbirgt seine Technik. Es hat kein Display und wird über den Browser oder eine App eingerichtet. Der Bitforge Nano ist dafür gemacht, in einer Wohnung dauerhaft zu laufen, ohne dabei aufzufallen. Damit ergab sich ein Wendepunkt: Die offene Mining-Szene begann, nicht nur an Schaltungen zu arbeiten, sondern auch an der visuellen Gestaltung der Geräte. Eine Sonderausführung dieses Modells, die Ghost Edition, die Aluminiumgehäuse und Rauchglasfenster besitzt, wurde 2026 bei den London Design Awards mit Silber ausgezeichnet. Gestaltet wurde sie von Duncan Coombe, wobei „WantClue“ und „kliA90“ mitwirkten. Das Gerät ist Open Source: Schaltpläne und Firmware stehen unter einer Lizenz, die jede Weitergabe zur erneuten Offenlegung verpflichtet."
-                ],
-                "en": [
-                  "The BitForge Nano was designed specifically as a Bitcoin miner for home use. It has two ASIC chips that perform around 2.6 trillion calculations per second, a 12-volt power input, and an enclosure.",
-                  "All the other open-source miners in this exhibition reveal what they are: bare circuit boards, visible heat sinks, and blinking indicators. This device, however, conceals its technology. It has no display and is configured through a web browser or an app. The BitForge Nano is designed to run continuously in a home without drawing attention to itself. This marked a turning point: the open-source mining community began working on the visual design of its devices as well as their circuitry. A special version of this model, the Ghost Edition, with an aluminum enclosure and a smoked-glass window, received a silver award at the 2026 London Design Awards. It was designed by Duncan Coombe, with contributions from “WantClue” and “kliA90.”",
-                  "The device is open source: its circuit diagrams and firmware are available under a license that requires any redistribution to be accompanied by a re-disclosure."
-                ]
-              }
-            },
-            {
-              "kicker": "06",
-              "title": {
-                "de": "ASIC Chip BM1370",
-                "en": "BM1370 ASIC chip"
-              },
-              "museumLabel": {
-                "de": [
-                  "Gläserne Münze III",
-                  "Volksrepublik China, ASIC Chip BM1370 (Application Specific Integrated Circuit, 5-nm Fertigung)",
-                  "2024, Bitmain Technologies"
-                ],
-                "en": [
-                  "Transparent Coin III",
-                  "People’s Republic of China",
-                  "BM1370 ASIC chip (Application-Specific Integrated Circuit, 5 nm manufacturing process)",
-                  "2024, Bitmain Technologies"
-                ]
-              },
-              "museumDetails": {
-                "de": [
-                  "Leihgeber: „WantClue” (Pseudonym)"
-                ],
-                "en": [
-                  "Lender: “WantClue” (pseudonym)"
-                ]
-              },
-              "storyTitle": null,
-              "text": {
-                "de": [
-                  "Der ASIC Chip BM1370 ist ein anwendungsspezifischer Chip, der nur eine einzige Rechenoperation ausführen kann. Diese dient dazu, einen sogenannten Block zu vervollständigen, um mit Bitcoin belohnt zu werden. Eine solche Rechenoperation wird ca. eine Billion Mal pro Sekunde durchgeführt. Chips wie dieser stecken beispielsweise in den Maschinen der industriellen Rechenzentren. Sie schürfen heute den Großteil aller neuen Bitcoin: zu Hunderten in einer Maschine, zu Zehntausenden in einer Halle. 2013 leistete ein vergleichbarer Chip ein Zwanzigstel bei gleichem Stromverbrauch. Dieser Innovationswettlauf innerhalb der Chip-Industrie und die Kommerzialisierung des Bitcoin-Systems hat das Bitcoin-Mining aus dem Wohnzimmer in die Industrie verlagert. Über den technischen Aufbau des verwendeten Chips der Herstellerfirma Bitmain ist nichts bekannt, es handelt sich um geschütztes Firmeneigentum. Wer diesen Chip für den Bau eines offenen Miners verwenden wollte, musste erst herausfinden, wie man mit ihm kommunizieren kann."
-                ],
-                "en": [
-                  "The BM1370 ASIC chip is an application-specific chip capable of performing only one type of calculation. This calculation is used to complete a block and earn a Bitcoin reward. The chip performs around one trillion times per second. Chips like these are used in machines at industrial mining facilities, which now mine the vast majority of new bitcoin: hundreds of chips in a single machine, tens of thousands in a single building.",
-                  "In 2013, a comparable chip delivered one-twentieth of this performance while consuming the same amount of electricity. This race for innovation within the chip industry, together with the commercialization of the Bitcoin system, moved Bitcoin mining from living rooms into industrial facilities.",
-                  "The technical architecture of this chip, made by Bitmain, is undisclosed proprietary information. Anyone wishing to use it to build an open-source miner first had to work out how to communicate with it."
-                ]
-              }
-            },
-            {
-              "kicker": "07",
-              "title": {
-                "de": "NerdNOS",
-                "en": "NerdNOS"
-              },
-              "museumLabel": {
-                "de": [
-                  "Gläserne Münze IV",
-                  "OSMU-Gemeinschaft (Open Source Miners United, weltweit)"
-                ],
-                "en": [
-                  "Transparent Coin IV",
-                  "OSMU community (Open Source Miners United, worldwide)"
-                ]
-              },
-              "museumDetails": {
-                "de": [
-                  "2024, off. Entwurf von Benjamin Wilson, „Pmaxuw” (Pseudonym) und „WantClue“ (Pseudonym)",
-                  "Zusammenbau und Leihgeber: „WantClue“ (Pseudonym)"
-                ],
-                "en": [
-                  "2024, open-source design by Benjamin Wilson, “Pmaxuw” (pseudonym), and “WantClue” (pseudonym)",
-                  "Assembled and lent by: “WantClue” (pseudonym)"
-                ]
-              },
-              "storyTitle": null,
-              "text": {
-                "de": [
-                  "Der NerdNOS besteht aus zwei aufeinander gesteckten Platinen. Die Platine mit dem Display ist ein NerdMiner – ein Lerngerät mit buntem Display, das zwar mitrechnet, aber so langsam, dass es nur der reinen Anschauung dient. Die zweite Platine trägt einen echten ASIC-Chip und wird so mit einem Handgriff ressourcensparend zu einem Miner, der rund eine Million Mal schneller rechnen kann und nur eine WLAN-Verbindung benötigt. Damit ein gewöhnliches USB-Ladegerät zur Stromversorgung genügt, ist der Chip gezielt in seiner Leistung auf unter acht Watt gedrosselt. Genau so hat Bitcoin-Mining vor über zehn Jahren begonnen – mit einem Stecker in einer USB-Buchse."
-                ],
-                "en": [
-                  "The NerdNOS consists of two circuit boards plugged into one another. The board with the screen is a NerdMiner — an educational device with a colorful display. It participates in mining calculations but does so at such a slow rate that it serves purely as a demonstration.",
-                  "The second board carries an actual ASIC chip. Simply plugging it in transforms the educational device into a miner that makes efficient use of existing hardware, performs calculations around a million times faster, and needs only a Wi-Fi connection. The chip’s power consumption is deliberately limited to less than eight watts, allowing an ordinary USB charger to supply power. This recalls the early days of ASIC mining more than ten years ago, when small mining devices could simply be plugged into a USB port."
-                ]
-              }
-            },
-            {
-              "kicker": "08",
-              "title": {
-                "de": "Bitfury BF1 „Red Fury”",
-                "en": "Bitfury BF1 “Red Fury”"
-              },
-              "museumLabel": {
-                "de": [
-                  "Gläserne Münze V",
-                  "Vereinigte Staaten von Amerika, Bitfury BF1 „Red Fury”",
-                  "2013, Chip: Bitfury (55 nm), Platine: Big Picture Mining Company"
-                ],
-                "en": [
-                  "Transparent Coin V",
-                  "United States of America",
-                  "Bitfury BF1 “Red Fury”",
-                  "2013, chip: Bitfury (55 nm); circuit board: Big Picture Mining Company"
-                ]
-              },
-              "museumDetails": {
-                "de": [
-                  "Leihgeber: „WantClue” (Pseudonym)"
-                ],
-                "en": [
-                  "Lender: “WantClue” (pseudonym)"
-                ]
-              },
-              "storyTitle": null,
-              "text": {
-                "de": [
-                  "Als 2009 der Bitcoin entstand, konnte ihn jeder gewöhnliche Computer schürfen. Innerhalb weniger Jahre wurden diese Computer von spezialisierten Chips (ASICs) abgelöst, die nur noch eine einzige Rechenaufgabe beherrschten. Der Red Fury gehört zur ersten Generation jener Chips, die auch von Privatpersonen gekauft werden konnten. Dieser Stick wurde lediglich in eine USB-Buchse gesteckt und verbrauchte nur 2,5 Watt – weniger als eine Nachttischlampe. Rechnen konnte dieser aber nicht von allein: Ein angeschlossener Computer musste ihn mit Aufgaben versorgen. Der reihenweise Betrieb der USB-Sticks produzierte Abwärme, sodass sie extra gekühlt werden mussten. 2013 kostete dieser Stick rund 100 US-Dollar und war für kurze Zeit eines der schnellsten Geräte seiner Art. Zum Vergleich: Der 12 Jahre später gebaute ASIC Chip BM1370 rechnet ca. 1200-Mal schneller. Der Red Fury ist ein geschlossenes Produkt: das heißt, Chip und Bauplan sind geschütztes Firmeneigentum. Dies rief die ersten Open-Source-Gegenentwürfe der offenen Mining-Szene hervor."
-                ],
-                "en": [
-                  "When Bitcoin launched in 2009, any ordinary computer could mine it. Within a few years, these computers were superseded by specialized chips known as ASICs, which could perform only one type of computational task. The Red Fury belongs to the first generation of ASIC mining devices available for purchase by private individuals.",
-                  "This USB stick simply plugs into a USB port and consumes just 2.5 watts, which is less than a bedside lamp. However, it could not perform its calculations independently: a connected computer had to supply tasks. Running groups of these USB sticks generated heat, making additional cooling necessary. In 2013, this stick cost around US$100 and was briefly one of the fastest devices of its kind. By comparison, the BM1370 ASIC chip, made twelve years later, performs calculations around 1,200 times faster. The Red Fury is a closed-source product: both the chip and the circuit board design are proprietary. This prompted the open-source mining community to develop its first alternatives."
                 ]
               }
             }
@@ -1420,11 +1441,12 @@ window.KW_CONTENT = {
         "en": "New Developments, Familiar Challenges"
       },
       "hinge": {
-        "draft": true,
         "text": {
           "de": [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            "Ob Bitcoin tatsächlich Geld ist, bleibt umstritten. Die Europäische Zentralbank verlangt von Geld drei Funktionen: Tauschmittel, Recheneinheit, Wertaufbewahrung. Bitcoin erfüllt sie nur eingeschränkt und gilt der EZB als Krypto-Vermögenswert, nicht als Währung. Wer Bitcoin kauft, erwirbt weder einen Unternehmensanteil noch einen Anspruch auf Dividende oder Gegenleistung.",
+            "Bitcoin ist zudem nicht allein geblieben: zehntausende weitere digitale Token sind entstanden. Mit dieser Kommerzialisierung kamen Betrug und Missbrauch. Gefälschte Handelsplattformen, wertlose Token, Schneeballsysteme im digitalen Gewand: ein Wilder Westen. Die Europäische Union hat mit der MiCA-Verordnung (Markets in Crypto-Assets-Regulation) 2023 einen ersten umfassenden Rechtsrahmen geschaffen, die USA mit dem GENIUS Act 2025 ein Gesetz speziell für Stablecoins. Weltweit bleibt die Regulierung fragmentiert, wie bei anderen digitalen Technologien auch, etwa bei sozialen Medien oder Künstlicher Intelligenz, deren gesellschaftliche Auswirkungen erst mit großer Verzögerung regulatorisch eingeholt werden.",
+            "Zugleich verschiebt sich die Infrastruktur des alltäglichen Zahlens. Private Dienste, wie Apps, Karten und Plattformen, schieben sich zwischen Nutzer und staatliches Geld. Inzwischen geben einige dieser Unternehmen sogar eigene digitale Werte heraus, die an staatliches Geld gekoppelt sind, sogenannte private Stablecoins.",
+            "Neue Geldformen brauchen Zeit, um sich gesellschaftlich zu verankern. Dies ist von einer Vielzahl von Faktoren abhängig, die etwa in der politischen und gesellschaftlichen Situation einer Gesellschaft zu finden sind, der herrschenden Wirtschaftsordnung und den bestehenden Abhängigkeiten. Ohne diese Einbettungen scheiterten bisher neue Geldformen und richteten in der Gesellschaft Schäden für die Mehrzahl der Verbrauchenden an, selbst wenn die Idee bestechend war. In der Geldgeschichte lässt sich ablesen, dass mit gesellschaftlichen Rahmenbedingungen, die bei allgemeingültigen Standards beginnen, neue Geldformen etabliert werden konnten und Jahrhunderte überdauern."
           ],
           "en": []
         }
@@ -1842,7 +1864,7 @@ window.KW_CONTENT = {
       },
       "text": {
         "de": [
-          "Papiergeld war Menschen einmal genauso ungewohnt und suspekt, wie digitale Token es heute für viele sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten, war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?",
+          "Papiergeld war in der Vergangenheit für Menschen einmal genauso ungewohnt und suspekt, wie es digitale Token heutzutage sind. Als im 17. Jahrhundert die ersten Geldscheine in Europa auftauchten (Einführung während der Song Dynastie in China bereits im 11. Jh.), war die Skepsis groß: Wie soll ein bedrucktes Stück Papier denselben Wert besitzen wie eine Münze aus Silber oder Kupfer?",
           "Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) werden mit dem Anspruch angeboten, als Zahlungsmittel oder Wertträger zu dienen.",
           "Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern."
         ],
