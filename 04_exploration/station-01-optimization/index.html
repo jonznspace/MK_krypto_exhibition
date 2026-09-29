@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Station 1 · Kryptografie</title>
+    <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css" />
+    <link rel="stylesheet" href="station-01.css?v=3" />
+    <link
+      rel="stylesheet"
+      href="../../shared/css/station-language-switch.css"
+    />
+    <link rel="stylesheet" href="../../shared/css/station-idle-reload.css" />
+    <!-- Lokale Gestaltung der Optimierung, nach allen Original-Styles geladen. -->
+    <link rel="stylesheet" href="optimization.css?v=12" />
+    <!-- Vertiefungsebene v2 (2026-09-29), siehe CHANGELOG.md. -->
+    <link rel="stylesheet" href="vertiefung.css?v=1" />
+  </head>
+  <body class="station-optimization">
+    <div id="scaler">
+      <main id="frame" aria-label="Station 1 – Kryptografie">
+        <section class="screen screen-start" id="screenStart">
+          <div class="station-marker" aria-label="Station 1 - Kryptografie">
+            <span class="station-marker__station">Station 1</span>
+            <span class="station-marker__topic">Kryptografie</span>
+          </div>
+
+          <div class="start-copy">
+            <span class="eyebrow" id="startEyebrow"></span>
+            <h1 class="title title--hero" id="startTitle"></h1>
+            <div class="hero-summary">
+              <div
+                class="hero-text"
+                id="startIntro"
+                aria-label="Einführungstext zur Station"
+              ></div>
+              <button
+                class="reading-button"
+                id="btnReadMore"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="readingOverlay"
+              >
+                Weiterlesen
+              </button>
+            </div>
+          </div>
+
+          <div class="start-visual" aria-hidden="true">
+            <img class="station-image" id="startImage" alt="" />
+          </div>
+
+          <button class="cta" id="btnTry" type="button">
+            <span class="cta-label" id="tryLabel"></span>
+            <span class="cta-icon">
+              <img
+                src="../../00_design-system/symbols/brand-apple-arcade.svg"
+                alt=""
+              />
+            </span>
+          </button>
+        </section>
+
+        <section class="screen screen-action hidden" id="screenAction">
+          <header class="action-hdr">
+            <div class="action-hdr-copy">
+              <span class="eyebrow" id="actionEyebrow"></span>
+              <h1 class="title title--compact" id="actionTitle"></h1>
+            </div>
+            <button
+              class="close-btn"
+              id="btnClose"
+              aria-label="Schließen"
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </header>
+
+          <div class="action-layout">
+            <section
+              class="skytale-stage"
+              id="skyStage"
+              aria-label="Interaktive Skytale"
+            >
+              <div
+                class="skytale-canvas"
+                id="skyCanvas"
+                aria-label="Drehbares Modell einer Skytale"
+              ></div>
+              <!-- Vertiefung v2: Zustand als Überschrift, Legende und Drehhinweis.
+                   Wechselnde Texte liegen in eigenen Spans, damit das geteilte
+                   Sprach-Skript sie nicht auf alte Werte zurücksetzt. -->
+              <p class="stage-headline" aria-live="polite">
+                <span id="stageHeadline"></span>
+              </p>
+              <div class="stage-footer">
+                <p class="stage-legend">
+                  <span class="stage-legend__swatch" aria-hidden="true"></span>
+                  <span id="stageLegend"></span>
+                </p>
+                <p class="stage-hint" id="stageHint">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4.05 11a8 8 0 1 1 .5 4m-.5 5v-5h5" />
+                  </svg>
+                  <span id="stageHintText"></span>
+                </p>
+              </div>
+            </section>
+
+            <section class="skytale-controls" id="skyPanel" data-mode="encrypt">
+              <div class="tabs" role="tablist" aria-label="Arbeitsmodus">
+                <button
+                  class="tab active"
+                  id="btnEncrypt"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  Verschlüsseln
+                </button>
+                <button
+                  class="tab"
+                  id="btnDecrypt"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  Entschlüsseln
+                </button>
+              </div>
+
+              <p class="panel-task"><span id="skyTask"></span></p>
+
+              <!-- Verschlüsseln ①: Nachricht schreiben -->
+              <div class="step" data-only="encrypt">
+                <p class="step-title" id="stepWriteHeading">
+                  <span class="step-num" aria-hidden="true">1</span>
+                  <span id="stepWriteTitle"></span>
+                </p>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="skyIn"
+                  maxlength="36"
+                  autocomplete="off"
+                  readonly
+                  inputmode="none"
+                  aria-labelledby="stepWriteHeading"
+                />
+                <div
+                  class="skytale-keyboard hidden"
+                  id="skyKeyboard"
+                  aria-label="Bildschirmtastatur"
+                >
+                  <div class="keyboard-row" id="keyboardRowA"></div>
+                  <div class="keyboard-row" id="keyboardRowB"></div>
+                  <div
+                    class="keyboard-row keyboard-row--bottom"
+                    id="keyboardRowC"
+                  ></div>
+                  <div class="keyboard-row keyboard-row--actions">
+                    <button
+                      class="keyboard-key keyboard-key--wide"
+                      id="btnKeyboardSpace"
+                      type="button"
+                    >
+                      Leerzeichen
+                    </button>
+                    <button
+                      class="keyboard-key keyboard-key--wide"
+                      id="btnKeyboardBackspace"
+                      type="button"
+                    >
+                      Löschen
+                    </button>
+                    <button
+                      class="keyboard-key keyboard-key--wide"
+                      id="btnKeyboardDone"
+                      type="button"
+                    >
+                      Fertig
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Entschlüsseln: gefundener Streifen, nur lesbar -->
+              <div class="step" data-only="decrypt">
+                <p class="step-title step-title--plain">
+                  <span id="stripFoundTitle"></span>
+                </p>
+                <div class="strip-display" id="stripDisplay"></div>
+              </div>
+
+              <!-- Beide Modi: Schlüssel = Stabdicke -->
+              <div class="step">
+                <p class="step-title" id="stepKeyHeading">
+                  <span class="step-num" id="stepKeyNum" aria-hidden="true">2</span>
+                  <span id="stepKeyTitle"></span>
+                  <span class="step-value" id="skyColsText"></span>
+                </p>
+                <div class="key-slider">
+                  <input
+                    type="range"
+                    id="skyCols"
+                    min="2"
+                    max="7"
+                    step="1"
+                    value="5"
+                    aria-labelledby="stepKeyHeading"
+                  />
+                  <div class="key-ticks" id="keyTicks" aria-hidden="true"></div>
+                </div>
+              </div>
+
+              <!-- Verschlüsseln ③: abwickeln -->
+              <div class="step" data-only="encrypt">
+                <p class="step-title" id="stepWrapHeading">
+                  <span class="step-num" aria-hidden="true">3</span>
+                  <span id="stepWrapTitle"></span>
+                </p>
+                <div
+                  class="segmented"
+                  role="group"
+                  aria-labelledby="stepWrapHeading"
+                >
+                  <button
+                    class="segmented__option"
+                    id="btnWrapped"
+                    type="button"
+                    aria-pressed="true"
+                  >
+                    <span id="wrappedLabel"></span>
+                  </button>
+                  <button
+                    class="segmented__option"
+                    id="btnUnwrapped"
+                    type="button"
+                    aria-pressed="false"
+                  >
+                    <span id="unwrappedLabel"></span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Ergebnis: Geheimtext bzw. Lesung längs des Stabs -->
+              <div class="step step--result" aria-live="polite">
+                <p class="step-title" id="resultHeading">
+                  <span class="step-num" id="resultNum" aria-hidden="true">2</span>
+                  <span id="resultTitle"></span>
+                </p>
+                <div class="result-text" id="skyResult"></div>
+                <p class="result-note"><span id="skyResultNote"></span></p>
+                <button
+                  class="next-puzzle hidden"
+                  id="btnNextPuzzle"
+                  type="button"
+                >
+                  <span id="nextPuzzleLabel"></span>
+                </button>
+              </div>
+
+              <aside class="panel-takeaway">
+                <p class="panel-takeaway__label"><span id="takeawayLabel"></span></p>
+                <p class="panel-takeaway__text"><span id="takeawayText"></span></p>
+              </aside>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="reading-overlay" id="readingOverlay" hidden>
+      <section
+        class="reading-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="readingTitle"
+      >
+        <header class="reading-header">
+          <div>
+            <p class="reading-eyebrow" id="readingEyebrow">Hintergrund</p>
+            <h2 id="readingTitle">Verschlüsseln &amp; Versiegeln</h2>
+          </div>
+          <button
+            class="reading-close"
+            id="btnCloseReading"
+            type="button"
+            aria-label="Schließen"
+            title="Schließen"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </header>
+        <div
+          class="reading-body"
+          id="readingBody"
+          tabindex="0"
+          role="region"
+          aria-label="Vollständiger Einführungstext"
+        ></div>
+      </section>
+    </div>
+
+    <script src="../../shared/js/vendor/three.min.js"></script>
+    <script src="../../shared/js/station-language-switch.js"></script>
+    <script src="../../shared/js/station-idle-reload.js"></script>
+    <script src="station-01.js?v=15"></script>
+  </body>
+</html>

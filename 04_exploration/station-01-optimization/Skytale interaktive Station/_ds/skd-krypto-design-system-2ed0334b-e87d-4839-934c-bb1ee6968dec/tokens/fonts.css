@@ -1,0 +1,20 @@
+/* Webfonts.
+   The source .fig references four licensed families: Panchang (display),
+   Switzer (body), Baton Turbo (alternate body), DM Mono (technical/labels),
+   plus Inter for the light "Core/*" component set.
+   DM Mono and Inter are available and loaded below.
+   Panchang, Switzer and Baton Turbo ship no binaries in the .fig — the tokens
+   keep pointing at them and fall back to the platform sans until the licensed
+   web files are added here as @font-face rules. See readme.md → "Fonts". */
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-display: "Panchang", system-ui, -apple-system, "Segoe UI", sans-serif; /* @kind font */
+  --font-body: "Switzer", system-ui, -apple-system, "Segoe UI", sans-serif; /* @kind font */
+  --font-body-alt: "Baton Turbo", system-ui, -apple-system, "Segoe UI", sans-serif; /* @kind font */
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* @kind font */
+  --font-ui: "Inter", system-ui, sans-serif; /* @kind font */
+
+  --font-display-weight: 800; /* @kind font */
+  --font-display-stretch: normal; /* @kind font */
+}
