@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<template id="__bundler_thumbnail" data-bg-color="#000000">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#000000"/>
+    <g transform="rotate(-14 600 400)">
+      <rect x="230" y="345" width="740" height="110" fill="#f4f4f5" stroke="#000" stroke-width="6"/>
+      <g stroke="rgba(0,0,0,.35)" stroke-width="4">
+        <path d="M340 345V455M450 345V455M560 345V455M670 345V455M780 345V455M890 345V455"/>
+      </g>
+      <rect x="230" y="345" width="110" height="110" fill="#ED8003" stroke="#000" stroke-width="6"/>
+      <rect x="560" y="345" width="110" height="110" fill="#ED8003" stroke="#000" stroke-width="6"/>
+      <rect x="150" y="330" width="120" height="140" fill="#000000" stroke="#ffffff" stroke-width="6"/>
+    </g>
+  </svg>
+</template>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/tokens/fig-tokens.css">
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/tokens/fig-typography.css">
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/tokens/scale.css">
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/tokens/immersive.css">
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/tokens/base.css">
+<link rel="stylesheet" href="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<script src="_ds/skd-krypto-design-system-2ed0334b-e87d-4839-934c-bb1ee6968dec/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+<style>
+html,body{margin:0;background:#000}
+body{zoom:0.47}
+a{color:var(--color-primary-600)}
+a:hover{color:var(--color-primary-800)}
+input[type=range]{accent-color:var(--color-primary-600)}
+</style>
+</helmet>
+<div style="position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--immersive-bg);color:var(--immersive-ink);font-family:var(--font-body)">
+
+  <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0">
+      <div style="position:absolute;right:0;top:0;width:1120px;height:1080px">
+        <div ref="{{ hostRef }}" style="position:absolute;inset:0;pointer-events:none"></div>
+      </div>
+      <div style="position:absolute;inset:0;background:linear-gradient(96deg, #000 30%, rgba(0,0,0,0.6) 58%, rgba(0,0,0,0) 100%);pointer-events:none"></div>
+      <div style="position:absolute;left:40px;top:40px">
+        <x-import component-from-global-scope="SKDKryptoDesignSystem_2ed033.StationTag" station="Station 1" topic="Kryptografie" hint-size="240px,28px"></x-import>
+      </div>
+      <div style="position:absolute;left:40px;top:236px;display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+        <span style="font-family:var(--font-mono);font-weight:500;font-size:15px;line-height:100%;letter-spacing:0.100em;text-transform:uppercase">Geheime Botschaften in der Antike</span>
+        <h1 style="margin:0;font-family:var(--font-display);font-weight:800;font-size:96px;line-height:100%;text-transform:uppercase;max-width:14ch">Die Skytale</h1>
+      </div>
+      <p style="position:absolute;left:40px;top:470px;width:680px;margin:0;font-size:24px;line-height:1.5">Ein Streifen Leder, um einen Stab gewickelt, und eine Nachricht, die quer über die Wicklungen geschrieben wird. Abgewickelt bleibt nur eine Kette scheinbar sinnloser Buchstaben.</p>
+      <div style="position:absolute;left:40px;top:640px;width:912px;display:flex;flex-direction:row;gap:40px;align-items:flex-start">
+        <p style="flex:1;margin:0;font-size:20px;line-height:1.5">Die Skytale gilt als eines der ältesten überlieferten Verschlüsselungswerkzeuge, verwendet im antiken Griechenland, beschrieben bei Plutarch für die spartanische Heeresführung.</p>
+        <p style="flex:1;margin:0;font-size:20px;line-height:1.5">Sie tauscht keine Buchstaben aus, sie verschiebt ihre Reihenfolge. Der Schlüssel ist der Durchmesser des Stabs: Nur ein gleich dicker Stab ordnet die Buchstaben wieder richtig.</p>
+      </div>
+      <div style="position:absolute;left:40px;bottom:60px;display:flex;flex-direction:row;gap:16px;align-items:center">
+        <x-import component-from-global-scope="SKDKryptoDesignSystem_2ed033.ExhibitButton" tone="navigation" on-click="{{ openAction }}" hint-size="320px,90px">Skytale ausprobieren</x-import>
+        <span style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-muted)">Stab wickeln · abwickeln · lesen</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isAction }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:28px">
+
+      <div style="display:flex;flex-direction:row;align-items:flex-start;justify-content:space-between">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+          <span style="font-family:var(--font-mono);font-weight:500;font-size:15px;line-height:100%;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-body)">{{ modeTitle }}</span>
+          <h2 style="margin:0;font-family:var(--font-display);font-weight:800;font-size:64px;line-height:100%;text-transform:uppercase">{{ headline }}</h2>
+        </div>
+        <div style="display:flex;flex-direction:row;gap:12px;align-items:center">
+          <button onClick="{{ setFree }}" style="{{ freeStyle }}">Freies Wickeln</button>
+          <button onClick="{{ setTask }}" style="{{ taskStyle }}">Entschlüsseln</button>
+        </div>
+        <button onClick="{{ closeAction }}" aria-label="Zur Startansicht" style="width:80px;height:80px;border:0;border-radius:0;background:var(--color-neutral-800);color:var(--immersive-ink);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-neutral-700)"><i class="ti ti-x" style="font-size:32px"></i></button>
+      </div>
+
+      <div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr) 560px;gap:32px;min-height:0">
+
+        <div style="position:relative;background:var(--immersive-bg);box-shadow:inset 0 0 0 1px var(--color-neutral-700);min-height:0">
+          <div ref="{{ hostRef }}" style="position:absolute;inset:0;touch-action:none"></div>
+          <div style="position:absolute;left:16px;top:16px;display:flex;flex-direction:row;gap:8px;align-items:center;pointer-events:none">
+            <i class="ti ti-rotate-360" style="font-size:20px;color:var(--color-primary-600)"></i>
+            <span style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-muted)">Ziehen zum Drehen · längs oder quer</span>
+          </div>
+          <div style="position:absolute;left:16px;bottom:16px;font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-muted);pointer-events:none">{{ stageState }}</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px;min-height:0">
+
+          <sc-if value="{{ isTask }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--color-primary-600)">Gefundener Streifen</span>
+              <div style="min-height:64px;box-sizing:border-box;padding:14px 16px;background:rgba(237,128,3,0.08);box-shadow:inset 0 0 0 1px var(--color-primary-600);font-family:var(--font-mono);font-weight:500;font-size:22px;letter-spacing:0.09em;text-transform:uppercase;overflow-x:auto;white-space:nowrap">{{ stripOut }}</div>
+              <p style="margin:0;font-size:20px;line-height:1.5;color:var(--immersive-body)">Ein Bote wurde mit diesem Streifen aufgegriffen. Der passende Stab fehlt. Verstelle den Durchmesser, bis die Nachricht längs des Stabs lesbar wird.</p>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isFree }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="skyMsg" style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-muted)">Nachricht auf dem Lederstreifen · zum Tippen antippen</label>
+            <input id="skyMsg" type="text" maxlength="36" autocomplete="off" value="{{ message }}" onChange="{{ onMessage }}" onFocus="{{ openKeys }}" onClick="{{ openKeys }}" style="width:100%;box-sizing:border-box;min-height:64px;padding:0 16px;background:var(--color-neutral-900);border:0;box-shadow:inset 0 0 0 1px var(--color-primary-200);color:var(--immersive-ink);font-family:var(--font-mono);font-weight:500;font-size:20px;letter-spacing:0.08em;text-transform:uppercase" />
+          </div>
+          </sc-if>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:baseline">
+              <label for="skyCols" style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-muted)">Stabdurchmesser</label>
+              <span style="font-family:var(--font-mono);font-weight:500;font-size:15px;letter-spacing:0.100em;text-transform:uppercase;color:var(--color-primary-600)">{{ colsLabel }}</span>
+            </div>
+            <input id="skyCols" type="range" min="3" max="8" step="1" value="{{ cols }}" onChange="{{ onCols }}" style="width:100%;height:44px" />
+          </div>
+
+          <div style="display:flex;flex-direction:row;gap:12px;align-items:stretch">
+            <x-import component-from-global-scope="SKDKryptoDesignSystem_2ed033.ExhibitButton" tone="navigation" on-click="{{ toggleWrap }}" style="flex:1;min-height:76px;padding:24px 24px" hint-size="100%,76px">{{ wrapLabel }}</x-import>
+            <button onClick="{{ toggleRead }}" style="min-height:76px;padding:0 20px;border:0;border-radius:0;background:transparent;box-shadow:inset 0 0 0 1px var(--color-secondary-600);color:var(--color-secondary-600);font-family:var(--font-mono);font-weight:500;font-size:15px;letter-spacing:0.100em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px">
+              <i class="ti ti-eye" style="font-size:20px"></i>Leserichtung
+            </button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--immersive-muted)">{{ readLabel }}</span>
+            <div style="{{ readStyle }}">{{ plainOut }}</div>
+            <sc-if value="{{ isTask }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--color-primary-600)">{{ taskHint }}</span>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{ isFree }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:0.100em;text-transform:uppercase;color:var(--color-primary-600)">Abgewickelter Streifen</span>
+            <div style="min-height:64px;box-sizing:border-box;padding:14px 16px;background:rgba(237,128,3,0.08);box-shadow:inset 0 0 0 1px var(--color-primary-600);font-family:var(--font-mono);font-weight:500;font-size:22px;letter-spacing:0.09em;text-transform:uppercase;overflow-x:auto;white-space:nowrap">{{ cipherOut }}</div>
+          </div>
+          </sc-if>
+
+        </div>
+      </div>
+
+      <sc-if value="{{ showKeys }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div style="display:flex;flex-direction:row;gap:10px;justify-content:center">
+            <sc-for list="{{ rowA }}" as="k" hint-placeholder-count="11">
+              <x-import component-from-global-scope="SKDKryptoDesignSystem_2ed033.EnigmaKey" letter="{{ k.ch }}" on-click="{{ k.press }}" hint-size="64px,64px"></x-import>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:row;gap:10px;justify-content:center">
+            <sc-for list="{{ rowB }}" as="k" hint-placeholder-count="11">
+              <x-import component-from-global-scope="SKDKryptoDesignSystem_2ed033.EnigmaKey" letter="{{ k.ch }}" on-click="{{ k.press }}" hint-size="64px,64px"></x-import>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:row;gap:10px;justify-content:center;align-items:center">
+            <sc-for list="{{ rowC }}" as="k" hint-placeholder-count="8">
+              <x-import component-from-global-scope="SKDKryptoDesignSystem_2ed033.EnigmaKey" letter="{{ k.ch }}" on-click="{{ k.press }}" hint-size="64px,64px"></x-import>
+            </sc-for>
+            <button onClick="{{ pressSpace }}" style="{{ wideKey }}">Leerzeichen</button>
+            <button onClick="{{ pressBack }}" style="{{ wideKey }}">Löschen</button>
+            <button onClick="{{ pressClear }}" style="{{ wideKeyGhost }}">Alles löschen</button>
+            <button onClick="{{ closeKeys }}" style="{{ wideKey }}">Fertig</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1920,&quot;height&quot;:1080},&quot;message&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;TREFFEN BEI MONDLICHT&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lettersPerTurn&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:3,&quot;max&quot;:8,&quot;tsType&quot;:&quot;number&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const ROWS = ['QWERTZUIOPÜ', 'ASDFGHJKLÖÄ', 'YXCVBNMß'];
+const WIDE_KEY = 'height:64px;padding:0 22px;border:0;border-radius:100px;background:var(--key-live-bg);color:var(--key-live-ink);font-family:var(--font-mono);font-weight:500;font-size:15px;letter-spacing:0.100em;text-transform:uppercase;cursor:pointer;flex-shrink:0';
+const WIDE_KEY_GHOST = 'height:64px;padding:0 22px;border:0;border-radius:100px;background:transparent;box-shadow:inset 0 0 0 1px var(--color-neutral-700);color:var(--immersive-muted);font-family:var(--font-mono);font-weight:500;font-size:15px;letter-spacing:0.100em;text-transform:uppercase;cursor:pointer;flex-shrink:0';
+
+const TAB_BASE = 'min-height:52px;padding:0 20px;border:0;border-radius:0;font-family:var(--font-mono);font-weight:500;font-size:15px;letter-spacing:0.100em;text-transform:uppercase;cursor:pointer';
+const TAB_ON = TAB_BASE + ';background:var(--color-primary-600);color:#000';
+const TAB_OFF = TAB_BASE + ';background:transparent;box-shadow:inset 0 0 0 1px var(--color-neutral-700);color:var(--immersive-muted)';
+const OUT_BASE = 'min-height:64px;box-sizing:border-box;padding:14px 16px;font-family:var(--font-mono);font-weight:500;font-size:22px;letter-spacing:0.09em;text-transform:uppercase;overflow-x:auto;white-space:nowrap';
+const OUT_NEUTRAL = OUT_BASE + ';background:var(--color-neutral-900);box-shadow:inset 0 0 0 1px var(--color-neutral-700);color:var(--immersive-ink)';
+const OUT_OK = OUT_BASE + ';background:var(--color-primary-600);box-shadow:inset 0 0 0 1px var(--color-primary-600);color:#000';
+
+const CELL = 1.0;      // arc length per letter along the strip
+const STRIP_W = 1.15;  // strip width = axial advance per turn
+const PAD = 0.0;       // no blank lead-in: the band starts at the first letter
+const SEG = 7;         // length segments per cell
+const TAU = Math.PI * 2;
+const FLAT_Y = -2.0;   // where the unwound cloth lies
+const LIFT = 3.0;      // how far the branch lifts while unwinding
+
+const PUZZLE = { plain: 'BOTE KOMMT IN DREI TAGEN', cols: 6 };
+
+class Component extends DCLogic {
+  state = { screen: 'action', mode: 'free', msg: null, cols: null, wrapped: true, showRead: true, keys: false };
+
+  get message() { return this.state.msg != null ? this.state.msg : (this.props.message || 'TREFFEN BEI MONDLICHT'); }
+  get cols() { return this.state.cols != null ? this.state.cols : (this.props.lettersPerTurn || 5); }
+
+  norm(s) {
+    return String(s).toUpperCase().replace(/Ä/g, 'AE').replace(/Ö/g, 'OE').replace(/Ü/g, 'UE')
+      .replace(/ß/g, 'SS').replace(/[^A-Z ]/g, '').replace(/ +/g, ' ').replace(/^ /, '');
+  }
+
+  // strip order for a plaintext written along the stick
+  encode(plain, cols) {
+    const rows = Math.max(2, Math.ceil(plain.length / cols));
+    const cells = [];
+    for (let i = 0; i < rows * cols; i++) {
+      const r = Math.floor(i / cols), c = i % cols;
+      cells.push(plain.charAt(c * rows + r) || '·');
+    }
+    return { rows, cells };
+  }
+
+  // what the eye reads along the stick axis for a given thickness
+  axial(cells, cols) {
+    const rows = Math.ceil(cells.length / cols);
+    let out = '';
+    for (let c = 0; c < cols; c++) for (let r = 0; r < rows; r++) out += (cells[r * cols + c] || '·');
+    return out;
+  }
+
+  get isTask() { return this.state.mode === 'task'; }
+
+  get puzzleStrip() {
+    if (!this._pz) this._pz = this.encode(this.norm(PUZZLE.plain), PUZZLE.cols).cells;
+    return this._pz;
+  }
+
+  grid() {
+    const cols = this.cols;
+    if (this.isTask) {
+      const src = this.puzzleStrip;
+      const rows = Math.ceil(src.length / cols);
+      const cells = [];
+      for (let i = 0; i < rows * cols; i++) cells.push(src[i] || '·');
+      return { plain: this.axial(cells, cols), cols, rows, cells, task: true };
+    }
+    const plain = this.norm(this.message) || 'SKYTALE';
+    const e = this.encode(plain, cols);
+    return { plain, cols, rows: e.rows, cells: e.cells, task: false };
+  }
+
+  type(ch) {
+    const next = (this.message + ch).slice(0, 36);
+    this.setState({ msg: next });
+  }
+
+  keyRow(i) {
+    return ROWS[i].split('').map(ch => ({ ch, press: () => this.type(ch) }));
+  }
+
+  renderVals() {
+    const g = this.grid();
+    return {
+      isStart: this.state.screen === 'start',
+      isAction: this.state.screen === 'action',
+      isTask: this.isTask,
+      isFree: !this.isTask,
+      solved: this.isTask && this.cols === PUZZLE.cols,
+      unsolved: this.isTask && this.cols !== PUZZLE.cols,
+      modeTitle: this.isTask ? 'Station 1 · Entschlüsseln' : 'Station 1 · Ausprobieren',
+      headline: this.isTask ? 'Welcher Stab passt?' : 'Stab & Streifen',
+      freeStyle: this.isTask ? TAB_OFF : TAB_ON,
+      taskStyle: this.isTask ? TAB_ON : TAB_OFF,
+      readLabel: this.isTask ? (this.cols === PUZZLE.cols ? 'Gelöst · Nachricht längs des Stabs' : 'Lesung längs des Stabs') : 'Klartext längs des Stabs',
+      readStyle: this.isTask && this.cols === PUZZLE.cols ? OUT_OK : OUT_NEUTRAL,
+      taskHint: this.cols === PUZZLE.cols ? 'Richtig · ' + PUZZLE.cols + ' Buchstaben pro Wicklung' : 'Noch keine lesbare Nachricht · Durchmesser weiter verstellen',
+      setFree: () => this.setState({ mode: 'free' }),
+      setTask: () => this.setState({ mode: 'task', cols: 4, wrapped: true }),
+      message: this.message,
+      cols: String(this.cols),
+      colsLabel: this.cols + ' Buchstaben pro Wicklung',
+      wrapLabel: this.state.wrapped ? 'Streifen abwickeln' : 'Um den Ast wickeln',
+      stageState: this.state.wrapped ? 'Gewickelt · lesbar längs des Asts' : 'Abgewickelt · reine Buchstabenfolge',
+      plainOut: g.plain,
+      cipherOut: g.cells.map(ch => (ch === ' ' || ch === '') ? '·' : ch).join(''),
+      hostRef: (el) => this.attach(el),
+      openAction: () => this.setState({ screen: 'action' }),
+      closeAction: () => this.setState({ screen: 'start', wrapped: true, showRead: false }),
+      toggleWrap: () => this.setState(s => ({ wrapped: !s.wrapped })),
+      toggleRead: () => this.setState(s => ({ showRead: !s.showRead })),
+      onMessage: (e) => this.setState({ msg: e.target.value }),
+      showKeys: !this.isTask && this.state.keys,
+      openKeys: () => { if (!this.state.keys) this.setState({ keys: true }); },
+      closeKeys: () => { const el = document.getElementById('skyMsg'); if (el) el.blur(); this.setState({ keys: false }); },
+      wideKey: WIDE_KEY,
+      wideKeyGhost: WIDE_KEY_GHOST,
+      rowA: this.keyRow(0),
+      rowB: this.keyRow(1),
+      rowC: this.keyRow(2),
+      pressSpace: () => this.type(' '),
+      pressBack: () => this.setState({ msg: this.message.slice(0, -1) }),
+      pressClear: () => this.setState({ msg: '' }),
+      stripOut: this.puzzleStrip.map(ch => (ch === ' ' || ch === '') ? '·' : ch).join(''),
+      onCols: (e) => this.setState({ cols: Number(e.target.value) })
+    };
+  }
+
+  /* ---------- lifecycle ---------- */
+
+  componentDidMount() {
+    this.alive = true;
+    this.roll = 0.06;
+    this.wrapT = this.state.wrapped ? 1 : 0;
+    this.waitThree();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.texDirty = true; });
+  }
+
+  componentWillUnmount() {
+    this.alive = false;
+    if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.ro) this.ro.disconnect();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.scene) return;
+    if (prevProps.lettersPerTurn !== this.props.lettersPerTurn) this.setState({ cols: null });
+    if (prevProps.message !== this.props.message) this.setState({ msg: null });
+    const g = this.grid();
+    if (!this.built || g.cols !== this.built.cols || g.rows !== this.built.rows) this.build();
+    else { this.built = g; this.texDirty = true; }   // same grid, new letters: repaint the texture
+    if (prevState.showRead !== this.state.showRead) this.texDirty = true;
+  }
+
+  waitThree() {
+    if (!this.alive) return;
+    if (window.THREE) this.init();
+    else setTimeout(() => this.waitThree(), 60);
+  }
+
+  /* ---------- scene ---------- */
+
+  init() {
+    const THREE = window.THREE;
+    this.THREE = THREE;
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.OrthographicCamera(-10, 10, 6, -6, 0.1, 400);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const dom = this.renderer.domElement;
+    dom.style.cssText = 'display:block;width:100%;height:100%;cursor:grab;touch-action:none';
+
+    this.scene.add(new THREE.AmbientLight(0x4a5260, 0.55));
+    const key = new THREE.DirectionalLight(0xffe9cf, 1.35);
+    key.position.set(-4, 6, 7);
+    this.scene.add(key);
+    const rim = new THREE.DirectionalLight(0xed8003, 0.5);
+    rim.position.set(5, -2, -4);
+    this.scene.add(rim);
+
+    this.gradient = this.makeGradientMap();
+    this.group = new THREE.Group();
+    this.scene.add(this.group);
+    this.bindPointer(dom);
+    this.build();
+    if (this.host) this.attach(this.host);
+    this.last = performance.now();
+    this.loop();
+  }
+
+  makeGradientMap() {
+    const THREE = this.THREE;
+    const data = new Uint8Array([88, 152, 214, 255]);
+    const t = new THREE.DataTexture(data, data.length, 1, THREE.RedFormat);
+    t.minFilter = t.magFilter = THREE.NearestFilter;
+    t.generateMipmaps = false;
+    t.needsUpdate = true;
+    return t;
+  }
+
+  attach(el) {
+    if (!el) return;
+    this.host = el;
+    if (!this.renderer) return;
+    const dom = this.renderer.domElement;
+    if (dom.parentNode !== el) el.appendChild(dom);
+    if (this.ro) this.ro.disconnect();
+    this.ro = new ResizeObserver(() => this.resize());
+    this.ro.observe(el);
+    this.resize();
+  }
+
+  resize() {
+    if (!this.host || !this.renderer) return;
+    const w = this.host.clientWidth || 800, h = this.host.clientHeight || 600;
+    this.renderer.setSize(w, h, false);
+    this.aspect = w / Math.max(1, h);
+  }
+
+  bindPointer(dom) {
+    let lx = null, ly = null;
+    dom.addEventListener('pointerdown', e => { lx = e.clientX; ly = e.clientY; this.dragging = true; dom.style.cursor = 'grabbing'; dom.setPointerCapture(e.pointerId); });
+    dom.addEventListener('pointermove', e => {
+      if (!this.dragging || lx == null) return;
+      // both axes roll the stick: sideways drag and the more common up/down pull
+      this.roll += (e.clientX - lx) * 0.008 - (e.clientY - ly) * 0.010;
+      lx = e.clientX; ly = e.clientY;
+    });
+    const up = () => { this.dragging = false; lx = null; ly = null; dom.style.cursor = 'grab'; };
+    dom.addEventListener('pointerup', up);
+    dom.addEventListener('pointercancel', up);
+  }
+
+  /* ---------- build ---------- */
+
+  build() {
+    const THREE = this.THREE, g = this.grid();
+    this.built = g;
+    this.R = (g.cols * CELL) / TAU;
+    this.S = PAD * 2 + g.cells.length * CELL;
+    const turns = this.S / (TAU * this.R);
+    const bandW = Math.min(STRIP_W, this.R * 1.05);   // thin sticks carry a narrower band
+    this.bandW = bandW;
+    const pitch = bandW / Math.sqrt(Math.max(0.25, 1 - Math.pow(bandW / (TAU * this.R), 2)));
+    this.pitch = pitch;
+    this.L = Math.max(turns * pitch + pitch * 2.2, this.R * 5.4);
+    this.xStart = -(turns * pitch + pitch) / 2;   // centred: both sawn ends stay clear of the band
+
+    if (this.branch) { this.group.remove(this.branch); this.disposeTree(this.branch); }
+    this.branch = new THREE.Group();
+    this.group.add(this.branch);
+    this.buildBranch();
+
+    this.buildStrip();
+    this.texDirty = false;
+    this.updateStrip();
+  }
+
+  disposeTree(root) {
+    root.traverse(o => { if (o.geometry) o.geometry.dispose(); });
+  }
+
+  // grease-pencil look: flat black fill, white contour line, no textures
+  barkMat() {
+    const THREE = this.THREE;
+    return new THREE.MeshBasicMaterial({ color: 0x000000 });
+  }
+
+  inkMat(scale) {
+    const THREE = this.THREE;
+    return new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.BackSide });
+  }
+
+  // deformed surface point of the limb: angle a around the axis at position x
+  limbPoint(x, a, grow) {
+    const R = this.R, L = this.L;
+    const r = R * 0.88 * (grow || 1);   // a touch under the wrap radius so no facet can graze through the band
+    return new this.THREE.Vector3(x, Math.cos(a) * r, Math.sin(a) * r);
+  }
+
+  limbBend() { return 0; }
+
+  // a tapered, slightly gnarled limb along +x
+  buildBranch() {
+    const THREE = this.THREE, R = this.R, L = this.L;
+    const geo = new THREE.CylinderGeometry(R, R, L, 44, 26, true);
+    geo.rotateZ(Math.PI / 2);
+    const p = geo.getAttribute('position');
+    for (let i = 0; i < p.count; i++) {
+      const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+      const a = Math.atan2(z, y);
+      const v = this.limbPoint(x, a, 1);
+      p.setXYZ(i, v.x, v.y, v.z);
+    }
+    geo.computeVertexNormals();
+    this.branch.add(new THREE.Mesh(geo, this.barkMat()));
+
+    const outline = new THREE.Mesh(geo, this.inkMat());
+    outline.scale.set(1.0, 1.018, 1.018);
+    this.branch.add(outline);
+
+    // closing rim strokes so the silhouette reads as drawn
+    [1, -1].forEach(sign => {
+      const pts = [];
+      for (let i = 0; i <= 64; i++) pts.push(this.limbPoint(sign * (L / 2 - 0.01), (i / 64) * TAU, 1.018));
+      this.branch.add(new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(pts),
+        new THREE.LineBasicMaterial({ color: 0xffffff })
+      ));
+    });
+
+    // sawn ends: black disc with drawn growth rings
+    const endR = R * 0.735;
+    [1, -1].forEach(sign => {
+      const endX = sign * (L / 2 - 0.02), endY = this.limbBend(sign * L / 2);
+      const disc = new THREE.Mesh(new THREE.CircleGeometry(endR, 40), new THREE.MeshBasicMaterial({ color: 0x000000 }));
+      disc.rotation.y = sign * Math.PI / 2;
+      disc.position.set(endX, endY, 0);
+      this.branch.add(disc);
+      const rings = sign > 0 ? [[endR, 0.9], [endR * 0.52, 0.4], [endR * 0.2, 0.28]] : [[endR, 0.9]];
+      rings.forEach(([rr, op]) => {
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(rr * 0.965, rr, 44),
+          new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: op, side: THREE.DoubleSide })
+        );
+        ring.rotation.y = Math.PI / 2;
+        ring.position.set(endX + sign * 0.01, endY, 0);
+        this.branch.add(ring);
+      });
+    });
+
+  }
+
+  buildStrip() {
+    const THREE = this.THREE;
+    const dense = Math.max(1, Math.min(2.4, 0.8 / this.R));
+    const NL = Math.max(10, Math.round((this.S / CELL) * SEG * dense));
+    const NW = 8;   // divisions across the width: the ribbon has to follow the curvature,
+    this.NL = NL;   // otherwise a flat quad cuts through the stick and the neighbouring turn
+    const W = this.bandW || STRIP_W;
+    const count = (NL + 1) * (NW + 1);
+    const pos = new Float32Array(count * 3);
+    const uv = new Float32Array(count * 2);
+    const idx = [];
+    this.sArr = new Float32Array(count);
+    this.uArr = new Float32Array(count);
+    for (let i = 0; i <= NL; i++) {
+      const s = (i / NL) * this.S;
+      for (let j = 0; j <= NW; j++) {
+        const v = i * (NW + 1) + j;
+        this.sArr[v] = s;
+        this.uArr[v] = (j / NW) * W;
+        uv[v * 2] = s / this.S;
+        uv[v * 2 + 1] = j / NW;
+      }
+      if (i < NL) {
+        for (let j = 0; j < NW; j++) {
+          const a = i * (NW + 1) + j, b = a + 1, c = a + (NW + 1), d = c + 1;
+          idx.push(a, c, b, b, c, d);
+        }
+      }
+    }
+    if (this.strip) { this.group.remove(this.strip); this.strip.geometry.dispose(); }
+    const sg = new THREE.BufferGeometry();
+    sg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    sg.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
+    sg.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    sg.setIndex(idx);
+    this.strip = new THREE.Mesh(sg, new THREE.MeshBasicMaterial({
+      map: this.makeStripTex(), side: THREE.DoubleSide,
+      polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6
+    }));
+    this.strip.renderOrder = 3;
+    this.group.add(this.strip);
+  }
+
+  /* ---------- the band: flat fill, letters, no material texture ---------- */
+
+  makeStripTex() {
+    const THREE = this.THREE;
+    const g = this.built;
+    const ppu = Math.min(110, 6000 / this.S);
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(this.S * ppu);
+    cv.height = Math.round((this.bandW || STRIP_W) * ppu);
+    const c = cv.getContext('2d');
+    const H = cv.height, Wpx = cv.width;
+
+    c.fillStyle = '#f4f4f5'; c.fillRect(0, 0, Wpx, H);
+
+    const x0 = PAD * ppu, cw = CELL * ppu;
+    for (let i = 0; i < g.cells.length; i++) {
+      const x = x0 + i * cw;
+      if (this.state.showRead && i % g.cols === 0) {
+        c.fillStyle = '#ED8003';
+        c.fillRect(x, 0, cw, H);
+      }
+      c.strokeStyle = 'rgba(0,0,0,0.22)';
+      c.lineWidth = Math.max(1, ppu * 0.012);
+      c.beginPath(); c.moveTo(x, 0); c.lineTo(x, H); c.stroke();
+      c.save();
+      c.translate(x + cw / 2, H / 2);
+      c.rotate(-Math.PI / 2);
+      const ch = g.cells[i];
+      if (ch === ' ' || ch === '·' || ch === '') {
+        c.fillStyle = 'rgba(0,0,0,0.30)';
+        c.beginPath(); c.arc(0, 0, Math.max(2, ppu * 0.055), 0, TAU); c.fill();
+      } else {
+        c.fillStyle = '#000000';
+        c.font = '500 ' + Math.round(Math.min(cw, H * 0.82) * 0.72) + 'px "DM Mono", ui-monospace, monospace';
+        c.textAlign = 'center'; c.textBaseline = 'middle';
+        c.fillText(ch, 0, 0);
+      }
+      c.restore();
+    }
+    // drawn edge lines along the two long sides
+    c.strokeStyle = '#000000';
+    c.lineWidth = Math.max(1.5, ppu * 0.022);
+    c.beginPath();
+    c.moveTo(0, c.lineWidth / 2); c.lineTo(Wpx, c.lineWidth / 2);
+    c.moveTo(0, H - c.lineWidth / 2); c.lineTo(Wpx, H - c.lineWidth / 2);
+    c.stroke();
+
+    const t = new THREE.CanvasTexture(cv);
+    t.anisotropy = 8;
+    return t;
+  }
+
+  /* ---------- per-frame geometry ---------- */
+
+  updateStrip() {
+    if (!this.strip) return;
+    const THREE = this.THREE;
+    const attr = this.strip.geometry.getAttribute('position');
+    const arr = attr.array;
+    const R = this.R, L = this.L, S = this.S, W = this.pitch || STRIP_W, BW = this.bandW || STRIP_W;
+    const K = 1.0, T = this.wrapT;
+    const steep = (W / (TAU * R)) * (W / (TAU * R));
+    const rr = R * (1.04 + 0.55 * steep);                       // clears the limb (incl. knots + outline shell), so no letter sinks in
+    const xStart = this.xStart;
+    for (let v = 0; v < this.sArr.length; v++) {
+      const s = this.sArr[v], u = this.uArr[v];
+      // peel front: the far end of the cloth leaves the limb first
+      let t = (T * (1 + K) - K * (s / S));
+      t = t < 0 ? 0 : t > 1 ? 1 : t;
+      const e = t * t * (3 - 2 * t);
+      const th0 = (s - PAD) / R + 1.34;   // starts the first column facing the visitor
+      const phi = (s - PAD) / R;                 // wrap angle
+      const cA = R / Math.hypot(R, W / TAU);     // cos of the helix angle
+      const sA = (W / TAU) / Math.hypot(R, W / TAU);
+      const xw = xStart + (phi / TAU) * W + u * cA;
+      const th = th0 - (u * sA) / R;      // width runs square to the wrap, so turns abut cleanly
+      const yw = rr * Math.cos(th), zw = rr * Math.sin(th);
+      // laid out flat, with a slow cloth drape
+      const xf = s - S / 2;
+      const drape = 0.16 * Math.sin(s * 0.42) + 0.07 * Math.sin(s * 1.1 + 1.7);
+      const yf = FLAT_Y + (u - BW / 2) + drape;
+      const zf = R + 1.0 + 0.22 * Math.sin(s * 0.33 + 0.6);
+      const o = v * 3;
+      arr[o] = xf + (xw - xf) * e;
+      arr[o + 1] = yf + (yw - yf) * e;
+      arr[o + 2] = zf + (zw - zf) * e;
+    }
+    attr.needsUpdate = true;
+    this.strip.geometry.computeVertexNormals();
+    this.strip.geometry.computeBoundingBox();
+    this.strip.geometry.computeBoundingSphere();
+  }
+
+  fitCamera() {
+    const THREE = this.THREE;
+    const box = new THREE.Box3().setFromObject(this.group);
+    const ctr = box.getCenter(new THREE.Vector3());
+    const dir = new THREE.Vector3(0.10, 0.30, 1).normalize();
+    this.camera.position.copy(ctr).addScaledVector(dir, 120);
+    this.camera.lookAt(ctr);
+    this.camera.updateMatrixWorld();
+    const inv = new THREE.Matrix4().copy(this.camera.matrixWorld).invert();
+    let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    const v = new THREE.Vector3();
+    for (let i = 0; i < 8; i++) {
+      v.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z);
+      v.applyMatrix4(inv);
+      minX = Math.min(minX, v.x); maxX = Math.max(maxX, v.x);
+      minY = Math.min(minY, v.y); maxY = Math.max(maxY, v.y);
+    }
+    const pad = 1.22;
+    let halfW = (maxX - minX) / 2 * pad, halfH = (maxY - minY) / 2 * pad;
+    const a = this.aspect || 1.6;
+    if (halfW / halfH < a) halfW = halfH * a; else halfH = halfW / a;
+    this.camera.left = -halfW; this.camera.right = halfW;
+    this.camera.top = halfH; this.camera.bottom = -halfH;
+    this.camera.near = 1; this.camera.far = 400;
+    this.camera.updateProjectionMatrix();
+  }
+
+  loop() {
+    if (!this.alive) return;
+    this.raf = requestAnimationFrame(() => this.loop());
+    const now = performance.now();
+    const dt = Math.min(64, now - this.last);
+    this.last = now;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (this.texDirty) { this.texDirty = false; this.rebuildTex(); }
+
+    const target = this.state.wrapped ? 1 : 0;
+    if (this.wrapT !== target) {
+      const dur = reduced ? 90 : 1700;
+      const dir = target > this.wrapT ? 1 : -1;
+      this.wrapT = Math.max(0, Math.min(1, this.wrapT + dir * (dt / dur)));
+      this.updateStrip();
+    }
+
+    const ambient = this.props.autoRotate !== false;
+    if (!this.dragging && ambient && !reduced) this.roll += (TAU / 72000) * dt;
+
+    const T = this.wrapT;
+    const spin = this.roll * T * T * T;
+    this.branch.rotation.x = spin;
+    this.strip.rotation.x = spin;
+    this.branch.position.y = (1 - T) * LIFT;
+    this.branch.rotation.z = -0.04;
+    this.group.rotation.z = -0.10 * T;
+
+    this.fitCamera();
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  rebuildTex() {
+    if (!this.strip) return;
+    const old = this.strip.material.map;
+    this.strip.material.map = this.makeStripTex();
+    this.strip.material.needsUpdate = true;
+    if (old) old.dispose();
+  }
+}
+
+</script>
+</body>
+</html>

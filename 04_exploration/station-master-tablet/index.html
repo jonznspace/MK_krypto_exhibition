@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tablet-Master · Krypto, was?</title>
+  <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+  <link rel="stylesheet" href="tablet-master.css">
+  <script src="tablet-master.js" defer></script>
+</head>
+<body class="tablet-master">
+  <a class="skip-link button" href="#start">Zum Inhalt</a>
+  <header class="masthead" id="top">
+    <div class="marker"><span>Master</span><span>Tablet / Stationen</span></div>
+    <p class="meta" id="viewportReadout">Viewport wird ermittelt</p>
+  </header>
+  <nav class="section-nav" aria-label="Bereiche des Tablet-Masters">
+    <a href="#start">01 Startscreen</a>
+    <a href="#typografie">02 Typografie</a>
+    <a href="#elemente">03 Elemente</a>
+    <a href="#styles">04 Styles</a>
+  </nav>
+  <main>
+    <section id="start" class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <p class="eyebrow">Station 04 / Maschinen verschlüsseln</p>
+        <h1 class="type-display" id="heroTitle">Die<br>Enigma</h1>
+        <p class="type-body-l hero-intro">Wie wird aus einer Nachricht ein Geheimnis? Entdecke, wie Buchstaben verschlüsselt werden – und probiere es selbst aus.</p>
+        <p class="type-body-m muted hero-context">Eine Maschine, viele Möglichkeiten: Bei jedem Tastendruck verändert sich die Zuordnung der Buchstaben. Nur mit dem passenden Schlüssel wird die Nachricht wieder lesbar.</p>
+        <a class="button button-primary hero-cta" href="#elemente">Ausprobieren <img src="../../00_design-system/symbols/brand-apple-arcade.svg" alt=""></a>
+      </div>
+      <figure class="hero-object">
+        <img src="../station-04/dither-output.png" alt="Monochrom gerasterte Ansicht der Enigma" width="800" height="800">
+        <figcaption class="meta">Objektbild / Station 04</figcaption>
+      </figure>
+      <div class="hero-foot meta"><span>Tablet-Master · Arbeitsstand 01</span><span>Scrollen für alle Textstile und Elemente ↓</span></div>
+    </section>
+
+    <section class="catalog-section" id="typografie" aria-labelledby="typeTitle">
+      <div class="section-heading"><span class="section-number meta">02 / Typografie</span><h2 class="type-h2" id="typeTitle">Schrift im<br>richtigen Maß.</h2><p class="type-body-m muted">Drei Fonts, alle 13 Textstile. Jede Probe erscheint in ihrer tatsächlichen Größe. Ändere die Pixelwerte und vergleiche die Wirkung direkt auf dem Tablet.</p></div>
+      <div class="font-grid">
+        <article class="font-card"><span class="meta">01 / Display & Headlines</span><p class="font-preview font-panchang">Aa</p><h3 class="type-body-l">Panchang</h3><p class="type-body-s muted">Variable · 200–800<br>Hier: Bold 700 / Extrabold 800</p><p class="font-alphabet font-panchang">KRYPTO, WAS?<br>0123456789 ÄÖÜ</p></article>
+        <article class="font-card"><span class="meta">02 / Lesen & Verstehen</span><p class="font-preview font-switzer">Aa</p><h3 class="type-body-l">Switzer</h3><p class="type-body-s muted">Variable · 100–900<br>Hier: Regular 400 / Medium 500</p><p class="font-alphabet">Nachrichten werden lesbar.<br><em>Auch kursiv. Ää Öö Üü ß</em></p></article>
+        <article class="font-card"><span class="meta">03 / Labels & Codes</span><p class="font-preview font-mono">AZ</p><h3 class="type-body-l">DM Mono</h3><p class="type-body-s muted">Light 300 / Regular 400 / Medium 500<br>Immer in Versalien</p><p class="font-alphabet font-mono">A → D / 01001011<br><span style="font-weight:300">300</span> / 400 / <span style="font-weight:500">500</span></p></article>
+      </div>
+      <p class="type-body-s muted font-note">Baton Turbo ist im Design-System benannt, aber nicht als Font-Datei vorhanden. Für diesen Master werden die drei verfügbaren Schriften verwendet.</p>
+      <div class="scale-heading"><div><h3 class="type-h3">Die Tablet-Skala</h3><p class="type-body-s muted">Lokale Arbeitswerte · Größen in CSS-Pixeln · Änderungen gelten bis zum Neuladen.</p></div><button class="button button-quiet" id="resetType" type="button">Größen zurücksetzen</button></div>
+      <div id="typeSpecimens" class="type-specimens"></div>
+      <p class="meta" id="typeStatus" role="status">Alle Textstile verwenden die Tablet-Ausgangswerte.</p>
+      <noscript><p>Bitte JavaScript aktivieren, um die 13 Schriftproben und interaktiven Beispiele zu sehen.</p></noscript>
+    </section>
+
+    <section class="catalog-section" id="elemente" aria-labelledby="elementsTitle">
+      <div class="section-heading"><span class="section-number meta">03 / Elemente</span><h2 class="type-h2" id="elementsTitle">Berühren.<br>Ausprobieren.</h2><p class="type-body-m muted">Ein kleiner Stationsablauf mit echten Zuständen: Eingabe, Auswahl, Ausgabe und Vertiefung. Beispielinhalt nach Station 02.</p></div>
+      <div class="demo-shell">
+        <header class="demo-header"><div><p class="eyebrow">Station 02 / Verschlüsseln mit System</p><h3 class="type-h3">Deine geheime Nachricht</h3></div><a class="button button-quiet" href="#start" aria-label="Zurück zum Startscreen">Zurück</a></header>
+        <div class="tabs" role="tablist" aria-label="Verschlüsselungsmodus"><button class="tab" id="tabEncrypt" role="tab" aria-controls="panelEncrypt" aria-selected="true" type="button">Verschlüsseln</button><button class="tab" id="tabDecode" role="tab" aria-controls="panelDecode" aria-selected="false" tabindex="-1" type="button">Entschlüsseln</button></div>
+        <div id="panelEncrypt" role="tabpanel" aria-labelledby="tabEncrypt">
+          <div class="demo-grid">
+            <div class="input-panel"><p class="type-body-m">Wähle ein Wort oder schreibe eine Nachricht. Jeder Buchstabe wird um drei Stellen verschoben.</p><div class="chips" aria-label="Beispielwörter"><button class="button chip" data-word="HALLO" aria-pressed="true" type="button">Hallo</button><button class="button chip" data-word="KRYPTO" aria-pressed="false" type="button">Krypto</button><button class="button chip" data-word="DRESDEN" aria-pressed="false" type="button">Dresden</button></div><label class="eyebrow" for="message">Deine Nachricht</label><input id="message" class="text-input" value="HALLO" maxlength="24" autocomplete="off" spellcheck="false" aria-describedby="inputHint"><p class="type-body-s muted" id="inputHint">Bis zu 24 Zeichen. A–Z werden verschlüsselt; Umlaute und andere Zeichen bleiben erhalten.</p><button class="button button-quiet" id="clearMessage" type="button">Eingabe leeren</button></div>
+            <div class="output-panel"><span class="eyebrow">Geheimtext / Schlüssel +03</span><output class="cipher-output" id="cipher" for="message" aria-live="polite">KDOOR</output><div class="mapping"><span>A → D</span><span>B → E</span><span>C → F</span></div><p class="type-body-s muted">Aus HALLO wird KDOOR. Die Regel bleibt bei jedem Buchstaben gleich.</p><button class="button button-info" data-open-info type="button"><img src="../../00_design-system/symbols/bulb.svg" alt="">Mehr erfahren</button></div>
+          </div>
+        </div>
+        <div id="panelDecode" role="tabpanel" aria-labelledby="tabDecode" hidden><div class="decode-panel"><p class="eyebrow">Was steht hier?</p><p class="cipher-output">KDOOR</p><p class="type-body-m">Verschiebe jeden Buchstaben um drei Stellen zurück.</p><label class="eyebrow" for="answer">Deine Lösung</label><input class="text-input" id="answer" autocomplete="off" spellcheck="false" placeholder="Lösung eingeben" aria-describedby="answerFeedback"><button class="button button-primary" id="checkAnswer" type="button">Lösung prüfen</button><p id="answerFeedback" class="type-body-m feedback" role="status">Bereit für deinen Versuch.</p></div></div>
+      </div>
+      <div class="component-grid">
+        <article class="component-card"><p class="meta">Buttons / Touchfläche ≥ 52 px</p><h3 class="type-h4">Aktionen</h3><div class="button-stack"><button class="button button-secondary" data-open-info type="button">Sekundäre Aktion</button><button class="button button-quiet" id="showFeedback" type="button">Feedback anzeigen</button><button class="button" disabled type="button">Nicht verfügbar</button></div><p class="type-body-s muted" id="buttonFeedback" role="status">Buttons verwenden DM Mono im Label-Stil.</p></article>
+        <article class="component-card"><p class="meta">Auswahl / Mehrfachauswahl</p><h3 class="type-h4">Einstellungen</h3><label class="check-row"><input id="showHints" type="checkbox" checked><span>Hinweise anzeigen</span></label><label class="check-row"><input type="checkbox" disabled><span>Ton · im Master deaktiviert</span></label><p class="type-body-s muted" id="hintPreview">Hinweis: Aktive Elemente sind orange markiert und zusätzlich durch ihre Form oder Beschriftung erkennbar.</p></article>
+      </div>
+    </section>
+
+    <section class="catalog-section" id="styles" aria-labelledby="stylesTitle">
+      <div class="section-heading"><span class="section-number meta">04 / Styles</span><h2 class="type-h2" id="stylesTitle">Farbe hat<br>eine Funktion.</h2><p class="type-body-m muted">Schwarz, Weiß und Grau tragen den Inhalt. Orange kennzeichnet Aktionen und Auswahl. Blau öffnet die Informationsebene.</p></div>
+      <div class="swatch-grid"><div class="swatch"><div style="--swatch:var(--immersive-bg)"></div><p class="meta">Grund / Schwarz</p></div><div class="swatch"><div style="--swatch:var(--immersive-ink)"></div><p class="meta">Text / Weiß</p></div><div class="swatch"><div style="--swatch:var(--immersive-body)"></div><p class="meta">Lesetext / Grau</p></div><div class="swatch"><div style="--swatch:var(--immersive-accent)"></div><p class="meta">Aktion / Orange</p></div><div class="swatch"><div style="--swatch:var(--immersive-focus)"></div><p class="meta">Info / Blau</p></div></div>
+      <div class="surface-grid"><article class="surface surface-base"><span class="meta">01 / Subtle</span><h3 class="type-h4">Kontext</h3><p class="type-body-m muted">Sekundäre Information auf der Grundfläche.</p></article><article class="surface surface-contained"><span class="meta">02 / Contained</span><h3 class="type-h4">Modul</h3><p class="type-body-m muted">Zusammengehörige Inhalte in einem abgegrenzten Bereich.</p></article><article class="surface surface-elevated"><span class="meta">03 / Elevated</span><h3 class="type-h4">Vertiefung</h3><p class="type-body-m muted">Hervorgehobene Information in einer eigenen Ebene.</p></article></div>
+      <h3 class="type-h3 state-title">Zustände auf einen Blick</h3>
+      <div class="state-grid" aria-label="Statische Zustandsbeispiele"><div><span class="state-sample">Standard</span><p class="meta">Default</p></div><div><span class="state-sample sample-pressed">Gedrückt</span><p class="meta">Pressed / Hover</p></div><div><span class="state-sample sample-selected">✓ Gewählt</span><p class="meta">Selected</p></div><div><span class="state-sample sample-focus">Fokus</span><p class="meta">Tastaturfokus</p></div><div><span class="state-sample sample-disabled">Inaktiv</span><p class="meta">Disabled</p></div><div><span class="state-sample sample-error">! Erneut versuchen</span><p class="meta">Fehler / mit Klartext</p></div></div>
+      <div class="layout-note"><p class="type-h4">Platz zum Lesen. Platz zum Tippen.</p><p class="type-body-m muted">24 Spalten als Grundraster, 32 px Außenabstand und 24 px zwischen Modulen. Im Hochformat rücken die Module untereinander. Lange Inhalte bleiben vertikal scrollbar.</p><p class="type-body-s muted">Dieser Master ist eine separate Tablet-Arbeitsfläche mit eigenen Größen. Beispieltexte sind Platzhalter, keine finalen Ausstellungstexte.</p></div>
+    </section>
+  </main>
+  <footer class="footer"><span class="meta">Krypto, was? / Tablet-Master / V.01</span><a class="button button-quiet" href="#top">Nach oben ↑</a></footer>
+  <dialog id="infoDialog" aria-labelledby="dialogTitle"><div class="dialog-header"><span class="eyebrow info-label">Vertiefung / Beispiel</span><button class="button button-quiet" id="closeInfo" type="button" autofocus>Schließen</button></div><h2 id="dialogTitle" class="type-h2">Ein Schlüssel.<br>Viele Zeichen.</h2><p class="type-body-l">Bei der Caesar-Verschlüsselung wird das Alphabet um eine feste Anzahl von Stellen verschoben.</p><div class="mapping"><span>A → D</span><span>B → E</span><span>C → F</span></div><p class="type-body-m muted">Wer den Schlüssel kennt, kann die Nachricht wieder lesbar machen. Dieses Beispiel nutzt immer drei Stellen. Es zeigt die Typografie, Abstände und Bedienung einer Informationsebene.</p><p class="meta">Dialog / Panchang H2 · Switzer Body L + M</p></dialog>
+</body>
+</html>

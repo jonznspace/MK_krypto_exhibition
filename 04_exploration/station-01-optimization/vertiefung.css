@@ -1,0 +1,321 @@
+/* Station 01 · Vertiefungsebene v2 (2026-09-29).
+   Guided flow on the skytale screen: task, numbered steps, key = rod thickness,
+   state headline and legend on the stage. Loaded after optimization.css and
+   scoped to .station-optimization. Remove the <link> in index.html to switch
+   the styling back off; see CHANGELOG.md for the full rollback. */
+
+/* ---------- Stage: state headline, legend, rotate hint ---------- */
+.station-optimization .stage-headline {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+  right: var(--space-6);
+  text-align: center;
+  font: 600 var(--opt-section)/1.25 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
+  pointer-events: none;
+}
+.station-optimization .skytale-stage.is-solved .stage-headline { color: var(--color-feedback-success); }
+.station-optimization .stage-footer {
+  position: absolute;
+  left: var(--space-5);
+  right: var(--space-5);
+  bottom: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  pointer-events: none;
+}
+.station-optimization .stage-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font: 400 var(--opt-label)/1.4 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-body);
+}
+.station-optimization .stage-legend__swatch {
+  flex-shrink: 0;
+  width: var(--space-5);
+  height: var(--space-5);
+  background: var(--immersive-accent);
+  border: var(--opt-line) solid var(--color-neutral-100);
+}
+.station-optimization .stage-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-body);
+}
+.station-optimization .stage-hint svg { width: var(--size-icon-md); height: var(--size-icon-md); }
+.station-optimization .stage-hint.is-hidden { visibility: hidden; }
+
+/* ---------- Panel: vertical flow with one step after the other ---------- */
+.station-optimization .skytale-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.station-optimization .skytale-controls .tabs { margin-bottom: 0; flex-shrink: 0; }
+.station-optimization #skyPanel[data-mode="encrypt"] [data-only="decrypt"],
+.station-optimization #skyPanel[data-mode="decrypt"] [data-only="encrypt"] { display: none; }
+
+.station-optimization .panel-task {
+  font: 400 var(--opt-body-m)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
+}
+
+.station-optimization .step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.station-optimization .step-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font: 600 var(--opt-body-m)/1.3 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
+}
+.station-optimization .step-num {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font: 400 var(--opt-caption)/1 var(--font-family-dm-mono), monospace;
+  color: var(--immersive-ink);
+  background: var(--layer-surface-elevated);
+  border: var(--opt-line) solid var(--color-neutral-600);
+}
+.station-optimization .step-num[hidden] { display: none; }
+.station-optimization .step-value {
+  margin-left: auto;
+  font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-accent);
+  white-space: nowrap;
+}
+
+/* Step 1: message field opens the station keyboard, never the OS keyboard. */
+.station-optimization .skytale-controls .field-input {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+.station-optimization #skyPanel.is-typing .field-input {
+  border-color: var(--immersive-focus);
+  outline: var(--opt-line) solid var(--immersive-focus);
+}
+.station-optimization .skytale-controls .skytale-keyboard {
+  position: static;
+  padding: var(--space-2);
+  gap: var(--space-2);
+}
+.station-optimization .skytale-controls .skytale-keyboard.hidden { display: none; }
+.station-optimization #skyPanel.is-typing .panel-takeaway { display: none; }
+
+/* Key step: slider with a large square thumb and tappable values 2–7. */
+.station-optimization .key-slider { display: flex; flex-direction: column; gap: var(--space-1); }
+.station-optimization #skyCols {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: var(--size-control-md);
+  margin: 0;
+  background: transparent;
+  touch-action: pan-x;
+}
+.station-optimization #skyCols::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--color-neutral-600);
+}
+.station-optimization #skyCols::-moz-range-track {
+  height: 4px;
+  background: var(--color-neutral-600);
+}
+.station-optimization #skyCols::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 32px;
+  height: 32px;
+  margin-top: -14px;
+  background: var(--immersive-accent);
+  border: 2px solid var(--immersive-bg);
+  outline: var(--opt-line) solid var(--immersive-accent);
+}
+.station-optimization #skyCols::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  background: var(--immersive-accent);
+  border: 2px solid var(--immersive-bg);
+}
+.station-optimization #skyCols:focus-visible {
+  outline: var(--opt-focus) solid var(--immersive-focus);
+  outline-offset: var(--space-1);
+}
+.station-optimization .key-ticks {
+  display: flex;
+  justify-content: space-between;
+}
+.station-optimization .key-tick {
+  width: 32px;
+  min-height: var(--space-6);
+  display: grid;
+  place-items: center;
+  font: 400 var(--opt-label)/1 var(--font-family-dm-mono), monospace;
+  color: var(--immersive-body);
+  cursor: pointer;
+}
+.station-optimization .key-tick.is-active { color: var(--immersive-accent); }
+
+/* Step 3: wrap state as a two-way switch; the label never changes meaning. */
+.station-optimization .segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border: var(--opt-line) solid var(--layer-border);
+}
+.station-optimization .segmented__option {
+  min-height: var(--opt-control);
+  padding: var(--space-2);
+  font: 400 var(--opt-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-body);
+  background: transparent;
+  border: 0;
+  border-bottom: var(--opt-focus) solid transparent;
+}
+.station-optimization .segmented__option[aria-pressed="true"] {
+  color: var(--immersive-accent);
+  background: var(--state-selected-surface);
+  border-bottom-color: var(--immersive-accent);
+}
+.station-optimization .segmented__option:active { background: var(--state-pressed-surface); }
+.station-optimization .segmented__option:focus-visible {
+  outline: var(--opt-focus) solid var(--immersive-focus);
+  outline-offset: var(--space-1);
+}
+
+/* ---------- Letters: strip look (light) and rod reading (dark) ---------- */
+.station-optimization .letter-group { display: inline-flex; }
+.station-optimization .letter {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.3em;
+}
+.station-optimization .letter--filler { color: var(--immersive-muted); }
+
+/* The found strip looks like the leather strip on the model. */
+.station-optimization .strip-display {
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--space-2);
+  background: var(--color-neutral-100);
+  font: 500 var(--opt-body-m)/1 var(--font-family-dm-mono), monospace;
+  color: var(--immersive-bg);
+}
+.station-optimization .strip-display .letter-group { display: contents; }
+.station-optimization .strip-display .letter {
+  height: 36px;
+  border-right: var(--opt-line) solid rgba(0, 0, 0, .2);
+}
+.station-optimization .strip-display .letter--marked { background: var(--immersive-accent); }
+
+/* Result field: ciphertext (strip look) or reading along the rod. */
+.station-optimization .result-text {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  min-height: 60px;
+  padding: var(--space-3) var(--space-4);
+  border: var(--opt-line) solid var(--layer-border);
+  background: var(--layer-surface-elevated);
+  font: 400 var(--opt-body-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-ink);
+}
+.station-optimization .result-text .letter { min-width: 1em; }
+.station-optimization .result-text .letter--marked { color: var(--immersive-accent); }
+.station-optimization #skyPanel[data-mode="encrypt"] .result-text:not(.is-pending) {
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: transparent;
+  border-color: transparent;
+  color: var(--immersive-bg);
+}
+.station-optimization #skyPanel[data-mode="encrypt"] .result-text:not(.is-pending) .letter-group {
+  background: var(--color-neutral-100);
+  font-weight: 500;
+}
+.station-optimization #skyPanel[data-mode="encrypt"] .result-text .letter {
+  min-width: 1.3em;
+  height: 36px;
+  border-right: var(--opt-line) solid rgba(0, 0, 0, .2);
+}
+.station-optimization #skyPanel[data-mode="encrypt"] .result-text .letter--marked {
+  color: var(--immersive-bg);
+  background: var(--immersive-accent);
+}
+.station-optimization .result-text.is-pending {
+  align-items: center;
+  border-style: dashed;
+  background: transparent;
+}
+.station-optimization .result-pending {
+  font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--immersive-body);
+}
+.station-optimization .result-text.is-solved {
+  padding-right: calc(var(--size-icon-lg) + var(--space-6));
+  border-color: var(--color-feedback-success);
+  background: var(--color-feedback-success-bg);
+}
+.station-optimization .result-text.is-solved::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: var(--space-5);
+  width: 8px;
+  height: 16px;
+  margin-top: -10px;
+  border: solid var(--color-feedback-success);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.station-optimization .result-note {
+  font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-body);
+}
+.station-optimization .result-note:has(span:empty) { display: none; }
+.station-optimization .skytale-controls .next-puzzle { width: 100%; }
+
+/* ---------- Takeaway: links the tryout back to the station's message ---------- */
+.station-optimization .panel-takeaway {
+  margin-top: auto;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-feedback-info-bg);
+  border: var(--opt-line) solid var(--immersive-focus);
+}
+.station-optimization .panel-takeaway__label {
+  margin-bottom: var(--space-2);
+  font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--color-feedback-info);
+}
+.station-optimization .panel-takeaway__text {
+  font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
+}
