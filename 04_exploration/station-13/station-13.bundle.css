@@ -127,9 +127,28 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
   justify-content: space-between;
 }
 
+.screen-action {
+  display: flex;
+  flex-direction: column;
+}
+
+.action-hdr {
+  flex: none;
+  gap: 24px;
+}
+
 .action-hdr .title--compact {
   max-width: 11ch;
-  font-size: clamp(52px, 8vw, 92px);
+  font-size: clamp(36px, min(8vw, 8.5vh), 92px);
+}
+
+/* Tablet: kleinere, breitere Überschrift, damit die Vertiefungen Platz haben */
+@media (max-width: 1100px), (max-height: 900px) {
+  .action-hdr .title--compact {
+    max-width: 20ch;
+    font-size: clamp(30px, min(5vw, 6vh), 56px);
+  }
+  .deepdive-list { margin-top: 28px; }
 }
 
 .deepdive-list {
@@ -147,7 +166,9 @@ html,body{min-height:100%;background:var(--immersive-bg,#000);font-family:var(--
 }
 
 .deepdive-list {
-  height: calc(100dvh - 250px);
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
   margin-top: 48px;
   padding-right: 12px;
   display: flex;

@@ -2,31 +2,17 @@ const activeTouches = new Map();
 const movers = new Map();
 const cards = Array.from(document.querySelectorAll(".card"));
 
-/*
-BEWEGUNG / PHYSIK
-SUCHWORT: CARD_MOTION_SETTINGS
-
-- CRUISE_SPEED:       Konstante Reisegeschwindigkeit aller Karten (px pro 60fps-Frame).
-- MAX_SPEED:          Absolute Obergrenze, auch direkt nach einem Wurf.
-- SPEED_RECOVERY:     Wie schnell eine geworfene Karte wieder auf CRUISE_SPEED zurueckfaellt.
-- MAX_PUSH_PER_FRAME: Max. Verschiebung pro Frame beim Aufloesen von Ueberlappungen.
-                      Verhindert, dass Karten unter einer grossen offenen Karte "rausschiessen".
-- MIN_AXIS_SHARE:     Mindestanteil jeder Richtungsachse, damit Karten nie exakt waagerecht/
-                      senkrecht an einer Wand kleben bleiben.
-*/
 const FRAME_MS = 1000 / 60;
-const CRUISE_SPEED = 0.9;
-const MAX_SPEED = 4.6;
-const SPEED_RECOVERY = 0.03;
-const MAX_PUSH_PER_FRAME = 3;
-const MIN_AXIS_SHARE = 0.25;
-// 0 = Hitbox exakt an der Aussenkante (Kante an Kante). Positiv = Abstand, negativ = leichtes Ueberlappen.
-const COLLISION_GAP = 0;
-const MAX_FRAME_STEPS = 3;
+const RELEASE_BOOST = 1.2;
+const MAX_THROW_SPEED = 4.6;
+const CRUISE_PULL = 0.02;
+const COLLISION_RESTITUTION = 0.9;
+const COLLISION_RADIUS_SCALE = 0.58;
 const TAP_MOVE_THRESHOLD = 10;
 const STICKY_PULL = 0.12;
 const STICKY_DAMPING = 0.82;
 const STICKY_MAX_STRETCH = 130;
+const STICKY_RELEASE_BOOST = 0.24;
 let topLayer = 20;
 const openCards = new Set();
 const closingCards = new Set();
@@ -137,6 +123,8 @@ function openCard(card) {
     if (mover) {
         mover.vx = 0;
         mover.vy = 0;
+        mover.cruiseVx = 0;
+        mover.cruiseVy = 0;
         scheduleGeometrySync(card);
     }
 }
@@ -151,6 +139,8 @@ function closeCard(card) {
     if (mover) {
         mover.vx = 0;
         mover.vy = 0;
+        mover.cruiseVx = 0;
+        mover.cruiseVy = 0;
     }
 
     card.classList.add("closing");
@@ -165,7 +155,8 @@ function closeCard(card) {
 
         const currentMover = movers.get(card);
         if (currentMover) {
-            setRandomVelocity(currentMover);
+            currentMover.cruiseVx = randomSpeed();
+            currentMover.cruiseVy = randomSpeed();
             scheduleGeometrySync(card);
         }
     };
@@ -174,33 +165,12 @@ function closeCard(card) {
     window.setTimeout(() => finishClosing(), 280);
 }
 
-function setRandomVelocity(mover) {
-    const angle = Math.random() * Math.PI * 2;
-    mover.vx = Math.cos(angle) * CRUISE_SPEED;
-    mover.vy = Math.sin(angle) * CRUISE_SPEED;
-    normalizeVelocity(mover, CRUISE_SPEED);
-}
-
-// Richtung beibehalten, Betrag fest auf `speed` setzen.
-// Ausserdem: keine Achse darf fast 0 sein (sonst kleben Karten an Waenden).
-function normalizeVelocity(mover, speed) {
-    let len = Math.hypot(mover.vx, mover.vy);
-    if (len < 0.0001) {
-        const angle = Math.random() * Math.PI * 2;
-        mover.vx = Math.cos(angle);
-        mover.vy = Math.sin(angle);
-        len = 1;
-    }
-
-    let dx = mover.vx / len;
-    let dy = mover.vy / len;
-
-    if (Math.abs(dx) < MIN_AXIS_SHARE) dx = (dx < 0 ? -1 : 1) * MIN_AXIS_SHARE;
-    if (Math.abs(dy) < MIN_AXIS_SHARE) dy = (dy < 0 ? -1 : 1) * MIN_AXIS_SHARE;
-
-    const fixedLen = Math.hypot(dx, dy);
-    mover.vx = (dx / fixedLen) * speed;
-    mover.vy = (dy / fixedLen) * speed;
+function randomSpeed() {
+    const min = 0.35;
+    const max = 1.25;
+    const speed = min + Math.random() * (max - min);
+    const dir = Math.random() < 0.5 ? -1 : 1;
+    return speed * dir;
 }
 
 function clamp(value, min, max) {
@@ -229,6 +199,7 @@ function syncMoverGeometry(card) {
     mover.y = rect.top;
     mover.width = rect.width;
     mover.height = rect.height;
+    mover.radius = Math.min(rect.width, rect.height) * COLLISION_RADIUS_SCALE;
 }
 
 function scheduleGeometrySync(card) {
@@ -239,21 +210,25 @@ function scheduleGeometrySync(card) {
     setTimeout(() => {
         syncMoverGeometry(card);
         keepCardInViewport(card);
-    }, 260);
+    }, 230);
 }
 
 function initMover(card) {
     const rect = card.getBoundingClientRect();
-    const mover = {
+    const cruiseVx = randomSpeed();
+    const cruiseVy = randomSpeed();
+
+    movers.set(card, {
         x: rect.left,
         y: rect.top,
-        vx: 0,
-        vy: 0,
+        vx: cruiseVx,
+        vy: cruiseVy,
+        cruiseVx,
+        cruiseVy,
         width: rect.width,
-        height: rect.height
-    };
-    setRandomVelocity(mover);
-    movers.set(card, mover);
+        height: rect.height,
+        radius: Math.min(rect.width, rect.height) * COLLISION_RADIUS_SCALE
+    });
 }
 
 function isCardGrabbed(card) {
@@ -273,10 +248,14 @@ function releaseTouch(pointerId) {
 
     const mover = movers.get(touch.element);
     if (mover && touch.moved) {
-        mover.vx = touch.throwVx;
-        mover.vy = touch.throwVy;
-        const speed = clamp(Math.hypot(mover.vx, mover.vy), CRUISE_SPEED, MAX_SPEED);
-        normalizeVelocity(mover, speed);
+        const sticky = stickyTargets.get(touch.element);
+        if (sticky && !touch.element.classList.contains("open")) {
+            mover.vx = (sticky.x - mover.x) * STICKY_RELEASE_BOOST;
+            mover.vy = (sticky.y - mover.y) * STICKY_RELEASE_BOOST;
+        } else {
+            mover.vx = clamp(touch.throwVx * RELEASE_BOOST, -MAX_THROW_SPEED, MAX_THROW_SPEED);
+            mover.vy = clamp(touch.throwVy * RELEASE_BOOST, -MAX_THROW_SPEED, MAX_THROW_SPEED);
+        }
     }
 
     if (!touch.moved) {
@@ -320,7 +299,6 @@ cards.forEach(card => {
     card.addEventListener("transitionend", e => {
         if (e.propertyName === "width" || e.propertyName === "height") {
             syncMoverGeometry(card);
-            if (card.classList.contains("open")) keepCardInViewport(card);
         }
     });
 
@@ -384,6 +362,8 @@ window.addEventListener("pointermove", e => {
     if (mover) {
         mover.x = constrainedX;
         mover.y = constrainedY;
+        mover.vx = instVx;
+        mover.vy = instVy;
     }
 }, { passive: false });
 
@@ -395,56 +375,86 @@ window.addEventListener("pointercancel", e => {
     releaseTouch(e.pointerId);
 });
 
-// Rechteck-Kollision (statt Kreis): passt zu den eckigen Karten, auch zu grossen offenen.
-// Ueberlappungen werden nur schrittweise (MAX_PUSH_PER_FRAME) aufgeloest und die
-// Geschwindigkeit wird nur gespiegelt – es kommt also nie Energie hinzu.
-function resolveCardCollisions(dt) {
+function resolveCardCollisions() {
     const entries = Array.from(movers.entries());
-    const maxPush = MAX_PUSH_PER_FRAME * dt;
 
     for (let i = 0; i < entries.length; i++) {
         const [cardA, a] = entries[i];
-        const canMoveA = !isCardGrabbed(cardA) && !isCardLocked(cardA);
+        const grabbedA = isCardGrabbed(cardA);
+        const lockedA = isCardLocked(cardA);
+
+        const ax = a.x + a.width / 2;
+        const ay = a.y + a.height / 2;
 
         for (let j = i + 1; j < entries.length; j++) {
             const [cardB, b] = entries[j];
-            const canMoveB = !isCardGrabbed(cardB) && !isCardLocked(cardB);
-            if (!canMoveA && !canMoveB) continue;
+            const grabbedB = isCardGrabbed(cardB);
+            const lockedB = isCardLocked(cardB);
+            if ((grabbedA || lockedA) && (grabbedB || lockedB)) continue;
 
-            const overlapX = Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x) + COLLISION_GAP;
-            const overlapY = Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y) + COLLISION_GAP;
-            if (overlapX <= 0 || overlapY <= 0) continue;
+            const bx = b.x + b.width / 2;
+            const by = b.y + b.height / 2;
 
-            const axis = overlapX < overlapY ? "x" : "y";
-            const overlap = axis === "x" ? overlapX : overlapY;
-            const size = axis === "x" ? "width" : "height";
-            const v = axis === "x" ? "vx" : "vy";
+            let dx = bx - ax;
+            let dy = by - ay;
+            let dist = Math.hypot(dx, dy);
+            const minDist = a.radius + b.radius;
 
-            const centerA = a[axis] + a[size] / 2;
-            const centerB = b[axis] + b[size] / 2;
-            const sign = centerB >= centerA ? 1 : -1; // Richtung von A nach B
+            if (dist === 0) {
+                dx = 1;
+                dy = 0;
+                dist = 1;
+            }
 
-            const share = canMoveA && canMoveB ? overlap / 2 : overlap;
-            const push = Math.min(share, maxPush);
+            if (dist >= minDist) continue;
+
+            const nx = dx / dist;
+            const ny = dy / dist;
+            const overlap = minDist - dist;
+
+            // Separate cards first so they do not stay interpenetrating.
+            if ((grabbedA || lockedA) && !(grabbedB || lockedB)) {
+                b.x += nx * overlap;
+                b.y += ny * overlap;
+            } else if (!(grabbedA || lockedA) && (grabbedB || lockedB)) {
+                a.x -= nx * overlap;
+                a.y -= ny * overlap;
+            } else {
+                a.x -= nx * (overlap / 2);
+                a.y -= ny * (overlap / 2);
+                b.x += nx * (overlap / 2);
+                b.y += ny * (overlap / 2);
+            }
+
+            const rvx = b.vx - a.vx;
+            const rvy = b.vy - a.vy;
+            const velAlongNormal = (rvx * nx) + (rvy * ny);
+
+            if (velAlongNormal > 0) continue;
+
+            const canMoveA = !grabbedA && !lockedA;
+            const canMoveB = !grabbedB && !lockedB;
+            const invMassSum = (canMoveA ? 1 : 0) + (canMoveB ? 1 : 0);
+            if (invMassSum === 0) continue;
+
+            const impulse = -((1 + COLLISION_RESTITUTION) * velAlongNormal) / invMassSum;
+            const impulseX = impulse * nx;
+            const impulseY = impulse * ny;
 
             if (canMoveA) {
-                a[axis] -= sign * push;
-                a[v] = -sign * Math.abs(a[v]);
+                a.vx -= impulseX;
+                a.vy -= impulseY;
             }
+
             if (canMoveB) {
-                b[axis] += sign * push;
-                b[v] = sign * Math.abs(b[v]);
+                b.vx += impulseX;
+                b.vy += impulseY;
             }
         }
     }
 }
 
-let lastTickTime = null;
-
-function tick(now) {
-    const dt = lastTickTime === null ? 1 : clamp((now - lastTickTime) / FRAME_MS, 0, MAX_FRAME_STEPS);
-    lastTickTime = now;
-
+function tick() {
     const maxX = window.innerWidth;
     const maxY = window.innerHeight;
     stickyTargets = getStickyTargets();
@@ -458,50 +468,38 @@ function tick(now) {
             mover.vy += (sticky.y - mover.y) * STICKY_PULL;
             mover.vx *= STICKY_DAMPING;
             mover.vy *= STICKY_DAMPING;
-            const len = Math.hypot(mover.vx, mover.vy);
-            if (len > MAX_SPEED) {
-                mover.vx = (mover.vx / len) * MAX_SPEED;
-                mover.vy = (mover.vy / len) * MAX_SPEED;
-            }
         } else {
-            // Konstante Geschwindigkeit: Betrag gleitet zurueck auf CRUISE_SPEED, nie ueber MAX_SPEED.
-            const speed = Math.hypot(mover.vx, mover.vy);
-            const nextSpeed = clamp(
-                speed + (CRUISE_SPEED - speed) * Math.min(1, SPEED_RECOVERY * dt),
-                CRUISE_SPEED * 0.5,
-                MAX_SPEED
-            );
-            normalizeVelocity(mover, nextSpeed);
+            mover.vx += (mover.cruiseVx - mover.vx) * CRUISE_PULL;
+            mover.vy += (mover.cruiseVy - mover.vy) * CRUISE_PULL;
         }
 
-        mover.x += mover.vx * dt;
-        mover.y += mover.vy * dt;
+        mover.x += mover.vx;
+        mover.y += mover.vy;
 
         if (mover.x <= 0) {
             mover.x = 0;
             mover.vx = Math.abs(mover.vx);
+            mover.cruiseVx = Math.abs(mover.cruiseVx);
         } else if (mover.x + mover.width >= maxX) {
             mover.x = maxX - mover.width;
             mover.vx = -Math.abs(mover.vx);
+            mover.cruiseVx = -Math.abs(mover.cruiseVx);
         }
 
         if (mover.y <= 0) {
             mover.y = 0;
             mover.vy = Math.abs(mover.vy);
+            mover.cruiseVy = Math.abs(mover.cruiseVy);
         } else if (mover.y + mover.height >= maxY) {
             mover.y = maxY - mover.height;
             mover.vy = -Math.abs(mover.vy);
+            mover.cruiseVy = -Math.abs(mover.cruiseVy);
         }
     });
 
-    resolveCardCollisions(dt);
+    resolveCardCollisions();
 
     movers.forEach((mover, card) => {
-        // Nach dem Kollisions-Schieben nochmal in den Bildschirm holen.
-        if (!isCardGrabbed(card) && !isCardLocked(card)) {
-            mover.x = clamp(mover.x, 0, Math.max(0, maxX - mover.width));
-            mover.y = clamp(mover.y, 0, Math.max(0, maxY - mover.height));
-        }
         card.style.left = mover.x + "px";
         card.style.top = mover.y + "px";
     });
@@ -514,6 +512,7 @@ window.addEventListener("resize", () => {
         const rect = card.getBoundingClientRect();
         mover.width = rect.width;
         mover.height = rect.height;
+        mover.radius = Math.min(rect.width, rect.height) * COLLISION_RADIUS_SCALE;
 
         mover.x = Math.min(Math.max(mover.x, 0), Math.max(0, window.innerWidth - mover.width));
         mover.y = Math.min(Math.max(mover.y, 0), Math.max(0, window.innerHeight - mover.height));

@@ -546,6 +546,22 @@ html[data-language="en"] #startTitle { font-size: 88px; }
 .next-puzzle:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 .next-puzzle.hidden { display: none; }
 
+/* Hochformat (Handy): Skytale oben, Bedienung darunter; die Ansicht scrollt bei Bedarf */
+@media (max-aspect-ratio: 4/5) {
+  .screen-action { overflow-y: auto; padding: 24px; }
+  .title--compact { font-size: 40px; max-width: none; margin-top: 4px; }
+  .close-btn { width: 60px; height: 60px; }
+  .action-layout {
+    flex: none;
+    margin-top: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 380px auto;
+    gap: 16px;
+  }
+  .skytale-controls { padding: var(--space-4); }
+  .skytale-keyboard { left: var(--space-4); right: var(--space-4); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

@@ -554,6 +554,15 @@ ol, ul { padding: 0; list-style: none; }
 
 /* Scharniertext im Banner, unter der Überschrift */
 .opener__hinge { grid-column: var(--content); margin-top: var(--space-4); }
+.opener__hinge-title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-family-dm-mono), monospace;
+  font-size: var(--font-size-label);
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-accent);
+}
 .opener__banner .prose--lead p { color: var(--color-neutral-850); }
 .opener + .chapter { padding-top: var(--space-9); }
 
@@ -672,6 +681,11 @@ ol, ul { padding: 0; list-style: none; }
 
 .chapter--film > .film__frame,
 .chapter--film > .film__chapters { grid-column: 1 / -1; }
+/* Film etwas schmaler als die volle Breite, mittig */
+@media (min-width: 1101px) {
+  .chapter--film > .film__frame,
+  .chapter--film > .film__chapters { grid-column: 3 / -3; }
+}
 
 .film__frame {
   aspect-ratio: 16 / 9;
@@ -814,6 +828,61 @@ ol, ul { padding: 0; list-style: none; }
 .device__label { color: var(--immersive-body); }
 .device__details { padding-top: var(--space-4); border-top: var(--hairline); }
 .device__story { font-weight: 600; font-style: italic; color: var(--immersive-ink); }
+.device[hidden] { display: none; }
+
+/* Mining-Geräte: Schaubild links (breiter als sonst), Text des gewählten Geräts rechts */
+.miners { margin-top: var(--space-8); align-items: start; }
+@media (min-width: 1101px) {
+  .miners { --rail: 1 / span 11; --content: 13 / -1; }
+  .miner-map { position: sticky; top: var(--sticky-top); }
+}
+.miner-map__svg { display: block; width: 100%; height: auto; overflow: visible; }
+.miner-map__coin { fill: var(--immersive-bg); stroke: var(--immersive-ink); stroke-width: 3; }
+.miner-map__fixture { fill: none; stroke: var(--immersive-muted); stroke-width: 1.5; stroke-dasharray: 2 5; }
+.miner-map__pedestal {
+  fill: var(--layer-surface-raised);
+  stroke: var(--immersive-body);
+  stroke-width: 1.5;
+  transition: stroke var(--duration-1) var(--ease-standard);
+}
+.miner-map__hit { fill: transparent; }
+.miner-map__shape {
+  fill: transparent;
+  stroke: var(--immersive-ink);
+  stroke-width: 2;
+  transition: fill var(--duration-1) var(--ease-standard), stroke var(--duration-1) var(--ease-standard);
+}
+.miner-map__label { fill: var(--immersive-body); font-size: 20px; transition: fill var(--duration-1) var(--ease-standard); }
+.miner-map__target { cursor: pointer; outline: none; }
+.miner-map__target:hover .miner-map__shape { stroke: var(--immersive-accent); }
+.miner-map__target:focus-visible .miner-map__hit,
+.miner-map__target:focus-visible .miner-map__pedestal { stroke: var(--immersive-focus); stroke-width: 2; }
+.miner-map__target[aria-pressed="true"] .miner-map__shape {
+  stroke: var(--immersive-accent);
+  fill: color-mix(in srgb, var(--immersive-accent) 30%, transparent);
+}
+.miner-map__target[aria-pressed="true"] .miner-map__label { fill: var(--immersive-accent); }
+.miner-map__target[aria-pressed="true"] .miner-map__pedestal { stroke: var(--immersive-accent); }
+/* Hinweis auf die Klickbarkeit: die Geräte leuchten nacheinander kurz auf, bis jemand eines anklickt */
+.miner-map.is-hinting .miner-map__target:not([aria-pressed="true"]) .miner-map__shape {
+  animation: miner-pulse 8s var(--ease-standard) infinite;
+  animation-delay: calc(var(--i) * 1s + .5s);
+}
+@keyframes miner-pulse {
+  0%, 12%, 100% { stroke: var(--immersive-ink); fill: transparent; }
+  6% { stroke: var(--immersive-accent); fill: color-mix(in srgb, var(--immersive-accent) 35%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .miner-map.is-hinting .miner-map__target .miner-map__shape { animation: none; }
+}
+.miner-map__hint {
+  margin-top: var(--space-3);
+  font-family: var(--font-family-dm-mono), monospace;
+  font-size: var(--font-size-caption-m);
+  letter-spacing: .12em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-muted);
+}
 
 /* ------------------------------------------------------------------ G · Geld: Vertiefungen (Zeitleiste, Geldformen, keine Geldformen) */
 
@@ -990,7 +1059,7 @@ ol, ul { padding: 0; list-style: none; }
   column-gap: var(--gutter);
   row-gap: var(--space-8);
   margin-top: var(--section-space);
-  padding: var(--space-8) var(--page-pad) calc(var(--space-9) + var(--size-control-md));
+  padding: var(--space-8) var(--page-pad) var(--space-5);
   border-top: var(--hairline);
   font-size: var(--font-size-body-s);
 }
@@ -1027,9 +1096,10 @@ ol, ul { padding: 0; list-style: none; }
 .site-footer__logo { grid-column: 1 / -1; display: flex; justify-content: center; }
 .site-footer__logo img { display: block; width: 9rem; height: auto; }
 
-/* Zeile 3: Leiste mit Impressum, Schlossspuren und „Nach oben“ */
+/* Zeile 3: „Nach oben“ rechts über der Linie, darunter Leiste mit Impressum und Krypto-Spuren */
+.site-footer__end { grid-column: 1 / -1; display: grid; gap: var(--space-4); }
+.site-footer__totop { justify-self: end; }
 .site-footer__bar {
-  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -1092,32 +1162,29 @@ ol, ul { padding: 0; list-style: none; }
 
 /* ------------------------------------------------------------------ Schlossspuren (versteckt) */
 
-.spuren__index { grid-column: var(--content); }
-.spuren__index a {
-  display: grid;
-  grid-template-columns: var(--space-7) 1fr;
-  gap: var(--space-4);
-  align-items: baseline;
-  min-height: var(--size-touch-min);
-  padding: var(--space-2) 0;
-  border-top: var(--hairline);
-  text-decoration: none;
-  color: var(--immersive-body);
-  transition: color var(--duration-1) var(--ease-standard);
-}
-.spuren__index a:hover { color: var(--immersive-ink); }
-.spuren__index-nr { font-family: var(--font-family-dm-mono), monospace; color: var(--immersive-accent); }
-
-/* Jede Spur füllt den Bildschirm unter der Navigation; Scrollen rastet sanft an den Spuren ein */
-html.is-spuren { scroll-padding-top: var(--nav-h); scroll-snap-type: y proximity; }
+/* Jede Spur füllt den Bildschirm unter der Navigation */
+html.is-spuren { scroll-padding-top: var(--nav-h); }
 .chapter--spur {
   position: relative;
   min-height: calc(100svh - var(--nav-h));
   align-content: center;
   padding-top: var(--space-8);
   padding-bottom: var(--space-4);
-  scroll-snap-align: start;
 }
+
+/* Einstieg per QR-Code (?spur=3): nur diese Spur, wie eine einzelne Seite.
+   Übersicht, übrige Spuren und Footer erscheinen erst nach „Weitere Spuren“ (app.js). */
+.is-spur-focus #top,
+.is-spur-focus .chapter--spur:not(.is-focus),
+.is-spur-focus #siteFooter { display: none; }
+
+/* Zug am Seitenende (--pull 0…1, setzt app.js): Pfeil folgt, Farbe wechselt zum Akzent */
+.spur__next { --pull: 0; }
+.is-spur-focus .spur__next {
+  color: color-mix(in srgb, var(--immersive-accent) calc(var(--pull) * 100%), var(--immersive-muted));
+}
+.is-spur-focus .spur__next:hover { color: var(--immersive-accent); }
+.spur__next-icon { translate: 0 calc(var(--pull) * var(--space-6)); }
 .chapter--spur + .chapter--spur { border-top: var(--hairline); }
 .spur__actions { margin-top: var(--space-7); }
 .cta__icon .icon { width: var(--size-icon-lg); height: var(--size-icon-lg); color: var(--color-neutral-900); }
@@ -1152,10 +1219,60 @@ a.cta { text-decoration: none; }
 @keyframes spur-nudge-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(var(--space-2) * -1)); } }
 @media (prefers-reduced-motion: reduce) {
   .spur__next-icon { animation: none; }
-  html.is-spuren { scroll-snap-type: none; }
 }
+/* Breitere Bildspalte als in der Ausstellung: Bild + Objektschild links, Text rechts */
+@media (min-width: 1101px) {
+  .chapter--spur { --rail: 1 / span 10; --content: 12 / -1; }
+}
+/* Bildspalte scrollt mit (nicht sticky): sonst bleibt das Objektschild unter dem
+   Weiter-Pfeil am unteren Rand hängen */
+.chapter--spur > .spur__images { position: static; }
 .spur__images { display: grid; gap: var(--space-4); }
-.spur__image img { width: 100%; }
+/* Hohe Bilder begrenzen, damit das Objektschild darunter auf dem Bildschirm bleibt.
+   Etwas heller als die übrigen Objektbilder der Seite. */
+.spur__image img { width: auto; max-width: 100%; max-height: 55svh; opacity: .85; }
+/* Mehrere Bilder: fester Kasten (volle Spaltenbreite × feste Höhe). Die Bilder liegen
+   absolut darin übereinander und werden eingepasst – sie können nicht herausragen. */
+.spur__gallery { display: grid; gap: var(--space-3); }
+.spur__stage {
+  position: relative;
+  width: 100%;
+  height: 24rem;
+  overflow: hidden;
+  background: var(--layer-surface-raised);
+  cursor: pointer;
+}
+@media (max-width: 767px) { .spur__stage { height: 18rem; } }
+.spur__stage .spur__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  opacity: .85;
+  transition: opacity var(--duration-3) var(--ease-standard);
+}
+.spur__stage .spur__slide[aria-hidden="true"] { opacity: 0; }
+.spur__thumbs { display: flex; gap: var(--space-2); }
+.spur__thumb {
+  flex: none;
+  width: var(--space-8);
+  height: var(--space-8);
+  padding: 0;
+  overflow: hidden;
+  border: var(--hairline);
+  background: var(--layer-surface-raised);
+  cursor: pointer;
+  opacity: .5;
+  transition: opacity var(--duration-1) var(--ease-standard), border-color var(--duration-1) var(--ease-standard);
+}
+.spur__thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+.spur__thumb:hover { opacity: .8; }
+.spur__thumb[aria-pressed="true"] { opacity: 1; border: var(--rule) solid var(--immersive-accent); }
+.spur__thumb:focus-visible { outline: var(--rule) solid var(--immersive-accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .spur__stage .spur__slide { transition: none; } }
 .spur__image--pending {
   display: grid;
   place-items: center;
@@ -1163,12 +1280,15 @@ a.cta { text-decoration: none; }
   background: var(--layer-surface-raised);
   border: var(--hairline);
 }
+/* Objektschild unter dem Bild */
 .spur__description {
-  max-width: var(--measure);
-  margin-bottom: var(--space-6);
-  font-size: var(--font-size-body-l);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: var(--hairline);
+  font-size: var(--font-size-body-s);
   line-height: 1.5;
-  color: var(--immersive-ink);
+  color: var(--immersive-body);
+  white-space: pre-line;
 }
 
 .noscript { padding: var(--space-7) var(--page-pad); color: var(--immersive-ink); }
@@ -1182,7 +1302,7 @@ a.cta { text-decoration: none; }
   max-width: none;
   max-height: none;
   margin: 0;
-  padding: var(--page-pad);
+  padding: var(--space-4);
   border: 0;
   background: transparent;
   color: inherit;
@@ -1303,7 +1423,10 @@ a.cta { text-decoration: none; }
   .film__chapter[aria-current="true"] { border-top: var(--rule) solid var(--immersive-accent); }
   .forms__row { grid-template-columns: 1fr; gap: var(--space-2); }
 
-  .overlay { padding: var(--space-2); }
+  /* Handy: Overlay randlos über den ganzen Bildschirm */
+  .overlay { padding: 0; }
+  .overlay__panel { border: 0; }
+  .overlay__head { padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); }
 
   .sponsors,
   .sponsors__list { justify-items: start; justify-content: flex-start; }
