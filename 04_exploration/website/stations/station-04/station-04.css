@@ -442,13 +442,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .row-note { order: 2; }
   #rotorRowLabel { order: 0; }
   #rotorList { order: 1; }
-  #outputRowLabel { order: 3; }
-  #lampKeyboard { order: 4; }
-  .action-grid > .io-box { order: 5; align-self: stretch; }
-  #inputRowLabel { order: 6; }
-  #inputKeyboard { order: 7; }
+  /* Beschriftung jeweils direkt unter ihrem Kasten: Tasten → Ausgabe-Kasten → Text, Tasten → Eingabe-Kasten → Text */
+  #lampKeyboard { order: 3; }
+  .action-grid > .io-box { order: 4; align-self: stretch; }
+  #outputRowLabel { order: 5; margin-top: -8px; }
+  #inputKeyboard { order: 6; }
   #inputKeyboard { margin-top: 12px; }
-  .row-side { order: 8; align-self: stretch; }
+  .row-side { display: contents; }
+  .row-side > .io-box { order: 7; align-self: stretch; }
+  #inputRowLabel { order: 8; margin-top: -8px; }
+  .row-side > .reset-btn { order: 9; align-self: stretch; }
   .row-content { width: 100%; }
   .keyboard { width: max-content; }
   .rotor { width: 124px; height: 156px; }
@@ -456,6 +459,26 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .key { width: 54px; height: 54px; }
   .key-row { gap: 10px; }
   .key-row--offset { margin-left: 32px; }
+}
+
+/* ---------- Hochformat (Handy): alles kompakter, Tastaturen passen ganz in die Breite ---------- */
+@media (max-aspect-ratio: 4/5) {
+  .screen-action { overflow-y: auto; padding: 24px; }
+  .title--compact { font-size: 40px; margin-top: 4px; }
+  .action-grid { flex: none; gap: 12px; margin-top: 20px; }
+  .row-content { overflow: visible; padding-block: 0; }
+  .rotors { justify-content: flex-start; gap: 12px; }
+  .rotor { width: auto; height: auto; flex: 1 1 0; max-width: 150px; padding: 12px; gap: 8px; }
+  .rotor-box { width: 84px; height: 84px; font-size: 30px; }
+  .keyboard { width: 100%; gap: 8px; }
+  .key-row { gap: 8px; }
+  .key-row--offset { margin-left: 24px; }
+  .key { width: 48px; height: 48px; font-size: 18px; }
+  .keyboard--input .key--space { width: 240px; height: 48px; }
+  #inputKeyboard { margin-top: 4px; }
+  .io-box { height: 56px; }
+  .reset-btn { min-height: 56px; }
+  .row-side { gap: 12px; }
 }
 
 /* ---------- Reduced Motion ---------- */

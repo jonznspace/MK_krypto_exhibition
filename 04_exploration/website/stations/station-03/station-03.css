@@ -668,6 +668,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .cta-icon { width: 60px; height: 60px; }
 }
 
+/* Hochformat (Handy): kompakter, damit Eingabe und Ergebnis zusammen zu sehen sind */
+@media (max-aspect-ratio: 4/5) {
+  .screen-action { overflow-y: auto; padding: 24px; }
+  .title--compact { font-size: 40px; max-width: none; margin-top: 4px; }
+  .tabs { width: 100%; margin-top: 16px; }
+  .tab { flex: 1; padding-inline: 10px; }
+  .binary-tab-panel { flex: none; margin-top: 16px; overflow: visible; }
+  .template-grid { margin-top: 0; gap: 16px; }
+  .template-card { padding: 20px; min-height: 0; }
+  .template-card h2 { font-size: 28px; margin-bottom: 10px; }
+  .template-card p { font-size: 18px; }
+  .binary-module { min-height: 0; }
+  .binary-label { margin: 18px 0 8px; }
+  .binary-grid { gap: 8px; margin-top: 16px; }
+  .binary-cell { min-width: 0; flex: 1 1 calc(25% - 8px); padding: 10px 6px; }
+  .character-map { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

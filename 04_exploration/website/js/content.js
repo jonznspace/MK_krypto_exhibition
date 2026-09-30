@@ -50,20 +50,21 @@
   - "site.justifyText": Blocksatz für Fließtexte (true/false).
   - "site.showActions": false blendet alle „Ausprobieren“-Buttons (Overlays) aus.
     Die Einträge "action" in den Abschnitten bleiben erhalten.
-  - "site.showLanguageSwitch": DE/EN-Umschalter in der Navigation.\n*/
+  - "site.showLanguageSwitch": DE/EN-Umschalter in der Navigation.
+  - "site.showImprint": false blendet den Link „Impressum“ im Footer aus (Inhalt bleibt erhalten).\n*/
 window.KW_CONTENT = {
   "site": {
     "title": {
       "de": "Krypto, was?",
-      "en": "Krypto, was?"
+      "en": "Crypto, what?"
     },
     "pageTitle": {
       "de": "Krypto, was? · Münzkabinett Dresden",
-      "en": "Krypto, was? · Coin Cabinet Dresden"
+      "en": "Crypto, what? · Coin Cabinet Dresden"
     },
     "description": {
       "de": "Krypto, was? Eine Ausstellung im Münzkabinett der Staatlichen Kunstsammlungen Dresden.",
-      "en": "Krypto, was? An exhibition at the Coin Cabinet of the Dresden State Art Collections."
+      "en": "Crypto, what? An exhibition at the Coin Cabinet of the Dresden State Art Collections."
     },
     "institution": {
       "de": "Staatliche Kunstsammlungen Dresden",
@@ -85,7 +86,7 @@ window.KW_CONTENT = {
         "src": "img/text.png",
         "alt": {
           "de": "Key-Visual der Ausstellung „Krypto, was?“",
-          "en": "Key visual of the exhibition “Krypto, was?”"
+          "en": "Key visual of the exhibition “Crypto, what?”"
         }
       }
     },
@@ -103,6 +104,7 @@ window.KW_CONTENT = {
     "defaultLanguage": "de",
     "showLanguageSwitch": true,
     "showActions": true,
+    "showImprint": false,
     "justifyText": true,
     "logo": {
       "src": "img/SKD_Logo_oben_S_Korall_sRGB.png",
@@ -285,12 +287,16 @@ window.KW_CONTENT = {
       "en": "Show stations"
     },
     "secret": {
-      "de": "Schlossspuren",
-      "en": "Traces in the castle"
+      "de": "Krypto-Spuren",
+      "en": "Crypto Traces"
     },
     "logoPending": {
       "de": "Logo",
       "en": "Logo"
+    },
+    "minersHint": {
+      "de": "Auf ein Gerät tippen, um mehr zu erfahren",
+      "en": "Tap a device to learn more"
     },
     "glossaryCategories": {
       "de": "Kategorien",
@@ -437,7 +443,9 @@ window.KW_CONTENT = {
         "de": [
           "Was hat ein Chiffriergerät aus dem 16. Jahrhundert mit Bitcoin zu tun? Warum hilft die Geschichte des Papiergeldes, heutige Stablecoins einzuordnen? Was verbirgt sich hinter Begriffen wie Blockchain, Public/Private Key, Wallet und Mining? Die Sonderausstellung „Krypto, was?“ beleuchtet die historischen Wurzeln heutiger Kryptowerte in der Kryptografie, Rechentechnik und globalen Vernetzung. Am Beispiel von Bitcoin werden die Grundzüge eines dezentralen Kryptowertes und die Funktionsweise einer Blockchain erläutert. Zugleich werden historische Geldformen mit gegenwärtigen Entwicklungen von Kryptowerten in Beziehung gesetzt. Aus diesen Analogien ergeben sich überraschende Einsichten, die zu sehr grundsätzlichen Fragen rund ums Geld führen: Worauf beruht ein Wert? Welche Regeln gelten? Wie entsteht Vertrauen? Und wer trägt die Risiken?"
         ],
-        "en": []
+        "en": [
+          "What does a 16th-century cipher device have to do with Bitcoin? Why does the history of paper money help us put today’s stablecoins into perspective? What do terms like blockchain, public/private key, wallet, and mining mean? The special exhibition “Crypto, what?” explores the historical roots of today’s crypto assets in cryptography, computing, and global connectivity. Using Bitcoin as an example, it explains the basic principles of a decentralized crypto asset and how a blockchain works. At the same time, historical forms of money are explored in relation to current developments in crypto assets. These analogies yield surprising insights that lead to very basic monetary questions: What determines value? What rules apply? How is trust established? And who bears the risks?"
+        ]
       }
     },
     {
@@ -663,7 +671,7 @@ window.KW_CONTENT = {
       "hinge": {
         "title": {
           "de": "Vom Ideal zur Industrie",
-          "en": ""
+          "en": "From Ideal to Industry"
         },
         "text": {
           "de": [
@@ -672,7 +680,12 @@ window.KW_CONTENT = {
             "Damit verschiebt sich das Kräfteverhältnis: Aus einer technisch dezentral konzipierten Infrastruktur entstand eine zunehmend ökonomisch konzentrierte Landschaft. Der ursprüngliche Anspruch von Gleichheit trifft auf die Logik von Effizienz, Skalierung und Gewinnmaximierung.",
             "Das Bitcoin-System stellt die bisherige Ordnung unseres globalen kapitalistischen Geld- und Finanzsystems in Frage: Kann ein digitaler Wert als Geld fungieren? Ist dies möglich, sofern er allein von Mathematik, Rechenleistung und einem weltweiten Netzwerk getragen wird und keine zentralen Instanzen wie Staaten und ihre Nationalbanken involviert sind?"
           ],
-          "en": []
+          "en": [
+            "When Bitcoin launched in 2009, “mining” was meant to be an open, decentralized process: Anyone could join the network with a computer, verify transactions, and generate new blocks. The system promised equality – no central authority, no privileged players.",
+            "Today, however, the landscape is dominated by specialized high-performance devices and, in particular, industrial mining farms. In massive warehouses, thousands of ASIC machines operate around the clock. The competition for computing power has become a global business, driven by electricity prices, locational advantages, and investment capital. Individual miners now have little chance of keeping up profitably.",
+            "Thus, the balance of power shifted: an infrastructure originally designed to be technically decentralized has given rise to an increasingly economically concentrated landscape. The original ideal of equality clashes with the logic of efficiency, scaling, and profit maximization.",
+            "The Bitcoin system challenges the existing order of our global capitalist monetary and financial system: Can a digital asset function as money? Is this possible if it is supported solely by mathematics, computing power, and a global network, with no central authorities, such as states and their central banks, involved?"
+          ]
         }
       }
     },
@@ -686,7 +699,7 @@ window.KW_CONTENT = {
       },
       "title": {
         "de": "Überblick über das Bitcoin-System",
-        "en": "What is Bitcoin?"
+        "en": "Bitcoin System Overview"
       },
       "text": {
         "de": [
@@ -715,7 +728,7 @@ window.KW_CONTENT = {
         "de": "Erklärfilm · 3:51 · ohne Ton",
         "en": "Explainer film · 3:51 · silent"
       },
-      "src": "assets/film/bitcoin-film_v2.0.mp4",
+      "src": "assets/film/bitcoin-film_v2.1.mp4",
       "chapters": [
         {
           "t": 0,
@@ -1448,7 +1461,12 @@ window.KW_CONTENT = {
             "Zugleich verschiebt sich die Infrastruktur des alltäglichen Zahlens. Private Dienste, wie Apps, Karten und Plattformen, schieben sich zwischen Nutzer und staatliches Geld. Inzwischen geben einige dieser Unternehmen sogar eigene digitale Werte heraus, die an staatliches Geld gekoppelt sind, sogenannte private Stablecoins.",
             "Neue Geldformen brauchen Zeit, um sich gesellschaftlich zu verankern. Dies ist von einer Vielzahl von Faktoren abhängig, die etwa in der politischen und gesellschaftlichen Situation einer Gesellschaft zu finden sind, der herrschenden Wirtschaftsordnung und den bestehenden Abhängigkeiten. Ohne diese Einbettungen scheiterten bisher neue Geldformen und richteten in der Gesellschaft Schäden für die Mehrzahl der Verbrauchenden an, selbst wenn die Idee bestechend war. In der Geldgeschichte lässt sich ablesen, dass mit gesellschaftlichen Rahmenbedingungen, die bei allgemeingültigen Standards beginnen, neue Geldformen etabliert werden konnten und Jahrhunderte überdauern."
           ],
-          "en": []
+          "en": [
+            "Whether Bitcoin is actually money remains a matter of debate. The European Central Bank requires money to fulfill three functions: a medium of exchange, a unit of account, and a store of value. Bitcoin fulfills these functions only to a limited extent and is considered by the ECB to be a crypto asset, not a currency. Anyone who buys Bitcoin acquires neither a stake in a company nor a claim to dividends or consideration.",
+            "Bitcoin has not remained alone: tens of thousands of other digital tokens have emerged. This commercialization brought with it fraud and abuse. Fake trading platforms, worthless tokens, pyramid schemes in digital guise: a Wild West. The European Union created its first comprehensive legal framework with the MiCA Regulation (Markets in Crypto-Assets Regulation) in 2023, while the U.S. passed the GENIUS Act in 2025, a law specifically targeting stablecoins. Globally, regulation remains fragmented, as is the case with other digital technologies, such as social media or artificial intelligence, whose societal impacts are only addressed by regulators after a significant delay.",
+            "At the same time, the infrastructure of everyday payments is shifting. Private services, such as apps, cards, and platforms, are inserting themselves between users and government-issued currency. Some of these companies started issuing their own digital assets pegged to government-issued currency, so-called private stablecoins.",
+            "New forms of money take time to become established in society. This depends on a variety of factors, such as a society’s political and social situation, the prevailing economic system, and existing interdependencies. Without these foundational elements, new forms of money have failed in the past and caused harm to the majority of consumers in society, even when the idea itself was compelling. The history of money shows that new forms of currency can be established and endure for centuries when supported by a social framework that begins with universally accepted standards."
+          ]
         }
       }
     },
@@ -1868,7 +1886,11 @@ window.KW_CONTENT = {
           "Im 21. Jahrhundert kommt ein neues Abstraktionslevel hinzu: Digitale Werte (digitale Token, Stablecoins, Kryptowerte im Allgemeinen) werden mit dem Anspruch angeboten, als Zahlungsmittel oder Wertträger zu dienen.",
           "Die Geschichte des Geldes demonstriert, dass es immer wieder zur Entwicklung neuer Zahlungsmittel kam. Vier Beispiele aus drei Jahrhunderten zeigen, unter welchen Bedingungen neue Geldformen entstehen, unter welchen sie gelingen oder scheitern."
         ],
-        "en": []
+        "en": [
+          "In the past, paper money was just as unfamiliar and suspicious to people as digital tokens are today. When the first banknotes appeared in Europe in the 17th century (introduced in Song dynasty China during the 11th century), scepticism ran high: How could a printed piece of paper have the same value as a silver or copper coin?",
+          "In the 21st century, a new level of abstraction has emerged: Digital assets (such as digital tokens, stablecoins, and crypto assets in general) are offered with the claim that they serve as a means of payment or a store of value.",
+          "The history of money demonstrates that new forms of payment have emerged time and time again. Four examples spanning three centuries illustrate the conditions under which new forms of money emerge, and under which they succeed or fail."
+        ]
       }
     },
     {

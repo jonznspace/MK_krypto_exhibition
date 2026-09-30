@@ -486,6 +486,35 @@ html, body {
   .vert-btn { margin-top: 0; }
 }
 
+/* ---------- Hochformat (Handy): Scheibe oben, Bedienung darunter ---------- */
+@media (max-aspect-ratio: 4/5) {
+  .screen-action { overflow-y: auto; padding: 24px; }
+  .action-hdr-copy { padding-right: 16px; }
+  .title--compact { font-size: 40px; margin-top: 4px; }
+  .close-btn { width: 60px; height: 60px; }
+
+  .stage {
+    flex: none;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+    padding-top: 20px;
+  }
+  .disk-col { gap: 16px; }
+  #disc { width: 440px; height: 440px; }
+  .keyread { min-width: 200px; }
+
+  .panel { gap: 16px; max-width: none; }
+  .mode { gap: 14px; }
+  .tabs { width: 100%; }
+  .tab { flex: 1; padding-inline: 12px; }
+  .io-row { grid-template-columns: 84px minmax(0, 1fr); gap: 12px; }
+  .tile { width: 40px; height: 48px; font-size: 22px; }
+  .az { grid-template-columns: repeat(9, 1fr); gap: 6px; }
+  .vert-btn { align-self: stretch; justify-content: center; }
+  .attract { left: 24px; bottom: 24px; }
+}
+
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, #discInner { transition: none !important; animation: none !important; }

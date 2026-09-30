@@ -7,3 +7,8 @@
 .is-embedded #btnClose {
   display: none !important;
 }
+
+/* Station 3 (Binär): Auf der Website keine laufenden Signale mit früheren Eingaben,
+   nur das Ausprobieren – dafür über die ganze Breite */
+.is-embedded .binary-history { display: none !important; }
+.is-embedded .template-grid { grid-template-columns: minmax(0, 1fr); }

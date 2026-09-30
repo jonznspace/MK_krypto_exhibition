@@ -22,7 +22,9 @@
   function storeLanguage(lang) {
     try { localStorage.setItem(LANG_KEY, lang); } catch (error) { /* Speicher nicht verfügbar */ }
   }
-  const OVERLAY_SIZE = [1536, 864]; // Designgröße der Tablet-Stationen
+  const OVERLAY_SIZE = [1536, 864]; // Designgröße der Tablet-Stationen (Querformat)
+  const OVERLAY_PORTRAIT_WIDTH = 600; // Hochformat (Handy): schmale Ansicht, Stationen stapeln ihre Inhalte
+  const OVERLAY_MAX_SCALE = 1.25;     // auf großen Bildschirmen darf die Station etwas größer werden
 
   ROOT.lang = LANG;
   if (params.has('review')) ROOT.classList.add('is-review');
@@ -328,20 +330,33 @@
                 new URL(url).hostname.replace(/^www\./, ''), icon('external-link')))))))));
     },
 
+    // Mining-Geräte: links das Schaubild (Gläserne Münze + Sockel), rechts der Text des gewählten Geräts
     catalog(section) {
+      const items = section.groups.flatMap(group => group.items);
+      const articles = items.map(item => h('article', { class: 'device', id: `${section.id}-${item.kicker}` },
+        h('span', { class: 'device__nr' }, item.kicker),
+        h('h4', { class: 'device__title', text: item.title }),
+        h('ul', { class: 'device__label' }, (pick(item.museumLabel).value || []).map(line => h('li', null, line))),
+        item.storyTitle ? h('p', { class: 'device__story', text: item.storyTitle }) : null,
+        h('div', { class: 'device__text' }, paragraphs(item.text)),
+        h('ul', { class: 'device__details' }, (pick(item.museumDetails).value || []).map(line => h('li', null, line)))));
+      const detail = h('div', { class: 'miners__detail' }, articles);
+
+      function select(kicker, fromUser) {
+        items.forEach((item, index) => { articles[index].hidden = item.kicker !== kicker; });
+        map.querySelectorAll('.miner-map__target').forEach(target => target.setAttribute('aria-pressed', String(target.dataset.kicker === kicker)));
+        if (!fromUser) return;
+        map.classList.remove('is-hinting');
+        // Handy/Tablet: Text steht unter dem Schaubild – dorthin scrollen, falls nicht zu sehen
+        if (matchMedia('(max-width: 1100px)').matches) detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      const map = minerMap(section, items, select);
+      select(items[0].kicker, false);
       return h('section', { class: 'chapter chapter--catalog', id: section.id },
         chapterHead(section),
         h('div', { class: 'prose prose--story' }, paragraphs(section.text)),
-        section.groups.map(group => h('div', { class: 'catalog__group split' },
-          h('h3', { class: 'catalog__group-title', text: group.title }),
-          h('div', { class: 'catalog' },
-            group.items.map(item => h('article', { class: 'device', id: `${section.id}-${item.kicker}` },
-              h('span', { class: 'device__nr' }, item.kicker),
-              h('h4', { class: 'device__title', text: item.title }),
-              h('ul', { class: 'device__label' }, (pick(item.museumLabel).value || []).map((line, i, lines) => h('li', null, line))),
-              item.storyTitle ? h('p', { class: 'device__story', text: item.storyTitle }) : null,
-              h('div', { class: 'device__text' }, paragraphs(item.text)),
-              h('ul', { class: 'device__details' }, (pick(item.museumDetails).value || []).map(line => h('li', null, line)))))))));
+        h('div', { class: 'miners split' }, map, detail));
     },
 
     money(section) {
@@ -632,6 +647,11 @@
     const site = C.site;
     const sponsors = site.sponsors;
     const sponsorTitle = sponsors ? t(sponsors.title).trim() : '';
+    const legal = [
+      site.imprint && site.showImprint !== false ? h('button', { class: 'site-footer__imprint', type: 'button', onclick: openImprint, text: site.imprint.title }) : null,
+      // Versteckter Zugang zu den Krypto-Spuren: nur hier, nicht in der Navigation
+      SPUREN && view !== 'spuren' ? h('a', { class: 'site-footer__secret', href: urlWith({ spuren: '', spur: null }), text: C.ui.secret }) : null
+    ].filter(Boolean);
     document.getElementById('siteFooter').append(
       h('div', { class: 'site-footer__top' },
         h('div', { class: 'site-footer__info' },
@@ -653,12 +673,10 @@
       site.logo ? h('div', { class: 'site-footer__logo' },
         h('a', { href: site.logo.url || null, target: site.logo.url ? '_blank' : null, rel: site.logo.url ? 'noopener' : null },
           h('img', { src: site.logo.src, alt: t(site.logo.alt) }))) : null,
-      h('div', { class: 'site-footer__bar' },
-        h('div', { class: 'site-footer__legal' },
-          site.imprint ? h('button', { class: 'site-footer__imprint', type: 'button', onclick: openImprint, text: site.imprint.title }) : null,
-          // Versteckter Zugang zu den Schlossspuren: nur hier, nicht in der Navigation
-          SPUREN && view !== 'spuren' ? h('a', { class: 'site-footer__secret', href: urlWith({ spuren: '', spur: null }), text: C.ui.secret }) : null),
-        h('a', { class: 'nav-link', href: '#top' }, icon('arrow-up'), h('span', { text: C.ui.toTop }))));
+      // „Nach oben“ über der Linie, darunter die Leiste (nur wenn sie etwas enthält)
+      h('div', { class: 'site-footer__end' },
+        h('a', { class: 'nav-link site-footer__totop', href: '#top' }, icon('arrow-up'), h('span', { text: C.ui.toTop })),
+        legal.length ? h('div', { class: 'site-footer__bar' }, h('div', { class: 'site-footer__legal' }, legal)) : null));
   }
 
   // Impressum als eigenes Fenster (LAYER/400), Inhalt aus site.imprint
@@ -682,6 +700,95 @@
     imprintDialog.showModal();
   }
 
+  // ---------------------------------------------------------------- Mining-Geräte: Schaubild
+
+  // Grundriss der „Gläsernen Münze“ nach dem Ausstellungsplan, rechts dahinter die drei Sockel.
+  // Koordinaten im viewBox 0 0 760 720. Schlüssel = "kicker" der Geräte in content.js.
+  // shapes: ['rect', x, y, Breite, Höhe] oder ['circle', x, y, Radius]; labels: [Text, x, y, Ausrichtung]
+  const MINER_MAP = {
+    coin: { cx: 330, cy: 350, r: 320 },
+    // gepunktet: übrige Einbauten der Münze (nicht klickbar)
+    fixtures: [[251, 196, 164, 114], [57, 319, 164, 113], [277, 342, 110, 62], [442, 317, 164, 114], [250, 437, 164, 113]],
+    pedestalSize: 120,
+    targets: {
+      '01': { shapes: [['rect', 121, 150, 69, 116]], labels: [['I', 155, 136, 'middle']] },
+      '02': { shapes: [['rect', 315, 89, 36, 68], ['rect', 509, 202, 35, 70]], labels: [['IIa', 361, 129, 'start'], ['IIb', 554, 244, 'start']] },
+      '03': { shapes: [['rect', 75, 503, 19, 19]], labels: [['III', 84, 489, 'middle']] },
+      '04': { shapes: [['rect', 110, 498, 58, 24]], labels: [['IV', 139, 489, 'middle']] },
+      '05': { shapes: [['rect', 495, 495, 24, 43], ['rect', 534, 495, 24, 43]], labels: [['V', 526, 482, 'middle']] },
+      // Sockel (links oben, Mitte, rechts unten) mit angedeutetem Gerät; Beschriftung = erste Zeile des Objektschilds
+      // labelAbove: Beschriftung über dem Sockel, damit die Münze sie nicht verdeckt
+      '06': { pedestal: [545, 85], labelAbove: true, shapes: [['rect', 590, 100, 30, 90]] },
+      '07': {
+        pedestal: [635, 340],
+        shapes: [['rect', 663, 370, 64, 60],
+          ...[0, 1, 2].flatMap(col => [0, 1].map(row => ['rect', 672 + col * 17, 381 + row * 20, 11, 11]))]
+      },
+      '08': { pedestal: [545, 560], shapes: [['rect', 565, 581, 80, 78], ['circle', 605, 620, 24]] }
+    }
+  };
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  function svg(tag, attrs, ...children) {
+    const node = document.createElementNS(SVG_NS, tag);
+    Object.entries(attrs || {}).forEach(([key, value]) => { if (value != null) node.setAttribute(key, value); });
+    children.flat(Infinity).forEach(child => { if (child != null) node.append(child); });
+    return node;
+  }
+
+  function mapShape([type, a, b, c, d]) {
+    return type === 'circle'
+      ? svg('circle', { class: 'miner-map__shape', cx: a, cy: b, r: c })
+      : svg('rect', { class: 'miner-map__shape', x: a, y: b, width: c, height: d });
+  }
+
+  function shapesBox(shapes) {
+    const boxes = shapes.map(([type, a, b, c, d]) => type === 'circle' ? [a - c, b - c, a + c, b + c] : [a, b, a + c, b + d]);
+    const [x1, y1] = [Math.min(...boxes.map(box => box[0])), Math.min(...boxes.map(box => box[1]))];
+    const [x2, y2] = [Math.max(...boxes.map(box => box[2])), Math.max(...boxes.map(box => box[3]))];
+    return { x: x1, y: y1, width: x2 - x1, height: y2 - y1 };
+  }
+
+  function minerMap(section, items, onSelect) {
+    const size = MINER_MAP.pedestalSize;
+    const pedestals = [];
+    const coinTargets = [];
+    items.forEach((item, index) => {
+      const spec = MINER_MAP.targets[item.kicker];
+      if (!spec) return;
+      const labels = (spec.labels || []).map(([text, x, y, anchor]) => svg('text', { class: 'miner-map__label', x, y, 'text-anchor': anchor }, text));
+      let base;
+      if (spec.pedestal) {
+        const [x, y] = spec.pedestal;
+        base = svg('rect', { class: 'miner-map__pedestal', x, y, width: size, height: size });
+        labels.push(svg('text', { class: 'miner-map__label', x: x + size / 2, y: spec.labelAbove ? y - 12 : y + size + 26, 'text-anchor': 'middle' }, (pick(item.museumLabel).value || [])[0] || ''));
+      } else {
+        // unsichtbare, größere Trefferfläche, damit auch kleine Geräte gut zu treffen sind
+        const box = shapesBox(spec.shapes);
+        base = svg('rect', { class: 'miner-map__hit', x: box.x - 14, y: box.y - 14, width: box.width + 28, height: box.height + 28 });
+      }
+      const target = svg('g', {
+        class: 'miner-map__target', role: 'button', tabindex: 0, 'data-kicker': item.kicker, 'aria-pressed': 'false',
+        'aria-label': `${(pick(item.museumLabel).value || [])[0] || item.kicker} · ${pick(item.title).value}`, style: `--i: ${index}`
+      }, base, spec.shapes.map(mapShape), labels);
+      target.addEventListener('click', () => onSelect(item.kicker, true));
+      target.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onSelect(item.kicker, true); }
+      });
+      (spec.pedestal ? pedestals : coinTargets).push(target);
+    });
+
+    const { cx, cy, r } = MINER_MAP.coin;
+    return h('div', { class: 'miner-map is-hinting' },
+      // Reihenfolge = Ebenen: Sockel liegen hinter der Münze
+      svg('svg', { class: 'miner-map__svg', viewBox: '0 0 760 720', role: 'group', 'aria-label': t(section.title) },
+        pedestals,
+        svg('circle', { class: 'miner-map__coin', cx, cy, r }),
+        MINER_MAP.fixtures.map(([x, y, width, height]) => svg('rect', { class: 'miner-map__fixture', x, y, width, height })),
+        coinTargets),
+      h('p', { class: 'miner-map__hint', text: C.ui.minersHint }));
+  }
+
   // ---------------------------------------------------------------- Schlossspuren (versteckt)
 
   const spurId = nr => `spur-${String(nr).padStart(2, '0')}`;
@@ -695,18 +802,35 @@
     return h('figure', { class: 'spur__image spur__image--pending' }, h('span', { class: 'eyebrow', text: SPUREN.ui.imagePending }));
   }
 
+  // Mehrere Bilder: ein Bild im festen Rahmen, darunter Vorschaubilder zum Umschalten.
+  // Klick aufs große Bild schaltet zum nächsten.
+  function spurGallery(images) {
+    if (images.length < 2) return images.map(spurImage);
+    const slides = images.map((image, index) => h('img', {
+      class: 'spur__slide', src: image.src, alt: t(image.alt), loading: 'lazy', 'aria-hidden': String(index > 0)
+    }));
+    const thumbs = images.map((image, index) => h('button', {
+      class: 'spur__thumb', type: 'button', 'aria-pressed': String(index === 0),
+      'aria-label': `${t(SPUREN.ui.image)} ${index + 1} / ${images.length}`, onclick: () => show(index)
+    }, h('img', { src: image.src, alt: '', loading: 'lazy' })));
+    let current = 0;
+    function show(index) {
+      current = index;
+      slides.forEach((slide, i) => slide.setAttribute('aria-hidden', String(i !== index)));
+      thumbs.forEach((thumb, i) => thumb.setAttribute('aria-pressed', String(i === index)));
+    }
+    return h('div', { class: 'spur__gallery' },
+      h('div', { class: 'spur__stage', onclick: () => show((current + 1) % images.length) }, slides),
+      h('div', { class: 'spur__thumbs', role: 'group', 'aria-label': t(SPUREN.ui.images) }, thumbs));
+  }
+
   function renderSpuren(main) {
     main.append(
       h('section', { class: 'opener', id: 'top' },
         h('div', { class: 'opener__banner' },
-          h('div', { class: 'opener__label' }, h('span', { text: SPUREN.eyebrow })),
+          h('div', { class: 'opener__label' }, SPUREN.eyebrow ? h('span', { text: SPUREN.eyebrow }) : null),
           h('h1', { class: 'title opener__title', text: SPUREN.title }),
-          SPUREN.intro ? h('div', { class: 'opener__hinge prose prose--lead', ...draftProps(SPUREN.intro.draft) }, paragraphs(SPUREN.intro.text)) : null),
-        h('nav', { class: 'spuren__index', 'aria-label': t(SPUREN.ui.overview) },
-          h('ol', null, SPUREN.items.map(item => h('li', null,
-            h('a', { href: `#${spurId(item.nr)}` },
-              h('span', { class: 'spuren__index-nr' }, String(item.nr).padStart(2, '0')),
-              h('span', { text: item.title }))))))),
+          SPUREN.intro ? h('div', { class: 'opener__hinge prose prose--lead', ...draftProps(SPUREN.intro.draft) }, paragraphs(SPUREN.intro.text)) : null)),
       ...SPUREN.items.map((item, index) => h('section', { class: 'chapter chapter--spur', id: spurId(item.nr), ...draftProps(item.draft) },
         h('div', { class: 'chapter__head' },
           h('div', { class: 'chapter__meta' },
@@ -714,16 +838,90 @@
               h('span', { class: 'station-marker__station' }, spurLabel(item)),
               h('span', { class: 'station-marker__topic', text: SPUREN.title }))),
           h('h2', { class: `title chapter__title ${titleSize(item.title)}`, text: item.title })),
-        h('div', { class: 'chapter__visual spur__images' }, (item.images || []).map(spurImage)),
+        // Bildspalte: Bilder, darunter das Objektschild (description)
+        h('div', { class: 'chapter__visual spur__images' },
+          spurGallery(item.images || []),
+          h('p', { class: 'spur__description', text: item.description })),
         h('div', { class: 'chapter__main' },
-          h('p', { class: 'spur__description', text: item.description }),
           h('div', { class: 'prose' }, paragraphs(item.text)),
           h('div', { class: 'spur__actions' }, spurWebsiteButton())),
         spurNext(SPUREN.items[index + 1]))));
 
-    // ?spur=3 springt direkt zur Spur (per QR-Code): ohne Scroll-Animation
-    const requested = params.get('spur');
-    if (requested) document.getElementById(spurId(requested))?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    // ?spur=3 (per QR-Code): die Spur steht allein wie eine einzelne Seite
+    const requested = SPUREN.items.find(item => String(item.nr) === params.get('spur'));
+    if (requested) initSpurFocus(requested);
+  }
+
+  // Einstieg per QR-Code: Nur die aufgerufene Spur ist zu sehen. Erst kräftiges
+  // Weiterscrollen am Seitenende (Mausrad/Trackpad bzw. Wischen) oder der Button
+  // „Weitere Spuren“ öffnet die übrigen Spuren; danach scrollt die Seite ganz normal.
+  // Einstieg über den Footer (?spuren) = gleich die normale, frei scrollbare Seite.
+  const PULL_WHEEL = 500; // Scrollweg in px, der am Seitenende gesammelt werden muss
+  const PULL_TOUCH = 140; // Wischweg in px am Seitenende
+
+  function initSpurFocus(item) {
+    const section = document.getElementById(spurId(item.nr));
+    const nextLink = section.querySelector('.spur__next');
+    const next = SPUREN.items[SPUREN.items.indexOf(item) + 1];
+    let pull = 0;
+    let armed = false;
+    let lastWheel = 0;
+    let wheelReset = null;
+    let touchStart = null;
+
+    section.classList.add('is-focus');
+    ROOT.classList.add('is-spur-focus');
+    scrollTo({ top: 0, behavior: 'instant' });
+
+    const atEnd = () => innerHeight + scrollY >= ROOT.scrollHeight - 4;
+    const setPull = value => {
+      pull = Math.max(0, value);
+      nextLink.style.setProperty('--pull', Math.min(1, pull).toFixed(3));
+    };
+
+    function onWheel(event) {
+      const now = performance.now();
+      const gap = now - lastWheel;
+      lastWheel = now;
+      if (event.deltaY <= 0 || !atEnd()) { armed = false; setPull(0); return; }
+      // Nachlaufender Schwung vom Scrollen bis ans Ende zählt nicht: erst eine neue Geste
+      if (!armed) { if (gap < 250) return; armed = true; }
+      clearTimeout(wheelReset);
+      wheelReset = setTimeout(() => setPull(0), 350);
+      setPull(pull + (event.deltaMode === 1 ? event.deltaY * 40 : event.deltaY) / PULL_WHEEL);
+      if (pull >= 1) release();
+    }
+    function onTouchStart(event) { touchStart = atEnd() ? event.touches[0].clientY : null; }
+    function onTouchMove(event) { if (touchStart !== null) setPull((touchStart - event.touches[0].clientY) / PULL_TOUCH); }
+    function onTouchEnd() {
+      if (touchStart === null) return;
+      touchStart = null;
+      if (pull >= 1) release(); else setPull(0);
+    }
+    function onNextClick(event) { event.preventDefault(); release(); }
+
+    function release() {
+      removeEventListener('wheel', onWheel);
+      removeEventListener('touchstart', onTouchStart);
+      removeEventListener('touchmove', onTouchMove);
+      removeEventListener('touchend', onTouchEnd);
+      nextLink.removeEventListener('click', onNextClick);
+      clearTimeout(wheelReset);
+      setPull(0);
+      // Übrige Spuren einblenden, ohne dass die aktuelle Spur springt, dann weiter zur nächsten
+      const before = section.getBoundingClientRect().top;
+      ROOT.classList.remove('is-spur-focus');
+      scrollBy({ top: section.getBoundingClientRect().top - before, behavior: 'instant' });
+      const target = document.getElementById(next ? spurId(next.nr) : 'top');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth', block: 'start' });
+    }
+
+    addEventListener('wheel', onWheel, { passive: true });
+    addEventListener('touchstart', onTouchStart, { passive: true });
+    addEventListener('touchmove', onTouchMove, { passive: true });
+    addEventListener('touchend', onTouchEnd);
+    nextLink.addEventListener('click', onNextClick);
   }
 
   // Button zur Ausstellungswebsite unter jeder Spur (Ziel: SPUREN.websiteUrl, sonst dieser Onepager)
@@ -857,8 +1055,24 @@
     const stage = overlay.querySelector('.overlay__stage');
     const viewport = overlay.querySelector('.overlay__viewport');
     const iframe = overlay.querySelector('iframe');
-    const [width, height] = OVERLAY_SIZE;
-    const scale = Math.min(stage.clientWidth / width, stage.clientHeight / height, 1);
+    const stageWidth = stage.clientWidth;
+    const stageHeight = stage.clientHeight;
+    if (!stageWidth || !stageHeight) return;
+    // Die Station bekommt eine Fläche im Seitenverhältnis der Bühne, damit sie diese ganz füllt:
+    // Hochformat → 600 px breit (Handy-Layouts der Stationen), sonst mindestens 1536 × 864.
+    let width;
+    let height;
+    if (stageWidth / stageHeight < 0.8) {
+      width = OVERLAY_PORTRAIT_WIDTH;
+      height = Math.round(width * stageHeight / stageWidth);
+    } else if (stageWidth / stageHeight > OVERLAY_SIZE[0] / OVERLAY_SIZE[1]) {
+      height = OVERLAY_SIZE[1];
+      width = Math.round(height * stageWidth / stageHeight);
+    } else {
+      width = OVERLAY_SIZE[0];
+      height = Math.round(width * stageHeight / stageWidth);
+    }
+    const scale = Math.min(stageWidth / width, stageHeight / height, OVERLAY_MAX_SCALE);
     viewport.style.width = `${width * scale}px`;
     viewport.style.height = `${height * scale}px`;
     iframe.style.width = `${width}px`;

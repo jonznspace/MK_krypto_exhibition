@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>p5 Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Panchang:wght@800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="controls">
+    <label for="textInput">Text:</label>
+    <input id="textInput" type="text" value="TYPE" />
+    <label for="tileSizeInput">Tile size: <span id="tileSizeValue">24</span></label>
+    <input id="tileSizeInput" type="range" min="1" max="80" step="1" value="24" />
+    <button id="exportSvg">Export SVG</button>
+  </div>
+  <script src="sketch.js"></script>
+</body>
+</html>

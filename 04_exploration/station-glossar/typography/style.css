@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.controls {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  font-family: sans-serif;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.controls label {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.controls input[type="text"] {
+  min-width: 140px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.controls input[type="range"] {
+  width: 180px;
+  margin: 0;
+}
+
+.controls span {
+  font-weight: 700;
+}

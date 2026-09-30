@@ -85,6 +85,16 @@ html, body {
     opacity: 0.75;
 }
 
+#glossary-title-overlay,
+#glossary-title-overlay canvas {
+    position: fixed !important;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 1000;
+}
+
 .card.open {
     width: calc(340px * var(--ui-scale));
     height: calc(360px * var(--ui-scale));
@@ -137,6 +147,18 @@ html, body {
 
 .card.open .card-content {
     display: flex;
+}
+
+.card.closing .card-symbol {
+    display: none;
+}
+
+.card.closing .card-content {
+    display: flex;
+    opacity: 0;
+    transform: scale(.72);
+    transform-origin: top left;
+    transition: opacity 180ms ease, transform 240ms cubic-bezier(.2,.8,.25,1);
 }
 
 .card-title-row {
@@ -496,6 +518,14 @@ html, body {
 
     // script.js NACH dem Erstellen der Karten laden (findet dann alle .card-Elemente)
     await new Promise(resolve => {
+        const p5Script = document.createElement('script');
+        p5Script.src = '../typogrphy/p5.min.js';
+        p5Script.onload = resolve;
+        p5Script.onerror = resolve;
+        document.head.appendChild(p5Script);
+    });
+
+    await new Promise(resolve => {
         const s = document.createElement('script');
         s.src = 'script_bis_29_09_2026.js';
         s.onload = resolve;
@@ -507,6 +537,98 @@ html, body {
 
     // In dieser Variante: keine Sticky-Ziele, damit verbundene Karten frei treiben.
     window.computeStickyTargets = function () { return new Map(); };
+
+    function createTitleAnimator() {
+        if (typeof window.p5 !== 'function') return { open() {}, close() {} };
+
+        const host = document.createElement('div');
+        host.id = 'glossary-title-overlay';
+        document.body.appendChild(host);
+
+        let animation = null;
+        let activeCanvas = null;
+        const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const sketch = p => {
+            p.setup = () => {
+                activeCanvas = p.createCanvas(window.innerWidth, window.innerHeight).elt;
+                p.pixelDensity(1);
+                p.noLoop();
+                requestAnimationFrame(() => {
+                    host.querySelectorAll('canvas').forEach(canvas => {
+                        if (canvas !== activeCanvas) canvas.remove();
+                    });
+                });
+            };
+
+            p.draw = () => {
+                p.clear();
+                if (!animation) return;
+
+                const elapsed = Math.min(1, (performance.now() - animation.startedAt) / animation.duration);
+                const progress = animation.closing ? 1 - elapsed : elapsed;
+                const x = animation.to.x;
+                const y = animation.to.y;
+                const size = animation.to.size;
+                const visible = Math.max(1, Math.ceil(animation.text.length * progress));
+                const text = animation.text.split('').map((character, index) => {
+                    if (character === ' ' || index < visible - 2) return character;
+                    return glyphs[Math.floor(Math.random() * glyphs.length)];
+                }).join('');
+
+                p.fill(255);
+                p.noStroke();
+                p.textFont('Switzer, Segoe UI, sans-serif');
+                p.textStyle(p.BOLD);
+                p.textSize(size);
+                p.textAlign(p.LEFT, p.TOP);
+                p.text(text, x, y);
+
+                if (elapsed < 1) {
+                    requestAnimationFrame(() => sketchInstance.redraw());
+                } else {
+                    animation.title.style.opacity = '';
+                    animation = null;
+                }
+            };
+
+            p.windowResized = () => p.resizeCanvas(window.innerWidth, window.innerHeight);
+        };
+
+        new window.p5(sketch, host);
+
+        const rectData = element => {
+            const rect = element.getBoundingClientRect();
+            return { x: rect.left, y: rect.top, size: parseFloat(getComputedStyle(element).fontSize) || 24 };
+        };
+
+        const start = (card, closing) => {
+            const title = card.querySelector('.card-title');
+            const source = card.querySelector(closing ? '.card-title' : '.card-symbol');
+            if (!title || !source) return;
+
+            const from = rectData(source);
+            const target = closing
+                ? { x: card.getBoundingClientRect().left + 10, y: card.getBoundingClientRect().top + 10, size: 18 }
+                : rectData(title);
+
+            title.style.opacity = '0';
+            animation = {
+                text: title.textContent.trim(),
+                from,
+                to: closing ? target : target,
+                title,
+                closing,
+                duration: closing ? 240 : 300,
+                startedAt: performance.now()
+            };
+            sketchInstance.redraw();
+        };
+
+        const sketchInstance = new window.p5(sketch, host);
+        return { open: card => start(card, false), close: card => start(card, true) };
+    }
+
+    const titleAnimator = createTitleAnimator();
 
     window.addEventListener('resize', () => {
         applyDisplayScale();
@@ -585,9 +707,11 @@ html, body {
         window.openCard = function (card) {
             originalOpenCard(card);
             showLines(card);
+            titleAnimator.open(card);
         };
 
         window.closeCard = function (card) {
+            titleAnimator.close(card);
             originalCloseCard(card);
             hideLines(card);
         };
