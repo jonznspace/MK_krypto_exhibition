@@ -53,6 +53,8 @@ if [[ "$URL" =~ ^[0-9]+$ ]]; then
         exit 1
     fi
 fi
+# Zugangsdaten in der URL (https://benutzer:passwort@...) nie anzeigen oder loggen
+URL_SHOW="$(printf '%s' "$URL" | sed -E 's#://[^[:space:]]*@#://***:***@#')"
 ZOOM="${ZOOM/,/.}"   # 0,8 -> 0.8
 case "$ZOOM" in
     ''|*[!0-9.]*|*.*.*|.) echo "FEHLER: Zoom muss eine Zahl sein, z.B. 0.8 (= 80 %)"; exit 1 ;;
@@ -76,7 +78,7 @@ mkdir -p "$BACKUP"
 
 echo "=============================================="
 echo " Kiosk-Setup auf $(hostname)"
-echo " URL:  $URL"
+echo " URL:  $URL_SHOW"
 if [ -n "$CSSFILE" ]; then echo " CSS:  $(basename "$CSSFILE")"; else echo " CSS:  keins"; fi
 echo " Zoom: $ZOOM"
 echo " Runterscrollen: $SCROLL Pixel"
@@ -181,7 +183,7 @@ mkdir -p "$K"
 
 # Eigenes CSS der gewaehlten Seite (Windows-Zeilenenden entfernen)
 if [ -n "$CSSFILE" ]; then
-    tr -d '\r' < "$CSSFILE" > "$K/custom.css"
+    tr -d '\r' < "$CSSFILE" | sed -E '/URL:/s#://[^[:space:]]*@#://***:***@#' > "$K/custom.css"
     echo "  Eigenes CSS: $(basename "$CSSFILE") -> $K/custom.css"
 else
     rm -f "$K/custom.css"
@@ -197,9 +199,14 @@ cat > "$K/helper.py" <<'PYEOF'
 #  - oeffnet sie erneut, wenn die Seite weiss/leer bleibt oder eine Fehlerseite zeigt
 #  - scrollt optional ein paar Pixel nach unten
 # Benutzung: python3 helper.py https://example.com [PIXEL_RUNTER]
-import base64, json, os, socket, struct, sys, time, urllib.request
+import base64, json, os, socket, struct, subprocess, sys, time, urllib.parse, urllib.request
 
 URL = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("KIOSK_URL", "")
+# URL mit Zugangsdaten (https://benutzer:passwort@...): CLEAN ist dieselbe Adresse ohne sie
+_p = urllib.parse.urlsplit(URL)
+HAS_LOGIN = "@" in _p.netloc
+CLEAN = urllib.parse.urlunsplit(_p._replace(netloc=_p.netloc.rsplit("@", 1)[-1])) if HAS_LOGIN else URL
+LOGIN_WAIT = int(os.environ.get("KIOSK_LOGIN_WAIT", "3"))        # Sekunden
 try:
     SCROLL = int(sys.argv[2]) if len(sys.argv) > 2 else 0
 except ValueError:
@@ -207,6 +214,10 @@ except ValueError:
 PORT = int(os.environ.get("KIOSK_PORT", "9222"))
 FIRST_RELOAD = int(os.environ.get("KIOSK_FIRST_RELOAD", "15"))  # Sekunden
 CHECK_EVERY = int(os.environ.get("KIOSK_CHECK_EVERY", "15"))     # Sekunden
+CALL_TIMEOUT = int(os.environ.get("KIOSK_CALL_TIMEOUT", "90"))   # Sekunden
+FREEZE_LIMIT = int(os.environ.get("KIOSK_FREEZE_LIMIT", "6"))    # Timeouts in Folge
+started = False  # Start-Neuladen nur einmal pro Chromium-Start, nicht bei jeder Neuverbindung
+frozen = 0       # Timeouts in Folge: Chromium laeuft, antwortet aber nicht mehr
 
 # Eigenes CSS der Seite (von kiosk-setup.sh aus kiosk-seiten/ kopiert)
 CSS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "custom.css")
@@ -270,6 +281,8 @@ class WS:
             head += chunk
         if b" 101 " not in head.split(b"\r\n", 1)[0]:
             raise IOError("handshake failed: %r" % head[:80])
+        # Langsame Pis brauchen fuer Antworten (z.B. Page.navigate) oft laenger
+        self.s.settimeout(CALL_TIMEOUT)
         self.n = 0
 
     def _read(self, n):
@@ -327,7 +340,7 @@ class WS:
 
 
 def find_page():
-    with urllib.request.urlopen("http://127.0.0.1:%d/json" % PORT, timeout=3) as f:
+    with urllib.request.urlopen("http://127.0.0.1:%d/json" % PORT, timeout=10) as f:
         for t in json.load(f):
             if t.get("type") == "page" and t.get("webSocketDebuggerUrl"):
                 return t["webSocketDebuggerUrl"]
@@ -335,21 +348,31 @@ def find_page():
 
 
 def session(url):
+    global started, frozen
     ws = WS(url)
     ws.call("Page.enable")
     ws.call("Page.addScriptToEvaluateOnNewDocument", source=INJECT)
     ws.call("Runtime.evaluate", expression=INJECT)
+    frozen = 0
     log("verbunden, CSS aktiv")
 
     def open_url(why):
         if URL:
-            ws.call("Page.navigate", url=URL)
+            if HAS_LOGIN:
+                # erst mit Zugangsdaten anmelden (Chromium merkt sie sich), danach die
+                # Adresse ohne Zugangsdaten oeffnen - sonst kann die Seite ihre Daten
+                # nicht nachladen (fetch verweigert Adressen mit Zugangsdaten) -> weiss
+                ws.call("Page.navigate", url=URL)
+                time.sleep(LOGIN_WAIT)
+            ws.call("Page.navigate", url=CLEAN)
         else:
             ws.call("Page.reload", ignoreCache=True)
         log("Website neu geoeffnet (%s)" % why)
 
-    time.sleep(FIRST_RELOAD)
-    open_url("Start")
+    if not started:
+        time.sleep(FIRST_RELOAD)
+        open_url("Start")
+        started = True
 
     bad = 0
     while True:
@@ -364,14 +387,17 @@ def session(url):
             continue
         bad += 1
         log("Seite:", state, "(%dx)" % bad)
-        if state in ("error", "empty") or bad >= 2:
+        # weisse Seite erst nach ca. 1 Minute neu laden - langsame Pis brauchen so lange
+        if state in ("error", "empty") or bad >= 4:
             open_url(state)
             bad = 0
 
 
 def main():
-    log("Kiosk-Helfer gestartet, URL:", URL or "(keine)", "Scroll:", SCROLL,
+    log("Kiosk-Helfer gestartet, URL:", CLEAN or "(keine)",
+        "Zugangsdaten:", "ja" if HAS_LOGIN else "nein", "Scroll:", SCROLL,
         "Eigenes CSS:", "%d Zeichen" % len(EXTRA_CSS) if EXTRA_CSS else "keins")
+    global started, frozen
     while True:
         try:
             url = find_page()
@@ -379,6 +405,21 @@ def main():
                 session(url)
         except Exception as e:
             log("warte auf Chromium ...", type(e).__name__, e)
+            reason = getattr(e, "reason", None)
+            if isinstance(reason, ConnectionRefusedError):
+                # Chromium laeuft (noch) nicht -> nach dem Start Website wieder neu oeffnen
+                started = False
+                frozen = 0
+            elif isinstance(e, TimeoutError) or isinstance(reason, TimeoutError):
+                # Chromium laeuft, antwortet aber nicht: eingefroren (weisser Bildschirm).
+                # Hart beenden - start.sh startet ihn dann neu.
+                frozen += 1
+                if frozen >= FREEZE_LIMIT:
+                    log("Chromium eingefroren -> wird beendet und neu gestartet")
+                    subprocess.run(["pkill", "-KILL", "-f", "--",
+                                    "--remote-debugging-port=%d" % PORT])
+                    started = False
+                    frozen = 0
         time.sleep(3)
 
 
@@ -463,6 +504,7 @@ except Exception:
 p = d.setdefault("profile", {})
 p["exited_cleanly"] = True
 p["exit_type"] = "Normal"
+d.setdefault("translate", {})["enabled"] = False  # nie "Seite uebersetzen?" anbieten
 z = d.setdefault("partition", {}).setdefault("default_zoom_level", {})
 if abs(zoom - 1) < 1e-6:
     z.pop("x", None)
@@ -493,12 +535,12 @@ echo "  Modell: ${MODEL:-unbekannt}"
 # Startscript (ohne Variablen-Ersetzung schreiben, Werte danach einsetzen)
 cat > "$K/start.sh" <<'EOF'
 #!/bin/bash
-URL="__URL__"
+K="__K__"
+URL="$(cat "$K/url.txt")"
 ZOOM="__ZOOM__"
 BROWSER="__BROWSER__"
 GPUFLAGS="__GPU__"
 SCROLL="__SCROLL__"
-K="__K__"
 PROFILE="$K/profile"
 exec > "$K/start.log" 2>&1
 echo "$(date) Start"
@@ -522,27 +564,53 @@ sleep 3
 pkill -f "$K/helper.py" 2>/dev/null
 python3 "$K/helper.py" "$URL" "$SCROLL" > "$K/helper.log" 2>&1 &
 
+# Grafik-Varianten (nur Pi 3 und aelter): stuerzt Chromium kurz nach dem Start ab
+# oder friert ein (der Helfer beendet ihn dann), kommt die naechste Variante dran.
+# Die zuletzt benutzte Variante wird gemerkt und gilt auch nach einem Neustart.
+if [ -n "$GPUFLAGS" ]; then
+    MODES=("$GPUFLAGS" "--disable-gpu" "")
+else
+    MODES=("")
+fi
+MODE="$(cat "$K/gpu-mode" 2>/dev/null)"
+case "$MODE" in ''|*[!0-9]*) MODE=0 ;; esac
+[ "$MODE" -lt "${#MODES[@]}" ] || MODE=0
+
 # 4) Chromium starten - und neu starten, falls er abstuerzt
 while true; do
     # Browser-Zoom setzen + "Chromium wurde nicht richtig beendet"-Leiste verhindern
     python3 "$K/prefs.py" "$PROFILE/Default/Preferences" "$ZOOM"
 
-    echo "$(date) Chromium startet"
+    FLAGS="${MODES[$MODE]}"
+    echo "$(date) Chromium startet (Grafik-Variante $MODE: ${FLAGS:-Standard})"
+    T0="$(date +%s)"
     "$BROWSER" --kiosk \
         --user-data-dir="$PROFILE" \
         --remote-debugging-port=9222 \
-        $GPUFLAGS \
+        $FLAGS \
         --hide-scrollbars \
         --noerrdialogs --disable-infobars --disable-session-crashed-bubble \
         --no-first-run --password-store=basic \
+        --disable-features=Translate,TranslateUI \
         --check-for-update-interval=31536000 \
         "$URL"
-    echo "$(date) Chromium beendet (Code $?)"
+    RC=$?
+    echo "$(date) Chromium beendet (Code $RC)"
+    # Absturz/Einfrieren in den ersten 10 Minuten -> naechste Grafik-Variante
+    # (Code 0 = von Hand geschlossen, z.B. Alt+F4 -> Variante bleibt)
+    if [ "$RC" -ne 0 ] && [ "${#MODES[@]}" -gt 1 ] && [ $(( $(date +%s) - T0 )) -lt 600 ]; then
+        MODE=$(( (MODE + 1) % ${#MODES[@]} ))
+        echo "$MODE" > "$K/gpu-mode"
+        echo "$(date) lief nur kurz -> naechste Grafik-Variante: $MODE"
+    fi
     sleep 5
 done
 EOF
-URL_ESC="$(printf '%s' "$URL" | sed 's/[&|\]/\&/g')"
-sed -i -e "s|__URL__|$URL_ESC|" -e "s|__ZOOM__|$ZOOM|" -e "s|__BROWSER__|$BROWSER|" -e "s|__K__|$K|" -e "s|__GPU__|$GPUFLAGS|" -e "s|__SCROLL__|$SCROLL|" "$K/start.sh"
+# URL in eigener Datei: so bleiben Sonderzeichen (z.B. $ im Passwort) unveraendert
+# und Zugangsdaten stehen nicht im Startscript
+printf '%s' "$URL" > "$K/url.txt"
+chmod 600 "$K/url.txt"
+sed -i -e "s|__ZOOM__|$ZOOM|" -e "s|__BROWSER__|$BROWSER|" -e "s|__K__|$K|" -e "s|__GPU__|$GPUFLAGS|" -e "s|__SCROLL__|$SCROLL|" "$K/start.sh"
 chmod +x "$K/start.sh"
 
 # ------------------------------------------------------------
@@ -570,6 +638,18 @@ if sudo -n true 2>/dev/null && command -v raspi-config >/dev/null; then
     sudo raspi-config nonint do_blanking 1        && echo "  Bildschirm-Abschaltung: aus"
 else
     echo "  uebersprungen (bitte ggf. per 'sudo raspi-config' einstellen)"
+fi
+
+# Google-Uebersetzer in Chromium per Richtlinie abschalten (kein Symbol, keine Meldung)
+if sudo -n true 2>/dev/null; then
+    for d in /etc/chromium /etc/chromium-browser; do
+        [ -d "$d" ] || [ "$d" = /etc/chromium ] || continue
+        sudo mkdir -p "$d/policies/managed"
+        echo '{ "TranslateEnabled": false }' | sudo tee "$d/policies/managed/kiosk.json" >/dev/null
+    done
+    echo "  Uebersetzer: aus (Richtlinie)"
+else
+    echo "  Uebersetzer-Richtlinie uebersprungen (sudo braucht Passwort)"
 fi
 
 # ------------------------------------------------------------

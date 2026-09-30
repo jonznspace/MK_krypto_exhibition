@@ -126,8 +126,9 @@
     .filter(([, s]) => s.nr != null)
     .sort((a, b) => a[1].nr - b[1].nr);
 
+  // Nummer wie im Ausstellungsskript, ohne führende Null
   function stationNumber(s) {
-    return String(s.nr).padStart(2, '0');
+    return String(s.nr);
   }
 
   function stationLabel(s) {
@@ -248,13 +249,10 @@
 
     // Kapitel-Banner eines Ausstellungsbereichs, darunter der Scharniertext
     opener(section) {
-      const parts = SECTIONS.filter(item => item.type === 'opener');
-      const count = `${String(parts.indexOf(section) + 1).padStart(2, '0')} / ${String(parts.length).padStart(2, '0')}`;
       return h('section', { class: 'opener', id: section.id },
         h('div', { class: 'opener__banner' },
           h('div', { class: 'opener__label' },
-            h('span', null, `${t(C.ui.part)} ${section.numeral}`),
-            h('span', { class: 'opener__count', 'aria-hidden': 'true' }, count)),
+            h('span', null, `${t(C.ui.part)} ${section.numeral}`)),
           h('h2', { class: `title opener__title ${titleSize(section.title)}`, text: section.title }),
           section.hinge ? h('div', { class: 'opener__hinge prose prose--lead', ...draftProps(section.hinge.draft) },
             section.hinge.title ? h('h3', { class: 'opener__hinge-title', text: section.hinge.title }) : null,
@@ -277,7 +275,7 @@
     },
 
     film(section) {
-      const video = h('video', { class: 'film__video', src: section.src, controls: true, muted: true, playsinline: true, preload: 'metadata' });
+      const video = h('video', { class: 'film__video', src: section.src, controls: true, muted: true, loop: true, playsinline: true, preload: 'metadata' });
       video.muted = true;
       const buttons = section.chapters.map((chapter, index) => h('button', {
         class: 'film__chapter', type: 'button',
@@ -291,6 +289,19 @@
         section.chapters.forEach((chapter, index) => { if (video.currentTime >= chapter.t) active = index; });
         buttons.forEach((button, index) => button.setAttribute('aria-current', String(index === active)));
       });
+
+      // Autoplay (stumm), sobald der Film zur Hälfte im Bild ist; pausiert beim Wegscrollen.
+      // Hat jemand selbst pausiert, startet er nicht von allein neu. Bei „Bewegung reduzieren“ kein Autoplay.
+      let userPaused = false;
+      let autoPausing = false;
+      video.addEventListener('pause', () => { if (!autoPausing && !video.ended) userPaused = true; autoPausing = false; });
+      video.addEventListener('play', () => { userPaused = false; });
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting && video.paused && !userPaused) video.play().catch(() => {});
+          else if (!entry.isIntersecting && !video.paused) { autoPausing = true; video.pause(); }
+        }, { threshold: 0.5 }).observe(video);
+      }
 
       return h('section', { class: 'chapter chapter--film', id: section.id },
         chapterHead({ eyebrow: section.meta, title: section.title }),
@@ -334,7 +345,8 @@
     catalog(section) {
       const items = section.groups.flatMap(group => group.items);
       const articles = items.map(item => h('article', { class: 'device', id: `${section.id}-${item.kicker}` },
-        h('span', { class: 'device__nr' }, item.kicker),
+        // Objektnummer wie im Skript (I–V); die Sockel haben keine
+        item.nr ? h('span', { class: 'device__nr' }, item.nr) : null,
         h('h4', { class: 'device__title', text: item.title }),
         h('ul', { class: 'device__label' }, (pick(item.museumLabel).value || []).map(line => h('li', null, line))),
         item.storyTitle ? h('p', { class: 'device__story', text: item.storyTitle }) : null,
@@ -559,9 +571,9 @@
     document.getElementById('skipLink').textContent = t(C.ui.skip);
   }
 
-  // Überfahrener/fokussierter Navigationspunkt: unter der Leiste klappt ein Band mit dem vollen
-  // Titel des Ausstellungsbereichs auf. Die Wörter fahren nacheinander von unten ein (CSS),
-  // beim Wechsel gleitet der Inhalt unter den neuen Punkt.
+  // Überfahrener/fokussierter Navigationspunkt: direkt darunter läuft der volle Titel des
+  // Ausstellungsbereichs weiter, bündig mit dem Punkt. Die Wörter fahren nacheinander von unten
+  // ein (CSS), beim Wechsel gleitet der Titel unter den neuen Punkt.
   function initNavExpand(nav) {
     const list = nav.querySelector('.site-nav__parts ul');
     const links = [...nav.querySelectorAll('.nav-link[data-nav]')];
@@ -572,17 +584,21 @@
     const fill = section => {
       const words = t(section.title).split(/\s+/).filter(Boolean);
       inner.replaceChildren(
-        h('p', { class: 'eyebrow site-nav__drop-eyebrow' }, `${t(C.ui.part)}${section.numeral ? ` · ${section.numeral}` : ''}`),
         h('p', { class: 'site-nav__drop-title' }, words.map((word, index) =>
           h('span', { class: 'site-nav__drop-word', style: `--i: ${index}` }, h('span', null, word)))));
     };
 
-    // Inhalt unter dem Link ausrichten, aber nie über den rechten Rand hinaus
+    // Titel bündig unter dem Link beginnen lassen; reicht der Platz bis zum rechten Rand nicht
+    // (mind. 20em), rückt er so weit nach links wie nötig
     const place = link => {
-      const bar = nav.getBoundingClientRect();
-      const left = link.getBoundingClientRect().left - bar.left;
-      const max = bar.width - inner.offsetWidth - parseFloat(getComputedStyle(drop).paddingRight);
-      inner.style.setProperty('--x', `${Math.max(0, Math.min(left, max))}px`);
+      const dropBox = drop.getBoundingClientRect();
+      const style = getComputedStyle(drop);
+      const padLeft = parseFloat(style.paddingLeft);
+      const contentWidth = dropBox.width - padLeft - parseFloat(style.paddingRight);
+      const start = link.getBoundingClientRect().left + parseFloat(getComputedStyle(link).paddingLeft) - dropBox.left - padLeft;
+      const width = Math.min(contentWidth, Math.max(contentWidth - start, 20 * parseFloat(getComputedStyle(inner).fontSize)));
+      inner.style.setProperty('--w', `${width}px`);
+      inner.style.setProperty('--x', `${Math.max(0, Math.min(start, contentWidth - width))}px`);
     };
 
     const open = link => {
@@ -702,10 +718,13 @@
 
   // ---------------------------------------------------------------- Mining-Geräte: Schaubild
 
-  // Grundriss der „Gläsernen Münze“ nach dem Ausstellungsplan, rechts dahinter die drei Sockel.
-  // Koordinaten im viewBox 0 0 760 720. Schlüssel = "kicker" der Geräte in content.js.
+  // Grundriss der „Gläsernen Münze“ nach dem Ausstellungsplan, rechts daneben die drei Sockel
+  // untereinander, ohne Überschneidung mit der Münze.
+  // Koordinaten im viewBox 0 0 840 720. Schlüssel = "kicker" der Geräte in content.js.
   // shapes: ['rect', x, y, Breite, Höhe] oder ['circle', x, y, Radius]; labels: [Text, x, y, Ausrichtung]
+  // Bei Sockeln sind die shapes relativ zur linken oberen Ecke des Sockels.
   const MINER_MAP = {
+    viewBox: '0 0 840 720',
     coin: { cx: 330, cy: 350, r: 320 },
     // gepunktet: übrige Einbauten der Münze (nicht klickbar)
     fixtures: [[251, 196, 164, 114], [57, 319, 164, 113], [277, 342, 110, 62], [442, 317, 164, 114], [250, 437, 164, 113]],
@@ -716,15 +735,14 @@
       '03': { shapes: [['rect', 75, 503, 19, 19]], labels: [['III', 84, 489, 'middle']] },
       '04': { shapes: [['rect', 110, 498, 58, 24]], labels: [['IV', 139, 489, 'middle']] },
       '05': { shapes: [['rect', 495, 495, 24, 43], ['rect', 534, 495, 24, 43]], labels: [['V', 526, 482, 'middle']] },
-      // Sockel (links oben, Mitte, rechts unten) mit angedeutetem Gerät; Beschriftung = erste Zeile des Objektschilds
-      // labelAbove: Beschriftung über dem Sockel, damit die Münze sie nicht verdeckt
-      '06': { pedestal: [545, 85], labelAbove: true, shapes: [['rect', 590, 100, 30, 90]] },
+      // Sockel links, Mitte, rechts mit angedeutetem Gerät; Beschriftung = erste Zeile des Objektschilds
+      '06': { pedestal: [690, 60], shapes: [['rect', 45, 15, 30, 90]] },
       '07': {
-        pedestal: [635, 340],
-        shapes: [['rect', 663, 370, 64, 60],
-          ...[0, 1, 2].flatMap(col => [0, 1].map(row => ['rect', 672 + col * 17, 381 + row * 20, 11, 11]))]
+        pedestal: [690, 270],
+        shapes: [['rect', 28, 30, 64, 60],
+          ...[0, 1, 2].flatMap(col => [0, 1].map(row => ['rect', 37 + col * 17, 41 + row * 20, 11, 11]))]
       },
-      '08': { pedestal: [545, 560], shapes: [['rect', 565, 581, 80, 78], ['circle', 605, 620, 24]] }
+      '08': { pedestal: [690, 480], shapes: [['rect', 20, 21, 80, 78], ['circle', 60, 60, 24]] }
     }
   };
 
@@ -759,9 +777,8 @@
       const labels = (spec.labels || []).map(([text, x, y, anchor]) => svg('text', { class: 'miner-map__label', x, y, 'text-anchor': anchor }, text));
       let base;
       if (spec.pedestal) {
-        const [x, y] = spec.pedestal;
-        base = svg('rect', { class: 'miner-map__pedestal', x, y, width: size, height: size });
-        labels.push(svg('text', { class: 'miner-map__label', x: x + size / 2, y: spec.labelAbove ? y - 12 : y + size + 26, 'text-anchor': 'middle' }, (pick(item.museumLabel).value || [])[0] || ''));
+        base = svg('rect', { class: 'miner-map__pedestal', x: 0, y: 0, width: size, height: size });
+        labels.push(svg('text', { class: 'miner-map__label', x: size / 2, y: size + 26, 'text-anchor': 'middle' }, (pick(item.museumLabel).value || [])[0] || ''));
       } else {
         // unsichtbare, größere Trefferfläche, damit auch kleine Geräte gut zu treffen sind
         const box = shapesBox(spec.shapes);
@@ -769,7 +786,8 @@
       }
       const target = svg('g', {
         class: 'miner-map__target', role: 'button', tabindex: 0, 'data-kicker': item.kicker, 'aria-pressed': 'false',
-        'aria-label': `${(pick(item.museumLabel).value || [])[0] || item.kicker} · ${pick(item.title).value}`, style: `--i: ${index}`
+        'aria-label': `${(pick(item.museumLabel).value || [])[0] || item.kicker} · ${pick(item.title).value}`, style: `--i: ${index}`,
+        transform: spec.pedestal ? `translate(${spec.pedestal[0]} ${spec.pedestal[1]})` : null
       }, base, spec.shapes.map(mapShape), labels);
       target.addEventListener('click', () => onSelect(item.kicker, true));
       target.addEventListener('keydown', event => {
@@ -780,12 +798,11 @@
 
     const { cx, cy, r } = MINER_MAP.coin;
     return h('div', { class: 'miner-map is-hinting' },
-      // Reihenfolge = Ebenen: Sockel liegen hinter der Münze
-      svg('svg', { class: 'miner-map__svg', viewBox: '0 0 760 720', role: 'group', 'aria-label': t(section.title) },
-        pedestals,
+      svg('svg', { class: 'miner-map__svg', viewBox: MINER_MAP.viewBox, role: 'group', 'aria-label': t(section.title) },
         svg('circle', { class: 'miner-map__coin', cx, cy, r }),
         MINER_MAP.fixtures.map(([x, y, width, height]) => svg('rect', { class: 'miner-map__fixture', x, y, width, height })),
-        coinTargets),
+        coinTargets,
+        pedestals),
       h('p', { class: 'miner-map__hint', text: C.ui.minersHint }));
   }
 

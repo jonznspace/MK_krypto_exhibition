@@ -175,8 +175,8 @@
         nr: 7,
         title: { de: 'Die ver­steckte Signatur', en: 'The Hidden Signature' },
         description: {
-          de: 'Gewehrgalerie\nLange Steinschlossflinte\nLauf: Widiewarddene d.Ä. Achari, Sri Lanka\nSchloss: Meister MiW, wohl Sri Lanka\nGesamtlänge: 2715 mm\nUm 1670\nInv.-Nr. G 1548',
-          en: 'Firearms Gallery\nLong flintlock shotgun\nBarrel: Widiewarddene the Elder Achari, Sri Lanka\nLock: Master MiW, likely Sri Lanka\nOverall length: 2715 mm\nCirca 1670\nInv. No. G 1548'
+          de: 'Gewehrgalerie\nLange Steinschlossflinte\nLauf: Widiewarddene d.Ä. Achari, Sri Lanka\nSchloss: Meister MiW, wohl Sri Lanka\nGesamtlänge: 2,72 m\nUm 1670\nInv.-Nr. G 1548',
+          en: 'Firearms Gallery\nLong flintlock shotgun\nBarrel: Widiewarddene the Elder Achari, Sri Lanka\nLock: Master MiW, likely Sri Lanka\nOverall length: 2.72 m\nCirca 1670\nInv. No. G 1548'
         },
         images: [image('Kryptospur 7 Prunkgewehr.jpg', 'Lange Steinschlossflinte', 'Long flintlock shotgun')],
         text: {
