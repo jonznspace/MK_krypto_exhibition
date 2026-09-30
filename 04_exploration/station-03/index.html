@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Station 3 · Leibniz-Rechenmaschine</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="station-03.css?v=5">
+<link rel="stylesheet" href="../../shared/css/station-offcanvas.css">
+<link rel="stylesheet" href="station-03.css?v=9">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
 </head>
@@ -21,8 +22,13 @@
       </div>
 
       <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
         <h1 class="title title--hero" id="startTitle"></h1>
-        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+        <div class="hero-summary">
+          <div class="hero-text" id="startIntro" aria-label="Einführungstext zur Station"></div>
+          <!-- Öffnet die geteilte Leseansicht (shared/js/station-offcanvas.js). -->
+          <button class="station-offcanvas-trigger" id="btnReadMore" type="button">Weiterlesen</button>
+        </div>
       </div>
 
       <div class="start-visual" aria-hidden="true">
@@ -40,9 +46,13 @@
     <section class="screen screen-action hidden" id="screenAction">
       <header class="action-hdr">
         <div class="action-hdr-copy">
-          <h1 class="title title--compact" id="actionTitle"></h1>
+          <h2 class="title title--compact" id="actionTitle"></h2>
         </div>
-        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
       </header>
 
       <div class="tabs" role="tablist" aria-label="Binärstation">
@@ -53,8 +63,6 @@
       <section class="binary-tab-panel" id="binaryTestPanel" role="tabpanel">
         <div class="template-grid">
           <section class="template-card binary-module">
-          <span class="template-tag" id="binaryTag"></span>
-          <h2 id="binaryTitle"></h2>
           <p id="actionDescription"></p>
           <label class="binary-label" id="binaryLabel" for="binaryInput"></label>
           <input class="binary-input" id="binaryInput" type="text" maxlength="12" autocomplete="off" spellcheck="false">
@@ -78,9 +86,7 @@
       </section>
 
       <section class="binary-tab-panel hidden" id="binaryDecodePanel" role="tabpanel">
-        <section class="template-card binary-challenge" aria-labelledby="challengeTitle">
-          <span class="template-tag">Entschlüsseln</span>
-          <h2 id="challengeTitle">Binär entschlüsseln</h2>
+        <section class="template-card binary-challenge" aria-labelledby="tabDecode">
           <div class="decode-layout">
             <div class="decode-prompt">
               <h3>Was steht hier?</h3>
@@ -114,6 +120,7 @@
 <script src="../../shared/js/station-language-switch.js"></script>
 <script src="../../shared/js/station-idle-reload.js"></script>
 <script src="../../shared/js/vendor/profanity-filter.js"></script>
-<script src="station-03.js?v=17"></script>
+<script src="../../shared/js/station-offcanvas.js"></script>
+<script src="station-03.js?v=23"></script>
 </body>
 </html>

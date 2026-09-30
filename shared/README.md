@@ -18,11 +18,11 @@ Die Leseansicht aus Station 01 als globale Komponente. **Aufbau, Farben,
 Typografie und Verhalten sind fest.** Pro Station ändert sich nur der Inhalt.
 
 ```
-┌─ Panel (880 px, volle Höhe, --layer-surface-raised) ──┐
+┌─ Panel (50 % Viewport-Breite, volle Höhe) ────────────┐
 │ EYEBROW                                         [ × ] │  Header, bleibt stehen
 │ Headline                                              │
 ├───────────────────────────────────────────────────────┤
-│ Einführungstext (weiß)                              ▐ │  scrollt nativ,
+│ Einführungstext                                     ▐ │  scrollt nativ,
 │                                                     ▐ │  blauer Indikator rechts
 │ Zwischenüberschrift                                   │
 │ Absatz …                                              │
@@ -71,7 +71,7 @@ Typografie und Verhalten sind fest.** Pro Station ändert sich nur der Inhalt.
            { title: 'Skytale', text: 'Absatz …' },
            { title: 'Caesar-Chiffre', text: ['Absatz 1 …', 'Absatz 2 …'] }
          ],
-         highlight: { label: 'Das Wichtigste', text: 'Kernaussage …' }
+         highlight: { label: 'Auf den Punkt gebracht', text: 'Kernaussage …' }
        },
        en: { /* gleiche Struktur */ }
      }
@@ -85,7 +85,7 @@ Typografie und Verhalten sind fest.** Pro Station ändert sich nur der Inhalt.
 | Feld | Pflicht | Inhalt |
 | --- | --- | --- |
 | `title` | ja | Headline im Header (Switzer 600, `--font-size-h3`) |
-| `lead` | nein | Einführungstext, weiß hervorgehoben. String oder Array von Absätzen |
+| `lead` | nein | Einführungstext am Anfang (alle Texte der Leseansicht sind weiß). String oder Array von Absätzen |
 | `sections` | nein | Liste aus `{ title, text }`. `text` ist String oder Array. Ohne `title` entstehen nur Absätze |
 | `highlight` | nein | `{ label, text }` für die blaue Infobox am Ende |
 | `eyebrow` | nein | Zeile über der Headline. Default: „Hintergrund“ / „Background“. `''` blendet sie aus |

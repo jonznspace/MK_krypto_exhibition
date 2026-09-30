@@ -2,7 +2,7 @@
 
 html, body {
   min-height: 100%;
-  background: #000;
+  background: var(--immersive-bg);
   font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
   color: var(--immersive-ink);
   -webkit-font-smoothing: antialiased;
@@ -10,7 +10,7 @@ html, body {
 
 #scaler {
   min-height: 100dvh;
-  background: #000;
+  background: var(--immersive-bg);
 }
 
 #frame {
@@ -28,40 +28,42 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .eyebrow {
   display: block;
   font-family: var(--font-family-dm-mono);
-  font-size: 15px;
-  letter-spacing: .18em;
+  font-size: var(--font-size-label);
+  line-height: 1.4;
+  letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-body);
 }
+.eyebrow:empty { display: none; }
 
+/* Titel-Schrift; Größe, Zeilenhöhe und Laufweite je Rolle (.title--hero, .title--compact). */
 .title {
   font-family: var(--font-family-panchang), sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: -.01em;
-  word-spacing: .24em;
-  line-height: .92;
 }
 
 .title-word { display: inline-block; max-width: 100%; margin-right: .16em; overflow-wrap: anywhere; }
-.title--hero { width: 100%; max-width: 100%; font-size: 108px; margin-top: 18px; white-space: normal; }
-.title--hero.title--medium { font-size: 88px; }
-.title--hero.title--long { font-size: 68px; }
-.title--compact { font-size: 68px; margin-top: 10px; max-width: 12ch; white-space: normal; }
 
+/* =========================================================================
+   Startbildschirm — Maße, Abstände und Typografie wie Station 01
+   (station-01/station-01.css + optimization.css + vertiefung.css), nur Tokens.
+   Schriftgrößen aus den globalen --font-size-*-Tokens, keine lokale Skala.
+   ========================================================================= */
 .screen-start {
   position: relative;
   height: 100dvh;
   min-height: 0;
-  padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 72px);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* DE/EN: große Touchflächen, aktive Sprache mit oranger Schrift und Unterkante. */
 #frame > .station-language-switch {
-  top: clamp(40px, 5vw, 88px);
-  right: clamp(24px, 4vw, 72px);
+  top: var(--space-6);
+  right: var(--space-6);
   gap: 0;
   padding: 0;
   border: 0;
@@ -70,22 +72,35 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 #frame > .station-language-switch .station-language-switch__button {
-  min-width: 48px;
-  min-height: 32px;
-  padding: 0 14px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  letter-spacing: .12em;
+  min-width: var(--size-control-lg);
+  min-height: var(--size-control-lg);
+  padding-inline: var(--space-4);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  border-bottom: 2px solid transparent;
+}
+
+#frame > .station-language-switch .station-language-switch__button.is-active {
+  background: var(--state-selected-surface);
+  color: var(--immersive-accent);
+  border-bottom-color: var(--immersive-accent);
+}
+
+#frame > .station-language-switch .station-language-switch__button:focus-visible {
+  outline: 2px solid var(--immersive-focus);
+  outline-offset: var(--space-1);
 }
 
 .station-marker {
   display: inline-flex;
   align-items: stretch;
+  align-self: flex-start;
   position: relative;
   z-index: 2;
   font-family: var(--font-family-dm-mono);
-  font-size: 15px;
-  letter-spacing: .18em;
+  font-size: var(--font-size-caption-m);
+  line-height: 1.4;
+  letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-body);
 }
@@ -94,11 +109,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .station-marker__topic {
   display: flex;
   align-items: center;
-  height: 32px;
-  padding: 0 14px;
+  height: var(--space-6);
+  padding-inline: var(--space-3);
 }
 
-.station-marker__station { background: #ed8003; color: var(--color-neutral-850); }
+.station-marker__station { background: var(--immersive-accent); color: var(--immersive-bg); }
 .station-marker__topic { background: var(--color-neutral-850); }
 
 .start-copy {
@@ -106,44 +121,49 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: 0;
   position: relative;
   z-index: 2;
-  margin-top: clamp(72px, 12vh, 130px);
+  margin-top: var(--space-8);
+  /* Hält die CTA unten rechts frei von Kurztext und „Weiterlesen“. */
+  padding-bottom: calc(var(--size-control-lg) + var(--space-5));
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.hero-text {
+/* H1: eine Größe (Token h1), unabhängig von der Titellänge. */
+.screen-start .title--hero {
+  width: 100%;
+  max-width: 100%;
+  margin-top: var(--space-5);
+  font-size: var(--font-size-h1);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  /* Panchang ist breit: ohne Extra-Wortabstand laufen die Wörter ineinander. */
+  word-spacing: .3em;
+  white-space: normal;
+}
+.screen-start .title--hero .title-word { margin-right: 0; }
+
+.hero-summary {
   width: 820px;
   max-width: 100%;
-  max-height: none;
-  flex: 1;
-  min-height: 0;
-  margin-top: 22px;
-  padding: 18px 28px 20px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--immersive-accent) color-mix(in srgb, var(--immersive-body) 18%, transparent);
-  scrollbar-gutter: stable;
+  margin-top: var(--space-5);
 }
-
-.hero-text::-webkit-scrollbar { width: 8px; }
-.hero-text::-webkit-scrollbar-track { background: color-mix(in srgb, var(--immersive-body) 18%, transparent); }
-.hero-text::-webkit-scrollbar-thumb {
-  background: var(--immersive-accent);
-  border: 2px solid var(--immersive-bg);
-}
-
 .hero-text p {
-  font-size: 24px;
-  line-height: 1.42;
-  color: var(--immersive-body);
   max-width: 64ch;
+  font-size: var(--font-size-body-m);
+  line-height: 1.5;
+  color: var(--immersive-body);
 }
+.hero-text p:first-child {
+  font-size: var(--font-size-body-l);
+  line-height: 1.45;
+  color: var(--immersive-ink);
+}
+/* „Weiterlesen“ und die Leseansicht kommen aus shared/css/station-offcanvas.css;
+   lokal nur die Platzierung. */
+.station-offcanvas-trigger { margin-top: var(--space-8); }
 
+/* Bildposition bleibt stationsspezifisch. */
 .start-visual {
   position: absolute;
   right: -160px;
@@ -181,189 +201,205 @@ button { font: inherit; color: inherit; cursor: pointer; }
   text-transform: var(--text-transform-dm-mono);
 }
 
+/* Einstieg in die Aktion: durchgehend blau, auch Hover und gedrückt. */
 .cta {
   position: absolute;
-  right: clamp(24px, 4vw, 72px);
-  bottom: clamp(40px, 5vw, 80px);
+  right: var(--space-6);
+  bottom: var(--space-6);
   z-index: 3;
   display: flex;
   align-items: stretch;
   border: none;
-  background: none;
+  background: var(--immersive-focus);
+  color: var(--immersive-ink);
+  transition: background var(--duration-1) var(--ease-standard);
 }
 
 .cta-label {
   display: flex;
   align-items: center;
-  min-height: 68px;
-  padding: 0 32px;
-  font-family: var(--font-family-panchang), sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  background: var(--color-neutral-800);
-  color: var(--immersive-ink);
-  transition: background var(--duration-1) var(--ease-standard);
+  min-height: var(--size-control-lg);
+  padding-inline: var(--space-5);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
 }
 
 .cta-icon {
   display: grid;
   place-items: center;
-  width: 68px;
-  height: 68px;
-  background: var(--immersive-focus);
-  color: var(--immersive-ink);
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  border-left: 1px solid var(--color-secondary-300);
 }
 
-.cta-icon img { width: 40px; height: 40px; filter: brightness(0) invert(1); }
-.cta:hover .cta-label { background: var(--color-neutral-700); }
+.cta-icon img { width: var(--size-icon-lg); height: var(--size-icon-lg); filter: brightness(0) invert(1); }
+@media (hover: hover) {
+  .cta:hover { background: var(--color-secondary-700); }
+}
+.cta:active { background: var(--color-secondary-800); }
 .cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }
 
+/* =========================================================================
+   Aktions-Screen — Kopf, Tabs, Schrift und Bedienelemente wie Station 01/02,
+   nur Tokens. Aufteilung (Karte + Signal bzw. eine breite Karte) bleibt.
+   ========================================================================= */
 .screen-action {
   position: relative;
   height: 100dvh;
-  padding: clamp(24px, 3vw, 40px);
+  padding: var(--space-6);
   min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* Kopf wie Station 01: Headline und Schließen-Button vertikal mittig. */
 .action-hdr {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
+  gap: var(--space-5);
 }
+.action-hdr-copy { flex: 1; min-width: 0; }
 
+/* Headline zeigt den aktiven Tab (Token h3, Gewicht 800 wie der Starttitel). */
+.title--compact {
+  width: 100%;
+  margin-top: 0;
+  font-size: var(--font-size-h3);
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  /* Panchang ist breit: ohne Extra-Wortabstand laufen die Wörter ineinander. */
+  word-spacing: .3em;
+  white-space: normal;
+}
+.title--compact .title-word { margin-right: 0; }
+
+/* Schließen wie Station 01: 52er Fläche, graue Fläche mit Kontur, Tabler-X 24 px. */
 .close-btn {
-  width: 80px;
-  height: 80px;
+  flex-shrink: 0;
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
   display: grid;
   place-items: center;
-  font-size: 32px;
-  font-weight: 300;
   color: var(--immersive-ink);
-  background: var(--color-neutral-800);
-  border: none;
+  background: var(--layer-surface-elevated);
+  border: 1px solid var(--layer-border);
+  transition: border-color var(--duration-1) var(--ease-standard);
 }
-
+.close-btn svg { width: var(--size-icon-lg); height: var(--size-icon-lg); }
+.close-btn:active { border-color: var(--color-neutral-500); }
+@media (hover: hover) {
+  .close-btn:hover { border-color: var(--color-neutral-500); }
+}
 .close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
-.template-grid {
-  margin-top: clamp(44px, 8vh, 88px);
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 24px;
-  align-items: stretch;
-}
-
+/* Tabs im Stil von Station 01 (wie der DE/EN-Schalter): bündige Flächen ohne
+   Rahmen, aktiver Tab mit oranger Schrift und Unterkante. */
 .tabs {
   display: flex;
-  gap: 8px;
-  border: 1px solid var(--layer-border);
-  border-radius: var(--radius-md);
-  padding: 6px;
+  gap: 0;
   width: fit-content;
-  margin-top: 28px;
+  margin-top: var(--space-6);
 }
 
 .tab {
-  min-height: 48px;
-  padding: 8px 28px;
+  min-height: var(--size-control-lg);
+  padding: 0 var(--space-4);
   cursor: pointer;
   border: 0;
-  background: transparent;
-  color: var(--immersive-muted);
-  font-family: var(--font-family-dm-mono);
-  font-size: var(--font-size-label);
-  letter-spacing: .08em;
+  border-bottom: 2px solid transparent;
+  background: var(--layer-surface-elevated);
+  color: var(--immersive-body);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
-  border-radius: var(--radius-sm);
-  transition: color var(--duration-1) var(--ease-standard),
-              background var(--duration-1) var(--ease-standard);
+  transition: background-color var(--duration-2) var(--ease-standard),
+              color var(--duration-2) var(--ease-standard);
 }
 
-.tab.active { color: var(--immersive-bg); background: var(--immersive-accent); }
-.tab:not(.active):hover { background: var(--state-pressed-surface); color: var(--immersive-ink); }
-.tab:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
+.tab:not(.active):active { background: var(--color-neutral-800); color: var(--immersive-ink); }
+@media (hover: hover) {
+  .tab:not(.active):hover { background: var(--color-neutral-800); color: var(--immersive-ink); }
+}
+.tab.active {
+  background: var(--state-selected-surface);
+  color: var(--immersive-accent);
+  border-bottom-color: var(--immersive-accent);
+}
+.tab:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: var(--space-1); }
 
 .binary-tab-panel.hidden { display: none; }
 .binary-tab-panel {
   flex: 1;
   min-height: 0;
-  margin-top: 24px;
+  margin-top: var(--space-5);
   overflow: hidden;
 }
 
+.template-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: var(--space-5);
+  align-items: stretch;
+}
+
+/* Karte wie das Aufgaben-Panel in Station 01. */
 .template-card {
   border: 1px solid var(--layer-border);
-  background: color-mix(in srgb, var(--immersive-bg) 84%, var(--color-neutral-900));
-  padding: 24px;
+  background: var(--layer-surface-raised);
+  padding: var(--space-5);
   min-height: 240px;
 }
 
-.template-card--wide {
-  grid-column: 1 / -1;
-  min-height: 220px;
-}
-
-.template-tag {
-  display: inline-block;
-  margin-bottom: 14px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  letter-spacing: .16em;
-  text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-muted);
-}
-
-.template-card h2 {
-  font-family: var(--font-family-panchang), sans-serif;
-  font-size: 34px;
-  text-transform: uppercase;
-  line-height: 1;
-  margin-bottom: 14px;
-}
-
+/* Aufgabe wie in Station 01 (panel-task). */
 .template-card p {
-  font-size: 22px;
-  line-height: 1.46;
-  color: var(--immersive-body);
   max-width: 70ch;
+  font: 400 var(--font-size-body-m)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
 }
 
 .binary-module { min-height: 520px; }
+/* Abstand Aufgabe → Eingabe wie in Station 01 (Aufgabe → Schritt 1): 16 + 24 = 40 px. */
+.binary-module .binary-label { margin-top: calc(var(--space-4) + var(--space-5)); }
+
+/* Feldbeschriftungen wie Station 02 (io-lbl). */
 .binary-label {
   display: block;
-  margin: 28px 0 10px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--immersive-muted);
+  margin: var(--space-5) 0 var(--space-2);
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-body);
 }
+
+/* Eingabefeld wie Station 01 (field-input); aktiv mit blauer Kontur. */
 .binary-input {
   width: min(100%, 620px);
-  min-height: 52px;
-  padding: 10px 14px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 20px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  min-height: 56px;
+  padding: 0 var(--space-4);
+  font: 400 var(--font-size-body-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-ink);
-  background: var(--immersive-bg);
-  border: 1px solid var(--layer-border);
+  background: var(--layer-surface-base);
+  border: 1px solid var(--color-neutral-600);
   outline: none;
 }
-.binary-input:focus { border-color: var(--immersive-accent); }
+.binary-input:focus {
+  border-color: var(--immersive-focus);
+  outline: 1px solid var(--immersive-focus);
+}
+
+/* Bildschirmtastatur wie Station 01. */
 .binary-keyboard {
   width: min(100%, 620px);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   margin: 0 0 var(--space-4);
-  padding: var(--space-3);
+  padding: var(--space-2);
   border: 1px solid var(--layer-border);
   background: var(--immersive-bg);
 }
@@ -372,59 +408,55 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .keyboard-row--bottom { padding-inline: var(--space-5); }
 .keyboard-row--actions { margin-top: var(--space-1); }
 .keyboard-key {
+  flex: 1 1 0;
   display: grid;
   place-items: center;
-  min-width: var(--size-control-md);
+  min-width: 0;
   min-height: var(--size-control-md);
-  padding: 0 var(--space-2);
+  padding: 0 var(--space-1);
   border: 1px solid var(--layer-border);
   background: var(--layer-surface-elevated);
   color: var(--immersive-ink);
-  font-family: var(--font-family-dm-mono);
-  font-size: var(--font-size-caption-m);
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
 }
-.keyboard-key:hover { background: var(--state-pressed-surface); border-color: var(--immersive-accent); }
+.keyboard-key:active { background: var(--state-pressed-surface); border-color: var(--immersive-accent); }
+@media (hover: hover) {
+  .keyboard-key:hover { background: var(--state-pressed-surface); border-color: var(--immersive-accent); }
+}
 .keyboard-key:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 2px; }
-.keyboard-key--wide { flex: 1; }
+.keyboard-key--wide { flex: 1 1 0; }
+
+/* Buchstabe + Bitfolge: Buchstabe wie die Kacheln in Station 02 (h4, DM Mono 500). */
 .binary-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
 }
 .binary-cell {
   min-width: 92px;
-  padding: 12px 10px;
+  padding: var(--space-3) var(--space-2);
   text-align: center;
-  background: var(--immersive-bg);
+  background: var(--layer-surface-base);
   border: 1px solid var(--layer-border);
 }
 .binary-cell strong {
   display: block;
-  margin-bottom: 7px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 20px;
-  font-weight: 500;
-  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+  font: 500 var(--font-size-h4)/1 var(--font-family-dm-mono), monospace;
+  text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-ink);
 }
 .binary-cell span {
   display: block;
-  font-family: var(--font-family-dm-mono);
-  font-size: 12px;
+  font: 400 var(--font-size-caption-s)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   color: var(--immersive-ink);
 }
-.template-card .binary-info {
-  margin-top: 20px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--immersive-body);
-}
 
+/* Laufendes Signal: Grafik, Größen und Animation bewusst unverändert. */
 .binary-history {
   min-height: 520px;
   border: 0;
@@ -489,19 +521,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: 420px;
 }
 
+/* Frage wie ein Schritt-Titel in Station 01 (step-title). */
 .binary-challenge h3 {
-  margin-bottom: 12px;
-  font-family: var(--font-family-panchang), sans-serif;
-  font-size: 24px;
-  line-height: 1;
-  text-transform: uppercase;
-  word-spacing: .24em;
+  margin-bottom: var(--space-3);
+  font: 600 var(--font-size-body-m)/1.3 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
 }
 
 .decode-layout {
   display: grid;
   grid-template-columns: minmax(260px, 1fr) minmax(420px, 1.4fr);
-  gap: 24px;
+  gap: var(--space-5);
   align-items: start;
 }
 
@@ -509,25 +539,20 @@ button { font: inherit; color: inherit; cursor: pointer; }
   position: relative;
 }
 
+/* Liegt direkt unter der Bitfolge, egal ob sie ein- oder zweizeilig ist. */
 .challenge-keyboard {
   position: absolute;
-  top: 92px;
+  top: 100%;
   left: 0;
   z-index: 3;
   width: 100%;
   margin: 0;
 }
 
-.challenge-keyboard .keyboard-key {
-  flex: 1 1 0;
-  min-width: 0;
-  padding-inline: var(--space-1);
-}
-
 .character-map {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .character-map__cell {
@@ -535,65 +560,64 @@ button { font: inherit; color: inherit; cursor: pointer; }
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 4px;
+  gap: var(--space-1);
   min-height: 58px;
-  padding: 9px;
+  padding: var(--space-2);
   border: 1px solid var(--layer-border);
-  background: var(--immersive-bg);
+  background: var(--layer-surface-base);
   color: var(--immersive-body);
-  font-family: var(--font-family-dm-mono);
-  font-size: 12px;
+  font-family: var(--font-family-dm-mono), monospace;
 }
 
 .character-map__cell strong {
+  font: 500 var(--font-size-body-l)/1 var(--font-family-dm-mono), monospace;
   color: var(--immersive-ink);
-  font-size: 20px;
-  font-weight: 500;
 }
 
 .character-map__cell span {
-  color: var(--immersive-body);
-  font-size: 12px;
+  font: 400 var(--font-size-caption-s)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .02em;
+  color: var(--immersive-body);
 }
 
-.binary-challenge h2 {
-  margin-bottom: 16px;
-}
-
+/* Die abgefangene Bitfolge: gut lesbar, wie das Ergebnisfeld in Station 01. */
 .challenge-code {
-  min-height: 68px;
-  margin-bottom: 16px;
-  padding: 14px 16px;
+  min-height: 60px;
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   color: var(--immersive-ink);
-  background: var(--immersive-bg);
+  background: var(--layer-surface-elevated);
   border: 1px solid var(--layer-border);
-  font-family: var(--font-family-dm-mono);
-  font-size: 15px;
-  line-height: 1.6;
+  font: 400 var(--font-size-body-m)/1.5 var(--font-family-dm-mono), monospace;
   letter-spacing: .04em;
 }
 
 .challenge-input {
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-4);
 }
 
 .challenge-actions {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
+/* Buttons im Label-Textstyle; Prüfen orange (Aktion), Neue Folge als Outline. */
 .challenge-button {
-  min-height: 44px;
-  padding: 0 16px;
+  min-height: var(--size-control-lg);
+  padding: 0 var(--space-5);
   border: 1px solid var(--immersive-accent);
   background: var(--immersive-accent);
   color: var(--immersive-bg);
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+  transition: background-color var(--duration-2) var(--ease-standard),
+              border-color var(--duration-2) var(--ease-standard);
+}
+.challenge-button:active { background: var(--color-primary-500); border-color: var(--color-primary-500); }
+@media (hover: hover) {
+  .challenge-button:hover { background: var(--color-primary-300); border-color: var(--color-primary-300); }
 }
 
 .challenge-button--quiet {
@@ -601,71 +625,70 @@ button { font: inherit; color: inherit; cursor: pointer; }
   background: transparent;
   color: var(--immersive-ink);
 }
-
-.challenge-feedback {
-  min-height: 1.5em;
-  margin-top: 12px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  color: var(--immersive-muted);
+.challenge-button--quiet:active { background: var(--state-pressed-surface); border-color: var(--immersive-accent); }
+@media (hover: hover) {
+  .challenge-button--quiet:hover { background: transparent; border-color: var(--immersive-accent); }
 }
+.challenge-button:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
-.challenge-feedback.is-correct { color: var(--immersive-ink); }
-.challenge-feedback.is-wrong { color: var(--immersive-body); }
-
-.challenge-feedback.is-correct::after,
-.challenge-feedback.is-wrong::after {
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 20px;
-  font-weight: 700;
+/* Rückmeldung als Feld wie in Station 01/02: richtig grün mit Haken,
+   falsch rot mit Kreuz. Leer (vor dem Prüfen) nicht sichtbar.
+   .template-card davor, damit die Absatz-Regel (.template-card p) nicht greift. */
+.template-card .challenge-feedback {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: none;
+  min-height: 60px;
+  margin-top: var(--space-4);
+  padding: var(--space-3) calc(var(--size-icon-lg) + var(--space-6)) var(--space-3) var(--space-4);
+  border: 1px solid var(--layer-border);
+  /* Ganze Sätze: Hinweis-Stil wie Station 01 (result-note) und Station 02 (crack-status). */
+  font: 400 var(--font-size-label)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
 }
+.template-card .challenge-feedback:empty { display: none; }
 
+.challenge-feedback.is-correct {
+  border-color: var(--color-feedback-success);
+  background: var(--color-feedback-success-bg);
+}
 .challenge-feedback.is-correct::after {
-  content: '✓';
-  color: var(--color-success-strong, #36c978);
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: var(--space-5);
+  width: 8px;
+  height: 16px;
+  margin-top: -10px;
+  border: solid var(--color-feedback-success);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
 }
 
+.challenge-feedback.is-wrong {
+  border-color: var(--color-feedback-error);
+  background: var(--color-feedback-error-bg);
+}
+.challenge-feedback.is-wrong::before,
 .challenge-feedback.is-wrong::after {
-  content: '✕';
-  color: var(--color-error-strong, #ff5c5c);
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: calc(var(--space-5) - 5px);
+  width: 20px;
+  height: 3px;
+  background: var(--color-feedback-error);
 }
-
+.challenge-feedback.is-wrong::before { transform: translateY(-50%) rotate(45deg); }
+.challenge-feedback.is-wrong::after { transform: translateY(-50%) rotate(-45deg); }
 
 @media (max-width: 1100px) {
-  .start-copy { width: 100%; max-width: 100%; margin-top: 64px; }
-  .hero-text { width: 100%; max-height: none; padding-right: 0; overflow-y: visible; scrollbar-gutter: auto; }
-  .start-visual { position: relative; inset: auto; width: min(92vw, 760px); margin: -80px -40px 0 auto; }
-  .station-image-placeholder { width: 100%; min-height: 320px; margin-bottom: 0; }
-  .cta { position: relative; inset: auto; align-self: flex-end; margin-top: -24px; }
   .template-grid { grid-template-columns: 1fr; }
   .binary-module,
   .binary-history { min-height: auto; }
   .decode-layout { grid-template-columns: 1fr; }
   .character-map { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-}
-
-@media (max-height: 900px) and (min-width: 761px) {
-  .screen-action { padding-block: 20px; }
-  .action-hdr .title--compact { font-size: 56px; }
-  .close-btn { width: 64px; height: 64px; }
-  .tabs { margin-top: 16px; }
-  .binary-tab-panel { margin-top: 16px; }
-  .template-card { padding: 18px; }
-  .binary-challenge h2 { font-size: 30px; margin-bottom: 10px; }
-  .binary-challenge h3 { font-size: 20px; margin-bottom: 8px; }
-  .challenge-code { min-height: 54px; margin-bottom: 10px; padding: 10px 12px; }
-  .binary-label { margin: 14px 0 6px; }
-}
-
-@media (max-width: 760px) {
-  .title--hero { font-size: clamp(42px, 14vw, 72px); }
-  .title--compact { font-size: clamp(38px, 11vw, 56px); }
-  .template-card p { font-size: 19px; }
-  .close-btn { width: 60px; height: 60px; }
-  .cta { width: 100%; margin-top: 8px; }
-  .cta-label { flex: 1; min-height: 60px; padding-inline: 20px; font-size: 18px; }
-  .cta-icon { width: 60px; height: 60px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

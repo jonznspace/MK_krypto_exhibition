@@ -25,7 +25,7 @@ Lokal bleiben nur die Linienstärken `--opt-line` (1 px) und `--opt-focus` (2 px
   scrollbar bei feststehendem Kopfbereich.
 - Zwischenüberschriften „Skytale“ und „Caesar-Chiffre“ in Switzer Semibold,
   24 px, normale Groß-/Kleinschreibung; englische Entsprechungen vorhanden.
-- Letzter Absatz als „Das Wichtigste“ / „Key takeaway“ in einer Infofläche mit
+- Letzter Absatz als „Auf den Punkt gebracht“ / „Key takeaway“ in einer Infofläche mit
   24 px Innenabstand und blauer 1-px-Kontur (`--immersive-focus`).
   Vorhandener Token `--color-feedback-info-bg` (Dark: `--color-secondary-900`,
   #0A132E), Info-Label über `--color-feedback-info`.

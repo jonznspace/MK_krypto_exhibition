@@ -8,6 +8,8 @@
     start: {
       eyebrow: 'Die Maschine rechnet',
       title: 'Die Leibniz-Rechenmaschine',
+      // Zeilenumbruch in der H1 des Startscreens nach diesem Wortteil (Text bleibt unverändert).
+      titleBreakAfter: 'Leibniz-',
       intro: [
         'Im 17. Jahrhundert arbeiteten Gelehrte in mehreren Ländern Europas an der Frage, ob sich Rechenvorgänge mechanisieren lassen. Einer von ihnen war der in Leipzig geborene Gottfried Wilhelm Leibniz (1646-1716). Seine mechanische Rechenmaschine zählt zu den bedeutendsten frühen Exemplaren ihrer Art, weil sie alle vier Grundrechenarten ausführen konnte. Ihr Herzstück war die sogenannte Staffelwalze: ein Mechanismus aus ineinandergreifenden Rädern, der Rechenoperationen mechanisch ausführte.',
         'Leibniz beschäftigte sich früh mit dem Binärsystem und schrieb es als einer der Ersten systematisch nieder. Diese Zahlendarstellung verwendet nur zwei Ziffern: 0 und 1. Im Unterschied zum Dezimalsystem mit zehn Ziffern lassen sich Informationen hier mit zwei Zuständen darstellen, etwa wie bei einem Schalter: an oder aus.',
@@ -103,6 +105,7 @@
   let signalTimers = [];
   let signalLines = [];
   let challengeIndex = 0;
+  let binaryMode = 'names';
   const screenStart = $('screenStart');
   const screenAction = $('screenAction');
 
@@ -118,7 +121,8 @@
     $(id).textContent = value;
   }
 
-  function setTitle(id, value) {
+  // breakAfter (optional): Wortteil, nach dem die Überschrift umbricht (<br>).
+  function setTitle(id, value, breakAfter) {
     const title = $(id);
     const characterCount = value.replace(/\s/g, '').length;
     title.classList.toggle('title--medium', id === 'startTitle' && characterCount >= 20 && characterCount < 39);
@@ -126,11 +130,23 @@
     const words = value.split(' ');
     title.innerHTML = '';
 
-    words.forEach((word, index) => {
+    const appendWord = text => {
       const wordNode = document.createElement('span');
       wordNode.className = 'title-word';
-      wordNode.textContent = word;
+      wordNode.textContent = text;
       title.appendChild(wordNode);
+    };
+
+    words.forEach((word, index) => {
+      const breakIndex = breakAfter ? word.indexOf(breakAfter) : -1;
+      const splitAt = breakIndex + (breakAfter || '').length;
+      if (breakIndex >= 0 && splitAt < word.length) {
+        appendWord(word.slice(0, splitAt));
+        title.appendChild(document.createElement('br'));
+        appendWord(word.slice(splitAt));
+      } else {
+        appendWord(word);
+      }
       if (index < words.length - 1) {
         title.appendChild(document.createTextNode(' '));
       }
@@ -151,8 +167,10 @@
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
-    setTitle('startTitle', content.start.title);
-    renderParagraphs('startIntro', content.start.intro);
+    setText('startEyebrow', content.start.eyebrow);
+    setTitle('startTitle', content.start.title, content.start.titleBreakAfter);
+    // Start zeigt nur den ersten Absatz; der volle Text steht in der Leseansicht.
+    renderParagraphs('startIntro', content.start.intro.slice(0, 1));
     setText('tryLabel', content.start.ctaLabel);
 
     const startImage = $('startImage');
@@ -162,8 +180,6 @@
     setTitle('actionTitle', content.action.title);
     setText('actionDescription', content.action.description);
     $('btnClose').setAttribute('aria-label', content.action.closeLabel);
-    setText('binaryTag', content.action.binary.tag);
-    setText('binaryTitle', content.action.binary.title);
     setText('binaryLabel', content.action.binary.label);
     $('binaryInput').value = content.action.binary.initialValue;
   }
@@ -314,17 +330,15 @@
   function applyActionLanguage() {
     const language = currentLanguage();
     const copy = ACTION_COPY[language];
-    setTitle('startTitle', language === 'en' ? copy.startTitle : STATION_CONTENT.start.title);
-    renderParagraphs('startIntro', language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro);
-    setTitle('actionTitle', copy.title);
+    setText('startEyebrow', language === 'en' ? copy.eyebrow : STATION_CONTENT.start.eyebrow);
+    if (language === 'en') setTitle('startTitle', copy.startTitle);
+    else setTitle('startTitle', STATION_CONTENT.start.title, STATION_CONTENT.start.titleBreakAfter);
+    renderParagraphs('startIntro', (language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro).slice(0, 1));
+    updateActionTitle();
     setText('tabNames', copy.namesTab);
     setText('tabDecode', copy.decodeTab);
-    setText('binaryTag', copy.tag);
-    setText('binaryTitle', copy.binaryTitle);
     setText('actionDescription', copy.description);
     setText('binaryLabel', copy.binaryLabel);
-    document.querySelector('#binaryDecodePanel .template-tag').textContent = copy.decodeTag;
-    setText('challengeTitle', copy.decodeTitle);
     document.querySelector('.binary-challenge h3').textContent = copy.question;
     document.querySelector('label[for="challengeInput"]').textContent = copy.solutionLabel;
     setText('challengeCheck', copy.check);
@@ -455,7 +469,15 @@
     screenStart.classList.remove('hidden');
   });
 
+  // Die Headline zeigt den Titel des aktiven Tabs.
+  function updateActionTitle() {
+    const copy = ACTION_COPY[currentLanguage()];
+    setTitle('actionTitle', binaryMode === 'names' ? copy.namesTab : copy.decodeTab);
+  }
+
   function setBinaryMode(mode) {
+    binaryMode = mode;
+    updateActionTitle();
     const isNames = mode === 'names';
     $('binaryTestPanel').classList.toggle('hidden', !isNames);
     $('binaryDecodePanel').classList.toggle('hidden', isNames);
@@ -466,6 +488,22 @@
   }
 
   renderStation(STATION_CONTENT);
+  // Geteilte Leseansicht (shared/js/station-offcanvas.js): Absatz 1 als Lead,
+  // Absatz 2 unverändert darunter, ohne Zwischenüberschrift.
+  // Absatz 3 steht in der blauen Infobox (Label wie Station 01).
+  const readingContent = (title, intro, highlightLabel) => ({
+    title,
+    lead: intro[0],
+    sections: [{ text: intro.slice(1, -1) }],
+    highlight: { label: highlightLabel, text: intro[intro.length - 1] }
+  });
+  StationOffcanvas.create({
+    trigger: $('btnReadMore'),
+    content: {
+      de: readingContent(STATION_CONTENT.start.title, STATION_CONTENT.start.intro, 'Auf den Punkt gebracht'),
+      en: readingContent(ACTION_COPY.en.startTitle, ACTION_COPY.en.startIntro, 'Key takeaway')
+    }
+  });
   renderHistory();
   renderChallenge();
   renderCharacterMap();

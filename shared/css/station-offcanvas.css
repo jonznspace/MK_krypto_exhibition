@@ -6,7 +6,8 @@
    as --station-offcanvas-* properties and can be overridden per station if needed. */
 .station-offcanvas,
 .station-offcanvas-trigger {
-  --station-offcanvas-width: 880px;
+  /* 50 % der Viewport-Breite (1563 px Tablet: 782 px). */
+  --station-offcanvas-width: 50vw;
   --station-offcanvas-scrim: 80%;
   --station-offcanvas-line: 1px;
   --station-offcanvas-focus: 2px;
@@ -116,7 +117,7 @@
   width: var(--size-control-lg);
   height: var(--size-control-lg);
   padding: 0;
-  color: var(--immersive-body);
+  color: var(--immersive-ink);
   background: transparent;
   border: var(--station-offcanvas-line) solid var(--color-neutral-600);
   border-radius: var(--radius-none);
@@ -150,7 +151,8 @@
   touch-action: pan-y;
   scrollbar-width: none;
   font: 400 var(--font-size-body-m)/1.5 var(--font-family-switzer), sans-serif;
-  color: var(--immersive-body);
+  /* Alle Texte in der Primärfarbe, keine Abstufung primär/sekundär. */
+  color: var(--immersive-ink);
 }
 .station-offcanvas__body::-webkit-scrollbar { display: none; }
 .station-offcanvas__scrollbar {
