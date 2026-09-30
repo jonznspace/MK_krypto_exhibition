@@ -10,7 +10,7 @@
 
 html, body {
   height: 100%;
-  background: #000;
+  background: var(--immersive-bg);
   overflow: hidden;
   -webkit-user-select: none;
   user-select: none;
@@ -21,7 +21,7 @@ html, body {
 
 #scaler {
   min-height: 100dvh;
-  background: #000;
+  background: var(--immersive-bg);
 }
 
 /* Die feste Kiosk-Bühne — wird per JS auf das Fenster skaliert */
@@ -43,21 +43,24 @@ html, body {
 }
 
 /* =========================================================================
-   Startbildschirm
+   Startbildschirm — Maße, Abstände und Typografie wie Station 01
+   (station-01/station-01.css + optimization.css + vertiefung.css), nur Tokens.
+   Schriftgrößen aus den globalen --font-size-*-Tokens, keine lokale Skala.
    ========================================================================= */
 .screen-start {
   position: relative;
   height: 100dvh;
   min-height: 0;
-  padding: clamp(40px, 5vw, 88px) clamp(24px, 4vw, 72px);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* DE/EN: große Touchflächen, aktive Sprache mit oranger Schrift und Unterkante. */
 #frame > .station-language-switch {
-  top: clamp(40px, 5vw, 88px);
-  right: clamp(24px, 4vw, 72px);
+  top: var(--space-6);
+  right: var(--space-6);
   gap: 0;
   padding: 0;
   border: 0;
@@ -66,12 +69,23 @@ html, body {
 }
 
 #frame > .station-language-switch .station-language-switch__button {
-  min-width: 48px;
-  min-height: 32px;
-  padding: 0 14px;
-  font-family: var(--font-family-dm-mono);
-  font-size: 13px;
-  letter-spacing: .12em;
+  min-width: var(--size-control-lg);
+  min-height: var(--size-control-lg);
+  padding-inline: var(--space-4);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  border-bottom: 2px solid transparent;
+}
+
+#frame > .station-language-switch .station-language-switch__button.is-active {
+  background: var(--state-selected-surface);
+  color: var(--immersive-accent);
+  border-bottom-color: var(--immersive-accent);
+}
+
+#frame > .station-language-switch .station-language-switch__button:focus-visible {
+  outline: 2px solid var(--immersive-focus);
+  outline-offset: var(--space-1);
 }
 
 #screenAction:not(.hidden) ~ .station-language-switch {
@@ -79,17 +93,26 @@ html, body {
 }
 
 .station-marker {
-  display: inline-flex; align-items: stretch;
-  position: relative; z-index: 2;
-  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
+  display: inline-flex;
+  align-items: stretch;
+  align-self: flex-start;
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-caption-m);
+  line-height: 1.4;
+  letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-body);
 }
 .station-marker__station,
 .station-marker__topic {
-  display: flex; align-items: center; height: 32px; padding: 0 14px;
+  display: flex;
+  align-items: center;
+  height: var(--space-6);
+  padding-inline: var(--space-3);
 }
-.station-marker__station { background: #ed8003; color: var(--color-neutral-850); }
+.station-marker__station { background: var(--immersive-accent); color: var(--immersive-bg); }
 .station-marker__topic { background: var(--color-neutral-850); }
 
 .start-copy {
@@ -97,137 +120,168 @@ html, body {
   min-height: 0;
   position: relative;
   z-index: 2;
-  margin-top: clamp(72px, 12vh, 130px);
+  margin-top: var(--space-8);
+  /* Hält die CTA unten rechts frei von Kurztext und „Weiterlesen“. */
+  padding-bottom: calc(var(--size-control-lg) + var(--space-5));
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+.eyebrow {
+  display: block;
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-label);
+  line-height: 1.4;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-body);
+}
+.eyebrow:empty { display: none; }
+
+/* Bildposition bleibt stationsspezifisch (Scheibe statt Skytale).
+   Bild 150 % (1920 × 1440): linke obere Ecke wie bei 1280 × 960,
+   gewachsen nach rechts und unten (right/bottom um 640/480 px verschoben).
+   Zusätzlich 20 % der Screenhöhe nach oben (top/bottom je −20vh). */
 .start-visual {
   position: absolute;
-  right: -360px; top: -20px; bottom: -200px;
-  width: 1280px;
+  right: -1000px; top: calc(-20px - 20vh); bottom: calc(-680px + 20vh);
+  width: 1920px;
   display: flex; align-items: flex-end; justify-content: flex-end;
   z-index: 1;
   pointer-events: none;
   opacity: .28;
 }
-.station-image { width: 100%; height: auto; max-height: 1020px; object-fit: contain; object-position: bottom right; }
+.station-image { width: 100%; height: auto; max-height: 1530px; object-fit: contain; object-position: bottom right; }
 
-.title--hero {
-  font-size: 108px;
-  margin-top: 18px;
+/* H1: eine Größe (Token h1), unabhängig von der Titellänge. */
+.screen-start .title--hero {
   width: 100%;
   max-width: 100%;
-  word-spacing: .24em;
+  margin-top: var(--space-5);
+  font-size: var(--font-size-h1);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  /* Panchang ist breit: ohne Extra-Wortabstand laufen die Wörter ineinander. */
+  word-spacing: .3em;
   white-space: normal;
-  line-height: .92;
 }
-.title--hero.title--medium { font-size: 88px; }
-.title--hero.title--long { font-size: 68px; }
+.screen-start .title--hero .title-word { margin-right: 0; }
 
 .title-word { display: inline-block; max-width: 100%; margin-right: .16em; overflow-wrap: anywhere; }
 
-.hero-text {
-  width: 820px; max-width: 100%; max-height: none;
-  flex: 1; min-height: 0;
-  margin-top: 32px; padding: 0 30px 0 0;
-  display: flex; flex-direction: column; gap: 20px;
-  overflow-y: auto; overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--immersive-accent) color-mix(in srgb, var(--immersive-body) 18%, transparent);
-  scrollbar-gutter: stable;
-  position: relative;
+.hero-summary {
+  width: 820px;
+  max-width: 100%;
+  margin-top: var(--space-5);
 }
-.hero-text::-webkit-scrollbar { width: 8px; }
-.hero-text::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--immersive-body) 18%, transparent);
+.hero-text p {
+  max-width: 64ch;
+  font-size: var(--font-size-body-m);
+  line-height: 1.5;
+  color: var(--immersive-body);
 }
-.hero-text::-webkit-scrollbar-thumb {
-  background: var(--immersive-accent);
-  border: 2px solid var(--immersive-bg);
+.hero-text p:first-child {
+  font-size: var(--font-size-body-l);
+  line-height: 1.45;
+  color: var(--immersive-ink);
 }
-.hero-text:focus-visible { outline: 1px solid var(--immersive-accent); outline-offset: 8px; }
-.hero-text p { font-size: 24px; line-height: 1.42; color: var(--immersive-body); max-width: 68ch; }
+/* „Weiterlesen“ und die Leseansicht kommen aus shared/css/station-offcanvas.css;
+   lokal nur die Platzierung. */
+.station-offcanvas-trigger { margin-top: var(--space-8); }
 
+/* Einstieg in die Vertiefung: durchgehend blau, auch Hover und gedrückt. */
 .cta {
-  position: absolute; right: clamp(24px, 4vw, 72px); bottom: clamp(40px, 5vw, 80px); z-index: 3;
-  display: flex; align-items: stretch;
-  border: none; background: none;
-}
-.cta-label {
-  display: flex; align-items: center;
-  min-height: 68px; padding: 0 32px;
-  font-family: var(--font-family-panchang), sans-serif; font-size: 22px; font-weight: 700; letter-spacing: .02em;
-  text-transform: uppercase;
-  background: var(--color-neutral-800); color: var(--immersive-ink);
+  position: absolute;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 3;
+  display: flex;
+  align-items: stretch;
+  border: none;
+  background: var(--immersive-focus);
+  color: var(--immersive-ink);
   transition: background var(--duration-1) var(--ease-standard);
 }
-.cta-icon {
-  display: grid; place-items: center;
-  width: 68px; height: 68px;
-  background: var(--immersive-focus); color: var(--immersive-ink);
+.cta-label {
+  display: flex;
+  align-items: center;
+  min-height: var(--size-control-lg);
+  padding-inline: var(--space-5);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
 }
-.cta-icon img { width: 40px; height: 40px; filter: brightness(0) invert(1); }
-.cta:hover .cta-label { background: var(--color-neutral-700); }
+.cta-icon {
+  display: grid;
+  place-items: center;
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  border-left: 1px solid var(--color-secondary-300);
+}
+.cta-icon img { width: var(--size-icon-lg); height: var(--size-icon-lg); filter: brightness(0) invert(1); }
+@media (hover: hover) {
+  .cta:hover { background: var(--color-secondary-700); }
+}
+.cta:active { background: var(--color-secondary-800); }
 .cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }
 
 .screen-action {
   position: relative;
   height: 100dvh;
   min-height: 0;
-  padding: clamp(24px, 3vw, 40px);
+  /* Unten kein Abstand: die Bühne reicht bis zur Viewport-Unterseite. */
+  padding: clamp(24px, 3vw, 40px) clamp(24px, 3vw, 40px) 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
+/* Kopfhöhe = Headline; der Schließen-Button liegt absolut daneben,
+   damit die Bühne zwischen Headline und Unterkante zentriert. */
 .action-hdr { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; }
-.action-hdr-copy { flex: 1; min-width: 0; padding-right: 32px; }
-.title--compact { width: 100%; font-size: 68px; margin-top: 10px; word-spacing: .24em; white-space: normal; line-height: .92; }
+.action-hdr-copy { flex: 1; min-width: 0; padding-right: calc(var(--size-control-lg) + var(--space-5)); }
+.title--compact {
+  width: 100%;
+  margin-top: 0;
+  font-size: var(--font-size-h3);
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  /* Panchang ist breit: ohne Extra-Wortabstand laufen die Wörter ineinander. */
+  word-spacing: .3em;
+  white-space: normal;
+}
 
+/* Schließen wie Station 01: 52er Fläche, graue Fläche mit Kontur, Tabler-X 24 px.
+   Vertikal mittig zur Headline (Station 01: align-items: center im Kopf). */
 .close-btn {
-  width: 80px; height: 80px; flex: none;
+  position: absolute; top: 50%; right: 0;
+  transform: translateY(-50%);
+  width: var(--size-control-lg); height: var(--size-control-lg); flex: none;
   display: grid; place-items: center;
-  font-size: 32px; font-weight: 300; color: var(--immersive-ink);
-  background: var(--color-neutral-800); border: none;
+  color: var(--immersive-ink);
+  background: var(--layer-surface-elevated);
+  border: 1px solid var(--layer-border);
   transition: border-color var(--duration-1) var(--ease-standard);
 }
-.close-btn:hover { border-color: var(--immersive-accent); }
+.close-btn svg { width: var(--size-icon-lg); height: var(--size-icon-lg); }
+.close-btn:active { border-color: var(--color-neutral-500); }
+@media (hover: hover) {
+  .close-btn:hover { border-color: var(--color-neutral-500); }
+}
 .close-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
-/* ---------- Header ---------- */
-.hdr {
-  display: grid; grid-template-columns: 1fr auto; align-items: end;
-  gap: 40px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--layer-border);
-}
-.tag {
-  display: inline-block;
-  font-family: var(--font-family-dm-mono); font-size: 15px; letter-spacing: .18em;
-  text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-bg); background: var(--immersive-accent);
-  padding: 6px 14px; border-radius: var(--radius-sm);
-}
-.kicker {
-  display: block; margin: 18px 0 6px;
-  font-family: var(--font-family-dm-mono); font-size: 17px; letter-spacing: .16em;
-  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
-}
+/* Titel-Schrift; Größe, Zeilenhöhe und Laufweite je Rolle (.title--hero, .title--compact). */
 .title {
-  font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
-  font-size: 72px; line-height: .96; text-transform: uppercase; letter-spacing: -.01em;
+  font-family: var(--font-family-panchang), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
 }
-.intro {
-  max-width: 640px; font-size: 22px; line-height: 1.5; color: var(--immersive-body);
-  text-align: right;
-}
-.intro b { color: var(--immersive-ink); font-weight: 600; }
 
 /* ---------- Bühne ---------- */
+/* Scheibe und Panel vertikal mittig zwischen Headline und Viewport-Unterseite. */
 .stage {
   flex: 1; display: grid; grid-template-columns: 860px 1fr; gap: 72px;
-  align-items: center; padding-top: 40px; min-height: 0;
+  align-content: center; align-items: center; min-height: 0;
 }
 
 /* ---------- Scheibe ---------- */
@@ -242,19 +296,21 @@ html, body {
   padding: 10px 24px; background: var(--layer-surface-raised);
 }
 .keyread-lbl {
-  display: block; font-family: var(--font-family-dm-mono); font-size: 12px;
-  letter-spacing: .18em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+  display: block;
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
 }
 .keyread b {
-  font-family: var(--font-family-dm-mono); font-size: 30px; font-weight: 500;
-  letter-spacing: .1em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
+  font: 500 var(--font-size-h4)/1.2 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em; text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
 }
 
 /* ---------- Buttons ---------- */
 /* Button-Text nutzt ausschließlich den Label-Textstyle (font-size/label). VISUAL_LANGUAGE IX5. */
 .btn {
   min-height: var(--size-touch-min); min-width: 56px;
-  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .06em;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
   background: var(--immersive-accent); color: var(--immersive-bg);
   border: none; border-radius: var(--radius-md); padding: 12px 22px; cursor: pointer;
@@ -265,9 +321,11 @@ html, body {
   background: transparent; color: var(--immersive-ink);
   border: 1px solid var(--layer-border); padding: 12px 20px;
 }
-.btn.ghost:hover { border-color: var(--immersive-accent); }
-.btn:focus-visible, .tab:focus-visible, .vert-btn:focus-visible,
-.chip:focus-visible, .az button:focus-visible, .ov-close:focus-visible, .mute:focus-visible {
+@media (hover: hover) {
+  .btn.ghost:hover { border-color: var(--immersive-accent); }
+}
+.btn:focus-visible, .tab:focus-visible,
+.chip:focus-visible, .az button:focus-visible {
   outline: 2px solid var(--immersive-focus); outline-offset: 3px;
 }
 
@@ -278,7 +336,8 @@ html, body {
   border-radius: var(--radius-md); padding: 6px; width: fit-content; }
 .tab {
   min-height: 48px; padding: 8px 28px; cursor: pointer;
-  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .08em;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
   background: transparent; color: var(--immersive-muted); border: none;
   border-radius: var(--radius-sm);
@@ -289,32 +348,45 @@ html, body {
 
 .mode { display: flex; flex-direction: column; gap: 18px; }
 .mode.hidden { display: none; }
-.hint { font-size: 19px; line-height: 1.5; color: var(--immersive-body); }
+/* Beide Modi liegen übereinander; der inaktive bleibt unsichtbar stehen.
+   So ist das Panel in beiden Modi gleich hoch und springt beim Tab-Wechsel nicht. */
+.modes { display: grid; }
+.modes > .mode { grid-area: 1 / 1; }
+.modes > .mode.hidden { display: flex; visibility: hidden; }
+.hint {
+  font: 400 var(--font-size-body-m)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-ink);
+}
 
 /* Wort-Chips */
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
   min-height: 44px; padding: 8px 18px; cursor: pointer;
-  font-family: var(--font-family-dm-mono); font-size: 16px; letter-spacing: .1em;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
   background: var(--layer-surface-raised); color: var(--immersive-ink);
   border: 1px solid var(--layer-border); border-radius: var(--radius-full);
   transition: border-color var(--duration-1) var(--ease-standard);
 }
-.chip:hover { border-color: var(--immersive-accent); }
+@media (hover: hover) {
+  .chip:hover { border-color: var(--immersive-accent); }
+}
 .chip.active { border-color: var(--immersive-accent); color: var(--immersive-accent); }
 
 /* Ein-/Ausgabe */
 .io { display: flex; flex-direction: column; gap: 14px; }
-.io-row { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 18px; }
+/* Labelspalte fasst „Entschlüsselt“ in caption-m (14 px); gleich breit in allen Zeilen. */
+.io-row { display: grid; grid-template-columns: calc(var(--space-9) + var(--space-6)) 1fr; align-items: center; gap: 18px; }
 .io-lbl {
-  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .16em;
-  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted);
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono); color: var(--immersive-body);
 }
 .tiles { display: flex; flex-wrap: wrap; gap: 8px; min-height: 56px; align-content: center; }
 .tile {
   width: 48px; height: 56px; display: grid; place-items: center;
-  font-family: var(--font-family-dm-mono); font-size: 26px; font-weight: 500;
+  font: 500 var(--font-size-h4)/1 var(--font-family-dm-mono), monospace;
   text-transform: var(--text-transform-dm-mono);
   background: var(--layer-surface-raised); border: 1px solid var(--layer-border);
   border-radius: var(--radius-sm); color: var(--immersive-ink);
@@ -325,100 +397,73 @@ html, body {
 .tiles.cipher .tile { color: var(--immersive-accent); }
 .tile.pending { opacity: var(--dimmed-opacity); }
 .tile.active { border-color: var(--immersive-accent); }
+.tiles.is-solved .tile { border-color: var(--color-feedback-success); }
 
 /* A–Z Leiste */
 .az { display: grid; grid-template-columns: repeat(13, 1fr); gap: 8px; }
 .az button {
   min-height: var(--size-touch-min); cursor: pointer;
-  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
   background: var(--layer-surface-raised); color: var(--immersive-ink);
   border: 1px solid var(--layer-border); border-radius: var(--radius-sm);
   transition: border-color var(--duration-1) var(--ease-standard),
               background var(--duration-1) var(--ease-standard);
 }
-.az button:hover { border-color: var(--immersive-accent); }
+@media (hover: hover) {
+  .az button:hover { border-color: var(--immersive-accent); }
+}
 .az button:active { background: var(--state-pressed-surface); }
 
 .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 
-/* Knacken */
+
+
+
+/* Knacken: Status wie das Ergebnisfeld in Station 01. Offen gestrichelt,
+   gelöst mit grünem Rahmen und Haken. */
 .crack-status {
-  font-family: var(--font-family-dm-mono); font-size: 20px; letter-spacing: .04em;
-  text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-muted); min-height: 1.4em;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--layer-border);
+  font: 400 var(--font-size-label)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-body);
 }
-.crack-status.solved { color: var(--immersive-accent); }
+.crack-status.is-solved {
+  padding-right: calc(var(--size-icon-lg) + var(--space-6));
+  border-style: solid;
+  border-color: var(--color-feedback-success);
+  background: var(--color-feedback-success-bg);
+  font: 400 var(--font-size-body-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-ink);
+}
+.crack-status.is-solved::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: var(--space-5);
+  width: 8px;
+  height: 16px;
+  margin-top: -10px;
+  border: solid var(--color-feedback-success);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
 
-/* Vertiefung-Button (blau) */
-.vert-btn {
-  margin-top: 8px; align-self: flex-start; cursor: pointer;
-  display: flex; align-items: center; gap: 12px; min-height: var(--size-touch-min);
-  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .08em;
-  text-transform: var(--text-transform-dm-mono);
-  background: transparent; color: var(--immersive-focus);
-  border: 1px solid var(--immersive-focus); border-radius: var(--radius-md);
-  padding: 12px 22px;
-  transition: background var(--duration-1) var(--ease-standard);
-}
-.vert-btn:hover { background: color-mix(in srgb, var(--immersive-focus) 14%, transparent); }
-.vert-dot { width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--immersive-focus); }
-
-/* ---------- Vertiefung Overlay (LAYER/400) ---------- */
-.overlay {
-  position: absolute; inset: 0; z-index: 400;
-  display: grid; place-items: center;
-  background: color-mix(in srgb, var(--immersive-bg) 60%, transparent); /* 40% dim, kein Blur */
-  opacity: 0; pointer-events: none;
-  transition: opacity var(--duration-4) var(--ease-standard);
-}
-.overlay.open { opacity: 1; pointer-events: auto; }
-.ov-card {
-  position: relative; width: 900px; max-width: 90%;
-  background: var(--layer-surface-elevated);
-  border: 1px solid var(--immersive-focus); border-radius: var(--radius-lg);
-  padding: 48px 56px;
-  transform: translateY(24px);
-  transition: transform var(--duration-4) var(--ease-standard);
-}
-.overlay.open .ov-card { transform: translateY(0); }
-.ov-close {
-  position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; cursor: pointer;
-  font-size: var(--font-size-label);
-  background: transparent; color: var(--immersive-muted);
-  border: 1px solid var(--layer-border); border-radius: var(--radius-sm);
-}
-.ov-tag {
-  font-family: var(--font-family-dm-mono); font-size: 13px; letter-spacing: .18em;
-  text-transform: var(--text-transform-dm-mono); color: var(--immersive-focus);
-}
-.ov-card h2 {
-  font-family: var(--font-family-panchang), sans-serif; font-weight: 800;
-  max-width: calc(100% - 64px);
-  font-size: clamp(28px, 2.1vw, 40px); text-transform: uppercase; margin: 10px 0 20px; line-height: 1;
-  word-spacing: .24em;
-  overflow-wrap: anywhere;
-}
-.ov-card p { font-size: 20px; line-height: 1.6; color: var(--immersive-body); margin-bottom: 16px; max-width: 62ch; }
-.ov-card p b { color: var(--immersive-ink); font-weight: 600; }
-.perm-compare { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 12px; }
-.perm-box {
-  background: var(--immersive-bg); border: 1px solid var(--layer-border);
-  border-radius: var(--radius-md); padding: 18px 22px;
-}
-.perm-box.hi { border-color: var(--immersive-focus); }
-.perm-lbl { font-family: var(--font-family-dm-mono); font-size: 12px; letter-spacing: .16em;
-  text-transform: var(--text-transform-dm-mono); color: var(--immersive-muted); }
-.perm-val { display: block; margin: 8px 0 4px; font-family: var(--font-family-dm-mono);
-  text-transform: var(--text-transform-dm-mono);
-  font-size: 22px; color: var(--immersive-focus); word-break: break-all; line-height: 1.2; }
-.perm-cap { font-family: var(--font-family-dm-mono); font-size: 12px; color: var(--immersive-muted);
-  text-transform: var(--text-transform-dm-mono); letter-spacing: .1em; }
+/* Vertiefung: Optik aus shared/css/station-offcanvas.css, lokal nur die Platzierung. */
+.vert-btn { margin-top: var(--space-2); align-self: flex-start; }
 
 /* ---------- Attract & Toast ---------- */
 .attract {
   position: absolute; left: 72px; bottom: 96px; z-index: 300;
-  font-family: var(--font-family-dm-mono); font-size: 18px; letter-spacing: .12em;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono); color: var(--immersive-accent);
   opacity: 0; transition: opacity var(--duration-3) var(--ease-standard);
 }
@@ -429,23 +474,14 @@ html, body {
   position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%) translateY(16px);
   z-index: 500; background: var(--layer-surface-elevated);
   border: 1px solid var(--state-accent); color: var(--immersive-ink);
-  font-family: var(--font-family-dm-mono); font-size: 18px; letter-spacing: .04em;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
   padding: 14px 28px; border-radius: var(--radius-md);
   opacity: 0; pointer-events: none; transition: opacity var(--duration-2) var(--ease-standard),
               transform var(--duration-2) var(--ease-standard);
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Ton-Schalter (dev/kiosk) */
-.mute {
-  position: fixed; right: 16px; bottom: 16px; z-index: 600; min-height: 40px; cursor: pointer;
-  font-family: var(--font-family-dm-mono); font-size: var(--font-size-label); letter-spacing: .1em;
-  text-transform: var(--text-transform-dm-mono);
-  background: var(--layer-surface-raised); color: var(--immersive-muted);
-  border: 1px solid var(--layer-border); border-radius: var(--radius-full); padding: 8px 16px;
-}
-.mute[aria-pressed="false"] { color: var(--immersive-muted); opacity: .6; }
 
 /* ---------- SVG Scheibe ---------- */
 .disc-ring { fill: var(--layer-surface-raised); stroke: var(--layer-border); stroke-width: 1; }
@@ -466,13 +502,9 @@ html, body {
 #discInnerLetters.free .disc-letter.inner { transition: none; }
 
 @media (max-height: 900px) {
-  .title--compact { font-size: 58px; }
-
   .stage {
     grid-template-columns: 760px minmax(0, 1fr);
     gap: 48px;
-    align-items: start;
-    padding-top: 20px;
   }
 
   .disk-col { gap: 16px; }

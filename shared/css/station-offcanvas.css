@@ -1,4 +1,5 @@
-/* Station off-canvas: reading layer that slides in from the left.
+/* Station off-canvas: reading layer that slides in from the left
+   (default) or from the right (option side: 'right').
    Shared component, used together with shared/js/station-offcanvas.js.
    Structure and look are fixed; stations only supply content (see shared/README.md).
    All values come from the tokens; the few component measures live below
@@ -79,6 +80,9 @@
   transform: translateX(0);
   transition-timing-function: var(--ease-entrance);
 }
+/* From the right: panel on the right edge, slides in from outside the right edge. */
+.station-offcanvas--right { justify-content: flex-end; }
+.station-offcanvas--right .station-offcanvas__panel { transform: translateX(100%); }
 
 /* ---------- Header: eyebrow, headline, close button; stays fixed while the text scrolls ---------- */
 .station-offcanvas__header {

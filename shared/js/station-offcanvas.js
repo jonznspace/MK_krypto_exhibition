@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * Station off-canvas: reading layer that slides in from the left.
+ * Station off-canvas: reading layer that slides in from the left (default)
+ * or from the right (options.side = 'right').
  * Builds its own markup; a station only passes a trigger button and content
  * per language. Usage and content format: shared/README.md.
  * Styles: shared/css/station-offcanvas.css.
@@ -163,6 +164,7 @@
    * options.content     { de: {...}, en: {...} } or one content object
    * options.background  element made inert while open (default #scaler, else #frame)
    * options.id          id of the layer (default stationOffcanvas, stationOffcanvas2, ...)
+   * options.side        'left' (default) or 'right': edge the panel slides in from
    */
   function create(options) {
     instanceCount += 1;
@@ -175,6 +177,7 @@
     let closing = false;
     let renderedLanguage = null;
 
+    overlay.classList.toggle('station-offcanvas--right', options.side === 'right');
     document.body.appendChild(overlay);
     const updateScrollbar = initScrollIndicator(body, parts.track, parts.thumb);
 

@@ -39,7 +39,7 @@
       more: 'Weitere Verschlüsselungsverfahren', deepTag: 'Vertiefung', deepTitle: 'Weitere Verschlüsselungsverfahren',
       deepText: 'Weitere Hilfsmittel machten Verschlüsselung komplexer. Dazu gehörten Chiffriertabellen oder Codebücher, sogenannte Nomenklatoren, in denen Namen, Orte oder ganze Wörter durch andere Zeichen ersetzt wurden. Solche Verfahren prägten seit dem 15. Jahrhundert besonders die europäische Diplomatie, die auf dichte Netzwerke reisender Boten und Gesandter angewiesen war. In „schwarzen Kammern“ chiffrierten und dechiffrierten die Höfe abgefangene Nachrichten. Auch am sächsischen Hof gab es eine „schwarze Kammer“, die direkt in der Poststelle untergebracht war, um ein- bzw. ausgehende Schreiben zu kontrollieren. Noch zu DDR-Zeiten, zur Zeit des sogenannten Kalten Krieges, waren diese Verfahren gang und gäbe. In unserer heutigen Verfassung ist das Postgeheimnis klar geregelt, was durch die Digitalisierung und Privatisierung dieses Bereiches allerdings aufgeweicht wird.',
       attract: 'Drehe die Scheibe', solvedToast: 'Botschaft geknackt', disc: 'Kryptografischer Zirkel: äußere und innere Alphabetscheibe. Innere Scheibe drehbar.',
-      rotateLeft: 'Innere Scheibe eine Stellung nach links', rotateRight: 'Innere Scheibe eine Stellung nach rechts', closeOverlay: 'Schließen'
+      rotateLeft: 'Innere Scheibe eine Stellung nach links', rotateRight: 'Innere Scheibe eine Stellung nach rechts'
     },
     en: {
       startTitle: 'The Cryptographic Dividers and the “Permutation Machine”',
@@ -56,7 +56,7 @@
       more: 'More encryption methods', deepTag: 'Deep dive', deepTitle: 'Other Encryption Methods',
       deepText: 'Other tools made encryption more complex. These included cipher tables and codebooks known as nomenclators, in which names, places, or entire words were replaced with other symbols. From the 15th century onward, such methods played a particularly important role in European diplomacy, which relied on extensive networks of traveling couriers and envoys. In “black chambers,” royal courts encrypted messages and deciphered intercepted correspondence. The Saxon court also had a “black chamber,” located within the postal office itself so that incoming and outgoing letters could be monitored. Such practices remained commonplace in East Germany during the Cold War. Today, the privacy of correspondence is explicitly protected by Germany’s constitution, although digitization and the privatization of postal and communications services are weakening that protection.',
       attract: 'Turn the disc', solvedToast: 'Message cracked', disc: 'Cryptographic disc with outer and inner alphabets. The inner disc can be rotated.',
-      rotateLeft: 'Turn the inner disc one step left', rotateRight: 'Turn the inner disc one step right', closeOverlay: 'Close'
+      rotateLeft: 'Turn the inner disc one step left', rotateRight: 'Turn the inner disc one step right'
     }
   };
 
@@ -140,17 +140,14 @@
     });
   }
 
-  function setDeepeningTitle(value = STATION_CONTENT.action.deepening.title) {
-    const title = $('ovTitle');
-    title.textContent = value;
-  }
-
   function renderStation(content) {
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
+    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
-    renderParagraphs('startIntro', content.start.intro);
+    // Start zeigt nur den ersten Absatz; der volle Text steht in der Leseansicht.
+    renderParagraphs('startIntro', content.start.intro.slice(0, 1));
     setText('tryLabel', content.start.ctaLabel);
 
     const startImage = $('startImage');
@@ -159,11 +156,6 @@
 
     setTitle('actionTitle', content.action.title);
     $('btnClose').setAttribute('aria-label', content.action.closedLabel);
-
-    const deepening = content.action.deepening;
-    setText('ovTag', deepening.tag);
-    setDeepeningTitle();
-    renderParagraphs('ovBody', deepening.paragraphs);
   }
 
   /* ---------------- SVG-Scheibe aufbauen ---------------- */
@@ -317,14 +309,15 @@
     crackIdx.forEach(c => box.appendChild(tile(AL[dec(c, key)])));
     const status = $('crackStatus');
     const copy = currentCopy();
-    if (key === crackSecret) {
+    const solved = key === crackSecret;
+    // Gelöst wie in Station 01: grüner Rahmen mit Haken um Status und Klartext.
+    status.classList.toggle('is-solved', solved);
+    box.classList.toggle('is-solved', solved);
+    if (solved) {
       status.textContent = copy.cracked + AL[key];
-      status.classList.add('solved');
-      box.querySelectorAll('.tile').forEach(t => t.classList.add('active'));
       if (!crackSolvedFlag) { crackSolvedFlag = true; Sound.confirm(); toast(copy.solvedToast); }
     } else {
       status.textContent = copy.turnKey;
-      status.classList.remove('solved');
       crackSolvedFlag = false;
     }
   }
@@ -337,8 +330,9 @@
     appliedLanguage = language;
     const copy = currentCopy();
 
+    setText('startEyebrow', language === 'en' ? copy.eyebrow : STATION_CONTENT.start.eyebrow);
     setTitle('startTitle', language === 'en' ? copy.startTitle : STATION_CONTENT.start.title);
-    renderParagraphs('startIntro', language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro);
+    renderParagraphs('startIntro', (language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro).slice(0, 1));
     setTitle('actionTitle', copy.title);
     btnClose.setAttribute('aria-label', copy.close);
     svg.setAttribute('aria-label', copy.disc);
@@ -356,11 +350,6 @@
     setText('interceptedLabel', copy.intercepted);
     setText('decryptedLabel', copy.decrypted);
     setText('newMsg', copy.newMessage);
-    setText('vertBtnLabel', copy.more);
-    setText('ovTag', copy.deepTag);
-    setDeepeningTitle(copy.deepTitle);
-    renderParagraphs('ovBody', [copy.deepText]);
-    $('ovClose').setAttribute('aria-label', copy.closeOverlay);
     setText('attract', copy.attract);
 
     plain = EXAMPLES[language].encrypt[0];
@@ -412,10 +401,28 @@
     dragging = false; svg.classList.remove('dragging'); innerG.classList.remove('free'); innerLetters.classList.remove('free');
   }));
 
-  /* ---------------- Vertiefung Overlay ---------------- */
-  $('vertBtn').onclick = () => { Sound.open(); $('overlay').classList.add('open'); $('overlay').setAttribute('aria-hidden', 'false'); kick(); };
-  $('ovClose').onclick = () => { Sound.close(); $('overlay').classList.remove('open'); $('overlay').setAttribute('aria-hidden', 'true'); };
-  $('overlay').addEventListener('click', e => { if (e.target === $('overlay')) $('ovClose').onclick(); });
+  /* ---------------- Vertiefung: geteilte Leseansicht von rechts ---------------- */
+  // Button-Beschriftung, Eyebrow, Titel und Text kommen je Sprache aus der Komponente.
+  const deepening = STATION_CONTENT.action.deepening;
+  StationOffcanvas.create({
+    trigger: $('vertBtn'),
+    id: 'stationDeepDive',
+    side: 'right',
+    content: {
+      de: {
+        eyebrow: deepening.tag,
+        title: deepening.title,
+        sections: [{ text: deepening.paragraphs }],
+        labels: { open: ACTION_COPY.de.more, region: deepening.tag }
+      },
+      en: {
+        eyebrow: ACTION_COPY.en.deepTag,
+        title: ACTION_COPY.en.deepTitle,
+        sections: [{ text: ACTION_COPY.en.deepText }],
+        labels: { open: ACTION_COPY.en.more, region: ACTION_COPY.en.deepTag }
+      }
+    }
+  });
 
   /* ---------------- Toast ---------------- */
   let toastT;
@@ -473,6 +480,26 @@
 
   /* ---------------- Start ---------------- */
   renderStation(STATION_CONTENT);
+  // Geteilte Leseansicht (shared/js/station-offcanvas.js): Absatz 1 als Lead,
+  // Absatz 2 und 3 unter eigenen Zwischenüberschriften.
+  // EN-Zwischenüberschriften aus dem vorhandenen EN-Text abgeleitet, noch nicht freigegeben.
+  const readingContent = (title, intro, sectionTitles) => ({
+    title,
+    lead: intro[0],
+    sections: [
+      { title: sectionTitles[0], text: intro[1] },
+      { title: sectionTitles[1], text: intro[2] }
+    ]
+  });
+  StationOffcanvas.create({
+    trigger: $('btnReadMore'),
+    content: {
+      de: readingContent(STATION_CONTENT.start.title, STATION_CONTENT.start.intro,
+        ['Der kryptografische Zirkel', 'Die „Permutationsmaschine“']),
+      en: readingContent(ACTION_COPY.en.startTitle, ACTION_COPY.en.startIntro,
+        ['The cryptographic dividers', 'The “permutation machine”'])
+    }
+  });
   renderPlain();
   switchMode('encrypt');
   new MutationObserver(mutations => {

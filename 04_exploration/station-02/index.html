@@ -6,7 +6,8 @@
 <title>Station 2 · Zirkel &amp; Permutationsscheibe</title>
 <!-- Design-System-Tokens (zieht per @import auch die self-hosted Fonts) -->
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="station-02.css?v=3">
+<link rel="stylesheet" href="../../shared/css/station-offcanvas.css">
+<link rel="stylesheet" href="station-02.css?v=10">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
 </head>
@@ -23,8 +24,13 @@
       </div>
 
       <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
         <h1 class="title title--hero" id="startTitle"></h1>
-        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
+        <div class="hero-summary">
+          <div class="hero-text" id="startIntro" aria-label="Einführungstext zur Station"></div>
+          <!-- Öffnet die geteilte Leseansicht (shared/js/station-offcanvas.js). -->
+          <button class="station-offcanvas-trigger" id="btnReadMore" type="button">Weiterlesen</button>
+        </div>
       </div>
 
       <div class="start-visual" aria-hidden="true">
@@ -45,9 +51,13 @@
       <!-- ---------- Header (LAYER/300) ---------- -->
       <header class="action-hdr">
         <div class="action-hdr-copy">
-          <h1 class="title title--compact" id="actionTitle"></h1>
+          <h2 class="title title--compact" id="actionTitle"></h2>
         </div>
-        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
       </header>
 
       <!-- ---------- Bühne ---------- -->
@@ -74,47 +84,39 @@
           <button class="tab" id="tabCrack" data-mode="crack" role="tab" aria-selected="false">Knacken</button>
         </div>
 
-        <!-- Modus: Verschlüsseln -->
-        <div class="mode" id="modeEncrypt" role="tabpanel">
-          <p class="hint" id="encryptHint">Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.</p>
-          <div class="chips" id="wordChips"></div>
-          <div class="io">
-            <div class="io-row"><span class="io-lbl" id="plainLabel">Klartext</span><div class="tiles" id="plainTiles"></div></div>
-            <div class="io-row"><span class="io-lbl" id="cipherLabel">Geheim</span><div class="tiles cipher" id="cipherTiles"></div></div>
-          </div>
-          <div class="az" id="azStrip" aria-label="Buchstaben eingeben"></div>
-          <div class="row">
+        <!-- Beide Modi übereinander, damit das Panel gleich hoch bleibt -->
+        <div class="modes">
+          <!-- Modus: Verschlüsseln -->
+          <div class="mode" id="modeEncrypt" role="tabpanel">
+            <p class="hint" id="encryptHint">Wähle ein Wort oder tippe eigene Buchstaben. Stelle mit der Scheibe den Schlüssel.</p>
+            <div class="chips" id="wordChips"></div>
+            <div class="io">
+              <div class="io-row"><span class="io-lbl" id="plainLabel">Klartext</span><div class="tiles" id="plainTiles"></div></div>
+              <div class="io-row"><span class="io-lbl" id="cipherLabel">Geheim</span><div class="tiles cipher" id="cipherTiles"></div></div>
+            </div>
+            <div class="az" id="azStrip" aria-label="Buchstaben eingeben"></div>
+            <div class="row">
            
-            <button class="btn ghost" id="clearBtn">Leeren</button>
+              <button class="btn ghost" id="clearBtn">Leeren</button>
+            </div>
+          </div>
+
+          <!-- Modus: Knacken -->
+          <div class="mode hidden" id="modeCrack" role="tabpanel">
+            <p class="hint" id="crackHint">Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.</p>
+            <div class="io">
+              <div class="io-row"><span class="io-lbl" id="interceptedLabel">Abgefangen</span><div class="tiles cipher" id="crackCipher"></div></div>
+              <div class="io-row"><span class="io-lbl" id="decryptedLabel">Entschlüsselt</span><div class="tiles" id="crackPlain"></div></div>
+            </div>
+            <div class="crack-status" id="crackStatus">Schlüssel drehen …</div>
+            <div class="row"><button class="btn ghost" id="newMsg">Neue Botschaft</button></div>
           </div>
         </div>
 
-        <!-- Modus: Knacken -->
-        <div class="mode hidden" id="modeCrack" role="tabpanel">
-          <p class="hint" id="crackHint">Eine abgefangene Botschaft. Dreh die Scheibe, bis ein sinnvolles Wort erscheint.</p>
-          <div class="io">
-            <div class="io-row"><span class="io-lbl" id="interceptedLabel">Abgefangen</span><div class="tiles cipher" id="crackCipher"></div></div>
-            <div class="io-row"><span class="io-lbl" id="decryptedLabel">Entschlüsselt</span><div class="tiles" id="crackPlain"></div></div>
-          </div>
-          <div class="crack-status" id="crackStatus">Schlüssel drehen …</div>
-          <div class="row"><button class="btn ghost" id="newMsg">Neue Botschaft</button></div>
-        </div>
-
-        <button class="vert-btn" id="vertBtn">
-          <span class="vert-dot"></span><span id="vertBtnLabel">Weitere Verschlüsselungsverfahren</span>
-        </button>
+        <!-- Öffnet die Vertiefung als geteilte Leseansicht von rechts (shared/js/station-offcanvas.js). -->
+        <button class="station-offcanvas-trigger vert-btn" id="vertBtn" type="button">Weitere Verschlüsselungsverfahren</button>
       </div>
     </section>
-
-        <!-- ---------- Vertiefung (LAYER/400, blau markiert) ---------- -->
-        <div class="overlay" id="overlay" aria-hidden="true">
-          <div class="ov-card" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
-            <button class="ov-close" id="ovClose" aria-label="Schließen">✕</button>
-            <span class="ov-tag" id="ovTag"></span>
-            <h2 id="ovTitle"></h2>
-            <div id="ovBody"></div>
-          </div>
-        </div>
 
       <!-- Attract-Hinweis -->
       <div class="attract" id="attract" aria-hidden="true">Drehe die Scheibe</div>
@@ -128,6 +130,7 @@
 
 <script src="../../shared/js/station-language-switch.js"></script>
 <script src="../../shared/js/station-idle-reload.js"></script>
-<script src="station-02.js?v=8"></script>
+<script src="../../shared/js/station-offcanvas.js"></script>
+<script src="station-02.js?v=10"></script>
 </body>
 </html>

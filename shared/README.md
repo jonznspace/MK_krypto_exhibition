@@ -8,7 +8,7 @@ die Tokens müssen also vorher geladen sein.
 | --- | --- | --- |
 | Sprachumschalter | `css/station-language-switch.css`, `js/station-language-switch.js` | DE/EN-Schalter, setzt `data-language` auf `<html>` |
 | Idle-Reload | `css/station-idle-reload.css`, `js/station-idle-reload.js` | Warnung + Neustart nach Inaktivität |
-| **Off-Canvas** | `css/station-offcanvas.css`, `js/station-offcanvas.js` | Leseansicht „Weiterlesen“ von links |
+| **Off-Canvas** | `css/station-offcanvas.css`, `js/station-offcanvas.js` | Leseansicht „Weiterlesen“ von links (oder rechts) |
 
 ---
 
@@ -111,6 +111,7 @@ Ein einzelnes Objekt ohne `de`/`en` funktioniert auch. Dann gilt es für beide S
 | `content` | `{}` | siehe oben |
 | `background` | `#scaler` → `#frame` | Element, das beim Lesen `inert` wird |
 | `id` | `stationOffcanvas` | Id des Layers (bei mehreren Layern pro Station setzen) |
+| `side` | `'left'` | Seite, von der das Panel einfährt: `'left'` oder `'right'` (z. B. Vertiefung in Station 02) |
 
 ### Anpassen
 
