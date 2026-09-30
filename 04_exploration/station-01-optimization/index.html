@@ -17,7 +17,7 @@
     <!-- Lokale Gestaltung der Optimierung, nach allen Original-Styles geladen. -->
     <link rel="stylesheet" href="optimization.css?v=12" />
     <!-- Vertiefungsebene v2 (2026-09-29), siehe CHANGELOG.md. -->
-    <link rel="stylesheet" href="vertiefung.css?v=1" />
+    <link rel="stylesheet" href="vertiefung.css?v=14" />
   </head>
   <body class="station-optimization">
     <div id="scaler">
@@ -68,7 +68,7 @@
           <header class="action-hdr">
             <div class="action-hdr-copy">
               <span class="eyebrow" id="actionEyebrow"></span>
-              <h1 class="title title--compact" id="actionTitle"></h1>
+              <h2 class="title title--compact" id="actionTitle"></h2>
             </div>
             <button
               class="close-btn"
@@ -237,34 +237,16 @@
                 </div>
               </div>
 
-              <!-- Verschlüsseln ③: abwickeln -->
-              <div class="step" data-only="encrypt">
-                <p class="step-title" id="stepWrapHeading">
-                  <span class="step-num" aria-hidden="true">3</span>
-                  <span id="stepWrapTitle"></span>
-                </p>
-                <div
-                  class="segmented"
-                  role="group"
-                  aria-labelledby="stepWrapHeading"
+              <!-- Verschlüsseln: eine Aktion, die Beschriftung sagt, was als Nächstes passiert -->
+              <div class="step step--action" data-only="encrypt">
+                <button
+                  class="unwrap-button"
+                  id="btnUnwrap"
+                  type="button"
+                  aria-pressed="false"
                 >
-                  <button
-                    class="segmented__option"
-                    id="btnWrapped"
-                    type="button"
-                    aria-pressed="true"
-                  >
-                    <span id="wrappedLabel"></span>
-                  </button>
-                  <button
-                    class="segmented__option"
-                    id="btnUnwrapped"
-                    type="button"
-                    aria-pressed="false"
-                  >
-                    <span id="unwrappedLabel"></span>
-                  </button>
-                </div>
+                  <span id="unwrapLabel"></span>
+                </button>
               </div>
 
               <!-- Ergebnis: Geheimtext bzw. Lesung längs des Stabs -->
@@ -327,19 +309,25 @@
             </svg>
           </button>
         </header>
-        <div
-          class="reading-body"
-          id="readingBody"
-          tabindex="0"
-          role="region"
-          aria-label="Vollständiger Einführungstext"
-        ></div>
+        <!-- Orange scroll indicator as in the original station (see CHANGELOG.md). -->
+        <div class="reading-scroll">
+          <div
+            class="reading-body"
+            id="readingBody"
+            tabindex="0"
+            role="region"
+            aria-label="Vollständiger Einführungstext"
+          ></div>
+          <div class="scroll-indicator" id="readingScrollbar" aria-hidden="true">
+            <div class="scroll-indicator__thumb" id="readingScrollbarThumb"></div>
+          </div>
+        </div>
       </section>
     </div>
 
     <script src="../../shared/js/vendor/three.min.js"></script>
     <script src="../../shared/js/station-language-switch.js"></script>
     <script src="../../shared/js/station-idle-reload.js"></script>
-    <script src="station-01.js?v=15"></script>
+    <script src="station-01.js?v=18"></script>
   </body>
 </html>

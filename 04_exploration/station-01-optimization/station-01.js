@@ -70,7 +70,7 @@
       taskDecrypt: 'Ein Bote bringt diesen Streifen. Finde den Stab, auf dem er wieder lesbar wird.',
       stepWrite: 'Nachricht schreiben', stepKey: 'Schlüssel wählen: Stabdicke',
       keyValue: cols => `${cols} Buchstaben pro Umdrehung`,
-      stepUnwrap: 'Streifen abwickeln', wrapped: 'Aufgewickelt', unwrapped: 'Abgewickelt',
+      unwrapAction: 'Streifen abwickeln', rewrapAction: 'Wieder aufwickeln',
       stripFound: 'Gefundener Streifen',
       resultCipher: 'Geheimtext auf dem Streifen',
       resultCipherPending: 'Wickle den Streifen ab. Dann erscheint hier der Geheimtext.',
@@ -99,7 +99,7 @@
       taskDecrypt: 'A messenger brings this strip. Find the rod that makes it readable again.',
       stepWrite: 'Write a message', stepKey: 'Choose the key: rod thickness',
       keyValue: cols => `${cols} letters per turn`,
-      stepUnwrap: 'Unwrap the strip', wrapped: 'Wrapped', unwrapped: 'Unwrapped',
+      unwrapAction: 'Unwrap the strip', rewrapAction: 'Wrap it back',
       stripFound: 'Recovered strip',
       resultCipher: 'Ciphertext on the strip',
       resultCipherPending: 'Unwrap the strip to reveal the ciphertext here.',
@@ -199,6 +199,8 @@
 
     setData(cells, cols) {
       if (!this.scene) return;
+      // Unchanged content: keep the running wrap animation untouched.
+      if (this.strip && cols === this.cols && cells.join('') === this.cells.join('')) return;
       this.cells = cells;
       this.cols = cols;
       this.build();
@@ -248,8 +250,10 @@
     build() {
       const THREE = this.THREE;
       this.clearGroup();
+      // Keep the current wrap progress so a rebuild never skips the animation.
+      if (this.wrapAmount === undefined) this.wrapAmount = this.wrapped ? 1 : 0;
       // Flat strip shows upright letters; on the rod they read along the axis.
-      this.upright = !this.wrapped;
+      this.upright = this.wrapAmount === 0;
       this.rows = Math.max(1, Math.ceil(this.cells.length / this.cols));
       this.radius = Math.max(0.65, this.cols / (Math.PI * 2));
       this.bandWidth = Math.min(1.15, this.radius * 1.05);
@@ -277,7 +281,6 @@
       });
 
       this.buildStrip();
-      this.wrapAmount = this.wrapped ? 1 : 0;
       this.updateStrip();
     }
 
@@ -518,6 +521,51 @@
     $('btnClose').setAttribute('aria-label', content.action.closeLabel);
   }
 
+  // Orange scroll indicator from the original station. Scrolling itself stays
+  // native (touch, wheel); the thumb mirrors the position and can be dragged.
+  function initScrollIndicator(scroller, track, thumb) {
+    let dragOffset = 0;
+    function update() {
+      const trackHeight = track.clientHeight;
+      const scrollRange = scroller.scrollHeight - scroller.clientHeight;
+      track.hidden = scrollRange <= 1;
+      if (track.hidden) return;
+      const thumbHeight = Math.max(40, trackHeight * scroller.clientHeight / scroller.scrollHeight);
+      const thumbTop = scroller.scrollTop / scrollRange * Math.max(0, trackHeight - thumbHeight);
+      thumb.style.height = `${thumbHeight}px`;
+      thumb.style.transform = `translateY(${thumbTop}px)`;
+    }
+    function scrollToPointer(clientY) {
+      const thumbRange = track.clientHeight - thumb.offsetHeight;
+      const thumbTop = Math.max(0, Math.min(thumbRange, clientY - track.getBoundingClientRect().top - dragOffset));
+      scroller.scrollTop = thumbRange > 0 ? thumbTop / thumbRange * (scroller.scrollHeight - scroller.clientHeight) : 0;
+    }
+    scroller.addEventListener('scroll', update, { passive: true });
+    track.addEventListener('pointerdown', event => {
+      const thumbRect = thumb.getBoundingClientRect();
+      const onThumb = event.clientY >= thumbRect.top && event.clientY <= thumbRect.bottom;
+      dragOffset = onThumb ? event.clientY - thumbRect.top : thumb.offsetHeight / 2;
+      track.setPointerCapture(event.pointerId);
+      track.classList.add('is-dragging');
+      scrollToPointer(event.clientY);
+    });
+    track.addEventListener('pointermove', event => {
+      if (track.hasPointerCapture(event.pointerId)) scrollToPointer(event.clientY);
+    });
+    const stopDragging = () => track.classList.remove('is-dragging');
+    track.addEventListener('pointerup', stopDragging);
+    track.addEventListener('pointercancel', stopDragging);
+    // Size changes (overlay opens, language switch) re-measure the content.
+    const observer = new ResizeObserver(update);
+    observer.observe(scroller);
+    new MutationObserver(() => {
+      Array.from(scroller.children).forEach(child => observer.observe(child));
+      update();
+    }).observe(scroller, { childList: true });
+    Array.from(scroller.children).forEach(child => observer.observe(child));
+    update();
+    return update;
+  }
   function initReadingOverlay() {
     const overlay = $('readingOverlay');
     const background = $('scaler');
@@ -525,6 +573,7 @@
     const closeButton = $('btnCloseReading');
     const readingBody = $('readingBody');
     const panel = overlay.querySelector('.reading-panel');
+    const updateReadingScrollbar = initScrollIndicator(readingBody, $('readingScrollbar'), $('readingScrollbarThumb'));
     let closing = false;
 
     async function closeReading() {
@@ -551,6 +600,7 @@
       // Establish the off-screen start position before enabling the transition.
       void panel.offsetWidth;
       overlay.classList.add('is-open');
+      updateReadingScrollbar();
       closeButton.focus({ preventScroll: true });
     });
     closeButton.addEventListener('click', closeReading);
@@ -600,8 +650,10 @@
   function setWrapped(wrapped) {
     skytaleWrapped = wrapped;
     skytaleModel.setWrapped(wrapped);
-    $('btnWrapped').setAttribute('aria-pressed', String(wrapped));
-    $('btnUnwrapped').setAttribute('aria-pressed', String(!wrapped));
+    // One action button; its label always names the next step.
+    $('btnUnwrap').setAttribute('aria-pressed', String(!wrapped));
+    setText('unwrapLabel', wrapped ? currentCopy().unwrapAction : currentCopy().rewrapAction);
+    $('skyPanel').classList.toggle('is-wrapped', wrapped);
     skytaleRender();
   }
   function chunk(value, size) {
@@ -762,9 +814,6 @@
     $('btnKeyboardDone').textContent = copy.done;
     setText('stepWriteTitle', copy.stepWrite);
     setText('stepKeyTitle', copy.stepKey);
-    setText('stepWrapTitle', copy.stepUnwrap);
-    setText('wrappedLabel', copy.wrapped);
-    setText('unwrappedLabel', copy.unwrapped);
     setText('stripFoundTitle', copy.stripFound);
     setText('nextPuzzleLabel', copy.next);
     setText('takeawayLabel', copy.takeawayLabel);
@@ -788,8 +837,7 @@
   $('skyCols').addEventListener('input', skytaleRender);
   $('btnEncrypt').addEventListener('click', () => setSkytaleMode('encrypt'));
   $('btnDecrypt').addEventListener('click', () => setSkytaleMode('decrypt'));
-  $('btnWrapped').addEventListener('click', () => setWrapped(true));
-  $('btnUnwrapped').addEventListener('click', () => setWrapped(false));
+  $('btnUnwrap').addEventListener('click', () => setWrapped(!skytaleWrapped));
   $('btnKeyboardSpace').addEventListener('click', () => typeOnKeyboard(' '));
   $('btnKeyboardBackspace').addEventListener('click', () => {
     const input = $('skyIn');

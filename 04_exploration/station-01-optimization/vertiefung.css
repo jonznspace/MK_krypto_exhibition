@@ -62,10 +62,52 @@
   overscroll-behavior: contain;
 }
 .station-optimization .skytale-controls .tabs { margin-bottom: 0; flex-shrink: 0; }
+
+/* Mode tabs share the DE/EN switch style: flush buttons without a frame,
+   filled inactive buttons, orange text and underline on the active one. */
+.station-optimization .skytale-controls .tabs {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+/* Tabs as the panel's header: full width, flush with the top and side edges
+   (cancels the panel's 24 px padding); the content below stays in place.
+   Sticky, so the mode stays visible if the panel ever scrolls. */
+.station-optimization .skytale-controls > .tabs {
+  position: sticky;
+  /* Sticky offsets count from the padded edge; pin to the panel's outer edge. */
+  top: calc(var(--space-5) * -1);
+  z-index: 2;
+  width: auto;
+  margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) 0;
+}
+.station-optimization .skytale-controls .tab {
+  padding: 0 var(--space-4);
+  background: var(--layer-surface-elevated);
+  color: var(--immersive-body);
+  transition: background-color var(--duration-2) var(--ease-standard),
+              color var(--duration-2) var(--ease-standard);
+}
+.station-optimization .skytale-controls .tab:not(.active):hover {
+  background: var(--color-neutral-800);
+  color: var(--immersive-ink);
+}
+.station-optimization .skytale-controls .tab.active {
+  background: var(--state-selected-surface);
+  color: var(--immersive-accent);
+  border-bottom-color: var(--immersive-accent);
+}
+.station-optimization .skytale-controls .tab:focus-visible {
+  outline: var(--opt-focus) solid var(--immersive-focus);
+  outline-offset: var(--space-1);
+}
 .station-optimization #skyPanel[data-mode="encrypt"] [data-only="decrypt"],
 .station-optimization #skyPanel[data-mode="decrypt"] [data-only="encrypt"] { display: none; }
 
 .station-optimization .panel-task {
+  /* 24 px panel gap + 16 px: sets the task apart from tabs and steps. */
+  margin-block: var(--space-4);
   font: 400 var(--opt-body-m)/1.45 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
@@ -75,10 +117,15 @@
   flex-direction: column;
   gap: var(--space-3);
 }
+/* Clearer separation between the numbered steps: 24 px panel gap + 24 px. */
+.station-optimization .skytale-controls .step { margin-top: var(--space-5); }
+.station-optimization #skyPanel[data-mode="encrypt"] .panel-task + .step,
+.station-optimization #skyPanel[data-mode="decrypt"] .panel-task + .step + .step { margin-top: 0; }
 .station-optimization .step-title {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-1) var(--space-3);
   font: 600 var(--opt-body-m)/1.3 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
@@ -94,8 +141,10 @@
   border: var(--opt-line) solid var(--color-neutral-600);
 }
 .station-optimization .step-num[hidden] { display: none; }
+/* Value sits on its own line below the heading, aligned with the heading text. */
 .station-optimization .step-value {
-  margin-left: auto;
+  flex-basis: 100%;
+  padding-left: calc(28px + var(--space-3));
   font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
@@ -174,35 +223,31 @@
 }
 .station-optimization .key-tick.is-active { color: var(--immersive-accent); }
 
-/* Step 3: wrap state as a two-way switch; the label never changes meaning. */
-.station-optimization .segmented {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2);
-  padding: var(--space-1);
-  border: var(--opt-line) solid var(--layer-border);
-}
-.station-optimization .segmented__option {
-  min-height: var(--opt-control);
-  padding: var(--space-2);
-  font: 400 var(--opt-label)/1.4 var(--font-family-dm-mono), monospace;
-  letter-spacing: .04em;
+/* Encrypt action: one large button. Its label names the next step
+   (unwrap / wrap back); the stage headline shows the current state. */
+.station-optimization .unwrap-button {
+  width: 100%;
+  min-height: 72px;
+  padding: var(--space-3) var(--space-5);
+  font: 500 var(--opt-body-m)/1.2 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
-  color: var(--immersive-body);
-  background: transparent;
+  color: var(--immersive-bg);
+  background: var(--immersive-accent);
   border: 0;
-  border-bottom: var(--opt-focus) solid transparent;
+  transition: background-color var(--duration-2) var(--ease-standard);
 }
-.station-optimization .segmented__option[aria-pressed="true"] {
-  color: var(--immersive-accent);
-  background: var(--state-selected-surface);
-  border-bottom-color: var(--immersive-accent);
+.station-optimization .unwrap-button:active { background: var(--color-primary-500); }
+@media (hover: hover) {
+  .station-optimization .unwrap-button:hover { background: var(--color-primary-300); }
 }
-.station-optimization .segmented__option:active { background: var(--state-pressed-surface); }
-.station-optimization .segmented__option:focus-visible {
+.station-optimization .unwrap-button:focus-visible {
   outline: var(--opt-focus) solid var(--immersive-focus);
   outline-offset: var(--space-1);
 }
+
+/* The ciphertext only appears once the strip is unwrapped: nothing to read before. */
+.station-optimization #skyPanel[data-mode="encrypt"].is-wrapped .step--result { display: none; }
 
 /* ---------- Letters: strip look (light) and rod reading (dark) ---------- */
 .station-optimization .letter-group { display: inline-flex; }
@@ -319,3 +364,72 @@
   font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
+
+/* While typing: tighter step spacing and no pending hint, so the panel still
+   fits the screen with the keyboard open. */
+.station-optimization #skyPanel.is-typing .step { margin-top: var(--space-2); }
+.station-optimization #skyPanel.is-typing .panel-task + .step { margin-top: 0; }
+.station-optimization #skyPanel.is-typing .step--result:has(.is-pending) { display: none; }
+
+/* ---------- Screen headline as H2 (36 px; weight 800 like the start title) ---------- */
+.station-optimization {
+  --opt-h2: 36px;
+}
+.station-optimization #actionTitle {
+  font-size: var(--opt-h2);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  /* Panchang is wide: without extra word spacing the words run together. */
+  word-spacing: .3em;
+}
+
+/* Decrypt: keep clear distance between step 2 (reading + note / next button)
+   and the takeaway box, even when the panel is short: 24 px gap + 32 px. */
+.station-optimization #skyPanel[data-mode="decrypt"] .step--result { margin-bottom: var(--space-6); }
+
+/* ---------- Scroll indicator (as in the original station, in our blue) ----------
+   Reading view: native scrolling, native scrollbar hidden; an 8 px track with
+   a blue thumb mirrors the position and can be dragged (44 px hit area). */
+.station-optimization .reading-scroll {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+.station-optimization .reading-scroll .reading-body {
+  scrollbar-width: none;
+  scrollbar-gutter: auto;
+}
+.station-optimization .reading-scroll .reading-body::-webkit-scrollbar { display: none; }
+.station-optimization .scroll-indicator {
+  position: relative;
+  flex: 0 0 8px;
+  width: 8px;
+  margin: var(--space-6) var(--space-5) var(--space-6) 0;
+  background: color-mix(in srgb, var(--immersive-body) 18%, transparent);
+  touch-action: none;
+  cursor: pointer;
+}
+.station-optimization .scroll-indicator[hidden] { display: none; }
+.station-optimization .scroll-indicator::before {
+  content: '';
+  position: absolute;
+  inset: 0 -18px;
+}
+.station-optimization .scroll-indicator__thumb {
+  position: absolute;
+  inset: 0 0 auto;
+  min-height: 40px;
+  background: var(--immersive-focus);
+  pointer-events: none;
+}
+.station-optimization .scroll-indicator.is-dragging .scroll-indicator__thumb { background: var(--color-secondary-400); }
+
+/* Task panel (scrolls only on shorter screens): blue native scrollbar. */
+.station-optimization .skytale-controls {
+  scrollbar-width: thin;
+  scrollbar-color: var(--immersive-focus) transparent;
+}
+
+/* Start headline (H1): same extra word spacing as the screen headline (H2). */
+.station-optimization #startTitle { word-spacing: .3em; }
