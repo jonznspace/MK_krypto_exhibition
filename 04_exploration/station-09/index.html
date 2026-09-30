@@ -1,19 +1,21 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Station 7 · neue Entwicklungen</title>
+<title>Station 7 · Neue Entwicklungen</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
+<link rel="stylesheet" href="../../shared/css/station-offcanvas.css">
+<link rel="stylesheet" href="station-09.css?v=4">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
-<link rel="stylesheet" href="station-09.bundle.css?v=6">
 </head>
 <body>
 
 <div id="scaler">
-  <main id="frame" aria-label="Station 7 – neue Entwicklungen">
+  <main id="frame" aria-label="Station 7 – Neue Entwicklungen">
 
+    <!-- Nur Startscreen und Leseansicht, keine Aktion. -->
     <section class="screen screen-start" id="screenStart">
       <div class="station-marker" aria-label="Station 7 - Neue Entwicklungen">
         <span class="station-marker__station">Station 7</span>
@@ -22,44 +24,15 @@
 
       <div class="start-copy">
         <h1 class="title title--hero" id="startTitle"></h1>
-        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
-      </div>
-
-      <!-- CTA removed for this station -->
-    </section>
-
-    <section class="screen screen-action hidden" id="screenAction">
-      <header class="action-hdr">
-        <div class="action-hdr-copy">
-          <h1 class="title title--compact" id="actionTitle"></h1>
+        <div class="hero-summary">
+          <div class="hero-text" id="startIntro" aria-label="Einführungstext zur Station"></div>
+          <!-- Öffnet die geteilte Leseansicht (shared/js/station-offcanvas.js). -->
+          <button class="station-offcanvas-trigger" id="btnReadMore" type="button">Weiterlesen</button>
         </div>
-        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
-      </header>
-
-      <div class="tabs" role="tablist" aria-label="Stationsmodule">
-        <button class="tab active" id="tabModuleA" type="button" role="tab" aria-selected="true">Modul A</button>
-        <button class="tab" id="tabModuleB" type="button" role="tab" aria-selected="false">Modul B</button>
-        <button class="tab" id="tabModuleC" type="button" role="tab" aria-selected="false">Modul C</button>
       </div>
 
-      <div class="template-grid">
-        <section class="template-card template-card--wide module-panel" id="moduleA" role="tabpanel">
-          <span class="template-tag">Modul A</span>
-          <h2>Erkunden</h2>
-          <p id="actionDescription"></p>
-        </section>
-
-        <section class="template-card module-panel hidden" id="moduleB" role="tabpanel">
-          <span class="template-tag">Modul B</span>
-          <h2>Interaktion</h2>
-          <p>Platzhalter für das interaktive Element dieser Station.</p>
-        </section>
-
-        <section class="template-card module-panel hidden" id="moduleC" role="tabpanel">
-          <span class="template-tag" id="deepeningTag"></span>
-          <h2 id="deepeningTitle"></h2>
-          <div id="deepeningBody"></div>
-        </section>
+      <div class="start-visual" aria-hidden="true">
+        <img class="station-image" src="dither-output.png" alt="">
       </div>
     </section>
 
@@ -68,6 +41,7 @@
 
 <script src="../../shared/js/station-language-switch.js"></script>
 <script src="../../shared/js/station-idle-reload.js"></script>
-<script src="station-09.bundle.js?v=6" defer></script>
+<script src="../../shared/js/station-offcanvas.js"></script>
+<script src="station-09.js?v=3" defer></script>
 </body>
 </html>
