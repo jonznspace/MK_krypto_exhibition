@@ -632,7 +632,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .challenge-button:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
 /* Rückmeldung als Feld wie in Station 01/02: richtig grün mit Haken,
-   falsch rot mit Kreuz. Leer (vor dem Prüfen) nicht sichtbar.
+   falsch orange mit Kreuz (VISUAL_LANGUAGE C5: Fehler im Immersive-Kontext orange, nicht rot). Leer (vor dem Prüfen) nicht sichtbar.
    .template-card davor, damit die Absatz-Regel (.template-card p) nicht greift. */
 .template-card .challenge-feedback {
   position: relative;
@@ -667,8 +667,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 .challenge-feedback.is-wrong {
-  border-color: var(--color-feedback-error);
-  background: var(--color-feedback-error-bg);
+  border-color: var(--state-accent);
+  /* Kein eigener Fehler-Flächen-Token im Immersive-Kontext: dunkle Orange-Fläche. */
+  background: var(--state-pressed-surface);
 }
 .challenge-feedback.is-wrong::before,
 .challenge-feedback.is-wrong::after {
@@ -678,7 +679,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   right: calc(var(--space-5) - 5px);
   width: 20px;
   height: 3px;
-  background: var(--color-feedback-error);
+  background: var(--state-accent);
 }
 .challenge-feedback.is-wrong::before { transform: translateY(-50%) rotate(45deg); }
 .challenge-feedback.is-wrong::after { transform: translateY(-50%) rotate(-45deg); }

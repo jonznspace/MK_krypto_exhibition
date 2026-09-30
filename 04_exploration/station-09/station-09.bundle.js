@@ -126,8 +126,15 @@ document.addEventListener('DOMContentLoaded',()=>{
       intro: '<p>In the past, paper money was just as unfamiliar and suspicious to people as digital tokens are today. When the first banknotes appeared in Europe in the 17th century (introduced in Song dynasty China during the 11th century), scepticism ran high: How could a printed piece of paper have the same value as a silver or copper coin?</p><p>In the 21st century, a new level of abstraction has emerged: Digital assets (such as digital tokens, stablecoins, and crypto assets in general) are offered with the claim that they serve as a means of payment or a store of value.</p><p>The history of money demonstrates that new forms of payment have emerged time and time again. Four examples spanning three centuries illustrate the conditions under which new forms of money emerge, and under which they succeed or fail.</p>'
     }
   };
+  // Nur bei echtem Sprachwechsel neu aufbauen: Der Sprachschalter setzt data-language
+  // nach jeder DOM-Änderung erneut (gleicher Wert). Ohne diese Prüfung baut sich der
+  // Starttext in jedem Frame neu auf (Endlosschleife).
+  const currentLanguage = ()=> document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  let renderedLanguage = null;
   const renderStart = ()=>{
-    const text = START_TEXT[document.documentElement.dataset.language === 'en' ? 'en' : 'de'];
+    if (currentLanguage() === renderedLanguage) return;
+    renderedLanguage = currentLanguage();
+    const text = START_TEXT[renderedLanguage];
     set('startTitle', text.title);
     const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML=text.intro;
   };

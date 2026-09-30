@@ -34,10 +34,9 @@
       rotorLabels: ['Walze I', 'Walze II', 'Walze III'],
       rotorNote: 'Bei jedem Tastendruck dreht die rechte Walze weiter',
       outputRow: 'Anzeige des unverschlüsselten Ergebnisses',
-      outputBox: 'Ausgabe:',
+      outputBox: 'Ausgabe',
       inputRow: 'Eingabe der verschlüsselten Buchstaben',
-      inputBox: 'Eingabe:',
-      emptyInput: 'Auto',
+      inputBox: 'Eingabe',
       reset: 'Zurücksetzen',
       letter: 'Buchstabe'
     },
@@ -55,10 +54,9 @@
       rotorLabels: ['Rotor I', 'Rotor II', 'Rotor III'],
       rotorNote: 'The right-hand rotor advances with every keystroke',
       outputRow: 'Display of the unencrypted result',
-      outputBox: 'Output:',
+      outputBox: 'Output',
       inputRow: 'Input of encrypted letters',
-      inputBox: 'Input:',
-      emptyInput: 'Ready',
+      inputBox: 'Input',
       reset: 'Reset',
       letter: 'Letter'
     }
@@ -96,14 +94,14 @@
       rotorNote: 'Bei jedem Tastendruck dreht die rechte Walze weiter',
       output: {
         rowLabel: 'Anzeige des unverschlüsselten Ergebnisses',
-        boxLabel: 'Ausgabe:',
-        value: 'XLWS',
-        activeLetter: 'H'
+        boxLabel: 'Ausgabe',
+        value: '',
+        activeLetter: ''
       },
       input: {
         rowLabel: 'Eingabe der verschlüsselten Buchstaben',
-        boxLabel: 'Eingabe:',
-        value: 'Auto',
+        boxLabel: 'Eingabe',
+        value: '',
         activeLetter: ''
       },
       resetLabel: 'Zurücksetzen'
@@ -183,12 +181,14 @@
 
     KEYBOARD_ROWS.forEach((row, rowIndex) => {
       const rowNode = document.createElement('div');
-      rowNode.className = rowIndex === 1 ? 'key-row key-row--offset' : 'key-row';
+      rowNode.className = 'key-row';
 
       row.forEach(letter => {
-        const key = document.createElement('button');
+        // Nur die Tastatur ist bedienbar; das Lampenfeld ist reine Anzeige.
+        const isInput = variant === 'keyboard--input';
+        const key = document.createElement(isInput ? 'button' : 'span');
         key.className = 'key';
-        key.type = 'button';
+        if (isInput) key.type = 'button';
         key.textContent = letter;
 
         if (letter === activeLetter) {
@@ -275,7 +275,14 @@
     };
   }
 
-  function updateMachine(activeLetter, moved = []) {
+  // pressedLetter: Taste, deren Lampe gerade leuchtet (bleibt orange bis zum nächsten Druck).
+  // activeRotors: Walzen, die beim letzten Druck weitergedreht haben; ohne Druck Walze III.
+  function updateMachine(activeLetter, moved = [], pressedLetter = '') {
+    const activeRotors = moved.some(Boolean) ? moved : [false, false, true];
+    document.querySelectorAll('#rotorList .rotor').forEach((rotor, index) => {
+      rotor.classList.toggle('is-active', activeRotors[index]);
+    });
+
     const rotorBoxes = document.querySelectorAll('#rotorList .rotor-box');
     rotorBoxes.forEach((box, index) => {
       const nextValue = String(rotorPositions[index] + 1).padStart(2, '0');
@@ -290,7 +297,11 @@
     document.querySelectorAll('#lampKeyboard .key').forEach(key => {
       key.classList.toggle('key--lit', key.textContent === activeLetter);
     });
-    setText('inputValue', inputText || currentCopy().emptyInput);
+    document.querySelectorAll('#inputKeyboard .key').forEach(key => {
+      key.classList.toggle('key--pressed', key.textContent === pressedLetter);
+    });
+    // Vor dem ersten Tastendruck bleiben Eingabe und Ausgabe leer.
+    setText('inputValue', inputText);
     setText('outputValue', outputText || '');
 
     $('inputValue').scrollLeft = $('inputValue').scrollWidth;
@@ -308,7 +319,7 @@
     const { letter: encrypted, moved } = encrypt(letter);
     inputText += letter;
     outputText += encrypted;
-    updateMachine(encrypted, moved);
+    updateMachine(encrypted, moved, letter);
   }
 
   function resetMachine() {
@@ -322,13 +333,17 @@
     document.title = content.meta.title;
     frame.setAttribute('aria-label', content.meta.ariaLabel);
 
+    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
-    renderParagraphs('startIntro', content.start.intro);
+    // Start zeigt nur den ersten Absatz; der volle Text steht in der Leseansicht.
+    renderParagraphs('startIntro', content.start.intro.slice(0, 1));
     setText('tryLabel', content.start.ctaLabel);
 
     const startImage = $('startImage');
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
+    // Aktions-Screen nutzt dasselbe Hintergrundbild wie der Start.
+    $('actionImage').src = content.start.image.src;
 
     setTitle('actionTitle', content.action.title);
     setText('rotorRowLabel', content.action.rotorRowLabel);
@@ -354,8 +369,9 @@
     appliedLanguage = language;
     const copy = currentCopy();
 
+    setText('startEyebrow', language === 'en' ? copy.eyebrow : STATION_CONTENT.start.eyebrow);
     setTitle('startTitle', language === 'en' ? copy.title : STATION_CONTENT.start.title);
-    renderParagraphs('startIntro', language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro);
+    renderParagraphs('startIntro', (language === 'en' ? copy.startIntro : STATION_CONTENT.start.intro).slice(0, 1));
     setTitle('actionTitle', copy.title);
     $('btnClose').setAttribute('aria-label', copy.close);
     setText('rotorRowLabel', copy.rotorRow);
@@ -375,6 +391,20 @@
   }
 
   renderStation(STATION_CONTENT);
+  // Geteilte Leseansicht (shared/js/station-offcanvas.js): Absatz 1 als Lead,
+  // Absatz 2–4 ohne Zwischenüberschriften (der Ausstellungstext hat keine).
+  const readingContent = (title, intro) => ({
+    title,
+    lead: intro[0],
+    sections: [{ text: intro.slice(1) }]
+  });
+  StationOffcanvas.create({
+    trigger: $('btnReadMore'),
+    content: {
+      de: readingContent(STATION_CONTENT.start.title, STATION_CONTENT.start.intro),
+      en: readingContent(ACTION_COPY.en.title, ACTION_COPY.en.startIntro)
+    }
+  });
 
   $('resetButton').addEventListener('click', resetMachine);
 
@@ -384,6 +414,8 @@
   });
 
   $('btnClose').addEventListener('click', () => {
+    // Eingabe, Ausgabe und Walzen zurücksetzen, damit der nächste Besuch leer startet.
+    resetMachine();
     screenAction.classList.add('hidden');
     screenStart.classList.remove('hidden');
   });

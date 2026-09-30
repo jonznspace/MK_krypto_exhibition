@@ -273,5 +273,7 @@
     };
   }
 
-  window.StationOffcanvas = { create };
+  // scrollIndicator: the same blue indicator for other scroll areas on a station
+  // (e.g. Station 07). Markup and usage: shared/README.md.
+  window.StationOffcanvas = { create, scrollIndicator: initScrollIndicator };
 })();

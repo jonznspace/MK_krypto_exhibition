@@ -5,7 +5,8 @@
    All values come from the tokens; the few component measures live below
    as --station-offcanvas-* properties and can be overridden per station if needed. */
 .station-offcanvas,
-.station-offcanvas-trigger {
+.station-offcanvas-trigger,
+.station-offcanvas__scrollbar {
   /* 50 % der Viewport-Breite (1563 px Tablet: 782 px). */
   --station-offcanvas-width: 50vw;
   --station-offcanvas-scrim: 80%;

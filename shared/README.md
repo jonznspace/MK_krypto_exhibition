@@ -113,6 +113,20 @@ Ein einzelnes Objekt ohne `de`/`en` funktioniert auch. Dann gilt es für beide S
 | `id` | `stationOffcanvas` | Id des Layers (bei mehreren Layern pro Station setzen) |
 | `side` | `'left'` | Seite, von der das Panel einfährt: `'left'` oder `'right'` (z. B. Vertiefung in Station 02) |
 
+**Blauer Scroll-Indikator außerhalb der Leseansicht:**
+`StationOffcanvas.scrollIndicator(scroller, track, thumb)` hängt denselben Indikator an einen
+eigenen Scrollbereich (natives Scrollen, Daumen zieh- und antippbar, blendet sich aus, wenn
+nichts zu scrollen ist). Markup neben dem Scrollbereich:
+
+```html
+<div class="station-offcanvas__scrollbar" aria-hidden="true">
+  <div class="station-offcanvas__scrollbar-thumb"></div>
+</div>
+```
+
+Den nativen Scrollbalken des Scrollbereichs lokal ausblenden (`scrollbar-width: none`).
+Referenz: `04_exploration/station-07/`.
+
 ### Anpassen
 
 - **Für alle Stationen:** `css/station-offcanvas.css` bzw. `js/station-offcanvas.js` ändern.

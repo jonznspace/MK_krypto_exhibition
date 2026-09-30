@@ -332,19 +332,28 @@ html, body {
 /* ---------- Panel ---------- */
 .panel { display: flex; flex-direction: column; gap: 22px; min-width: 0; max-width: 760px; }
 
-.tabs { display: flex; gap: 8px; border: 1px solid var(--layer-border);
-  border-radius: var(--radius-md); padding: 6px; width: fit-content; }
+/* Tabs im Stil von Station 01 (wie der DE/EN-Schalter): bündige Flächen ohne
+   Rahmen, aktiver Tab mit oranger Schrift und Unterkante. */
+.tabs { display: flex; gap: 0; width: fit-content; }
 .tab {
-  min-height: 48px; padding: 8px 28px; cursor: pointer;
+  min-height: var(--size-control-lg); padding: 0 var(--space-4); cursor: pointer;
   font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
-  background: transparent; color: var(--immersive-muted); border: none;
-  border-radius: var(--radius-sm);
-  transition: color var(--duration-1) var(--ease-standard),
-              background var(--duration-1) var(--ease-standard);
+  background: var(--layer-surface-elevated); color: var(--immersive-body);
+  border: 0; border-bottom: 2px solid transparent;
+  transition: background-color var(--duration-2) var(--ease-standard),
+              color var(--duration-2) var(--ease-standard);
 }
-.tab.active { color: var(--immersive-bg); background: var(--immersive-accent); }
+.tab:not(.active):active { background: var(--color-neutral-800); color: var(--immersive-ink); }
+@media (hover: hover) {
+  .tab:not(.active):hover { background: var(--color-neutral-800); color: var(--immersive-ink); }
+}
+.tab.active {
+  background: var(--state-selected-surface);
+  color: var(--immersive-accent);
+  border-bottom-color: var(--immersive-accent);
+}
 
 .mode { display: flex; flex-direction: column; gap: 18px; }
 .mode.hidden { display: none; }

@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Station 4 · Die Enigma</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="station-04.css">
+<link rel="stylesheet" href="../../shared/css/station-offcanvas.css">
+<link rel="stylesheet" href="station-04.css?v=10">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
 </head>
@@ -28,8 +29,13 @@
         <span class="station-marker__topic">Kryptografie</span>
       </div>
       <div class="start-copy">
+        <span class="eyebrow" id="startEyebrow"></span>
         <h1 class="title title--hero" id="startTitle"></h1>
-        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Enigma"></div>
+        <div class="hero-summary">
+          <div class="hero-text" id="startIntro" aria-label="Einführungstext zur Enigma"></div>
+          <!-- Öffnet die geteilte Leseansicht (shared/js/station-offcanvas.js). -->
+          <button class="station-offcanvas-trigger" id="btnReadMore" type="button">Weiterlesen</button>
+        </div>
       </div>
 
       <div class="start-visual" aria-hidden="true">
@@ -45,37 +51,45 @@
     </section>
 
     <section class="screen screen-action hidden" id="screenAction">
+      <!-- Gleiches Hintergrundbild und gleiche Position wie auf dem Startscreen. -->
+      <div class="start-visual" aria-hidden="true">
+        <img src="" alt="" class="enigma-img" id="actionImage">
+      </div>
+
       <header class="action-hdr">
         <div class="action-hdr-copy">
           <h1 class="title title--compact" id="actionTitle"></h1>
         </div>
-        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
       </header>
 
+      <!-- Enigma nach Figma (enigma-2, 608:3949): Beschriftung | Maschine | Ausgabe/Eingabe,
+           drei Zeilen Walzen / Lampenfeld / Tastatur. Platzierung in station-04.css. -->
       <div class="action-grid">
-        <p class="row-label" id="rotorRowLabel" style="grid-row:1;"></p>
-        <div class="row-content rotors" id="rotorList" style="grid-row:1;"></div>
-        <p class="row-note" id="rotorNote" style="grid-row:1;"></p>
+        <p class="row-label" id="rotorRowLabel"></p>
+        <div class="row-content rotors" id="rotorList"></div>
+        <p class="row-note" id="rotorNote"></p>
 
-        <p class="row-label" id="outputRowLabel" style="grid-row:2;"></p>
-        <div class="row-content" id="lampKeyboard" style="grid-row:2;"></div>
-        <div class="io-box" style="grid-row:2;">
+        <p class="row-label" id="outputRowLabel"></p>
+        <div class="row-content" id="lampKeyboard"></div>
+        <div class="io-box io-box--output">
           <span class="io-lbl" id="outputBoxLabel"></span>
           <span class="io-val" id="outputValue"></span>
         </div>
-        <span class="connector connector--output" aria-hidden="true"></span>
 
-        <p class="row-label" id="inputRowLabel" style="grid-row:3;"></p>
-        <div class="row-content" id="inputKeyboard" style="grid-row:3;"></div>
-        <div class="row-side" style="grid-row:3;">
+        <p class="row-label" id="inputRowLabel"></p>
+        <div class="row-content" id="inputKeyboard"></div>
+        <div class="row-side">
           <div class="io-box">
             <span class="io-lbl" id="inputBoxLabel"></span>
             <span class="io-val" id="inputValue"></span>
           </div>
           <button class="reset-btn" id="resetButton" type="button"></button>
         </div>
-        <span class="connector connector--input" aria-hidden="true"></span>
-
       </div>
     </section>
 
@@ -84,6 +98,7 @@
 
 <script src="../../shared/js/station-language-switch.js"></script>
 <script src="../../shared/js/station-idle-reload.js"></script>
-<script src="station-04.js?v=4"></script>
+<script src="../../shared/js/station-offcanvas.js"></script>
+<script src="station-04.js?v=9"></script>
 </body>
 </html>

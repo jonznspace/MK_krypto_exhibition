@@ -262,6 +262,15 @@ document.addEventListener('DOMContentLoaded', () => {
     'Bitcoin-Mining-Geräte': 'Bitcoin mining devices'
   };
 
+  // Absätze stehen im Text als <br>; als eigene <p> bekommen sie echten Absatzabstand.
+  function appendParagraphs(target, html) {
+    html.split(/<br\s*\/?>/).map(text => text.trim()).filter(Boolean).forEach(text => {
+      const paragraph = document.createElement('p');
+      paragraph.innerHTML = text;
+      target.append(paragraph);
+    });
+  }
+
   function appendSections(container, sections, language = 'de') {
     container.innerHTML = '';
     let currentGroup = '';
@@ -299,8 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
       heading.textContent = language === 'en'
         ? bitcoinTitleTranslations[english.title] || english.title
         : english.title;
-      const paragraph = document.createElement('p');
-      paragraph.innerHTML = english.body;
       article.append(heading);
       if (english.storyTitle) {
         const storyHeading = document.createElement('h3');
@@ -308,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         storyHeading.textContent = english.storyTitle;
         article.append(storyHeading);
       }
-      article.append(paragraph);
+      appendParagraphs(article, english.body);
       const sectionDeepDives = Array.isArray(section.deepDives)
         ? section.deepDives
         : section.deepDives
@@ -321,11 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         summary.innerHTML = `<span>${detail.label || 'Vertiefung'}</span><strong>${detail.title}</strong>`;
         const body = document.createElement('div');
         body.className = 'inline-deepdive-body';
-        (detail.paragraphs || []).forEach(text => {
-          const detailParagraph = document.createElement('p');
-          detailParagraph.innerHTML = text;
-          body.appendChild(detailParagraph);
-        });
+        (detail.paragraphs || []).forEach(text => appendParagraphs(body, text));
         expansion.append(summary, body);
         article.appendChild(expansion);
       });
@@ -341,11 +344,26 @@ document.addEventListener('DOMContentLoaded', () => {
     appendSections($('devicesContent'), deviceSections, language);
   }
 
-  renderContent(document.documentElement.dataset.language === 'en' ? 'en' : 'de');
-  new MutationObserver(mutations => {
-    if (mutations.some(mutation => mutation.attributeName === 'data-language')) {
-      renderContent(document.documentElement.dataset.language === 'en' ? 'en' : 'de');
-    }
+  // Nur bei echtem Sprachwechsel neu aufbauen: Der Sprachschalter setzt data-language
+  // nach jeder DOM-Änderung erneut (gleicher Wert). Ohne diese Prüfung baut sich der
+  // Inhalt in jedem Frame neu auf, und aufgeklappte Vertiefungen schließen sofort wieder.
+  // Blauer Scroll-Indikator wie in der Leseansicht, je Tab ein eigener.
+  document.querySelectorAll('.module-panel').forEach(panel => {
+    const track = panel.querySelector('.station-offcanvas__scrollbar');
+    window.StationOffcanvas.scrollIndicator(
+      panel.querySelector('.module-scroller'),
+      track,
+      track.querySelector('.station-offcanvas__scrollbar-thumb')
+    );
+  });
+
+  const currentLanguage = () => document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  let renderedLanguage = currentLanguage();
+  renderContent(renderedLanguage);
+  new MutationObserver(() => {
+    if (currentLanguage() === renderedLanguage) return;
+    renderedLanguage = currentLanguage();
+    renderContent(renderedLanguage);
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
 });
 

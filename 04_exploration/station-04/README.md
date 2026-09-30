@@ -32,3 +32,90 @@ Fuer eine neue, aehnliche Station kann dieser Ordner dupliziert werden. Danach s
 - Bilddateien in `img/`
 
 Erst wenn das nicht reicht, sollte die Struktur erweitert werden.
+
+## Startscreen auf Tokens (2026-09-30)
+
+Maße, Abstände und Typografie des Startscreens entsprechen Station 01–03
+(Referenz: `../station-03/`). Alle Werte kommen aus `tokens.css`, es gibt keine
+lokale Typo-Skala. Der Aktions-Screen folgt als nächster Schritt und sieht bis dahin aus wie vorher.
+
+| Element | vorher | jetzt |
+| --- | --- | --- |
+| Außenabstand | `clamp(40–88 / 24–72px)` | `--space-6` (32) |
+| Stations-Tag | 15 px, 32 × 14 px, `#ed8003` | `--font-size-caption-m`, `--space-6` hoch, `--space-3` innen, `--immersive-accent` |
+| DE/EN | 13 px, 32 px hoch | `--font-size-label`, 52 × 52, orange Schrift + Unterkante auf `--state-selected-surface` |
+| Eyebrow | im Inhalt vorhanden, nicht angezeigt | „Maschinen verschlüsseln“, `--font-size-label` |
+| Titel (H1) | 108/88/68 px je Länge | `--font-size-h1`, Zeilenhöhe 1,1, Laufweite −0,035em, Wortabstand 0,3em |
+| Einführung | 4 Absätze, 24 px, scrollbar | nur Absatz 1, `--font-size-body-l`, weiß, 820 px breit |
+| Weiterlesen | – | geteilte Leseansicht `shared/…/station-offcanvas.*`, `--space-8` Abstand |
+| Ausprobieren | Panchang 22 px, grau + blaues Icon, 68 px | durchgehend blau, DM Mono `--font-size-label`, 52 px, Icon 24 px |
+
+- **Leseansicht:** Absatz 1 als Lead, Absätze 2–4 als Fließtext. Keine Zwischenüberschriften und
+  keine „Das Wichtigste“-Box, weil der Ausstellungstext (DT/ENG final) keine vorsieht.
+- **Bildposition** (Enigma rechts, `.start-visual`) bleibt stationsspezifisch, auch die Breite `65vw` bis 1600 px.
+- Start-Regeln in den Media-Queries (Titelgrößen, Umbau ≤ 1100 / ≤ 760 px) entfernt, wie in Station 03.
+  Die Regeln für den Aktions-Screen bleiben; `.title--compact` behält vorerst seine alten Werte.
+- `html`, `body`, `#scaler`: `#000` → `--immersive-bg`.
+- Dateien: `index.html` (Eyebrow, `hero-summary`, Trigger, Off-Canvas eingebunden,
+  `station-04.css?v=5`, `station-04.js?v=5`), `station-04.css` (Block „Startbildschirm“),
+  `station-04.js` (Eyebrow, Kurztext, `StationOffcanvas.create`).
+
+## Aktions-Screen: Enigma nach Figma (2026-09-30)
+
+Der interaktive Teil folgt dem Figma-Screen „enigma-2“
+(`xdc82fp188ssSV45Y7LKhz`, Node `608:3949`), mit Werten aus `tokens.css`.
+Headline, Schließen-Button und Hintergrundbild sind unverändert.
+
+| Element | vorher | jetzt (Figma, Tokens) |
+| --- | --- | --- |
+| Raster | feste Spalten, Inline-`grid-row`, Linien per Gradient (bei 1563 × 864 aus) | `grid-template-areas` Beschriftung / Maschine / Seite, Bühne vertikal mittig |
+| Trennlinien | 2 px `--immersive-body`, teils ausgeblendet | 1 px `--immersive-ink` links jeder Zeile + vor dem Walzen-Hinweis |
+| Orange L-Verbinder | vorhanden | entfernt (nicht in Figma) |
+| Zeilenbeschriftung, Hinweis | 14 px, `--immersive-muted` | `--font-size-caption-m`, .06em, `--immersive-ink` |
+| Walzen | 144 × 176, Wert 34 px | Kontur `--color-neutral-700`, Wert `--font-size-caption-l`; **aktive Walze** Kontur `--color-neutral-400` |
+| Tasten | 62 px, 20 px, Versatz Reihe 2 | Ø 64 (`--space-8`), Abstand `--space-4`, `--font-size-caption-l`, Reihen zentriert |
+| Lampenfeld | `--immersive-muted` | aus `--color-neutral-800`/`-600`, an `--color-primary-200`/`-900`; keine Buttons mehr (`span`) |
+| Tastatur | gedrückt nie sichtbar | `--color-primary-50`/`-800`, gedrückt `--color-primary-600`/`-900`, bleibt bis zum nächsten Druck |
+| Ausgabe/Eingabe | Label links mit Doppelpunkt, weiße Kontur | Label oben (`--font-size-caption-s`, `--color-primary-200`), Wert `--font-size-label`, Kontur `--color-primary-200`, 272 breit |
+| Zurücksetzen | 64 hoch | `--size-control-lg`, `--color-neutral-800`, Label-Textstyle |
+
+- **Aktive Walze:** hervorgehoben sind die Walzen, die beim letzten Tastendruck weitergedreht
+  haben; vor dem ersten Druck Walze III (wie in Figma).
+- **Tablet quer (≤ 900 px hoch):** Maschine auf ca. 80 %: Tasten `--size-control-lg` (52),
+  Abstand `--space-3`, Zeilen `--space-6`, Walzenfenster 92 px, Seite 240 px.
+- **Hochformat (≤ 1100 px breit):** eine Spalte, Beschriftung über der Zeile, keine Trennlinien.
+- Bauteilmaße ohne Token (Walzenfenster, Seitenbreite) als `--enigma-*` oben im Block.
+- Vertiefung: gibt es für diese Station nicht.
+- Dateien: `index.html` (Raster ohne Inline-Styles und Verbinder, `?v=6`), `station-04.css`
+  (Block „Enigma“ + Media-Queries), `station-04.js` (Labels ohne Doppelpunkt, aktive Walze,
+  gedrückte Taste, Lampen als `span`).
+
+## Schließen-Button wie Station 01–03 (2026-09-30)
+
+- 52 × 52 (`--size-control-lg`) statt 80 × 80, Fläche `--layer-surface-elevated`, Kontur
+  1 px `--layer-border`, Tabler-X 24 px (`--size-icon-lg`) statt „✕“. Hover (nur echte Zeiger)
+  und gedrückt: Kontur `--color-neutral-500`. Die Sonderregel 60 × 60 unter 760 px ist entfernt.
+- Vertikal mittig zur Headline (`.action-hdr` mit `align-items: center`). Die Headline selbst ist unverändert.
+- `index.html`: SVG im Button, `station-04.css?v=7`.
+
+## Enigma-Screen: Hintergrundbild wie Startscreen (2026-09-30)
+
+- Der Aktions-Screen zeigt dasselbe Bild wie der Start (`dither-output.png`) in derselben
+  Position und Deckkraft: gleiche Markup-Klasse `.start-visual`, Bildquelle aus `STATION_CONTENT.start.image`.
+  Gemessen bei 1563 × 864: beide Bilder bei x 647, y −156, 1016 × 1020.
+- Das alte `::before` mit `img/eknigma01.png` ist entfernt (Datei bleibt im Ordner, wird nicht mehr genutzt).
+- Deckkraft auf dem Enigma-Screen `.08` statt `.28` (Start bleibt `.28`), damit das Bild nicht ablenkt.
+- `index.html`: `#actionImage`, `station-04.css?v=10`, `station-04.js?v=7`.
+
+## Schließen setzt die Maschine zurück (2026-09-30)
+
+- × auf dem Enigma-Screen ruft `resetMachine()` auf: Eingabe und Ausgabe leer, Walzen auf
+  Startstellung, keine Lampe/Taste aktiv. Der nächste Besuch sieht nichts vom vorherigen.
+- `index.html`: `station-04.js?v=8`.
+
+## Eingabe startet leer (2026-09-30)
+
+- Das Platzhalterwort „Auto“ / „Ready“ im Eingabefeld ist entfernt (`emptyInput`), ebenso die
+  Demo-Werte „XLWS“ / Lampe „H“ im Inhaltsobjekt. Vor dem ersten Tastendruck sind Eingabe und
+  Ausgabe leer; die Felder behalten ihre Höhe (`.io-val` mit `min-height`).
+- `index.html`: `station-04.js?v=9`.
