@@ -90,13 +90,6 @@ window.KW_CONTENT = {
         }
       }
     },
-    "lede": {
-      "draft": true,
-      "text": {
-        "de": "Eine Ausstellung über die Geschichte der Verschlüsselung und die Geschichte des Geldes – und darüber, wo beide zusammenkommen.",
-        "en": "An exhibition about the history of encryption and the history of money – and where the two meet."
-      }
-    },
     "languages": [
       "de",
       "en"
@@ -775,7 +768,7 @@ window.KW_CONTENT = {
       "titleDraft": true,
       "parts": [
         {
-          "kicker": "01",
+          "kicker": "5.1",
           "title": {
             "de": "Ein Kontobuch, das allen gehört",
             "en": "A Ledger That Belongs to Everyone"
@@ -820,7 +813,7 @@ window.KW_CONTENT = {
           ]
         },
         {
-          "kicker": "02",
+          "kicker": "5.2",
           "title": {
             "de": "Die digitale Unterschrift: Mein Schlüssel, dein Schloss",
             "en": "The Digital Signature: My Key, Your Lock"
@@ -869,7 +862,7 @@ window.KW_CONTENT = {
           ]
         },
         {
-          "kicker": "03",
+          "kicker": "5.3",
           "title": {
             "de": "Die Einigung durch Rechenarbeit – Mining: Wettbewerb um den nächsten Block",
             "en": "Reaching Agreement Through Computational Work – Mining: Competing to Add the Next Block"
@@ -893,7 +886,7 @@ window.KW_CONTENT = {
           "deepDives": [
             {
               "tag": {
-                "de": "Vertiefung 01",
+                "de": "Vertiefung 1",
                 "en": "A Closer Look 1"
               },
               "title": {
@@ -913,7 +906,7 @@ window.KW_CONTENT = {
             },
             {
               "tag": {
-                "de": "Vertiefung 02",
+                "de": "Vertiefung 2",
                 "en": "A Closer Look 2"
               },
               "title": {
@@ -931,7 +924,7 @@ window.KW_CONTENT = {
             },
             {
               "tag": {
-                "de": "Vertiefung 03",
+                "de": "Vertiefung 3",
                 "en": "A Closer Look 3"
               },
               "title": {
@@ -952,7 +945,7 @@ window.KW_CONTENT = {
           ]
         },
         {
-          "kicker": "04",
+          "kicker": "5.4",
           "title": {
             "de": "Die Kette wächst: Sicherheit durch Anhäufung",
             "en": "The Chain Grows: Security Through Accumulated Work"
@@ -1065,8 +1058,8 @@ window.KW_CONTENT = {
       "id": "mining-geraete",
       "station": "bitcoin",
       "eyebrow": {
-        "de": "05",
-        "en": "05"
+        "de": "5.5",
+        "en": "5.5"
       },
       "title": {
         "de": "Bitcoin-Mining-Geräte",
@@ -1129,7 +1122,8 @@ window.KW_CONTENT = {
                   "For the first time, this device brings together four ASIC chips on a single circuit board, performing around 2.4 trillion calculations per second. Until then, open-source devices had each used just one chip. Operating multiple chips involves more than placing them side by side: they need a coordinated power supply, cooling, and control signals in the correct sequence. Instead of five volts, this device uses twelve volts from a dedicated power supply. A small controller chip on the board manages the device, while a connected computer still supplies the computational tasks. Only later devices became independent of an external computer.",
                   "Simultaneously, the Bitaxe Ultra Hex 301 project pursued a similar idea. Two answers to the same question were thus developed within the same open-source community. This circuit board later evolved into the NerdQAxe, one of the most widely built open-source miners."
                 ]
-              }
+              },
+              "nr": "I"
             },
             {
               "kicker": "02",
@@ -1169,7 +1163,8 @@ window.KW_CONTENT = {
                   "All the other open-source miners in this exhibition reveal what they are: bare circuit boards, visible heat sinks, and blinking indicators. This device, however, conceals its technology. It has no display and is configured through a web browser or an app. The BitForge Nano is designed to run continuously in a home without drawing attention to itself. This marked a turning point: the open-source mining community began working on the visual design of its devices as well as their circuitry. A special version of this model, the Ghost Edition, with an aluminum enclosure and a smoked-glass window, received a silver award at the 2026 London Design Awards. It was designed by Duncan Coombe, with contributions from “WantClue” and “kliA90.”",
                   "The device is open source: its circuit diagrams and firmware are available under a license that requires any redistribution to be accompanied by a re-disclosure."
                 ]
-              }
+              },
+              "nr": "IIa & IIb"
             },
             {
               "kicker": "03",
@@ -1210,7 +1205,8 @@ window.KW_CONTENT = {
                   "In 2013, a comparable chip delivered one-twentieth of this performance while consuming the same amount of electricity. This race for innovation within the chip industry, together with the commercialization of the Bitcoin system, moved Bitcoin mining from living rooms into industrial facilities.",
                   "The technical architecture of this chip, made by Bitmain, is undisclosed proprietary information. Anyone wishing to use it to build an open-source miner first had to work out how to communicate with it."
                 ]
-              }
+              },
+              "nr": "III"
             },
             {
               "kicker": "04",
@@ -1248,7 +1244,8 @@ window.KW_CONTENT = {
                   "The NerdNOS consists of two circuit boards plugged into one another. The board with the screen is a NerdMiner — an educational device with a colorful display. It participates in mining calculations but does so at such a slow rate that it serves purely as a demonstration.",
                   "The second board carries an actual ASIC chip. Simply plugging it in transforms the educational device into a miner that makes efficient use of existing hardware, performs calculations around a million times faster, and needs only a Wi-Fi connection. The chip’s power consumption is deliberately limited to less than eight watts, allowing an ordinary USB charger to supply power. This recalls the early days of ASIC mining more than ten years ago, when small mining devices could simply be plugged into a USB port."
                 ]
-              }
+              },
+              "nr": "IV"
             },
             {
               "kicker": "05",
@@ -1287,7 +1284,8 @@ window.KW_CONTENT = {
                   "When Bitcoin launched in 2009, any ordinary computer could mine it. Within a few years, these computers were superseded by specialized chips known as ASICs, which could perform only one type of computational task. The Red Fury belongs to the first generation of ASIC mining devices available for purchase by private individuals.",
                   "This USB stick simply plugs into a USB port and consumes just 2.5 watts, which is less than a bedside lamp. However, it could not perform its calculations independently: a connected computer had to supply tasks. Running groups of these USB sticks generated heat, making additional cooling necessary. In 2013, this stick cost around US$100 and was briefly one of the fastest devices of its kind. By comparison, the BM1370 ASIC chip, made twelve years later, performs calculations around 1,200 times faster. The Red Fury is a closed-source product: both the chip and the circuit board design are proprietary. This prompted the open-source mining community to develop its first alternatives."
                 ]
-              }
+              },
+              "nr": "V"
             }
           ]
         },
@@ -1337,7 +1335,8 @@ window.KW_CONTENT = {
                 "en": [
                   "Inside the BitChimney is a single computing board, known as a hashboard, taken from an industrial Bitcoin miner, the S19j Pro. In the original miner, three of these boards sit side by side in one enclosure; industrial mining facilities house thousands of such machines. When these devices are retired, their individual components are often sold, giving them a second life in devices such as the BitChimney. Almost all the electricity consumed by the miner is converted into heat, which flows out through the “chimney” at the top. A conventional fan heater consuming the same 650 watts would also have heated the room, just not mining bitcoin at the same time. Whether this is an ideal use of electricity or a clever justification for consuming energy remains a subject of debate."
                 ]
-              }
+              },
+              "nr": null
             },
             {
               "kicker": "07",
@@ -1382,7 +1381,8 @@ window.KW_CONTENT = {
                   "A feature that had long been standard in industrial machines thus appeared for the first time in an openly documented design. Independently, another member of the developer community was pursuing the same concept as QAxe.",
                   "In terms of computing power, these devices stand little chance against the industrial mining facilities that now account for most Bitcoin mining. There are exceptions, however: as recently as July 2026, a Bitaxe added block 957,382 to the Bitcoin blockchain."
                 ]
-              }
+              },
+              "nr": null
             },
             {
               "kicker": "08",
@@ -1425,7 +1425,8 @@ window.KW_CONTENT = {
                   "Several of the smaller devices presented in this exhibition use the same types of specialized chips found in industrial miners. These chips can be recovered by desoldering them from retired machines. Building open-source devices around proprietary chips presented a challenge: where the necessary technical documentation was unavailable, developers had to reverse-engineer the way the chips were controlled. Even basic details, such as the number of chips on each board, could require direct inspection.",
                   "When the Antminer S19 was released in 2020, it was among the most efficient air-cooled devices of its kind. Just six years later, a chip of a newer generation may deliver several times the computing performance of an earlier chip while consuming substantially less electricity for the same amount of computation. Improvements of this kind can make older machines uneconomical to operate. Their components may then find their way into home workshops, where they can be reused in devices such as some of the smaller miners presented here."
                 ]
-              }
+              },
+              "nr": null
             }
           ]
         }
