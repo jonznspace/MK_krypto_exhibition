@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const englishDeepDives = [
     {
-      kicker: 'A Closer Look 1',
+      kicker: 'Deep dive 1',
       title: 'Key Turning Points on the Path to Modern Fiat Money',
       type: 'timeline',
       items: [
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      kicker: 'A Closer Look 2',
+      kicker: 'Deep dive 2',
       title: 'A Chronological Overview of Forms of Money',
       type: 'forms',
       intro: ['Each form of money can be described in two dimensions: the form it takes and what backs its value.'],
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      kicker: 'A Closer Look 3',
+      kicker: 'Deep dive 3',
       title: 'What Does Not Count as a Form of Money?',
       type: 'text',
       paragraphs: [
@@ -171,8 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.title = 'Station 6 · Was ist Geld?';
   $('frame').setAttribute('aria-label', 'Station 6 – Was ist Geld?');
   set('startTitle', 'Was ist Geld?');
-  set('tryLabel', 'Mehr erfahren');
-  set('actionTitle', 'Vertiefung');
 
   function renderIntro(language) {
     set('startTitle', language === 'en' ? 'What Is Money?' : 'Was ist Geld?');
@@ -283,6 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (language === appliedLanguage) return;
     appliedLanguage = language;
     renderIntro(language);
+    set('tryLabel', 'Mehr erfahren');
+    set('actionTitle', language === 'en' ? 'Deep dive' : 'Vertiefung');
     renderDeepDives(language);
   }
 

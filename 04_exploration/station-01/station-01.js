@@ -1,17 +1,21 @@
-﻿'use strict';
+'use strict';
 (function () {
   const STATION_CONTENT = {
     de: {
       meta: { title: 'Station 1 · Kryptografie', ariaLabel: 'Station 1 – Kryptografie' },
       start: {
         eyebrow: 'Geheime Botschaften in der Antike',
-        title: 'Verschlüsseln & versiegeln',
-        intro: [
-          'Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Diese Frage stellten sich Menschen wohl schon immer. Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel aus Bienenwachs zu „versiegeln“.  Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
-          'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.',
-          'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.',
-          'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitale Bezahlung und digitales Geld aufbauen wird.'
-        ],
+        title: 'Verschlüsseln & Versiegeln',
+        summary: 'Wie bleibt eine Nachricht geheim? Schon in der Antike schützten Menschen ihre Botschaften mit Siegeln und verschlüsselten Zeichen. Entdecke die Skytale: Ein Streifen wird erst auf dem passenden Stab lesbar.',
+        // Off-canvas content (shared/js/station-offcanvas.js): lead, sections, highlight.
+        reading: {
+          lead: 'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“. Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
+          sections: [
+            { title: 'Skytale', text: 'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.' },
+            { title: 'Caesar-Chiffre', text: 'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.' }
+          ],
+          highlight: { label: 'Das Wichtigste', text: 'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.' }
+        },
         image: { src: 'dither-output.png', alt: '' },
         ctaLabel: 'Ausprobieren'
       },
@@ -22,7 +26,7 @@
         skytaleDefaultCols: 5,
         skytalePuzzles: [
           { plain: 'BOTE KOMMT IN DREI TAGEN', cols: 5, startCols: 4 },
-          { plain: 'DER SCHLUESSEL LIEGT IM HAFEN', cols: 5, startCols: 3 }
+          { plain: 'DER SCHLÜSSEL LIEGT IM HAFEN', cols: 5, startCols: 3 }
         ],
         closeLabel: 'Zur Startansicht'
       }
@@ -30,14 +34,18 @@
     en: {
       meta: { title: 'Station 1 · Cryptography', ariaLabel: 'Station 1 – Cryptography' },
       start: {
-        eyebrow: 'Geheime Botschaften in der Antike',
-        title: 'Encryption and Seals',
-        intro: [
-          'How can messages be sent so that others cannot understand them? People have probably always asked this question. In antiquity, one solution was to secure a message with a beeswax seal. A broken seal indicated that the message had been read. Other solutions were also developed: texts, or the letters within them, were altered so that only the intended recipients could read them.',
-          'The scytale is a documented example of this approach from ancient Sparta. A strip of leather was wound around a wooden rod in a spiral, and the message was written across the turns of the strip. Once unwound, the message became unreadable. Only by wrapping the strip around a rod of the same diameter could the letters be arranged in the correct order again.',
-          'The so-called Caesar cipher, whose invention is attributed to Julius Caesar, works even more simply: each letter is shifted to a fixed number of places in the alphabet. For example, A becomes D, and B becomes E. Anyone who knows the “key”, which means the number of places to shift, can decode the message.',
-          'Both methods are easy to crack. Yet they demonstrate a principle that still applies today: information can be transformed so that only those who know how to decode it can understand it. This principle is called cryptography. It is the first of three foundations on which digital payments and digital money would later be built.'
-        ],
+        eyebrow: 'Secret messages in antiquity',
+        title: 'Encrypting & sealing',
+        summary: 'How do you keep a message secret? Even in antiquity, people protected their messages with seals and encrypted letters. Discover the skytale: a strip becomes readable only when wrapped around the right rod.',
+        // Off-canvas content (shared/js/station-offcanvas.js): lead, sections, highlight.
+        reading: {
+          lead: 'People have probably always faced a central problem: how can messages be sent so that others cannot understand them? One solution, used since antiquity, was to seal a message, for example with beeswax. A broken seal indicated that the message had been read. Other solutions were developed too: texts, or their letters, were changed so that only the intended recipients could read them.',
+          sections: [
+            { title: 'Skytale', text: 'In ancient Sparta, the skytale was used for this purpose. A strip of leather was wound around a wooden rod, and the message was written across the coils. Once removed, the strip became unreadable. Only a rod of the same diameter would put the letters back in the right order.' },
+            { title: 'Caesar cipher', text: 'The Caesar cipher, whose invention is attributed to Julius Caesar, works even more simply: each letter is shifted a fixed number of places in the alphabet. A becomes D, for example, and B becomes E. Anyone who knows the key – the number of places to shift – can decode the message.' }
+          ],
+          highlight: { label: 'Key takeaway', text: 'Both methods are easy to crack. But they demonstrate a principle that still applies today: information can be transformed so that only those in the know can understand it. This principle is called cryptography. It is the first of three foundations on which digital money would later be built.' }
+        },
         image: { src: 'dither-output.png', alt: '' },
         ctaLabel: 'Try it out'
       },
@@ -58,35 +66,72 @@
   const $ = id => document.getElementById(id);
   const screenStart = $('screenStart');
   const screenAction = $('screenAction');
+  // Vertiefung v2: Texte des geführten Ablaufs (siehe CHANGELOG.md).
   const UI_COPY = {
     de: {
-      topic: 'Kryptografie', templateTag: 'Zum Ausprobieren', encrypt: 'Verschlüsseln', decrypt: 'Entschlüsseln',
-      readableMessage: 'Lesbare Nachricht', recoveredStrip: 'Gefundener Streifen', diameter: 'Stabdurchmesser (Wicklungen): ',
-      unwrap: 'Streifen abwickeln', wrap: 'Um den Stab wickeln', readingDirection: 'Leserichtung',
-      outputEncrypt: 'Abgewickelter Geheimtext', outputDecrypt: 'Entschlüsselte Nachricht', next: 'Nächste Skytale',
-      drag: 'Ziehen zum Drehen', wrapped: 'Gewickelt · lesbar längs des Stabs',
-      unwrapped: 'Abgewickelt · Buchstabenfolge auf dem Streifen', notReadable: 'NOCH NICHT LESBAR',
+      topic: 'Kryptografie', encrypt: 'Verschlüsseln', decrypt: 'Entschlüsseln',
+      taskEncrypt: 'Schreibe eine geheime Nachricht. Wickle den Streifen danach vom Stab ab.',
+      taskDecrypt: 'Ein Bote bringt diesen Streifen. Finde den Stab, auf dem er wieder lesbar wird.',
+      stepWrite: 'Nachricht schreiben', stepKey: 'Schlüssel wählen: Stabdicke',
+      keyValue: cols => `${cols} Buchstaben pro Umdrehung`,
+      unwrapAction: 'Streifen abwickeln', rewrapAction: 'Wieder aufwickeln',
+      stripFound: 'Gefundener Streifen',
+      resultCipher: 'Geheimtext auf dem Streifen',
+      resultCipherPending: 'Wickle den Streifen ab. Dann erscheint hier der Geheimtext.',
+      resultCipherNote: 'Jede Gruppe ist eine Umdrehung um den Stab.',
+      resultEmpty: 'Schreibe zuerst eine Nachricht.',
+      stepRead: 'Längs des Stabs gelesen',
+      readWrong: 'Ergibt noch keinen Sinn. Probiere eine andere Stabdicke.',
+      readSolved: 'Gelöst! Mit dem richtigen Schlüssel ist die Nachricht lesbar.',
+      next: 'Nächster Streifen',
+      takeawayLabel: 'Das Wichtigste',
+      takeaway: 'Der Schlüssel ist die Stabdicke. Nur wer sie kennt, kann die Nachricht lesen.',
+      stageEncWrapped: 'Aufgewickelt: längs des Stabs lesbar',
+      stageEncUnwrapped: 'Abgewickelt: nicht mehr lesbar',
+      stageDecWrong: 'Falscher Stab: die Zeilen ergeben keinen Sinn',
+      stageDecSolved: 'Passender Stab: die Nachricht ist lesbar',
+      legendWrapped: 'Orange: eine Zeile, längs des Stabs gelesen',
+      legendUnwrapped: 'Orange: dieselbe Zeile, jetzt über den Streifen verteilt',
+      drag: 'Ziehen zum Drehen',
       space: 'Leerzeichen', delete: 'Löschen', done: 'Fertig', keyboard: 'Bildschirmtastatur', mode: 'Arbeitsmodus',
+      letter: letter => `Buchstabe ${letter}`,
       marker: 'Station 1 - Kryptografie', intro: 'Einführungstext zur Station', stage: 'Interaktive Skytale',
       model: 'Drehbares Modell einer Skytale'
     },
     en: {
-      topic: 'Cryptography', templateTag: 'Try it out', encrypt: 'Encrypt', decrypt: 'Decrypt',
-      readableMessage: 'Readable message', recoveredStrip: 'Recovered strip', diameter: 'Rod diameter (turns): ',
-      unwrap: 'Unwrap strip', wrap: 'Wrap around rod', readingDirection: 'Reading direction',
-      outputEncrypt: 'Unwrapped ciphertext', outputDecrypt: 'Decoded message', next: 'Next skytale',
-      drag: 'Drag to rotate', wrapped: 'Wrapped · readable along the rod',
-      unwrapped: 'Unwrapped · letter sequence on the strip', notReadable: 'NOT READABLE YET',
+      topic: 'Cryptography', encrypt: 'Encrypt', decrypt: 'Decrypt',
+      taskEncrypt: 'Write a secret message. Then unwrap the strip from the rod.',
+      taskDecrypt: 'A messenger brings this strip. Find the rod that makes it readable again.',
+      stepWrite: 'Write a message', stepKey: 'Choose the key: rod thickness',
+      keyValue: cols => `${cols} letters per turn`,
+      unwrapAction: 'Unwrap the strip', rewrapAction: 'Wrap it back',
+      stripFound: 'Recovered strip',
+      resultCipher: 'Ciphertext on the strip',
+      resultCipherPending: 'Unwrap the strip to reveal the ciphertext here.',
+      resultCipherNote: 'Each group is one turn around the rod.',
+      resultEmpty: 'Write a message first.',
+      stepRead: 'Read along the rod',
+      readWrong: 'Not making sense yet. Try another rod thickness.',
+      readSolved: 'Solved! With the right key the message is readable.',
+      next: 'Next strip',
+      takeawayLabel: 'Key takeaway',
+      takeaway: 'The key is the thickness of the rod. Only those who know it can read the message.',
+      stageEncWrapped: 'Wrapped: readable along the rod',
+      stageEncUnwrapped: 'Unwrapped: no longer readable',
+      stageDecWrong: 'Wrong rod: the lines make no sense',
+      stageDecSolved: 'Matching rod: the message is readable',
+      legendWrapped: 'Orange: one line, read along the rod',
+      legendUnwrapped: 'Orange: the same line, now spread across the strip',
+      drag: 'Drag to rotate',
       space: 'Space', delete: 'Delete', done: 'Done', keyboard: 'On-screen keyboard', mode: 'Mode',
+      letter: letter => `Letter ${letter}`,
       marker: 'Station 1 - Cryptography', intro: 'Introduction to the station', stage: 'Interactive skytale',
       model: 'Rotatable model of a skytale'
     }
   };
   let skytaleMode = 'encrypt';
   let skytaleWrapped = true;
-  let showReadDirection = true;
   let puzzleIndex = 0;
-  let updateHeroScrollbar = () => {};
   let appliedLanguage = null;
 
   function currentLanguage() {
@@ -160,6 +205,8 @@
 
     setData(cells, cols) {
       if (!this.scene) return;
+      // Unchanged content: keep the running wrap animation untouched.
+      if (this.strip && cols === this.cols && cells.join('') === this.cells.join('')) return;
       this.cells = cells;
       this.cols = cols;
       this.build();
@@ -209,6 +256,10 @@
     build() {
       const THREE = this.THREE;
       this.clearGroup();
+      // Keep the current wrap progress so a rebuild never skips the animation.
+      if (this.wrapAmount === undefined) this.wrapAmount = this.wrapped ? 1 : 0;
+      // Flat strip shows upright letters; on the rod they read along the axis.
+      this.upright = this.wrapAmount === 0;
       this.rows = Math.max(1, Math.ceil(this.cells.length / this.cols));
       this.radius = Math.max(0.65, this.cols / (Math.PI * 2));
       this.bandWidth = Math.min(1.15, this.radius * 1.05);
@@ -236,7 +287,6 @@
       });
 
       this.buildStrip();
-      this.wrapAmount = this.wrapped ? 1 : 0;
       this.updateStrip();
     }
 
@@ -273,20 +323,28 @@
 
     makeTexture() {
       const THREE = this.THREE;
+      const token = (name, fallback) => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+      const paper = token('--color-neutral-100', '#EEF0F3');
+      const accent = token('--immersive-accent', '#F79530');
+      const ink = token('--color-neutral-900', '#000000');
+      const faint = alpha => {
+        const value = parseInt(ink.replace('#', ''), 16);
+        return `rgba(${value >> 16 & 255}, ${value >> 8 & 255}, ${value & 255}, ${alpha / 100})`;
+      };
       const pixelsPerCell = 100;
       const canvas = document.createElement('canvas');
       canvas.width = Math.max(1, this.cells.length * pixelsPerCell);
       canvas.height = Math.round(this.bandWidth * pixelsPerCell);
       const context = canvas.getContext('2d');
-      context.fillStyle = '#eef0f3';
+      context.fillStyle = paper;
       context.fillRect(0, 0, canvas.width, canvas.height);
       this.cells.forEach((character, index) => {
         const x = index * pixelsPerCell;
         if (this.showRead && index % this.cols === 0) {
-          context.fillStyle = '#f79530';
+          context.fillStyle = accent;
           context.fillRect(x, 0, pixelsPerCell, canvas.height);
         }
-        context.strokeStyle = 'rgba(0,0,0,.28)';
+        context.strokeStyle = faint(28);
         context.lineWidth = 1.5;
         context.beginPath();
         context.moveTo(x, 0);
@@ -294,15 +352,15 @@
         context.stroke();
         context.save();
         context.translate(x + pixelsPerCell / 2, canvas.height / 2);
-        context.rotate(-Math.PI / 2);
-        context.fillStyle = character === '·' || character === ' ' ? 'rgba(0,0,0,.35)' : '#000000';
+        if (!this.upright) context.rotate(-Math.PI / 2);
+        context.fillStyle = character === '·' || character === ' ' ? faint(35) : ink;
         context.font = `500 ${Math.round(Math.min(pixelsPerCell, canvas.height) * .65)}px "DM Mono", monospace`;
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillText(character === '·' || character === ' ' ? '•' : character, 0, 0);
         context.restore();
       });
-      context.strokeStyle = '#000000';
+      context.strokeStyle = ink;
       context.lineWidth = 2;
       context.strokeRect(0, 0, canvas.width, canvas.height);
       return new THREE.CanvasTexture(canvas);
@@ -350,18 +408,22 @@
     }
 
     updateCameraFrame() {
-      const wrappedFrame = Math.max(this.stickLength * .42, this.stripLength * .37);
-      const unwrappedFrame = Math.max(this.stickLength * .56, this.stripLength * .56);
-      const halfWidth = wrappedFrame + (unwrappedFrame - wrappedFrame) * (1 - this.wrapAmount);
+      // Vertiefung v2: the wound rod fills about two thirds of the stage width
+      // and leaves room for the state headline above and the legend below.
+      const verticalReach = this.radius * 1.35 + this.stickLength * .05;
+      const wrappedFrame = Math.max(this.stickLength * .66, verticalReach * this.aspect / .62);
+      const unwrappedFrame = Math.max(this.stickLength * .56, this.stripLength * .54);
+      const unwrap = 1 - this.wrapAmount;
+      const halfWidth = wrappedFrame + (unwrappedFrame - wrappedFrame) * unwrap;
+      const centerY = -1.1 * unwrap;
       this.camera.left = -halfWidth;
       this.camera.right = halfWidth;
       this.camera.top = halfWidth / this.aspect;
       this.camera.bottom = -halfWidth / this.aspect;
-      this.camera.position.set(0, 0, 30);
-      this.camera.lookAt(0, 0, 0);
+      this.camera.position.set(0, centerY, 30);
+      this.camera.lookAt(0, centerY, 0);
       this.camera.updateProjectionMatrix();
     }
-
     loop() {
       this.frame = requestAnimationFrame(() => this.loop());
       const time = performance.now();
@@ -372,6 +434,11 @@
         const direction = target > this.wrapAmount ? 1 : -1;
         this.wrapAmount = Math.max(0, Math.min(1, this.wrapAmount + direction * delta / 1700));
         this.updateStrip();
+      }
+      const upright = this.wrapAmount === 0;
+      if (upright !== this.upright) {
+        this.upright = upright;
+        this.rebuildTexture();
       }
       this.updateCameraFrame();
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -419,77 +486,20 @@
     document.title = content.meta.title;
     $('frame').setAttribute('aria-label', content.meta.ariaLabel);
 
+    setText('startEyebrow', content.start.eyebrow);
     setTitle('startTitle', content.start.title);
-    renderParagraphs('startIntro', content.start.intro);
+    renderParagraphs('startIntro', [content.start.summary]);
     setText('tryLabel', content.start.ctaLabel);
 
     const startImage = $('startImage');
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
 
+    setText('actionEyebrow', content.action.eyebrow);
     setTitle('actionTitle', content.action.title);
     $('skyIn').value = content.action.skytaleDefaultText;
     $('skyCols').value = String(content.action.skytaleDefaultCols);
     $('btnClose').setAttribute('aria-label', content.action.closeLabel);
-  }
-
-  function initHeroScrollbar() {
-    const scroller = $('startIntro');
-    const track = $('startScrollbar');
-    const thumb = $('startScrollbarThumb');
-    let dragOffset = 0;
-    let lastTouchY = 0;
-
-    function update() {
-      const trackHeight = track.clientHeight;
-      const scrollRange = scroller.scrollHeight - scroller.clientHeight;
-      const thumbHeight = scrollRange > 0
-        ? Math.max(40, trackHeight * scroller.clientHeight / scroller.scrollHeight)
-        : trackHeight;
-      const thumbRange = Math.max(0, trackHeight - thumbHeight);
-      const thumbTop = scrollRange > 0 ? scroller.scrollTop / scrollRange * thumbRange : 0;
-
-      thumb.style.height = `${thumbHeight}px`;
-      thumb.style.transform = `translateY(${thumbTop}px)`;
-      track.hidden = scrollRange <= 0;
-    }
-
-    updateHeroScrollbar = update;
-
-    function scrollToPointer(clientY) {
-      const trackRect = track.getBoundingClientRect();
-      const thumbRange = track.clientHeight - thumb.offsetHeight;
-      const thumbTop = Math.max(0, Math.min(thumbRange, clientY - trackRect.top - dragOffset));
-      const scrollRange = scroller.scrollHeight - scroller.clientHeight;
-      scroller.scrollTop = thumbRange > 0 ? thumbTop / thumbRange * scrollRange : 0;
-    }
-
-    scroller.addEventListener('scroll', update, { passive: true });
-    scroller.addEventListener('wheel', event => {
-      event.preventDefault();
-      scroller.scrollTop += event.deltaY;
-    }, { passive: false });
-    scroller.addEventListener('touchstart', event => {
-      if (event.touches.length === 1) lastTouchY = event.touches[0].clientY;
-    }, { passive: true });
-    scroller.addEventListener('touchmove', event => {
-      if (event.touches.length !== 1) return;
-      event.preventDefault();
-      const currentY = event.touches[0].clientY;
-      scroller.scrollTop += lastTouchY - currentY;
-      lastTouchY = currentY;
-    }, { passive: false });
-    track.addEventListener('pointerdown', event => {
-      const thumbRect = thumb.getBoundingClientRect();
-      dragOffset = event.target === thumb ? event.clientY - thumbRect.top : thumb.offsetHeight / 2;
-      track.setPointerCapture(event.pointerId);
-      scrollToPointer(event.clientY);
-    });
-    track.addEventListener('pointermove', event => {
-      if (track.hasPointerCapture(event.pointerId)) scrollToPointer(event.clientY);
-    });
-    new ResizeObserver(update).observe(scroller);
-    update();
   }
 
   function normUp(value) {
@@ -501,82 +511,138 @@
       .replace(/ß/g, 'SS');
   }
 
+  // Vertiefung v2: guided flow per mode. Changing texts are written into
+  // spans outside the shared translator's selectors (see CHANGELOG.md).
   function setSkytaleMode(mode) {
     skytaleMode = mode;
     const isEncrypting = mode === 'encrypt';
     const action = currentContent().action;
-    const copy = currentCopy();
     $('btnEncrypt').classList.toggle('active', isEncrypting);
     $('btnDecrypt').classList.toggle('active', !isEncrypting);
     $('btnEncrypt').setAttribute('aria-selected', String(isEncrypting));
     $('btnDecrypt').setAttribute('aria-selected', String(!isEncrypting));
-    $('skyInLabel').textContent = isEncrypting ? copy.readableMessage : copy.recoveredStrip;
-    $('skyOutLabel').textContent = isEncrypting ? copy.outputEncrypt : copy.outputDecrypt;
-    $('skyKeyboard').classList.add('hidden');
-    const puzzle = currentPuzzle();
-    $('skyIn').value = isEncrypting
-      ? action.skytaleDefaultText
-      : puzzle.strip;
-    $('skyCols').value = String(isEncrypting
-      ? action.skytaleDefaultCols
-      : puzzle.startCols);
-    skytaleModel.setWrapped(skytaleWrapped);
-    $('btnWrap').textContent = copy.unwrap;
-    $('skyStageState').textContent = copy.wrapped;
+    $('skyPanel').dataset.mode = mode;
+    setText('skyTask', isEncrypting ? currentCopy().taskEncrypt : currentCopy().taskDecrypt);
+    closeKeyboard();
+    if (isEncrypting) $('skyIn').value = action.skytaleDefaultText;
+    $('skyCols').value = String(isEncrypting ? action.skytaleDefaultCols : currentPuzzle().startCols);
+    // Every mode starts on the wound rod; decrypting always reads on the rod.
+    setWrapped(true);
+  }
+  function setWrapped(wrapped) {
+    skytaleWrapped = wrapped;
+    skytaleModel.setWrapped(wrapped);
+    // One action button; its label always names the next step.
+    $('btnUnwrap').setAttribute('aria-pressed', String(!wrapped));
+    setText('unwrapLabel', wrapped ? currentCopy().unwrapAction : currentCopy().rewrapAction);
+    $('skyPanel').classList.toggle('is-wrapped', wrapped);
     skytaleRender();
   }
-
-  function skytaleRender() {
-    const raw = normUp($('skyIn').value)
-      .replace(/[^A-Z ]/g, '')
-      .replace(/ +/g, ' ')
-      .trim();
-    const cols = Number($('skyCols').value);
-    $('skyColsVal').textContent = String(cols);
-
-    const rows = Math.max(1, Math.ceil(raw.length / cols));
-    const cellCount = rows * cols;
-    let wrapped = '';
-    let output = '';
-
-    if (skytaleMode === 'encrypt') {
-      const plain = raw.padEnd(cellCount, '·');
-      const cells = [];
-      for (let index = 0; index < cellCount; index++) {
-        const row = Math.floor(index / cols);
-        const column = index % cols;
-        cells.push(plain.charAt(column * rows + row));
-      }
-      wrapped = cells.join('');
-      output = wrapped.replaceAll(' ', '·');
-    } else {
-      const strip = raw.padEnd(cellCount, '·');
-      for (let column = 0; column < cols; column++) {
-        for (let row = 0; row < rows; row++) {
-          output += strip.charAt(row * cols + column);
-        }
-      }
-      wrapped = strip;
-      output = output.replaceAll('·', '').replaceAll(' ', ' ');
-    }
-
-    const puzzle = currentPuzzle();
-    const solvedPuzzle = skytaleMode === 'decrypt' && raw === puzzle.strip && cols === puzzle.cols;
-    $('skyOut').textContent = skytaleMode === 'decrypt'
-      ? (solvedPuzzle ? puzzle.plain : currentCopy().notReadable)
-      : (output || '...');
-    $('skyOut').classList.toggle('is-solved', solvedPuzzle);
-    $('btnNextPuzzle').classList.toggle('hidden', !solvedPuzzle);
-    skytaleModel.setData(wrapped.split(''), cols);
+  function chunk(value, size) {
+    const groups = [];
+    for (let index = 0; index < value.length; index += size) groups.push(value.slice(index, index + size));
+    return groups;
   }
-
+  // Letters as spans; orange marks the same line as on the model.
+  function renderLetters(container, groups, isMarked) {
+    container.replaceChildren();
+    let index = 0;
+    groups.forEach(group => {
+      const groupNode = document.createElement('span');
+      groupNode.className = 'letter-group';
+      for (const character of group) {
+        const letter = document.createElement('span');
+        letter.className = 'letter';
+        letter.classList.toggle('letter--filler', character === '·');
+        letter.classList.toggle('letter--marked', isMarked(index));
+        letter.textContent = character;
+        groupNode.appendChild(letter);
+        index++;
+      }
+      container.appendChild(groupNode);
+    });
+  }
+  function showPending(container, text) {
+    container.replaceChildren();
+    const note = document.createElement('span');
+    note.className = 'result-pending';
+    note.textContent = text;
+    container.appendChild(note);
+  }
+  function skytaleRender() {
+    const copy = currentCopy();
+    const cols = Number($('skyCols').value);
+    const isEncrypting = skytaleMode === 'encrypt';
+    const result = $('skyResult');
+    let cells;
+    let solved = false;
+    let note = '';
+    let headline;
+    setText('skyColsText', copy.keyValue(cols));
+    $('keyTicks').querySelectorAll('.key-tick').forEach(tick => {
+      tick.classList.toggle('is-active', Number(tick.textContent) === cols);
+    });
+    $('stepKeyNum').textContent = isEncrypting ? '2' : '1';
+    $('resultNum').hidden = isEncrypting;
+    if (isEncrypting) {
+      const plain = compactMessage($('skyIn').value);
+      const strip = plain ? encodeStrip(plain, cols) : '';
+      cells = (strip || '·'.repeat(cols)).split('');
+      setText('resultTitle', copy.resultCipher);
+      if (!plain) {
+        showPending(result, copy.resultEmpty);
+      } else if (skytaleWrapped) {
+        showPending(result, copy.resultCipherPending);
+      } else {
+        renderLetters(result, chunk(strip, cols), index => index % cols === 0);
+        note = copy.resultCipherNote;
+      }
+      headline = skytaleWrapped ? copy.stageEncWrapped : copy.stageEncUnwrapped;
+    } else {
+      const puzzle = currentPuzzle();
+      const rows = Math.ceil(puzzle.strip.length / cols);
+      const padded = puzzle.strip.padEnd(rows * cols, '·');
+      let reading = '';
+      for (let column = 0; column < cols; column++) {
+        for (let row = 0; row < rows; row++) reading += padded.charAt(row * cols + column);
+      }
+      cells = padded.split('');
+      solved = cols === puzzle.cols;
+      renderLetters($('stripDisplay'), [puzzle.strip], index => index % cols === 0);
+      setText('resultTitle', copy.stepRead);
+      if (solved) {
+        result.replaceChildren(document.createTextNode(puzzle.plain));
+      } else {
+        renderLetters(result, chunk(reading, rows), index => index < rows);
+      }
+      note = solved ? copy.readSolved : copy.readWrong;
+      headline = solved ? copy.stageDecSolved : copy.stageDecWrong;
+    }
+    result.classList.toggle('is-solved', solved);
+    result.classList.toggle('is-pending', Boolean(result.querySelector('.result-pending')));
+    setText('skyResultNote', note);
+    $('btnNextPuzzle').classList.toggle('hidden', !solved);
+    setText('stageHeadline', headline);
+    $('skyStage').classList.toggle('is-solved', solved);
+    setText('stageLegend', skytaleWrapped ? copy.legendWrapped : copy.legendUnwrapped);
+    $('stageHint').classList.toggle('is-hidden', !skytaleWrapped);
+    skytaleModel.setData(cells, cols);
+  }
+  function openKeyboard() {
+    if (skytaleMode !== 'encrypt') return;
+    $('skyKeyboard').classList.remove('hidden');
+    $('skyPanel').classList.add('is-typing');
+  }
+  function closeKeyboard() {
+    $('skyKeyboard').classList.add('hidden');
+    $('skyPanel').classList.remove('is-typing');
+  }
   function typeOnKeyboard(character) {
     const input = $('skyIn');
     if (input.value.length >= input.maxLength) return;
     input.value += character;
     skytaleRender();
   }
-
   function buildKeyboard() {
     const rows = [
       ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'],
@@ -590,13 +656,25 @@
         key.className = 'keyboard-key';
         key.type = 'button';
         key.textContent = letter;
-        key.setAttribute('aria-label', `Buchstabe ${letter}`);
+        key.dataset.letter = letter;
         key.addEventListener('click', () => typeOnKeyboard(letter));
         row.appendChild(key);
       });
     });
   }
-
+  function buildKeyTicks() {
+    const slider = $('skyCols');
+    for (let value = Number(slider.min); value <= Number(slider.max); value++) {
+      const tick = document.createElement('span');
+      tick.className = 'key-tick';
+      tick.textContent = String(value);
+      tick.addEventListener('click', () => {
+        slider.value = String(value);
+        skytaleRender();
+      });
+      $('keyTicks').appendChild(tick);
+    }
+  }
   function applyLanguage() {
     const language = currentLanguage();
     if (language === appliedLanguage) return;
@@ -609,53 +687,41 @@
     $('startIntro').setAttribute('aria-label', copy.intro);
     $('skyStage').setAttribute('aria-label', copy.stage);
     $('skyCanvas').setAttribute('aria-label', copy.model);
-    document.querySelector('.template-tag').textContent = copy.templateTag;
-    document.querySelector('.skytale-stage__instruction').textContent = copy.drag;
     document.querySelector('.tabs').setAttribute('aria-label', copy.mode);
     $('skyKeyboard').setAttribute('aria-label', copy.keyboard);
+    document.querySelectorAll('.keyboard-key[data-letter]').forEach(key => {
+      key.setAttribute('aria-label', copy.letter(key.dataset.letter));
+    });
     $('btnEncrypt').textContent = copy.encrypt;
     $('btnDecrypt').textContent = copy.decrypt;
-    $('skyColsLabel').firstChild.textContent = copy.diameter;
-    $('btnReadDirection').textContent = copy.readingDirection;
-    $('btnNextPuzzle').textContent = copy.next;
     $('btnKeyboardSpace').textContent = copy.space;
     $('btnKeyboardBackspace').textContent = copy.delete;
     $('btnKeyboardDone').textContent = copy.done;
+    setText('stepWriteTitle', copy.stepWrite);
+    setText('stepKeyTitle', copy.stepKey);
+    setText('stripFoundTitle', copy.stripFound);
+    setText('nextPuzzleLabel', copy.next);
+    setText('takeawayLabel', copy.takeawayLabel);
+    setText('takeawayText', copy.takeaway);
+    setText('stageHintText', copy.drag);
     puzzleIndex = 0;
     setSkytaleMode(skytaleMode);
-    $('startIntro').scrollTop = 0;
-    window.requestAnimationFrame(updateHeroScrollbar);
   }
-
   $('btnTry').addEventListener('click', () => {
     screenStart.classList.add('hidden');
     screenAction.classList.remove('hidden');
   });
-
   $('btnClose').addEventListener('click', () => {
+    closeKeyboard();
     screenAction.classList.add('hidden');
     screenStart.classList.remove('hidden');
   });
-
-  $('skyIn').addEventListener('input', skytaleRender);
-  $('skyIn').addEventListener('focus', () => {
-    if (skytaleMode === 'encrypt') $('skyKeyboard').classList.remove('hidden');
-  });
+  $('skyIn').addEventListener('click', openKeyboard);
+  $('skyIn').addEventListener('focus', openKeyboard);
   $('skyCols').addEventListener('input', skytaleRender);
   $('btnEncrypt').addEventListener('click', () => setSkytaleMode('encrypt'));
   $('btnDecrypt').addEventListener('click', () => setSkytaleMode('decrypt'));
-  $('btnWrap').addEventListener('click', () => {
-    skytaleWrapped = !skytaleWrapped;
-    const copy = currentCopy();
-    skytaleModel.setWrapped(skytaleWrapped);
-    $('btnWrap').textContent = skytaleWrapped ? copy.unwrap : copy.wrap;
-    $('skyStageState').textContent = skytaleWrapped ? copy.wrapped : copy.unwrapped;
-  });
-  $('btnReadDirection').addEventListener('click', () => {
-    showReadDirection = !showReadDirection;
-    skytaleModel.setShowRead(showReadDirection);
-    $('btnReadDirection').setAttribute('aria-pressed', String(showReadDirection));
-  });
+  $('btnUnwrap').addEventListener('click', () => setWrapped(!skytaleWrapped));
   $('btnKeyboardSpace').addEventListener('click', () => typeOnKeyboard(' '));
   $('btnKeyboardBackspace').addEventListener('click', () => {
     const input = $('skyIn');
@@ -663,18 +729,31 @@
     skytaleRender();
   });
   $('btnKeyboardDone').addEventListener('click', () => {
-    $('skyKeyboard').classList.add('hidden');
+    closeKeyboard();
     $('skyIn').blur();
   });
   $('btnNextPuzzle').addEventListener('click', () => {
     puzzleIndex = (puzzleIndex + 1) % currentContent().action.skytalePuzzles.length;
     setSkytaleMode('decrypt');
   });
-
   renderStation(currentContent());
-  initHeroScrollbar();
+  // Shared off-canvas: layout, labels, language and behaviour come from the component.
+  StationOffcanvas.create({
+    trigger: $('btnReadMore'),
+    content: {
+      de: { title: STATION_CONTENT.de.start.title, ...STATION_CONTENT.de.start.reading },
+      en: { title: STATION_CONTENT.en.start.title, ...STATION_CONTENT.en.start.reading }
+    }
+  });
   buildKeyboard();
+  buildKeyTicks();
   const skytaleModel = new SkytaleModel($('skyCanvas'));
+  // Redraw the strip once DM Mono is available, not with the fallback font.
+  if (document.fonts) {
+    document.fonts.load('500 60px "DM Mono"').then(() => {
+      if (skytaleModel.strip) skytaleModel.rebuildTexture();
+    });
+  }
   new MutationObserver(mutations => {
     if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyLanguage();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });

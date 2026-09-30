@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       ]
     },
     deepening: {
-      tag: 'A Closer Look',
+      tag: 'Deep dive',
       title: 'A Framework as a Prerequisite',
       paragraphs: [
         'The success of paper money in Saxony was no coincidence. Behind it lay a principle still debated in monetary theory today: the tax theory of money, also known as chartalism, argues that money derives its value not from its material or any intrinsic property, but from the fact that a government accepts it as payment for taxes. This commitment to accept it creates the demand that gives money its value.',

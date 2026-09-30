@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'A Ledger That Belongs to Everyone',
       body: 'When you hold money in a bank account, the bank does not set aside particular banknotes for you. Instead, it records your account balance and transactions in its database. The bank maintains this ledger centrally and confirms which payments are valid.<br>Bitcoin takes a different approach. There is no single, central ledger. Instead, numerous independently operated computers, known as nodes, jointly maintain the transaction history. They check new transactions and blocks against the same rules.<br>New transactions are grouped into blocks. Each block can be compared to a new page in a shared ledger. On average, another block is added approximately every ten minutes.<br>The blocks containing these transactions are linked: each new block includes a digital reference to the previous one. These successive blocks form a chain: the blockchain. If an earlier block is altered, its “digital fingerprint” no longer matches the references in the blocks that follow. This makes changes to or manipulation of earlier transactions detectable.',
       deepDives: [{
-        label: 'A Closer Look',
+        label: 'Deep dive',
         title: 'How Blocks Are Linked—Hash Functions',
         paragraphs: [
           'The reference to the previous block is not a simple reference like a page number. It is a hash value, a digital fingerprint. A hash function is a computational procedure that converts data of any length into a fixed-length string. Bitcoin uses SHA-256 for this purpose. When hashing a block header, SHA-256 is applied twice in succession. The result consists of 256 bits and is usually displayed as a sequence of 64 hexadecimal characters.',
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'The Digital Signature: My Key, Your Lock',
       body: 'In conventional payment transactions, the bank checks whether an account has sufficient funds and whether a payment is authorized. A PIN, password, or signature may be used for identification. With Bitcoin, no bank performs this check. Instead, the network uses digital keys to verify whether someone is authorized to spend bitcoin.<br>You do not need to mine bitcoin to hold, receive, or send it. Using Bitcoin requires a wallet, “hot” or “cold”, and the associated digital keys. Users can manage their keys themselves, known as “self-custody”, or use a “custodial wallet”, for example through a crypto exchange.<br>When you set up your own wallet, its software generates a private key and a public key. The private key is kept secret. In “cold” storage, it remains offline or isolated from a network-connected computer, for example on a hardware wallet. On a crypto exchange, by contrast, the provider usually controls the keys. The bitcoins themselves are not stored in the wallet. They are recorded as entries in the blockchain.<br>The wallet uses the private key to digitally sign a payment. The public key allows the network to verify this signature without revealing the private key.<br>The wallet can derive a publicly visible Bitcoin address from the public key. This address contains neither a name nor a mailing address. Bitcoin is therefore pseudonymous, but not anonymous: the transactions associated with an address are publicly traceable. If an address is linked to a person, for example through a crypto exchange, its transactions can also be linked to that person.<br>Controlling your own keys comes with responsibility. If a private key is lost, the bitcoins it controls remain inaccessible. If the key is stolen, others can spend them. There is no bank or central help desk that can restore access.',
       deepDives: [{
-        label: 'A Closer Look',
+        label: 'Deep dive',
         title: 'The Mathematics Behind a Key Pair',
         paragraphs: [
           'Bitcoin key pairs are based on a mathematical method called elliptic curve cryptography. Bitcoin uses a particular curve known by the technical name secp256k1. The private key is a randomly generated number within a specified range. Written in decimal notation, it can be up to 78 digits long. The method calculates the public key from this number.',
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       body: 'Nodes can check whether a transaction complies with the rules of the Bitcoin system. But another question remains: who assembles the next block and thereby determines the order of new transactions in the blockchain?<br>This is where Bitcoin mining comes in. Miners select pending transactions and group them into potential new blocks. Specialized computers then compete continuously, performing enormous numbers of computational attempts until one finds a result that meets the required conditions.<br>The first miner to find such a result sends its block to the network. The nodes independently check whether the block and its proof of work comply with the rules. If they do, the nodes add the block to their copies of the blockchain.<br>This process is called proof of work. Finding a valid result requires a vast number of attempts. Checking it, however, takes very little computation.<br>The successful miner’s or mining pool’s revenue consists of two parts: the new bitcoin issued with the block and the transaction fees from the payments it contains. The competition to add the next block then begins.',
       deepDives: [
         {
-          label: 'A Closer Look 1',
+          label: 'Deep dive 1',
           title: 'What Miners Actually Calculate. Nonce and Target',
           paragraphs: [
             'Miners calculate the hash of the block header by applying SHA-256 twice in succession. Among other things, the block header contains a hash summarizing the transactions, the hash of the previous block, a timestamp, the target, and the nonce. The result of the hash calculation is a 256-bit number. It must be less than or equal to the specified target.',
@@ -79,14 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         },
         {
-          label: 'A Closer Look 2',
+          label: 'Deep dive 2',
           title: 'How Difficulty Adapts to Computing Power. Difficulty Adjustment',
           paragraphs: [
             'The Bitcoin system is designed to produce a new block approximately every ten minutes on average. Every 2,016 blocks, roughly every two weeks, the time taken to produce the preceding 2,016 blocks is assessed according to fixed rules. If they were produced faster than intended, the target is lowered, making the task harder. If they took longer, the target is raised, making the task easier. This mechanism is called difficulty adjustment. It does not ensure that each individual block takes exactly ten minutes; instead, it keeps the long-term average close to that interval.'
           ]
         },
         {
-          label: 'A Closer Look 3',
+          label: 'Deep dive 3',
           title: 'How the Issuance of New Bitcoin Is Determined. Block Subsidy and Halving',
           paragraphs: [
             'The Bitcoin system specifies the amount of newly created bitcoin that a miner may claim for finding a block. This part of the reward is called the block subsidy. Transaction fees are added to it, and their amounts are not fixed.',
@@ -342,12 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderContent(document.documentElement.dataset.language === 'en' ? 'en' : 'de');
-  document.querySelectorAll('.station-language-switch__button').forEach(button => {
-    button.addEventListener('click', () => {
-      window.requestAnimationFrame(() => {
-        renderContent(button.dataset.languageOption === 'en' ? 'en' : 'de');
-      });
-    });
-  });
+  new MutationObserver(mutations => {
+    if (mutations.some(mutation => mutation.attributeName === 'data-language')) {
+      renderContent(document.documentElement.dataset.language === 'en' ? 'en' : 'de');
+    }
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
 });
 

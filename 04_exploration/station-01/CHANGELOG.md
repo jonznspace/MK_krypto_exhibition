@@ -1,5 +1,22 @@
 # Station 01 Optimization · Änderungsprotokoll
 
+## 2026-09-30 · Leseansicht als globale Komponente
+
+Die Leseansicht (Off-Canvas „Weiterlesen“) ist jetzt die Shared-Komponente
+`station-offcanvas`, damit alle Stationen denselben Aufbau nutzen. Gestaltung und
+Verhalten sind unverändert; Screenshots vorher/nachher (DE/EN, geschlossen, offen,
+gescrollt, 1563 × 864) sind pixelgleich.
+
+| Datei | Änderung |
+| --- | --- |
+| `shared/css/station-offcanvas.css` | neu: Styles aus `optimization.css` und `vertiefung.css`, ohne `.station-optimization`-Scope |
+| `shared/js/station-offcanvas.js` | neu: Markup, Öffnen/Schließen, Fokus, Scroll-Indikator, DE/EN |
+| `shared/README.md` | neu: Einbau und Content-Format |
+| `index.html` | Dialog-Markup entfernt; Button heißt `station-offcanvas-trigger`; Komponente eingebunden |
+| `optimization.css` | `.reading-*`-Regeln entfernt, nur der Abstand des Buttons bleibt |
+| `vertiefung.css` | Scroll-Indikator-Regeln entfernt |
+| `station-01.js` | `renderReading`, `initScrollIndicator`, `initReadingOverlay` entfernt; Text als `start.reading` (`lead`, `sections`, `highlight`) |
+
 ## 2026-09-29 · Vertiefungsebene v2 (Skytale ausprobieren)
 
 Ziel: Besucher sollen verstehen, was auf dem Skytale-Screen passiert. Das
@@ -15,7 +32,7 @@ Der Stand davor liegt vollständig in `_checkpoint-2026-09-29-vor-vertiefung/`
 **Komplett zurück:**
 
 ```sh
-cd 04_exploration/station-01-optimization
+cd 04_exploration/station-01
 cp _checkpoint-2026-09-29-vor-vertiefung/{index.html,station-01.js,optimization.css,station-01.css,README.md} .
 rm vertiefung.css CHANGELOG.md
 ```
@@ -232,3 +249,47 @@ lieber komplett zurückgehen.
     (`--immersive-focus`, #264EFF), beim Ziehen `--color-secondary-400`.
   - Die Panel-Scrollbar ist ebenfalls blau.
 - `index.html`: `vertiefung.css?v=14`.
+
+## 2026-09-30 · Schriftgrößen aus den globalen Tokens
+
+Die Station hat keine eigene Typo-Skala mehr. Die globale Skala in
+`00_design-system/tokens/tokens.css` wurde auf die hier abgestimmten Werte
+gesetzt (Desktop: `h3` 36, `h4` 28, `label` 16, `caption-m` 14; Tablet: `label` 16).
+Das Tablet quer (1563 px) liegt in der Desktop-Stufe und sieht unverändert aus.
+Tablet hoch (864 px) und Stele (1080 px) liegen in der Tablet-Stufe und bekommen
+dort die kleineren Token-Werte.
+
+- `optimization.css`: `--opt-*`-Schriftgrößen entfernt und durch Tokens ersetzt
+  (`h1`, `h2`, `h3`, `h4`, `body-l`, `body-m`, `label`, `caption-m`).
+  `--opt-control`, `--opt-page-inset`, `--opt-info-text` direkt durch
+  `--size-control-lg`, `--space-6`, `--color-secondary-200` ersetzt.
+  Doppelte `font-size`-Überschreibungen entfernt, die jetzt aus `station-01.css` kommen.
+  Lokal bleiben nur `--opt-line` und `--opt-focus`.
+- `vertiefung.css`: `--opt-h2` entfernt; `#actionTitle` erbt `h3` von `.title--compact`.
+- `station-01.css`: alle hartkodierten Schriftgrößen durch Tokens ersetzt;
+  Längenstufen `.title--medium` / `.title--long` ohne eigene Größe;
+  ungenutzte Regeln `.station-image-placeholder` und `.template-card` entfernt.
+- `index.html`: `station-01.css?v=4`, `optimization.css?v=13`, `vertiefung.css?v=15`.
+
+## 2026-09-30 · Offene Bugs aus dem Review behoben
+
+- **Sprachumschaltung überschreibt Ergebnisse** (`shared/js/station-language-switch.js`,
+  gilt für alle Stationen): Das Skript merkt sich jetzt, welchen Text es selbst
+  geschrieben hat. Ändert eine Station den Text zur Laufzeit, wird der neue Text
+  zur Quelle, statt vom alten deutschen Text überschrieben zu werden.
+- **Tasten-Beschriftung für Screenreader** (`station-01.js`): „Buchstabe X“ /
+  „Letter X“ kommt aus `UI_COPY` und wechselt mit der Sprache.
+- **3D-Streifen** (`station-01.js`): Papier, Orange und Schrift lesen die Farben aus
+  den Tokens (`--color-neutral-100`, `--immersive-accent`, `--color-neutral-900`).
+- **Hover auf Touch** (`station-01.css`, `optimization.css`, `vertiefung.css`,
+  `shared/css/station-language-switch.css`): Hover nur noch unter
+  `@media (hover: hover)`; Tabs, Tasten, „Nächster Streifen“, Schließen-Buttons und
+  DE/EN haben ein `:active`-Feedback für Touch.
+- **Feste Farben** (`station-01.css`, `vertiefung.css`): `#000` → `--immersive-bg`,
+  Stations-Tag `#ed8003` → `--immersive-accent` (wie bisher sichtbar),
+  `rgba(0,0,0,.2)` → `color-mix` mit `--color-neutral-900`.
+- **Ungenutztes CSS entfernt**: `.hero-scroll*`, `.template-tag`, `.module-intro`,
+  `.field-label`, `.skytale-actions`, `.wrap-button`, `.read-button`, `.io-block`,
+  `.hashline*`.
+- `index.html`: `station-01.css?v=5`, `optimization.css?v=14`, `vertiefung.css?v=16`,
+  `station-01.js?v=19`.

@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const englishDeepDives = [
     {
-      kicker: 'A Closer Look 1',
+      kicker: 'Deep dive 1',
       title: 'Wildcat Banking, Stablecoins, and the Question of Rules',
       paragraphs: [
         'Why the United States Went Decades Without a Central Bank',
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      kicker: 'A Closer Look 2',
+      kicker: 'Deep dive 2',
       title: 'The Free-Banking Era—Thousands of Different “Currencies”',
       paragraphs: [
         'Beginning in 1837, a growing number of states adopted laws allowing anyone who met specified requirements to establish a bank. Each bank could issue its own notes. But banks were not the only issuers: railroad companies, insurance companies, real estate firms, and individual merchants also put notes into circulation.',
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     {
-      kicker: 'A Closer Look 3',
+      kicker: 'Deep dive 3',
       title: 'Establishing Common Rules and the Parallels with Today',
       paragraphs: [
         'The National Banking Acts of 1863 and 1864 established a system of federally chartered banks whose notes were backed by U.S. government bonds. A 10 percent tax on state-bank notes, enacted in 1865 and effective from 1866, made their continued circulation uneconomical. In 1874, redemption arrangements were expanded, allowing national banknotes to be redeemed at face value at Treasury offices across the country. The identity of the issuing bank became far less important to those using its notes.',

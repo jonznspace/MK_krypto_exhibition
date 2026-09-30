@@ -75,6 +75,8 @@
       remaining -= 1;
       if (remaining <= 0) {
         window.clearInterval(countdownTimer);
+        // Every new visitor starts in German.
+        if (window.StationLanguage) window.StationLanguage.resetStoredLanguage();
         window.location.reload();
         return;
       }

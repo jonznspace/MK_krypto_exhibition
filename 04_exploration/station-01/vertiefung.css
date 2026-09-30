@@ -11,7 +11,7 @@
   left: var(--space-6);
   right: var(--space-6);
   text-align: center;
-  font: 600 var(--opt-section)/1.25 var(--font-family-switzer), sans-serif;
+  font: 600 var(--font-size-h4)/1.25 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
   pointer-events: none;
 }
@@ -31,7 +31,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  font: 400 var(--opt-label)/1.4 var(--font-family-switzer), sans-serif;
+  font: 400 var(--font-size-label)/1.4 var(--font-family-switzer), sans-serif;
   color: var(--immersive-body);
 }
 .station-optimization .stage-legend__swatch {
@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-body);
@@ -89,9 +89,15 @@
   transition: background-color var(--duration-2) var(--ease-standard),
               color var(--duration-2) var(--ease-standard);
 }
-.station-optimization .skytale-controls .tab:not(.active):hover {
+.station-optimization .skytale-controls .tab:not(.active):active {
   background: var(--color-neutral-800);
   color: var(--immersive-ink);
+}
+@media (hover: hover) {
+  .station-optimization .skytale-controls .tab:not(.active):hover {
+    background: var(--color-neutral-800);
+    color: var(--immersive-ink);
+  }
 }
 .station-optimization .skytale-controls .tab.active {
   background: var(--state-selected-surface);
@@ -108,7 +114,7 @@
 .station-optimization .panel-task {
   /* 24 px panel gap + 16 px: sets the task apart from tabs and steps. */
   margin-block: var(--space-4);
-  font: 400 var(--opt-body-m)/1.45 var(--font-family-switzer), sans-serif;
+  font: 400 var(--font-size-body-m)/1.45 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
 
@@ -126,7 +132,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-3);
-  font: 600 var(--opt-body-m)/1.3 var(--font-family-switzer), sans-serif;
+  font: 600 var(--font-size-body-m)/1.3 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
 .station-optimization .step-num {
@@ -135,7 +141,7 @@
   place-items: center;
   width: 28px;
   height: 28px;
-  font: 400 var(--opt-caption)/1 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-caption-m)/1 var(--font-family-dm-mono), monospace;
   color: var(--immersive-ink);
   background: var(--layer-surface-elevated);
   border: var(--opt-line) solid var(--color-neutral-600);
@@ -145,7 +151,7 @@
 .station-optimization .step-value {
   flex-basis: 100%;
   padding-left: calc(28px + var(--space-3));
-  font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-accent);
@@ -217,7 +223,7 @@
   min-height: var(--space-6);
   display: grid;
   place-items: center;
-  font: 400 var(--opt-label)/1 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-label)/1 var(--font-family-dm-mono), monospace;
   color: var(--immersive-body);
   cursor: pointer;
 }
@@ -229,7 +235,7 @@
   width: 100%;
   min-height: 72px;
   padding: var(--space-3) var(--space-5);
-  font: 500 var(--opt-body-m)/1.2 var(--font-family-dm-mono), monospace;
+  font: 500 var(--font-size-body-m)/1.2 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-bg);
@@ -264,13 +270,13 @@
   flex-wrap: wrap;
   padding: var(--space-2);
   background: var(--color-neutral-100);
-  font: 500 var(--opt-body-m)/1 var(--font-family-dm-mono), monospace;
+  font: 500 var(--font-size-body-m)/1 var(--font-family-dm-mono), monospace;
   color: var(--immersive-bg);
 }
 .station-optimization .strip-display .letter-group { display: contents; }
 .station-optimization .strip-display .letter {
   height: 36px;
-  border-right: var(--opt-line) solid rgba(0, 0, 0, .2);
+  border-right: var(--opt-line) solid color-mix(in srgb, var(--color-neutral-900) 20%, transparent);
 }
 .station-optimization .strip-display .letter--marked { background: var(--immersive-accent); }
 
@@ -284,7 +290,7 @@
   padding: var(--space-3) var(--space-4);
   border: var(--opt-line) solid var(--layer-border);
   background: var(--layer-surface-elevated);
-  font: 400 var(--opt-body-m)/1.4 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-body-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-ink);
@@ -305,7 +311,7 @@
 .station-optimization #skyPanel[data-mode="encrypt"] .result-text .letter {
   min-width: 1.3em;
   height: 36px;
-  border-right: var(--opt-line) solid rgba(0, 0, 0, .2);
+  border-right: var(--opt-line) solid color-mix(in srgb, var(--color-neutral-900) 20%, transparent);
 }
 .station-optimization #skyPanel[data-mode="encrypt"] .result-text .letter--marked {
   color: var(--immersive-bg);
@@ -317,7 +323,7 @@
   background: transparent;
 }
 .station-optimization .result-pending {
-  font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
+  font: 400 var(--font-size-label)/1.45 var(--font-family-switzer), sans-serif;
   letter-spacing: 0;
   text-transform: none;
   color: var(--immersive-body);
@@ -340,7 +346,7 @@
   transform: rotate(45deg);
 }
 .station-optimization .result-note {
-  font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
+  font: 400 var(--font-size-label)/1.45 var(--font-family-switzer), sans-serif;
   color: var(--immersive-body);
 }
 .station-optimization .result-note:has(span:empty) { display: none; }
@@ -355,13 +361,13 @@
 }
 .station-optimization .panel-takeaway__label {
   margin-bottom: var(--space-2);
-  font: 400 var(--opt-caption)/1.4 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
   color: var(--color-feedback-info);
 }
 .station-optimization .panel-takeaway__text {
-  font: 400 var(--opt-label)/1.45 var(--font-family-switzer), sans-serif;
+  font: 400 var(--font-size-label)/1.45 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
 
@@ -371,12 +377,8 @@
 .station-optimization #skyPanel.is-typing .panel-task + .step { margin-top: 0; }
 .station-optimization #skyPanel.is-typing .step--result:has(.is-pending) { display: none; }
 
-/* ---------- Screen headline as H2 (36 px; weight 800 like the start title) ---------- */
-.station-optimization {
-  --opt-h2: 36px;
-}
+/* ---------- Screen headline (token h3; weight 800 like the start title) ---------- */
 .station-optimization #actionTitle {
-  font-size: var(--opt-h2);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -.035em;
@@ -387,43 +389,6 @@
 /* Decrypt: keep clear distance between step 2 (reading + note / next button)
    and the takeaway box, even when the panel is short: 24 px gap + 32 px. */
 .station-optimization #skyPanel[data-mode="decrypt"] .step--result { margin-bottom: var(--space-6); }
-
-/* ---------- Scroll indicator (as in the original station, in our blue) ----------
-   Reading view: native scrolling, native scrollbar hidden; an 8 px track with
-   a blue thumb mirrors the position and can be dragged (44 px hit area). */
-.station-optimization .reading-scroll {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-}
-.station-optimization .reading-scroll .reading-body {
-  scrollbar-width: none;
-  scrollbar-gutter: auto;
-}
-.station-optimization .reading-scroll .reading-body::-webkit-scrollbar { display: none; }
-.station-optimization .scroll-indicator {
-  position: relative;
-  flex: 0 0 8px;
-  width: 8px;
-  margin: var(--space-6) var(--space-5) var(--space-6) 0;
-  background: color-mix(in srgb, var(--immersive-body) 18%, transparent);
-  touch-action: none;
-  cursor: pointer;
-}
-.station-optimization .scroll-indicator[hidden] { display: none; }
-.station-optimization .scroll-indicator::before {
-  content: '';
-  position: absolute;
-  inset: 0 -18px;
-}
-.station-optimization .scroll-indicator__thumb {
-  position: absolute;
-  inset: 0 0 auto;
-  min-height: 40px;
-  background: var(--immersive-focus);
-  pointer-events: none;
-}
-.station-optimization .scroll-indicator.is-dragging .scroll-indicator__thumb { background: var(--color-secondary-400); }
 
 /* Task panel (scrolls only on shorter screens): blue native scrollbar. */
 .station-optimization .skytale-controls {

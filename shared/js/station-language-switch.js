@@ -16,6 +16,7 @@
     '.crack-status',
     '.skytale-stage__instruction',
     '.skytale-stage__state',
+    '.station-marker__topic',
     '.ov-tag',
     '.attract',
     '#skyOut',
@@ -81,6 +82,14 @@
       translate: value => value.replace(/^Buchstabe /, 'Letter ')
     },
     {
+      // "Station 2 – Verschlüsseln mit System", "Station 08 - Scheitern ohne Regeln"
+      matches: value => {
+        const match = value.match(/^(Station \d+ [–-] )(.+)$/);
+        return Boolean(match && EXACT_TRANSLATIONS[match[2]]);
+      },
+      translate: value => value.replace(/^(Station \d+ [–-] )(.+)$/, (_all, prefix, rest) => prefix + EXACT_TRANSLATIONS[rest])
+    },
+    {
       matches: value => /^Stabdurchmesser \(Wicklungen\):\s*$/.test(value),
       translate: () => 'Rod diameter (turns): '
     }
@@ -138,30 +147,37 @@
     return match[1] + translated + match[3];
   }
 
+  // Returns the German source for a text node or attribute, or null.
+  // A value the translator did not write itself (station scripts update
+  // results and labels at runtime) replaces the stored source, so a stale
+  // German base never overwrites live content.
+  function resolveBase(store, baseKey, appliedKey, current) {
+    const base = store[baseKey];
+    if (base !== undefined && (current === base || current === store[appliedKey])) return base;
+
+    delete store[appliedKey];
+    if (isGermanSource(current.trim())) {
+      store[baseKey] = current;
+      return current;
+    }
+    delete store[baseKey];
+    return null;
+  }
+
   function applyTextNodeTranslation(element, language) {
     Array.from(element.childNodes).forEach((node, index) => {
       if (node.nodeType !== Node.TEXT_NODE || !node.textContent.trim()) return;
 
-      const dataKey = 'langBaseTextNode' + index;
+      const baseKey = 'langBaseTextNode' + index;
+      const appliedKey = 'langAppliedTextNode' + index;
       const current = node.textContent;
-      const currentTrimmed = current.trim();
+      const base = resolveBase(element.dataset, baseKey, appliedKey, current);
+      if (base === null) return;
 
-      if (isGermanSource(currentTrimmed)) {
-        element.dataset[dataKey] = current;
-      }
-
-      const base = element.dataset[dataKey] || current;
-      if (language === 'en') {
-        const translated = translateWithWhitespace(base);
-        if (translated && current !== translated) {
-          node.textContent = translated;
-        }
-        return;
-      }
-
-      if (element.dataset[dataKey] && current !== base) {
-        node.textContent = base;
-      }
+      const target = language === 'en' ? translateWithWhitespace(base) : base;
+      if (!target) return;
+      element.dataset[appliedKey] = target;
+      if (current !== target) node.textContent = target;
     });
   }
 
@@ -169,23 +185,15 @@
     const current = element.getAttribute(attribute);
     if (!current) return;
 
-    const dataKey = dataKeyFor(attribute);
-    if (isGermanSource(current)) {
-      element.dataset[dataKey] = current;
-    }
+    const baseKey = dataKeyFor(attribute);
+    const appliedKey = baseKey.replace(/^langBase/, 'langApplied');
+    const base = resolveBase(element.dataset, baseKey, appliedKey, current);
+    if (base === null) return;
 
-    const base = element.dataset[dataKey] || current;
-    if (language === 'en') {
-      const translated = translateGerman(base);
-      if (translated && current !== translated) {
-        element.setAttribute(attribute, translated);
-      }
-      return;
-    }
-
-    if (element.dataset[dataKey] && current !== base) {
-      element.setAttribute(attribute, base);
-    }
+    const target = language === 'en' ? translateGerman(base) : base;
+    if (!target) return;
+    element.dataset[appliedKey] = target;
+    if (current !== target) element.setAttribute(attribute, target);
   }
 
   function updateSwitchUi(language) {
@@ -294,7 +302,9 @@
   window.StationLanguage = {
     getLanguage,
     setLanguage,
-    applyTranslations
+    applyTranslations,
+    // Next page load starts in German (used before the idle reload).
+    resetStoredLanguage: () => writeStoredLanguage('de')
   };
 
   if (document.readyState === 'loading') {

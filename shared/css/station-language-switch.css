@@ -26,11 +26,19 @@
   transition: background-color 160ms ease, color 160ms ease;
 }
 
-.station-language-switch__button:hover,
+.station-language-switch__button:active,
 .station-language-switch__button:focus-visible {
   background: var(--color-neutral-800, #292c33);
   color: var(--immersive-ink, #ffffff);
   outline: none;
+}
+
+/* Hover only for real pointers; on touch it would stick after a tap. */
+@media (hover: hover) {
+  .station-language-switch__button:hover {
+    background: var(--color-neutral-800, #292c33);
+    color: var(--immersive-ink, #ffffff);
+  }
 }
 
 .station-language-switch__button.is-active {

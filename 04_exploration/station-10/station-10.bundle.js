@@ -44,7 +44,7 @@
       ]
     },
     deepening: {
-      tag: 'A Closer Look',
+      tag: 'Deep dive',
       title: 'Bank Runs—Then and Now',
       paragraphs: [
         'What happened in Stockholm in the 1660s has a name still used today: a bank run. This occurs when confidence in a bank declines and too many people try to withdraw their money at the same time. If the bank cannot meet these demands quickly enough, uncertainty intensifies.',

@@ -3,7 +3,7 @@
   const STATION_CONTENT = {
     meta: {
       title: 'Station 3  ·  Leibniz-Rechenmaschine',
-      ariaLabel: 'Station 3 '
+      ariaLabel: 'Station 3 – Die Leibniz-Rechenmaschine'
     },
     start: {
       eyebrow: 'Die Maschine rechnet',

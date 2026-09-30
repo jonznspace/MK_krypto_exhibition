@@ -1,12 +1,14 @@
 # Station 01 — Optimization
 
-Vollständige Kopie von `../station-01/` für eine erste visuelle Abstimmung auf
+Ursprünglich als `station-01-optimization` aus der alten `station-01` kopiert; seit
+2026-09-30 ersetzt dieser Ordner die alte Station. Erste visuelle Abstimmung auf
 den fest installierten Tablets im Querformat. Einstieg: `index.html`.
 
 Die zusätzliche `optimization.css` wird nach den bisherigen Styles geladen.
-Sie ist über die Body-Klasse `station-optimization` lokal begrenzt. Alle neuen
-Schriftgrößen stehen am Anfang der Datei als `--opt-*`-Variablen. Es werden keine
-globalen Font-Tokens überschrieben, damit die Tastatur ihren bisherigen Stil behält.
+Sie ist über die Body-Klasse `station-optimization` lokal begrenzt. Alle
+Schriftgrößen kommen aus den globalen `--font-size-*`-Tokens
+(`00_design-system/tokens/tokens.css`); es gibt keine lokale Typo-Skala.
+Lokal bleiben nur die Linienstärken `--opt-line` (1 px) und `--opt-focus` (2 px).
 
 ## Änderungen
 
@@ -26,7 +28,10 @@ globalen Font-Tokens überschrieben, damit die Tastatur ihren bisherigen Stil be
 - Letzter Absatz als „Das Wichtigste“ / „Key takeaway“ in einer Infofläche mit
   24 px Innenabstand und blauer 1-px-Kontur (`--immersive-focus`).
   Vorhandener Token `--color-feedback-info-bg` (Dark: `--color-secondary-900`,
-  #0A132E), Info-Label über `--color-feedback-info`. Keine neue globale Komponente.
+  #0A132E), Info-Label über `--color-feedback-info`.
+- Seit 2026-09-30 ist die Leseansicht (inkl. „Weiterlesen“-Button) die globale
+  Komponente `shared/css/station-offcanvas.css` + `shared/js/station-offcanvas.js`.
+  Nutzung für andere Stationen: `shared/README.md`.
 - Schließen über das vorhandene Tabler-Outline-X: 24-px-Icon auf einer
   52-px-Touchfläche, mit deutscher/englischer zugänglicher Beschriftung.
 - Schließen per Button, Escape oder Tippen auf den Hintergrund; Fokus kehrt zu
@@ -58,10 +63,10 @@ Startscreen-Scrolllogik wurde durch den Weiterlesen-Ablauf ersetzt. Die Leseansi
 nutzt natives Scrollen und liegt unterhalb der vorhandenen Idle-Warnung.
 Auch der historische Unterordner ist unverändert kopiert.
 
-Originalstation, Tablet-Master, Shared-Dateien und Design-System bleiben unverändert.
-Für weitere visuelle Anpassungen `optimization.css` bearbeiten. Kurz- und Volltext
-liegen im `STATION_CONTENT` der lokalen `station-01.js`; `index.html` enthält die
-Dialogstruktur. „Ausprobieren“ bleibt die blau gefüllte Hauptaktion, „Weiterlesen“
+Für weitere visuelle Anpassungen `optimization.css` bearbeiten; Änderungen an der
+Leseansicht in `shared/css/station-offcanvas.css` (wirken auf alle Stationen).
+Kurz- und Volltext liegen im `STATION_CONTENT` der lokalen `station-01.js`
+(`start.summary` bzw. `start.reading`); das Markup der Leseansicht erzeugt die Komponente. „Ausprobieren“ bleibt die blau gefüllte Hauptaktion, „Weiterlesen“
 nutzt die zurückhaltendere Outline-Stufe; die Text-only-Stufe bleibt hier unbenutzt.
 
 ## Vertiefungsebene v2

@@ -1,0 +1,205 @@
+/* Station off-canvas: reading layer that slides in from the left.
+   Shared component, used together with shared/js/station-offcanvas.js.
+   Structure and look are fixed; stations only supply content (see shared/README.md).
+   All values come from the tokens; the few component measures live below
+   as --station-offcanvas-* properties and can be overridden per station if needed. */
+.station-offcanvas,
+.station-offcanvas-trigger {
+  --station-offcanvas-width: 880px;
+  --station-offcanvas-scrim: 80%;
+  --station-offcanvas-line: 1px;
+  --station-offcanvas-focus: 2px;
+  --station-offcanvas-measure: 65ch;
+  --station-offcanvas-scrollbar: 8px;
+  --station-offcanvas-thumb-min: 40px;
+}
+
+/* ---------- Trigger ("Weiterlesen"): blue outline button on the start screen ---------- */
+.station-offcanvas-trigger {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: var(--size-control-lg);
+  padding: var(--space-3) var(--space-5);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--color-secondary-200);
+  background: transparent;
+  border: var(--station-offcanvas-line) solid var(--immersive-focus);
+  border-radius: var(--radius-none);
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .station-offcanvas-trigger:hover {
+    border-color: var(--color-secondary-200);
+    background: var(--color-secondary-900);
+  }
+}
+.station-offcanvas-trigger:active { background: var(--color-secondary-800); }
+
+/* ---------- Layer: full-screen, below the shared idle warning ---------- */
+.station-offcanvas[hidden] { display: none; }
+.station-offcanvas {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  overflow: hidden;
+  isolation: isolate;
+}
+.station-offcanvas :where(h2, h3, p) { margin: 0; }
+/* Depth only through opacity: dimmed background, no blur, no shadow. */
+.station-offcanvas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--immersive-bg) var(--station-offcanvas-scrim), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-4) var(--ease-exit);
+}
+.station-offcanvas.is-open::before {
+  opacity: 1;
+  transition-timing-function: var(--ease-entrance);
+}
+.station-offcanvas__panel {
+  width: min(var(--station-offcanvas-width), calc(100% - var(--space-8)));
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--layer-surface-raised);
+  border: 0;
+  transform: translateX(-100%);
+  transition: transform var(--duration-4) var(--ease-exit);
+}
+.station-offcanvas.is-open .station-offcanvas__panel {
+  transform: translateX(0);
+  transition-timing-function: var(--ease-entrance);
+}
+
+/* ---------- Header: eyebrow, headline, close button; stays fixed while the text scrolls ---------- */
+.station-offcanvas__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border-bottom: var(--station-offcanvas-line) solid var(--layer-border);
+  flex-shrink: 0;
+}
+.station-offcanvas__eyebrow {
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--immersive-ink);
+}
+.station-offcanvas__eyebrow:empty { display: none; }
+.station-offcanvas__title {
+  font: 600 var(--font-size-h3)/1.2 var(--font-family-switzer), sans-serif;
+  letter-spacing: -.015em;
+  text-transform: none;
+  color: var(--immersive-ink);
+}
+.station-offcanvas__eyebrow:not(:empty) + .station-offcanvas__title { margin-top: var(--space-3); }
+.station-offcanvas__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  padding: 0;
+  color: var(--immersive-body);
+  background: transparent;
+  border: var(--station-offcanvas-line) solid var(--color-neutral-600);
+  border-radius: var(--radius-none);
+  cursor: pointer;
+}
+.station-offcanvas__close svg { width: var(--size-icon-lg); height: var(--size-icon-lg); }
+.station-offcanvas__close:active { color: var(--immersive-ink); border-color: var(--immersive-body); }
+@media (hover: hover) {
+  .station-offcanvas__close:hover { color: var(--immersive-ink); border-color: var(--immersive-body); }
+}
+.station-offcanvas-trigger:focus-visible,
+.station-offcanvas__close:focus-visible,
+.station-offcanvas__body:focus-visible {
+  outline: var(--station-offcanvas-focus) solid var(--immersive-focus);
+  outline-offset: var(--space-1);
+}
+
+/* ---------- Scroll area: native scrolling, native scrollbar replaced by the blue indicator ---------- */
+.station-offcanvas__scroll {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+.station-offcanvas__body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-6);
+  padding-bottom: var(--space-8);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  font: 400 var(--font-size-body-m)/1.5 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-body);
+}
+.station-offcanvas__body::-webkit-scrollbar { display: none; }
+.station-offcanvas__scrollbar {
+  position: relative;
+  flex: 0 0 var(--station-offcanvas-scrollbar);
+  width: var(--station-offcanvas-scrollbar);
+  margin: var(--space-6) var(--space-5) var(--space-6) 0;
+  background: color-mix(in srgb, var(--immersive-body) 18%, transparent);
+  touch-action: none;
+  cursor: pointer;
+}
+.station-offcanvas__scrollbar[hidden] { display: none; }
+/* 44 px hit area around the 8 px track. */
+.station-offcanvas__scrollbar::before {
+  content: '';
+  position: absolute;
+  inset: 0 -18px;
+}
+.station-offcanvas__scrollbar-thumb {
+  position: absolute;
+  inset: 0 0 auto;
+  min-height: var(--station-offcanvas-thumb-min);
+  background: var(--immersive-focus);
+  pointer-events: none;
+}
+.station-offcanvas__scrollbar.is-dragging .station-offcanvas__scrollbar-thumb { background: var(--color-secondary-400); }
+
+/* ---------- Content: lead, sections, highlight box ---------- */
+.station-offcanvas__body p { max-width: var(--station-offcanvas-measure); }
+.station-offcanvas__body > * + * { margin-top: var(--space-6); }
+.station-offcanvas__body p + p { margin-top: var(--space-5); }
+.station-offcanvas__lead { color: var(--immersive-ink); }
+.station-offcanvas__lead + .station-offcanvas__section { margin-top: var(--space-8); }
+.station-offcanvas__section-title {
+  margin-bottom: var(--space-3);
+  font: 600 var(--font-size-body-l)/1.3 var(--font-family-switzer), sans-serif;
+  text-transform: none;
+  color: var(--immersive-ink);
+}
+.station-offcanvas__body > .station-offcanvas__highlight {
+  margin-top: var(--space-8);
+  padding: var(--space-5);
+  background: var(--color-feedback-info-bg);
+  border: var(--station-offcanvas-line) solid var(--immersive-focus);
+  color: var(--immersive-ink);
+}
+.station-offcanvas__highlight-label {
+  margin-bottom: var(--space-3);
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
+  text-transform: var(--text-transform-dm-mono);
+  letter-spacing: .06em;
+  color: var(--color-feedback-info);
+}
+
+/* The screen underneath is inactive while reading. */
+body.has-station-offcanvas { overflow: hidden; }

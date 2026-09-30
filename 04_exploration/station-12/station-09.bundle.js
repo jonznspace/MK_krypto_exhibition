@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       ]
     },
     deepening: {
-      tag: 'A Closer Look',
+      tag: 'Deep dive',
       title: 'Company Money—from the VOC to PayPal and Stablecoins',
       paragraphs: [
         'The principle of company money extends far beyond the VOC. In the 19th century, companies in some regions paid their workers in company-issued tokens or vouchers that could be redeemed only at company stores. This practice is known as the truck system or payment in scrip. This overt form of dependence was eventually outlawed.',

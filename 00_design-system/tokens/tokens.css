@@ -2,6 +2,8 @@
   SKD Krypto design tokens.
   Source: Figma file xdc82fp188ssSV45Y7LKhz, node 726:2224.
   Refreshed from local Figma variables on 2026-08-06.
+  Since 2026-09-30 code leads: the type scale below was tuned on the installed
+  landscape tablets (Station 01) and is no longer a pure Figma export.
 */
 
 /* Self-hosted webfonts (Family-Namen = --font-family-* Tokens). Muss vor :root stehen. */
@@ -106,15 +108,15 @@
   --font-size-display: 96px;
   --font-size-h1: 64px;
   --font-size-h2: 48px;
-  --font-size-h3: 32px;
-  --font-size-h4: 26px;
+  --font-size-h3: 36px;
+  --font-size-h4: 28px;
   --font-size-h5: 22px;
-  --font-size-label: 19px;
+  --font-size-label: 16px;
   --font-size-body-l: 24px;
   --font-size-body-m: 20px;
   --font-size-body-s: 15px;
   --font-size-caption-l: 24px;
-  --font-size-caption-m: 15px;
+  --font-size-caption-m: 14px;
   --font-size-caption-s: 12px;
 
   --color-text-primary: var(--color-neutral-900);
@@ -262,7 +264,7 @@
     --font-size-h3: 28px;
     --font-size-h4: 22px;
     --font-size-h5: 20px;
-    --font-size-label: 17px;
+    --font-size-label: 16px;
     --font-size-body-l: 22px;
     --font-size-body-m: 18px;
     --font-size-body-s: 15px;

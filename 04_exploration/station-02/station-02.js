@@ -53,7 +53,7 @@
       plaintext: 'Plaintext', ciphertext: 'Ciphertext', letters: 'Enter letters', clear: 'Clear',
       crackHint: 'An intercepted message. Turn the disc until a meaningful word appears.', intercepted: 'Intercepted',
       decrypted: 'Decrypted', turnKey: 'Turn the key ...', cracked: 'CRACKED · Key A → ', newMessage: 'New message',
-      more: 'More encryption methods', deepTag: 'A Closer Look', deepTitle: 'Other Encryption Methods',
+      more: 'More encryption methods', deepTag: 'Deep dive', deepTitle: 'Other Encryption Methods',
       deepText: 'Other tools made encryption more complex. These included cipher tables and codebooks known as nomenclators, in which names, places, or entire words were replaced with other symbols. From the 15th century onward, such methods played a particularly important role in European diplomacy, which relied on extensive networks of traveling couriers and envoys. In “black chambers,” royal courts encrypted messages and deciphered intercepted correspondence. The Saxon court also had a “black chamber,” located within the postal office itself so that incoming and outgoing letters could be monitored. Such practices remained commonplace in East Germany during the Cold War. Today, the privacy of correspondence is explicitly protected by Germany’s constitution, although digitization and the privatization of postal and communications services are weakening that protection.',
       attract: 'Turn the disc', solvedToast: 'Message cracked', disc: 'Cryptographic disc with outer and inner alphabets. The inner disc can be rotated.',
       rotateLeft: 'Turn the inner disc one step left', rotateRight: 'Turn the inner disc one step right', closeOverlay: 'Close'
