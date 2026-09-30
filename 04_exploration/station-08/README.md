@@ -123,5 +123,7 @@ Button unten rechts, beide mit `--space-6` Abstand zum Rand.
 
 ### Offen
 
-- **Nicht übersetzt:** „Mehr erfahren“ und das Stations-Thema „Neue Entwicklungen“ bleiben im
-  EN-Modus deutsch (kein freigegebener Begriff).
+- **Nicht übersetzt:** Das Stations-Thema „Neue Entwicklungen“ bleibt im EN-Modus deutsch
+  (Vorschlag „New developments“ auf der Freigabe-Seite, noch offen).
+- „Mehr erfahren“ → „Learn more“ (2026-09-30, auf Anweisung; Vorschlag der Freigabe-Seite),
+  eingetragen in `shared/js/station-language-switch.js` (`EXACT_TRANSLATIONS`).

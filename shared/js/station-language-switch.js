@@ -69,6 +69,7 @@
     'Modul C': 'Module C',
     'Interaktion': 'Interaction',
     'Vertiefung': 'Deep dive',
+    'Mehr erfahren': 'Learn more',
     'Botschaft geknackt': 'Message cracked'
   };
 
