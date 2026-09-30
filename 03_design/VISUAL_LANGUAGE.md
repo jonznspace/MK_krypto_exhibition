@@ -164,17 +164,24 @@ Switzer/Panchang sind Variable Fonts, DM Mono statisch. **Baton Turbo** ist aktu
 Token referenziert, aber noch nicht als Font hinterlegt (nicht als Display-Font einsetzen,
 solange keine Datei vorliegt). Details: [tokens/README](../00_design-system/tokens/README.md).
 
-| Rolle | Token | Desktop |
-|-------|-------|---------|
-| Display | `font-size/display` | 96 |
-| Headline 1 | `font-size/h1` | 64 |
-| Headline 2 | `font-size/h2` | 48 |
-| Headline 3 | `font-size/h3` | 32 |
-| Headline 4 | `font-size/h4` | 26 |
-| Headline 5 | `font-size/h5` | 22 |
-| Body L / M / S | `font-size/body-l|m|s` | 24 / 20 / 15 |
-| Label | `font-size/label` | 19 |
-| Caption L / M / S | `font-size/caption-l|m|s` | 24 / 15 / 12 |
+Werte aus `tokens.css` (Code ist seit 2026-09-30 führend). Stufe nach Viewport:
+Phone < 768 px breit · Tablet 768–1439 px · Desktop ≥ 1440 px sowie hohe Screens (G4).
+
+| Rolle | Token | Desktop | Tablet | Phone |
+|-------|-------|---------|--------|-------|
+| Display | `font-size/display` | 96 | 72 | 56 |
+| Headline 1 | `font-size/h1` | 64 | 48 | 40 |
+| Headline 2 | `font-size/h2` | 48 | 38 | 32 |
+| Headline 3 | `font-size/h3` | 36 | 28 | 24 |
+| Headline 4 | `font-size/h4` | 28 | 22 | 20 |
+| Headline 5 | `font-size/h5` | 22 | 20 | 18 |
+| Body XL · nur Station 08 (Stele, Einführungstext) | `font-size/body-xl` | 32 | 28 | 24 |
+| Body L / M / S | `font-size/body-l\|m\|s` | 24 / 20 / 15 | 22 / 18 / 15 | 20 / 17 / 14 |
+| Label | `font-size/label` | 16 | 16 | 16 |
+| Caption L / M / S | `font-size/caption-l\|m\|s` | 24 / 14 / 12 | 20 / 14 / 12 | 18 / 13 / 11 |
+
+- h3, h4, Label und Caption M wurden auf den installierten Quer-Tablets (Station 01)
+  nachjustiert und weichen von den ursprünglichen Figma-Variablen ab. Body XL gibt es nur im Code.
 
 - **T1 [MUST]** Headlines sind versal, schwer, kondensiert (Display-Font). Mono (`DM Mono`)
   trägt Labels, Codes, Metadaten (Stations-Tag, „ANZEIGE DES…", Walzen-Werte). (SHAPE SH13)
@@ -194,6 +201,10 @@ solange keine Datei vorliegt). Details: [tokens/README](../00_design-system/toke
   Paddings, Gutters ausschließlich aus dieser Skala.
 - **G3 [SHOULD]** Layout atmet — Reduktion heißt auch großzügiger Negativraum auf Schwarz.
 - Breakpoints: `viewport/phone` 375 · `viewport/tablet` 768 · `viewport/desktop` 1440.
+- **G4 [MUST]** Hohe Screens bekommen die Desktop-Typo: mindestens **1000 px breit und
+  1700 px hoch** (Stele 1080 × 1920). Hochformat-Tablets (864 × 1563) bleiben in der
+  Tablet-Stufe. Umgesetzt in `tokens.css` (Media-Query der Tablet-Stufe).
+  · Die Stele wird aus größerer Distanz gelesen als das Tablet; nach Breite allein wäre sie Tablet.
 
 ---
 
@@ -254,6 +265,8 @@ immer mit sichtbarer Entsprechung (A6). Ambient-Soundscape siehe [SITE_VISIT §S
 - Quelle: `00_design-system/tokens/tokens.json` + `tokens.css`.
 - Relevante Collections: `Primitives`, `Semantic`, `Typography`, `Motion`, `Sound`,
   `Immersive`.
-- Neu ggü. Figma-Export: Primitive `neutral/850` (#0A0A0A) + Collections `Motion`, `Sound`,
-  `Immersive` (authored, Farben als Alias auf die Primitives).
+- `Motion`, `Sound` und `Immersive` existieren auch als Figma-Collections; die
+  Immersive-Farben sind Aliase auf die Primitives (`neutral/850` #1A1C23, `neutral/875` #0B0B0F …).
 - Diese sind auch als **Figma-Variablen** in der Datei angelegt (Code-Syntax `var(--…)`).
+- **Code ist führend** (seit 2026-09-30). Figma war der Ausgangspunkt; Abweichungen in der
+  Typografie (§5) und die Stufen-Regel für hohe Screens (G4) stehen nur im Code.

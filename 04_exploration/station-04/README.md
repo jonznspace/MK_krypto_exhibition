@@ -119,3 +119,16 @@ Headline, Schließen-Button und Hintergrundbild sind unverändert.
   Demo-Werte „XLWS“ / Lampe „H“ im Inhaltsobjekt. Vor dem ersten Tastendruck sind Eingabe und
   Ausgabe leer; die Felder behalten ihre Höhe (`.io-val` mit `min-height`).
 - `index.html`: `station-04.js?v=9`.
+
+## Enigma-Screen: Headline und Rand wie Station 01–03 (2026-09-30)
+
+| Element | vorher | jetzt (wie `../station-03/`) |
+| --- | --- | --- |
+| Außenabstand | `clamp(24–40px)`, ≤ 900 px hoch `32px 40px` | `--space-6` (32) ringsum |
+| Headline | 68 px, Zeilenhöhe .92, `margin-top` 10 px, −0,01em / Wortabstand .24em | `--font-size-h3`, Zeilenhöhe 1,2, −0,035em, Wortabstand .3em, `.title-word` ohne Abstand rechts |
+| Headline ≤ 760 px | `clamp(38–56px)`, jedes Wort eine Zeile | entfernt, Größe nur über das Token |
+| Kopfzeile | 73 px hoch, × bei 42 / 40 vom Rand | 52 px hoch, × bündig bei 32 / 32 |
+
+- Gemessen bei 1563 × 864: identisch mit Station 03 (Titel x 32 / y 36, × x 1479 / y 32).
+- `.action-hdr-copy { flex: 1; min-width: 0; }` wie Station 03.
+- `index.html`: `station-04.css?v=11`.

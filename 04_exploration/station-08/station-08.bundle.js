@@ -1,37 +1,3 @@
-// Minimal base behaviors for station pages
-document.addEventListener('DOMContentLoaded',()=>{
-  // Simple content binding helpers for the template
-  const bind = (id, value)=>{ const el=document.getElementById(id); if(!el) return; if(el.tagName==='IMG') el.src=value; else el.textContent=value }
-  // Default demo content (override in station-specific script)
-  bind('startTitle','Titel der Station 08');
-  const intro=document.getElementById('startIntro'); if(intro) intro.innerHTML='<p>Ein einführender Text für Station 08. Ersetze diesen Inhalt mit station-spezifischem JS.</p>';
-  // CTA label
-  bind('tryLabel','Ausprobieren');
-  // basic UI: toggle screens
-  const btnTry=document.getElementById('btnTry'); const screenStart=document.getElementById('screenStart'); const screenAction=document.getElementById('screenAction'); const btnClose=document.getElementById('btnClose');
-  if(btnTry && screenStart && screenAction){btnTry.addEventListener('click',()=>{screenStart.classList.add('hidden');screenAction.classList.remove('hidden')})}
-  if(btnClose && screenStart && screenAction){btnClose.addEventListener('click',()=>{screenAction.classList.add('hidden');screenStart.classList.remove('hidden')})}
-
-  const moduleTabs = [
-    ['tabModuleA', 'moduleA'],
-    ['tabModuleB', 'moduleB'],
-    ['tabModuleC', 'moduleC']
-  ];
-  moduleTabs.forEach(([tabId, panelId])=>{
-    const tab = document.getElementById(tabId);
-    if(!tab) return;
-    tab.addEventListener('click',()=>{
-      moduleTabs.forEach(([otherTabId, otherPanelId])=>{
-        const otherTab = document.getElementById(otherTabId);
-        const otherPanel = document.getElementById(otherPanelId);
-        const active = otherTabId === tabId;
-        otherTab.classList.toggle('active', active);
-        otherTab.setAttribute('aria-selected', String(active));
-        otherPanel.classList.toggle('hidden', !active);
-      });
-    });
-  });
-});
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -193,57 +159,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function appendTimeline(section, detail) {
+  function appendParagraph(parent, text) {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = text;
+    parent.appendChild(paragraph);
+  }
+
+  // Zäsuren und Geldformen teilen sich eine Zeitleiste: Titel, darunter ein oder mehrere Absätze.
+  function appendTimeline(entries, detail) {
     const timeline = document.createElement('div');
     timeline.className = 'money-timeline';
-    section.items.forEach(([date, text]) => {
+    entries.forEach(([title, ...texts]) => {
       const item = document.createElement('section');
       item.className = 'money-timeline__item';
-      const time = document.createElement('strong');
-      time.textContent = date;
-      const paragraph = document.createElement('p');
-      paragraph.textContent = text;
-      item.append(time, paragraph);
+      const heading = document.createElement('h3');
+      heading.className = 'money-timeline__title';
+      heading.textContent = title;
+      item.appendChild(heading);
+      texts.forEach(text => appendParagraph(item, text));
       timeline.appendChild(item);
     });
     detail.appendChild(timeline);
   }
 
-  function appendForms(section, detail) {
-    section.intro.forEach(text => {
-      const paragraph = document.createElement('p');
-      paragraph.className = 'money-detail__intro';
-      paragraph.textContent = text;
-      detail.appendChild(paragraph);
-    });
-    const grid = document.createElement('div');
-    grid.className = 'money-form-grid';
-    section.items.forEach(([title, shape, backing]) => {
-      const item = document.createElement('section');
-      item.className = 'money-form';
-      const heading = document.createElement('h3');
-      heading.textContent = title;
-      const shapeText = document.createElement('p');
-      shapeText.textContent = shape;
-      const backingText = document.createElement('p');
-      backingText.textContent = backing;
-      item.append(heading, shapeText, backingText);
-      grid.appendChild(item);
-    });
-    detail.appendChild(grid);
-  }
-
   function fillDeepDiveBody(section, body) {
-    if (section.type === 'timeline') appendTimeline(section, body);
-    else if (section.type === 'forms') appendForms(section, body);
-    else appendText(section, body);
+    if (section.type === 'timeline' || section.type === 'forms') {
+      (section.intro || []).forEach(text => appendParagraph(body, text));
+      appendTimeline(section.items, body);
+    } else {
+      appendText(section, body);
+    }
   }
 
+  // Immer nur eine Vertiefung offen; die geöffnete rückt an den Anfang des Scrollbereichs.
   function toggleDeepDive(index) {
+    const list = $('deepdiveList');
     document.querySelectorAll('.deepdive-item').forEach((item, itemIndex) => {
       const isOpen = itemIndex === index ? item.classList.toggle('open') : item.classList.remove('open');
       item.querySelector('.deepdive-header').setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) list.scrollTop = item.offsetTop;
     });
+  }
+
+  function closeDeepDives() {
+    document.querySelectorAll('.deepdive-item').forEach(item => {
+      item.classList.remove('open');
+      item.querySelector('.deepdive-header').setAttribute('aria-expanded', 'false');
+    });
+    $('deepdiveList').scrollTop = 0;
   }
 
   function renderDeepDives(language) {
@@ -251,30 +214,54 @@ document.addEventListener('DOMContentLoaded', () => {
     list.innerHTML = '';
     const sections = language === 'en' ? englishDeepDives : deepDives;
     sections.forEach((section, index) => {
-    const item = document.createElement('section');
-    item.className = 'deepdive-item';
+      const item = document.createElement('section');
+      item.className = 'deepdive-item';
 
-    const header = document.createElement('button');
-    header.className = 'deepdive-header';
-    header.type = 'button';
-    header.setAttribute('aria-expanded', 'false');
-    header.innerHTML = `<span class="deepdive-header-copy"><span>${section.kicker}</span><strong>${section.title}</strong></span><span class="deepdive-chevron">⌄</span>`;
-    header.addEventListener('click', () => toggleDeepDive(index));
+      const header = document.createElement('button');
+      header.className = 'deepdive-header';
+      header.type = 'button';
+      header.setAttribute('aria-expanded', 'false');
+      const kicker = document.createElement('span');
+      kicker.className = 'deepdive-kicker';
+      kicker.textContent = section.kicker;
+      const title = document.createElement('strong');
+      title.className = 'deepdive-title';
+      title.textContent = section.title;
+      header.append(kicker, title);
+      header.addEventListener('click', () => toggleDeepDive(index));
 
-    const panel = document.createElement('div');
-    panel.className = 'deepdive-panel';
-    const panelInner = document.createElement('div');
-    panelInner.className = 'deepdive-panel-inner';
-    const body = document.createElement('div');
-    body.className = 'deepdive-body';
-    fillDeepDiveBody(section, body);
-    panelInner.appendChild(body);
-    panel.appendChild(panelInner);
+      const panel = document.createElement('div');
+      panel.className = 'deepdive-panel';
+      const body = document.createElement('div');
+      body.className = 'deepdive-body';
+      fillDeepDiveBody(section, body);
+      panel.appendChild(body);
 
-    item.append(header, panel);
+      item.append(header, panel);
       list.appendChild(item);
     });
   }
+
+  // Start ↔ Vertiefung. Schließen setzt die Vertiefung zurück, damit der nächste Besuch oben beginnt.
+  $('btnTry').addEventListener('click', () => {
+    $('screenStart').classList.add('hidden');
+    $('screenAction').classList.remove('hidden');
+  });
+  $('btnClose').addEventListener('click', () => {
+    closeDeepDives();
+    $('screenAction').classList.add('hidden');
+    $('screenStart').classList.remove('hidden');
+  });
+
+  // Blauer Scroll-Indikator wie in der Leseansicht, je Scrollbereich ein eigener.
+  document.querySelectorAll('.scroll-area').forEach(area => {
+    const track = area.querySelector('.station-offcanvas__scrollbar');
+    window.StationOffcanvas.scrollIndicator(
+      area.querySelector('.scroll-area__scroller'),
+      track,
+      track.querySelector('.station-offcanvas__scrollbar-thumb')
+    );
+  });
 
   let appliedLanguage = null;
   function renderContent(language) {

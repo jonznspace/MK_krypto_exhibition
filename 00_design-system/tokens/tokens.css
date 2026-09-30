@@ -112,6 +112,8 @@
   --font-size-h4: 28px;
   --font-size-h5: 22px;
   --font-size-label: 16px;
+  /* body-xl: nur Station 08 (Stele, Einführungstext). */
+  --font-size-body-xl: 32px;
   --font-size-body-l: 24px;
   --font-size-body-m: 20px;
   --font-size-body-s: 15px;
@@ -247,6 +249,7 @@
     --font-size-h4: 20px;
     --font-size-h5: 18px;
     --font-size-label: 16px;
+    --font-size-body-xl: 24px;
     --font-size-body-l: 20px;
     --font-size-body-m: 17px;
     --font-size-body-s: 14px;
@@ -256,7 +259,13 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
+/* Tablet-Stufe: 768–1439 px breit, AUSSER hohe Screens.
+   Hoher Screen = mindestens 1000 px breit UND mindestens 1700 px hoch
+   (Stele 1080 × 1920). Dort greift keine der beiden Regeln, es bleiben die
+   Desktop-Werte aus :root. Hochformat-Tablets (864 × 1563) sind schmaler als
+   1000 px und bleiben in der Tablet-Stufe. */
+@media (min-width: 768px) and (max-width: 999px),
+       (min-width: 1000px) and (max-width: 1439px) and (max-height: 1699px) {
   :root {
     --font-size-display: 72px;
     --font-size-h1: 48px;
@@ -265,6 +274,7 @@
     --font-size-h4: 22px;
     --font-size-h5: 20px;
     --font-size-label: 16px;
+    --font-size-body-xl: 28px;
     --font-size-body-l: 22px;
     --font-size-body-m: 18px;
     --font-size-body-s: 15px;
