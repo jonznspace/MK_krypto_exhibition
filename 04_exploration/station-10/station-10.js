@@ -1,12 +1,7 @@
-/* Station 8 content and overlay */
+'use strict';
 (function () {
-  const STATION_CONTENT = {
-    meta: {
-      title: 'Station 08 · Scheitern ohne Regeln',
-      ariaLabel: 'Station 08 – Scheitern ohne Regeln'
-    },
-    start: {
-      eyebrow: 'Scheitern ohne Regeln',
+  const CONTENT = {
+    de: {
       title: 'Palmstruch und die Stockholms Banco',
       intro: [
         'Schweden bezahlte im 17. Jahrhundert mit Kupferplatten. Sie wogen bis zu 20 Kilogramm, was das Problem unmittelbar verdeutlicht: Dieses Geld war schwer, unhandlich und im Alltag kaum zu gebrauchen.',
@@ -14,13 +9,6 @@
         'Anfangs funktionierte das System. Die Zettel waren viel leichter und handlicher als die Platten. Der Zahlungsverkehr konnte zudem schneller abgewickelt werden. Doch es fehlte als essenzieller Bestandteil eine Regulierung der Emissionen: Niemand kontrollierte, wie viele Scheine die Bank ausgab. Palmstruch ließ mehr drucken, als durch Einlagen gedeckt waren. Als sich das herumsprach und das Vertrauen in die Einlösbarkeit schwand, verlangten viele Menschen gleichzeitig Münzgeld für ihre Scheine zurück. Diesen Forderungen konnte die Bank nicht nachkommen. Bereits 1664 ordnete die Regierung an, die ausgegebenen Kredite zurückzufordern und die Banknoten einzuziehen. Palmstruch wurde zunächst zum Tode verurteilt, später aber zu einer Gefängnisstrafe begnadigt.',
         'Aus diesem Scheitern zog Schweden eine Konsequenz: Die Leitung der Nachfolgeeinrichtung der Stockholms Banco, die Riksens Ständers Bank, die heutige Schwedische Nationalbank (Sveriges Riksbank), wurde nicht mehr einem privaten Unternehmer überlassen, sondern unter die Aufsicht des Parlaments gestellt. Sie gilt als älteste noch bestehende Zentralbank der Welt.'
       ],
-      image: { src: 'dither-output.png', alt: '' }
-    },
-    action: {
-      eyebrow: 'Vorlage',
-      title: 'Ausprobieren',
-      description: 'Platzhalterbereich ohne Zirkel-Logik. Diesen Bereich kannst du als Basis für neue Stationen nutzen.',
-      closeLabel: 'Zur Startansicht',
       deepening: {
         tag: 'Vertiefung',
         title: 'Bank Runs – damals und heute',
@@ -30,50 +18,42 @@
           'Anders als bei Banken gab es bei TerraUSD jedoch keine Einlagensicherung, keine Aufsichtsbehörde, die hätte eingreifen können, keinen Staat, der haftete. Es ist einer der Gründe, warum die Europäische Union mit der MiCA-Verordnung Regulierungsstrukturen schafft. Dies ist vergleichbar mit der Konsequenz, die Schweden 1668 zog, als es die Bankaufsicht dem Parlament unterstellte.'
         ]
       }
-    }
-  };
-
-  const ENGLISH_CONTENT = {
-    start: {
+    },
+    en: {
       title: 'Palmstruch and Stockholms Banco',
       intro: [
         'In the 17th century, Sweden used copper plates as money. They weighed up to 20 kilograms, making the problem immediately apparent: this money was heavy, cumbersome, and barely practical for everyday use.',
         'In 1656, Johan Palmstruch, a merchant from Riga, received permission from the Swedish king to establish a bank. From 1661, Stockholms Banco issued what were known as credit notes; Europe’s first banknotes. They made payments easier, removing the need to transport and hand over heavy copper plates with every transaction. The notes were not tied to a specific copper deposit but were issued as loans. The bank promised to redeem them in coins on demand. This marked the beginning of paper money in Europe.',
         'At first, the system worked. The notes were much lighter and easier to handle than the plates. Payments could also be processed more quickly. But an essential safeguard was missing: regulation of the issuance of banknotes. No one controlled how many notes the bank issued. Palmstruch had printed more than were backed by deposits. When word spread and confidence in their redeemability declined, many people demanded coins for their notes at the same time. The bank could not meet these demands. As early as 1664, the government ordered the bank to call in its loans and withdraw its banknotes from circulation. Palmstruch was initially sentenced to death, but his sentence was later commuted to imprisonment.',
         'Sweden drew a lesson from this failure: the management of Stockholms Banco’s successor, Riksens Ständers Bank, today Sweden’s central bank, Sveriges Riksbank, was placed under parliamentary oversight rather than entrusted to a private entrepreneur. It is regarded as the world’s oldest surviving central bank.'
-      ]
-    },
-    deepening: {
-      tag: 'Deep dive',
-      title: 'Bank Runs—Then and Now',
-      paragraphs: [
-        'What happened in Stockholm in the 1660s has a name still used today: a bank run. This occurs when confidence in a bank declines and too many people try to withdraw their money at the same time. If the bank cannot meet these demands quickly enough, uncertainty intensifies.',
-        'The same dynamic can be observed with digital tokens. In May 2022, the stablecoin TerraUSD lost its peg to the US dollar within a matter of days. The system collapsed, and its associated token, Luna, became virtually worthless. An estimated $45 billion in asset value was lost.',
-        'Unlike banks, however, TerraUSD had no deposit insurance, no supervisory authority that could have intervened, and no government liable for the losses. This is one reason why the European Union is establishing a regulatory framework through its Markets in Crypto-Assets Regulation (MiCA). A parallel can be drawn with Sweden’s response in 1668, when it placed bank oversight under parliament.'
-      ]
+      ],
+      deepening: {
+        tag: 'Deep dive',
+        title: 'Bank Runs—Then and Now',
+        paragraphs: [
+          'What happened in Stockholm in the 1660s has a name still used today: a bank run. This occurs when confidence in a bank declines and too many people try to withdraw their money at the same time. If the bank cannot meet these demands quickly enough, uncertainty intensifies.',
+          'The same dynamic can be observed with digital tokens. In May 2022, the stablecoin TerraUSD lost its peg to the US dollar within a matter of days. The system collapsed, and its associated token, Luna, became virtually worthless. An estimated $45 billion in asset value was lost.',
+          'Unlike banks, however, TerraUSD had no deposit insurance, no supervisory authority that could have intervened, and no government liable for the losses. This is one reason why the European Union is establishing a regulatory framework through its Markets in Crypto-Assets Regulation (MiCA). A parallel can be drawn with Sweden’s response in 1668, when it placed bank oversight under parliament.'
+        ]
+      }
     }
   };
 
   const $ = id => document.getElementById(id);
 
-  function setText(id, value) { $(id).textContent = value; }
+  function currentLanguage() {
+    return document.documentElement.dataset.language === 'en' ? 'en' : 'de';
+  }
 
   function setTitle(id, value) {
     const title = $(id);
-    const characterCount = value.replace(/\s/g, '').length;
-    title.classList.toggle('title--medium', id === 'startTitle' && characterCount >= 20 && characterCount < 39);
-    title.classList.toggle('title--long', id === 'startTitle' && characterCount >= 39);
-    const words = value.split(' ');
     title.innerHTML = '';
-
-    words.forEach((word, index) => {
+    value.split(' ').forEach((word, index, words) => {
       const wordNode = document.createElement('span');
       wordNode.className = 'title-word';
       wordNode.textContent = word;
       title.appendChild(wordNode);
-      if (index < words.length - 1) {
-        title.appendChild(document.createTextNode(' '));
-      }
+      if (index < words.length - 1) title.appendChild(document.createTextNode(' '));
     });
   }
 
@@ -87,45 +67,49 @@
     });
   }
 
-  function renderStation(content, language) {
-    document.title = content.meta.title;
-    $('frame').setAttribute('aria-label', content.meta.ariaLabel);
-
-    const start = language === 'en' ? ENGLISH_CONTENT.start : content.start;
-    const deepening = language === 'en' ? ENGLISH_CONTENT.deepening : content.action.deepening;
-    setTitle('startTitle', start.title);
-    renderParagraphs('startIntro', start.intro);
-
-    const startImage = $('startImage');
-    startImage.src = content.start.image.src;
-    startImage.alt = content.start.image.alt;
-
-    // also populate overlay content
-    const ovTag = document.getElementById('ovTag'); if(ovTag) ovTag.textContent = deepening.tag;
-    const ovTitle = document.getElementById('ovTitle'); if(ovTitle) ovTitle.textContent = deepening.title;
-    const ovBody = document.getElementById('ovBody'); if(ovBody) { ovBody.innerHTML = ''; deepening.paragraphs.forEach(p=>{ const el=document.createElement('p'); el.textContent=p; ovBody.appendChild(el); }); }
+  // Der Sprachschalter setzt data-language nach jeder DOM-Änderung erneut
+  // (gleicher Wert). Nur bei echtem Wechsel neu aufbauen, sonst Endlosschleife.
+  let renderedLanguage = null;
+  function render() {
+    const language = currentLanguage();
+    if (language === renderedLanguage) return;
+    renderedLanguage = language;
+    const content = CONTENT[language];
+    setTitle('startTitle', content.title);
+    // Start zeigt nur den ersten Absatz; der volle Text steht in der Leseansicht.
+    renderParagraphs('startIntro', content.intro.slice(0, 1));
   }
 
-  // Deepen button opens the overlay directly over the start screen
-  const btnDeepen = document.getElementById('btnDeepen');
-    const openDeepeningOverlay = ()=>{
-      const overlay = document.getElementById('overlay'); if(!overlay) return; overlay.setAttribute('aria-hidden','false'); overlay.style.display='flex'; document.body.classList.add('overlay-open');
+  render();
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+
+  // Geteilte Leseansicht (shared/js/station-offcanvas.js) von links: Absatz 1 als Lead,
+  // Absatz 2 bis 4 darunter, ohne Zwischenüberschrift und ohne Infobox.
+  const readingContent = language => ({
+    title: CONTENT[language].title,
+    lead: CONTENT[language].intro[0],
+    sections: [{ text: CONTENT[language].intro.slice(1) }]
+  });
+  StationOffcanvas.create({
+    trigger: $('btnReadMore'),
+    content: { de: readingContent('de'), en: readingContent('en') }
+  });
+
+  // Vertiefung: dieselbe Leseansicht von rechts, geöffnet über den CTA mit Glühbirne.
+  // Die Komponente schreibt die Beschriftung in [data-offcanvas-label], das Icon bleibt.
+  const deepeningContent = language => {
+    const deepening = CONTENT[language].deepening;
+    return {
+      eyebrow: deepening.tag,
+      title: deepening.title,
+      sections: [{ text: deepening.paragraphs }],
+      labels: { open: deepening.tag, region: deepening.tag }
     };
-    if(btnDeepen){ btnDeepen.addEventListener('click', openDeepeningOverlay); }
-    const ovClose = document.getElementById('ovClose'); if(ovClose){ ovClose.addEventListener('click', ()=>{ const overlay=document.getElementById('overlay'); if(!overlay) return; overlay.setAttribute('aria-hidden','true'); overlay.style.display='none'; document.body.classList.remove('overlay-open'); }); }
-    const overlay = document.getElementById('overlay');
-    if(overlay){ overlay.addEventListener('click', event=>{ if(event.target === overlay && ovClose) ovClose.click(); }); }
-
-  let appliedLanguage = null;
-  function applyLanguage() {
-    const language = document.documentElement.dataset.language === 'en' ? 'en' : 'de';
-    if (language === appliedLanguage) return;
-    appliedLanguage = language;
-    renderStation(STATION_CONTENT, language);
-  }
-
-  applyLanguage();
-  new MutationObserver(mutations => {
-    if (mutations.some(mutation => mutation.attributeName === 'data-language')) applyLanguage();
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-language'] });
+  };
+  StationOffcanvas.create({
+    trigger: $('btnDeepen'),
+    id: 'stationDeepDive',
+    side: 'right',
+    content: { de: deepeningContent('de'), en: deepeningContent('en') }
+  });
 })();

@@ -50,6 +50,10 @@ Typografie und Verhalten sind fest.** Pro Station ändert sich nur der Inhalt.
 
    Abstände zum umgebenden Layout (z. B. `margin-top`) legt die Station fest.
 
+   Ein Trigger mit eigenem Markup (z. B. CTA mit Icon) markiert sein Label mit
+   `data-offcanvas-label`. Die Komponente schreibt dann nur dort hinein und lässt das Icon stehen.
+   Referenz: Vertiefung von rechts in `04_exploration/station-10/`.
+
 3. **Script** nach dem Sprachumschalter, vor dem Stations-Script:
 
    ```html

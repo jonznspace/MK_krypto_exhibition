@@ -1,0 +1,208 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  background: var(--immersive-bg);
+  font-family: var(--font-family, "Switzer"), system-ui, sans-serif;
+  color: var(--immersive-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#scaler {
+  min-height: 100dvh;
+  background: var(--immersive-bg);
+}
+
+#frame {
+  width: 100%;
+  min-height: 100dvh;
+  background: var(--immersive-bg);
+  position: relative;
+  overflow-x: clip;
+}
+
+.screen { min-height: 100dvh; }
+.screen.hidden { display: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* Titel-Schrift; Größe, Zeilenhöhe und Laufweite in .title--hero. */
+.title {
+  font-family: var(--font-family-panchang), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.title-word { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+
+/* =========================================================================
+   Startbildschirm — Maße, Abstände und Typografie wie Station 03 und 09,
+   nur Tokens. Start zeigt Absatz 1, „Weiterlesen“ öffnet die Leseansicht
+   von links, der CTA „Vertiefung“ die Vertiefung von rechts. Keine Aktion.
+   ========================================================================= */
+.screen-start {
+  position: relative;
+  height: 100dvh;
+  min-height: 0;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* DE/EN: große Touchflächen, aktive Sprache mit oranger Schrift und Unterkante. */
+#frame > .station-language-switch {
+  top: var(--space-6);
+  right: var(--space-6);
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+#frame > .station-language-switch .station-language-switch__button {
+  min-width: var(--size-control-lg);
+  min-height: var(--size-control-lg);
+  padding-inline: var(--space-4);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  border-bottom: 2px solid transparent;
+}
+
+#frame > .station-language-switch .station-language-switch__button.is-active {
+  background: var(--state-selected-surface);
+  color: var(--immersive-accent);
+  border-bottom-color: var(--immersive-accent);
+}
+
+#frame > .station-language-switch .station-language-switch__button:focus-visible {
+  outline: 2px solid var(--immersive-focus);
+  outline-offset: var(--space-1);
+}
+
+.station-marker {
+  display: inline-flex;
+  align-items: stretch;
+  align-self: flex-start;
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-family-dm-mono);
+  font-size: var(--font-size-caption-m);
+  line-height: 1.4;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-body);
+}
+
+.station-marker__station,
+.station-marker__topic {
+  display: flex;
+  align-items: center;
+  height: var(--space-6);
+  padding-inline: var(--space-3);
+}
+
+.station-marker__station { background: var(--immersive-accent); color: var(--immersive-bg); }
+.station-marker__topic { background: var(--color-neutral-850); }
+
+.start-copy {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-8);
+  display: flex;
+  flex-direction: column;
+}
+
+/* H1: eine Größe (Token h1), unabhängig von der Titellänge. */
+.screen-start .title--hero {
+  width: 100%;
+  max-width: 100%;
+  margin-top: var(--space-5);
+  font-size: var(--font-size-h1);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  /* Panchang ist breit: ohne Extra-Wortabstand laufen die Wörter ineinander. */
+  word-spacing: .3em;
+  white-space: normal;
+}
+
+/* Start zeigt nur Absatz 1 (body-l, weiß), wie Station 03. */
+.hero-summary {
+  width: 820px;
+  max-width: 100%;
+  margin-top: var(--space-5);
+}
+.hero-text p {
+  max-width: 64ch;
+  font-size: var(--font-size-body-l);
+  line-height: 1.45;
+  color: var(--immersive-ink);
+}
+/* „Weiterlesen“ und die Leseansicht kommen aus shared/css/station-offcanvas.css;
+   lokal nur die Platzierung. */
+.station-offcanvas-trigger { margin-top: var(--space-8); }
+
+/* Bild: Banknote Stockholms Banco rechts unten, gedämpft (Platzierung wie Station 03). */
+.start-visual {
+  position: absolute;
+  right: -160px;
+  top: -20px;
+  bottom: 0;
+  width: 1180px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .28;
+}
+
+.station-image {
+  width: 100%;
+  height: auto;
+  max-height: 1020px;
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* CTA „Vertiefung“ mit Glühbirne, wie der CTA in Station 03: durchgehend blau,
+   auch Hover und gedrückt. Öffnet die Vertiefung von rechts. */
+.cta {
+  position: absolute;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 3;
+  display: flex;
+  align-items: stretch;
+  border: none;
+  background: var(--immersive-focus);
+  color: var(--immersive-ink);
+  transition: background var(--duration-1) var(--ease-standard);
+}
+
+.cta-label {
+  display: flex;
+  align-items: center;
+  min-height: var(--size-control-lg);
+  padding-inline: var(--space-5);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+}
+
+.cta-icon {
+  display: grid;
+  place-items: center;
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  border-left: 1px solid var(--color-secondary-300);
+}
+
+.cta-icon img { width: var(--size-icon-lg); height: var(--size-icon-lg); filter: brightness(0) invert(1); }
+@media (hover: hover) {
+  .cta:hover { background: var(--color-secondary-700); }
+}
+.cta:active { background: var(--color-secondary-800); }
+.cta:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 4px; }

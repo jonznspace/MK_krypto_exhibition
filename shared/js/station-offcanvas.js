@@ -197,7 +197,8 @@
       body.setAttribute('aria-label', labels.region);
       renderBody(body, current, id);
       body.scrollTop = 0;
-      if (trigger) trigger.textContent = labels.open;
+      // A trigger with its own markup (e.g. CTA with icon) marks the label element.
+      if (trigger) (trigger.querySelector('[data-offcanvas-label]') || trigger).textContent = labels.open;
     }
 
     function open() {
