@@ -257,111 +257,45 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .inline-deepdive-body p + p { margin-top: var(--space-5); }
 
 /* =========================================================================
-   Mining-Geräte: oben die Karte (Gläserne Münze + 3 Sockel, Formen wie auf
-   der Website), unten das Objektschild des gewählten Geräts.
-   Auswahl wie auf der Website: Orange mit 30 % Fläche.
+   Mining-Geräte: Gruppen als Zwischenzeile, jedes Gerät als Karte
+   wie die Karten in Station 03 (template-card).
    ========================================================================= */
-/* Grafik mit mehr Luft: 48 px zu den Tabs und zum Objektschild. */
-.device-panel { flex-direction: column; margin-top: var(--space-7); }
-
-.device-map {
-  flex-shrink: 0;
-  --map-selected-fill: color-mix(in srgb, var(--immersive-accent) 30%, transparent);
+.device-group-heading {
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--layer-border);
+  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-body);
 }
-/* 90 % der Inhaltsbreite, mittig: mehr Höhe für das Objektschild. */
-.device-map svg { display: block; width: 90%; height: auto; margin-inline: auto; overflow: visible; }
+.device-group-heading:not(:first-child) { margin-top: var(--space-8); }
 
-.map-coin { fill: none; stroke: var(--immersive-ink); stroke-width: 2.5; }
-.map-slot { fill: none; stroke: var(--color-neutral-500); stroke-width: 1; stroke-dasharray: 1 5.5; }
-.map-tile { fill: var(--layer-surface-raised); stroke: var(--immersive-body); stroke-width: 1.5; }
-
-.map-shape {
-  fill: transparent;
-  stroke: var(--immersive-ink);
-  stroke-width: 1.75;
-  transition: fill var(--duration-2) var(--ease-standard), stroke var(--duration-2) var(--ease-standard);
-}
-
-.map-label {
-  fill: var(--immersive-ink);
-  font: 400 var(--font-size-body-m) var(--font-family-switzer), sans-serif;
-  transition: fill var(--duration-2) var(--ease-standard);
-}
-
-/* Unsichtbare, größere Tippflächen; nehmen die Berührung für das ganze Objekt an. */
-.map-hit { fill: transparent; stroke: none; pointer-events: all; }
-.map-object { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
-.map-object > :not(.map-hit) { pointer-events: none; }
-
-.map-object.is-selected .map-shape { fill: var(--map-selected-fill); stroke: var(--immersive-accent); }
-.map-object.is-selected .map-label { fill: var(--immersive-accent); }
-.map-object.is-selected .map-tile { stroke: var(--immersive-accent); stroke-width: 2; }
-.map-object:not(.is-selected):active .map-shape { stroke: var(--immersive-accent); }
-.map-object:focus-visible .map-hit { stroke: var(--immersive-focus); stroke-width: 2; }
-
-/* Objektschild: Fläche und Rahmen wie die Infobox der Website. */
-.device-info {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  margin-top: var(--space-7);
+#moduleB .article-section {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
   border: 1px solid var(--layer-border);
   background: var(--layer-surface-raised);
 }
-.device-info .module-scroller { padding: var(--space-6) var(--space-5) var(--space-6) var(--space-6); }
-.device-info .station-offcanvas__scrollbar { margin: var(--space-6) var(--space-5) var(--space-6) 0; }
 
-.device-copy {
-  font: 400 var(--font-size-body-m)/1.5 var(--font-family-switzer), sans-serif;
-  color: var(--immersive-ink);
+#moduleB .article-section h2 { font-size: var(--font-size-h4); }
+
+/* Objektschild: Standort orange (Orientierung im Raum), darunter Herkunft und Leihgeber. */
+.museum-label {
+  display: grid;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--layer-border);
+  font: 400 var(--font-size-body-s)/1.45 var(--font-family-switzer), sans-serif;
+  color: var(--immersive-body);
 }
-.device-copy.is-entering { animation: device-copy-in var(--duration-2) var(--ease-standard); }
-@keyframes device-copy-in { from { opacity: 0; } }
 
-.device-copy > p { max-width: 65ch; }
-.device-copy > p + p { margin-top: var(--space-5); }
-.device-title + p,
-.device-copy .story-title + p { margin-top: var(--space-4); }
-/* Mehr Luft zwischen Objektschild und Text. */
-.device-meta + p,
-.device-copy .device-meta + .story-title { margin-top: var(--space-6); }
-
-.device-hint,
-.device-meta,
-.device-details {
-  font: 400 var(--font-size-caption-m)/1.6 var(--font-family-dm-mono), monospace;
+.museum-label span:first-child {
+  margin-bottom: var(--space-1);
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   text-transform: var(--text-transform-dm-mono);
-}
-
-.device-hint { margin-bottom: var(--space-5); color: var(--immersive-body); }
-
-.device-numeral {
-  margin-bottom: var(--space-3);
-  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
   color: var(--immersive-accent);
-}
-
-.device-title {
-  font: 600 var(--font-size-h4)/1.2 var(--font-family-switzer), sans-serif;
-  letter-spacing: -.015em;
-}
-
-.device-meta { display: grid; margin-top: var(--space-3); color: var(--immersive-body); }
-/* Erste Zeile = Standort (DM Mono), darunter Herkunft in Switzer. */
-.device-meta span + span {
-  font: 400 var(--font-size-body-s)/1.45 var(--font-family-switzer), sans-serif;
-  letter-spacing: normal;
-  text-transform: none;
-}
-.device-meta span:nth-child(2) { margin-top: var(--space-1); }
-
-.device-details {
-  display: grid;
-  margin-top: var(--space-6);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--layer-border);
-  color: var(--color-neutral-400);
 }
 
 @media (prefers-reduced-motion: reduce) {
