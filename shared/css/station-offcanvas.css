@@ -73,7 +73,8 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: var(--layer-surface-raised);
+  /* One surface step above raised (2026-10-01, tested in Station 13). */
+  background: var(--layer-surface-elevated);
   border: 0;
   transform: translateX(-100%);
   transition: transform var(--duration-4) var(--ease-exit);
@@ -166,6 +167,12 @@
   cursor: pointer;
 }
 .station-offcanvas__scrollbar[hidden] { display: none; }
+/* With collapsible sections the indicator keeps its space while hidden: the text width is
+   always the width with indicator, so the boxes do not jump when it appears. */
+.station-offcanvas--collapsible .station-offcanvas__scrollbar[hidden] {
+  display: block;
+  visibility: hidden;
+}
 /* 44 px hit area around the 8 px track. */
 .station-offcanvas__scrollbar::before {
   content: '';
@@ -207,6 +214,73 @@
   letter-spacing: .06em;
   color: var(--color-feedback-info);
 }
+
+/* ---------- Collapsible sections (section.collapsible): blue deep-dive boxes as in Station 08 ----------
+   Kicker in DM Mono, title one step above the body text, plus/minus on the right across both lines. */
+.station-offcanvas__body > .station-offcanvas__accordion {
+  border: var(--station-offcanvas-line) solid var(--immersive-focus);
+  background: var(--color-feedback-info-bg);
+}
+.station-offcanvas__lead + .station-offcanvas__accordion { margin-top: var(--space-8); }
+.station-offcanvas__accordion-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-5);
+  min-height: var(--size-control-lg);
+  padding: var(--space-5);
+  border: 0;
+  background: transparent;
+  color: var(--immersive-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.station-offcanvas__accordion-header::after {
+  content: '+';
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--color-feedback-info);
+  font: 400 var(--font-size-h3)/1 var(--font-family-dm-mono), monospace;
+}
+.station-offcanvas__accordion.is-open .station-offcanvas__accordion-header::after { content: '−'; }
+.station-offcanvas__accordion-header:focus-visible {
+  outline: var(--station-offcanvas-focus) solid var(--immersive-focus);
+  outline-offset: var(--space-1);
+}
+.station-offcanvas__accordion-kicker {
+  grid-column: 1;
+  margin-bottom: var(--space-3);
+  font: 400 var(--font-size-caption-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--color-feedback-info);
+}
+.station-offcanvas__accordion-title {
+  grid-column: 1;
+  font: 600 var(--font-size-body-l)/1.3 var(--font-family-switzer), sans-serif;
+}
+/* Open/close: height via grid rows 0fr ↔ 1fr, calm (--duration-5). Closed text is
+   invisible (visibility switches after the closing animation, so it leaves the a11y tree).
+   Reduced motion: the tokens shorten the duration. */
+.station-offcanvas__accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--duration-5) var(--ease-standard),
+    visibility 0s linear var(--duration-5);
+}
+.station-offcanvas__accordion.is-open .station-offcanvas__accordion-panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--duration-5) var(--ease-standard),
+    visibility 0s;
+}
+.station-offcanvas__accordion-clip { min-height: 0; overflow: hidden; }
+.station-offcanvas__accordion-content { padding: 0 var(--space-5) var(--space-5); }
 
 /* The screen underneath is inactive while reading. */
 body.has-station-offcanvas { overflow: hidden; }

@@ -33,6 +33,9 @@ Typografie und Verhalten sind fest.** Pro Station ändert sich nur der Inhalt.
       Rest des Screens: 80 % Schwarz, inaktiv
 ```
 
+Fläche des Panels: `--layer-surface-elevated` (#1A1C23), seit 2026-10-01 für alle Stationen
+(vorher `--layer-surface-raised`, #0B0B0F).
+
 ### Einbinden
 
 1. **CSS** nach den Tokens, vor den eigenen Stations-Styles:
@@ -90,7 +93,7 @@ Typografie und Verhalten sind fest.** Pro Station ändert sich nur der Inhalt.
 | --- | --- | --- |
 | `title` | ja | Headline im Header (Switzer 600, `--font-size-h3`) |
 | `lead` | nein | Einführungstext am Anfang (alle Texte der Leseansicht sind weiß). String oder Array von Absätzen |
-| `sections` | nein | Liste aus `{ title, text }`. `text` ist String oder Array. Ohne `title` entstehen nur Absätze |
+| `sections` | nein | Liste aus `{ title, text }`. `text` ist String oder Array. Ohne `title` entstehen nur Absätze. Mit `collapsible: true` (und optional `kicker`) wird der Abschnitt eine blaue Vertiefungs-Box zum Aufklappen wie in Station 08 (Referenz: `04_exploration/station-13/`) |
 | `highlight` | nein | `{ label, text }` für die blaue Infobox am Ende |
 | `eyebrow` | nein | Zeile über der Headline. Default: „Hintergrund“ / „Background“. `''` blendet sie aus |
 | `labels` | nein | Überschreibt `{ open, close, region }`. Defaults: „Weiterlesen“ / „Schließen“ / „Vollständiger Einführungstext“ (EN analog) |
@@ -104,6 +107,12 @@ Ein einzelnes Objekt ohne `de`/`en` funktioniert auch. Dann gilt es für beide S
 - Der Screen darunter (`#scaler`, sonst `#frame`) ist währenddessen `inert`. Die Idle-Warnung liegt darüber.
 - Der Fokus springt auf ×, bleibt im Dialog (Tab-Schleife) und kehrt beim Schließen zum Trigger zurück.
 - Sprachwechsel über `data-language` rendert den Inhalt automatisch neu.
+- Aufklappbare Abschnitte (`collapsible`): immer nur einer offen, der geöffnete rückt an den Anfang
+  des Scrollbereichs. Beim Schließen der Leseansicht klappen alle wieder zu.
+  Auf/Zu ist animiert (Höhe, `--duration-5` mit `--ease-standard`), das Mitscrollen läuft synchron dazu.
+  Antippen oder Scrollen während der Animation beendet das Mitscrollen.
+  Der Scroll-Indikator behält in solchen Leseansichten seinen Platz, auch wenn er ausgeblendet ist
+  (Klasse `station-offcanvas--collapsible`). So ändern die Boxen ihre Breite nicht, wenn er erscheint.
 
 ### API
 

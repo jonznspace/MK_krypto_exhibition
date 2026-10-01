@@ -127,11 +127,80 @@
     return { overlay, panel, eyebrow, title, closeButton, body, track, thumb };
   }
 
+  // Collapsible blue deep-dive box (as in Station 08): kicker and title in the button,
+  // plus/minus on the right, text below. Only one open at a time; the opened one moves to the top.
+  // Opening and closing animate the height (CSS: grid rows, --duration-5).
+  function appendAccordionItem(body, section, sectionId) {
+    const item = element('section', 'station-offcanvas__accordion');
+    const header = element('button', 'station-offcanvas__accordion-header');
+    header.type = 'button';
+    header.id = `${sectionId}Header`;
+    header.setAttribute('aria-expanded', 'false');
+    header.setAttribute('aria-controls', `${sectionId}Panel`);
+    if (section.kicker) header.appendChild(element('span', 'station-offcanvas__accordion-kicker', section.kicker));
+    header.appendChild(element('span', 'station-offcanvas__accordion-title', section.title));
+
+    // Panel (grid, animates 0fr ↔ 1fr) > clip (overflow hidden) > content (padding, paragraphs).
+    const panel = element('div', 'station-offcanvas__accordion-panel');
+    panel.id = `${sectionId}Panel`;
+    panel.setAttribute('role', 'region');
+    panel.setAttribute('aria-labelledby', header.id);
+    const clip = element('div', 'station-offcanvas__accordion-clip');
+    const content = element('div', 'station-offcanvas__accordion-content');
+    appendParagraphs(content, section.text);
+    clip.appendChild(content);
+    panel.appendChild(clip);
+
+    header.addEventListener('click', () => {
+      const isOpen = header.getAttribute('aria-expanded') !== 'true';
+      collapseAccordions(body);
+      header.setAttribute('aria-expanded', String(isOpen));
+      item.classList.toggle('is-open', isOpen);
+      if (isOpen) scrollAlong(body, item, panel);
+    });
+
+    item.append(header, panel);
+    body.appendChild(item);
+  }
+
+  // Moves the opened box to the top while the boxes animate. The target is measured every
+  // frame, because a box above may be closing at the same time.
+  function scrollAlong(body, item, panel) {
+    cancelAnimationFrame(body.accordionScroll);
+    const duration = parseFloat(getComputedStyle(panel).transitionDuration) * 1000 || 0;
+    const startTop = body.scrollTop;
+    const startTime = performance.now();
+    // Keep the body's top padding above the opened box.
+    const target = () => item.offsetTop - body.offsetTop - parseFloat(getComputedStyle(body).paddingTop);
+    const step = now => {
+      const progress = duration ? Math.min(1, (now - startTime) / duration) : 1;
+      const eased = 1 - Math.pow(1 - progress, 3);
+      body.scrollTop = startTop + (target() - startTop) * eased;
+      if (progress < 1) body.accordionScroll = requestAnimationFrame(step);
+    };
+    body.accordionScroll = requestAnimationFrame(step);
+    // A touch or wheel by the visitor takes over the scrolling.
+    const stop = () => cancelAnimationFrame(body.accordionScroll);
+    body.addEventListener('pointerdown', stop, { once: true });
+    body.addEventListener('wheel', stop, { once: true, passive: true });
+  }
+
+  function collapseAccordions(body) {
+    body.querySelectorAll('.station-offcanvas__accordion').forEach(item => {
+      item.classList.remove('is-open');
+      item.querySelector('.station-offcanvas__accordion-header').setAttribute('aria-expanded', 'false');
+    });
+  }
+
   function renderBody(body, content, id) {
     body.replaceChildren();
     appendParagraphs(body, content.lead, 'station-offcanvas__lead');
 
     toList(content.sections).forEach((section, index) => {
+      if (section.collapsible && section.title) {
+        appendAccordionItem(body, section, `${id}Section${index}`);
+        return;
+      }
       if (!section.title) {
         appendParagraphs(body, section.text);
         return;
@@ -196,6 +265,9 @@
       closeButton.setAttribute('title', labels.close);
       body.setAttribute('aria-label', labels.region);
       renderBody(body, current, id);
+      // Collapsible sections change the text height; the scroll indicator then keeps its
+      // space even while hidden, so the boxes do not change width when it appears.
+      overlay.classList.toggle('station-offcanvas--collapsible', toList(current.sections).some(section => section.collapsible));
       body.scrollTop = 0;
       // A trigger with its own markup (e.g. CTA with icon) marks the label element.
       if (trigger) (trigger.querySelector('[data-offcanvas-label]') || trigger).textContent = labels.open;
@@ -222,6 +294,8 @@
       void panel.offsetWidth;
       await Promise.allSettled(panel.getAnimations().map(animation => animation.finished));
       overlay.hidden = true;
+      // The next visit starts with all collapsible sections closed.
+      collapseAccordions(body);
       if (background) background.inert = false;
       document.body.classList.remove('has-station-offcanvas');
       closing = false;

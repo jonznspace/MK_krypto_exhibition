@@ -1,21 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Station 11 · Free-Banking-Era</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
-<link rel="stylesheet" href="../../shared/css/station-offcanvas.css">
-<link rel="stylesheet" href="station-13.css?v=9">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
+<link rel="stylesheet" href="station-13.bundle.css?v=6">
 </head>
 <body>
 
 <div id="scaler">
   <main id="frame" aria-label="Station 11 – Die Free-Banking-Era">
 
-    <!-- Startscreen mit Leseansicht (links) und drei Vertiefungen (rechts), keine Aktion. -->
     <section class="screen screen-start" id="screenStart">
       <div class="station-marker" aria-label="Station 11 - Free-Banking-Era">
         <span class="station-marker__station">Station 11</span>
@@ -24,24 +22,28 @@
 
       <div class="start-copy">
         <h1 class="title title--hero" id="startTitle"></h1>
-        <div class="hero-summary">
-          <div class="hero-text" id="startIntro" aria-label="Einführungstext zur Station"></div>
-          <!-- Öffnet die geteilte Leseansicht von links (shared/js/station-offcanvas.js). -->
-          <button class="station-offcanvas-trigger" id="btnReadMore" type="button">Weiterlesen</button>
-        </div>
+        <div class="hero-text" id="startIntro" tabindex="0" aria-label="Einführungstext zur Station"></div>
       </div>
 
       <div class="start-visual" aria-hidden="true">
-        <img class="station-image" src="dither-output.png" alt="">
+        <img class="station-image" id="startImage" src="dither-output.png" alt="">
       </div>
 
-      <!-- Öffnet die Vertiefungen als geteilte Leseansicht von rechts. -->
-      <button class="cta" id="btnDeepen" type="button">
-        <span class="cta-label" data-offcanvas-label>Vertiefung</span>
-        <span class="cta-icon">
-          <img src="../../00_design-system/symbols/bulb.svg" alt="">
-        </span>
+      <button class="cta" id="btnTry" type="button">
+        <span class="cta-label">Vertiefungen</span>
+        <span class="cta-icon"><img src="../../00_design-system/symbols/bulb.svg" alt=""></span>
       </button>
+    </section>
+
+    <section class="screen screen-action hidden" id="screenAction">
+      <header class="action-hdr">
+        <div class="action-hdr-copy">
+          <h1 class="title title--compact" id="actionTitle"></h1>
+        </div>
+        <button class="close-btn" id="btnClose" aria-label="Schließen" type="button">✕</button>
+      </header>
+
+      <div class="deepdive-list" id="deepdiveList" aria-label="Vertiefungen"></div>
     </section>
 
   </main>
@@ -49,7 +51,6 @@
 
 <script src="../../shared/js/station-language-switch.js"></script>
 <script src="../../shared/js/station-idle-reload.js"></script>
-<script src="../../shared/js/station-offcanvas.js"></script>
-<script src="station-13.js?v=4" defer></script>
+<script src="station-13.js?v=5" defer></script>
 </body>
 </html>
