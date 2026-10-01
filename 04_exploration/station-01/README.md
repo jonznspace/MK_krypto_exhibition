@@ -75,3 +75,17 @@ Der Skytale-Screen wurde am 2026-09-29 als geführter Ablauf überarbeitet
 (`vertiefung.css`, `station-01.js`, `index.html`). Details und Rückweg zum
 vorherigen Stand stehen in `CHANGELOG.md`, die Sicherung liegt in
 `_checkpoint-2026-09-29-vor-vertiefung/`.
+
+## Leseansicht ohne Infobox (2026-10-01)
+
+- Der letzte Absatz („Beide Verfahren sind leicht zu knacken …“ / „Both methods are easy to crack …“) steht nicht mehr
+  in der blauen Infobox „Auf den Punkt gebracht“ / „Key takeaway“, sondern als normaler Absatz am Ende,
+  ohne Zwischenüberschrift. Text unverändert, nur die Box-Überschrift entfällt.
+- `index.html`: `station-01.js?v=22`.
+
+## Schließen setzt zurück (2026-10-01)
+
+- Schließen der Vertiefung (✕) stellt den Startzustand her: Tab „Verschlüsseln“, Standardnachricht und Stabdicke,
+  Streifen aufgewickelt, erstes Rätsel, Tastatur zu, Ansicht des Stabs wie beim Laden (`SkytaleModel.resetView`).
+  Vorher blieb die Eingabe des vorigen Besuchers stehen.
+- `index.html`: `station-01.js?v=23`.

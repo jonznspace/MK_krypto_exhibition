@@ -95,3 +95,49 @@ Nur Schrift, Layout und Abstände folgen im nächsten Schritt.
   damit die Bühne weiter zur Headline zentriert.
 - Abstand zum Rand folgt noch dem alten Screen-Padding (40 px statt 32 px bei 1563 px).
 - `index.html`: `station-02.css?v=10`.
+
+## Hintergrundbild dunkler (2026-10-01)
+
+- **Bild:** Deckkraft .12 statt .28. Bei gleicher Deckkraft wirkte die Scheibe deutlich heller als das
+  Leibniz-Bild in Station 03, weil ihr Dither-Bild viel dichter ist (rechte Bildschirmhälfte, Tablet quer:
+  62 % helle Pixel gegenüber 22 %, mittlere Helligkeit 41,9 gegenüber 12,6).
+  Bei .12 liegt die mittlere Helligkeit bei rund 18. Exakt gleich wäre .08, dort ist die Scheibe aber kaum noch erkennbar.
+- `index.html`: `station-02.css?v=12`.
+- Nachjustiert: Deckkraft .16 (mittlere Helligkeit rechte Hälfte rund 24). `index.html`: `station-02.css?v=14`.
+
+## Vertiefungs-Button unten rechts (2026-10-01)
+
+- „Weitere Verschlüsselungsverfahren“ / EN-Fassung auf dem Aktionsscreen sitzt jetzt unten rechts in der Ecke,
+  an derselben Position wie „Ausprobieren“ auf dem Startscreen (`right`/`bottom` je `--space-6`, 32 px).
+  Dafür steht der Button nicht mehr in der Panel-Spalte, sondern direkt im Aktionsscreen. Optik unverändert
+  (Trigger aus `shared/css/station-offcanvas.css`).
+- `index.html`: `station-02.css?v=15`.
+
+## Ohne Sound (2026-10-01)
+
+- Medienstationen arbeiten ohne Sound: Das Sound-Modul (Web Audio, Klick- und Bestätigungstöne) ist aus
+  `station-02.js` entfernt, ebenso alle Aufrufe (Scheibe drehen, Wort-Chips, Buchstaben, Leeren, Tabs,
+  Neue Botschaft, gelöstes Rätsel, Verschlüsselungs-Animation). Kein Text verändert.
+- `index.html`: `station-02.js?v=11`.
+
+## Permutationsscheibe größer (2026-10-01)
+
+- Tablet quer (Regel `max-height: 900px`): Scheibe 560 px statt 500 px. Abstand Headline → Scheibe 65 px
+  (≈ `--space-8`), Bedienleiste endet 65 px über der Unterkante.
+- Die Regel für höhere Bildschirme (548 px) ist unverändert.
+- `index.html`: `station-02.css?v=16`.
+
+## Mehr Luft um den Einleitungstext (2026-10-01)
+
+- Panel der Permutationsscheibe: Tabs → Einleitungstext und Einleitungstext → Inhalt (Wort-Chips bzw. abgefangene
+  Botschaft) je `--space-6` (32 px), vorher auf dem Tablet quer 14 bzw. 12 px. Gilt in beiden Tabs und auch auf
+  größeren Bildschirmen.
+- Tablet quer: Panel jetzt von 187 bis 760 px, 20 px über dem Vertiefungs-Button (der weiter rechts liegt).
+- `index.html`: `station-02.css?v=17`.
+
+## Schließen setzt zurück (2026-10-01)
+
+- Schließen der Vertiefung (✕) stellt den Startzustand her (`resetAction`): Schlüssel A → D, erstes Beispielwort,
+  Tab „Verschlüsseln“, Knacken-Botschaft verworfen (beim nächsten Öffnen von „Knacken“ neu), Hinweis ausgeblendet.
+  Vorher blieb die Eingabe des vorigen Besuchers stehen.
+- `index.html`: `station-02.js?v=13`.

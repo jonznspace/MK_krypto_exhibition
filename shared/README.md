@@ -150,3 +150,28 @@ Referenz: `04_exploration/station-07/`.
   anderes braucht, lieber die Komponente erweitern.
 
 Referenz-Einbau: `04_exploration/station-01/`.
+
+---
+
+## Idle-Warnung (`station-idle-reload`)
+
+Nach 60 s ohne Eingabe erscheint „Sind Sie noch da?“ / „Still there?“ mit 15 s Countdown, danach lädt die Station
+neu (Sprache zurück auf Deutsch). Jede Berührung schließt die Warnung.
+
+**Gestaltung (2026-10-01, nur Tokens, wie die Leseansicht):**
+
+| Element | Stil |
+| --- | --- |
+| Abdunklung | `--immersive-bg` 90 % über `color-mix`, kein Weichzeichner, kein Schatten |
+| Box | `--layer-surface-elevated`, Rahmen `--layer-border`, Innenabstand `--space-7`, max. 640 px breit |
+| Titel | Switzer 600, `--font-size-h3`, Zeilenhöhe 1,2 (wie der Titel der Leseansicht) |
+| Text mit Countdown | Switzer 400, `--font-size-body-m`, `--immersive-ink`, Ziffern gleich breit (`tabular-nums`) |
+| Hinweis | DM Mono 400, `--font-size-label`, Versalien, `--immersive-accent` |
+| Ein-/Ausblenden | `--duration-3`, `--ease-standard` |
+
+Vorher: Titel in Panchang 600, feste Pixelgrößen, Hinweis in einer Systemschrift (das Token `--font-mono` gibt es
+nicht), Weichzeichner im Hintergrund. Screenshots: `04_exploration/screenshots-startseiten/idle-warnung_*.png`.
+
+**Zurücksetzen:** Das Neuladen leert alle Felder. Geprüft für die Stationen 01–04 und 08 (2026-10-01): Nach dem
+Neuladen ist jede Station im Startzustand, auch ohne eigenen Code. Schließen per ✕ setzt die Vertiefungen von
+01–04 und 08 ebenfalls zurück, die Leseansicht klappt aufklappbare Abschnitte zu.

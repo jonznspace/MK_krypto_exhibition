@@ -436,7 +436,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   margin-top: var(--space-5);
 }
 .binary-cell {
-  min-width: 92px;
+  min-width: 120px;
   padding: var(--space-3) var(--space-2);
   text-align: center;
   background: var(--layer-surface-base);
@@ -449,14 +449,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
   text-transform: var(--text-transform-dm-mono);
   color: var(--immersive-ink);
 }
+/* Code unter dem Buchstaben: body-m statt caption-s, damit er lesbar ist. */
 .binary-cell span {
   display: block;
-  font: 400 var(--font-size-caption-s)/1.4 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-body-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .06em;
   color: var(--immersive-ink);
 }
 
-/* Laufendes Signal: Grafik, Größen und Animation bewusst unverändert. */
+/* Bitstrom: der Name als durchgehende Folge von Bytes, Ziffer für Ziffer geschrieben
+   (station-03.js, stream). Bytes brechen nie in der Mitte um. */
 .binary-history {
   min-height: 520px;
   border: 0;
@@ -468,53 +470,37 @@ button { font: inherit; color: inherit; cursor: pointer; }
   height: 420px;
   min-height: 420px;
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
   padding: 0;
   border: 0;
   background: transparent;
   overflow: hidden;
-}
-
-.signal-line {
-  display: grid;
-  gap: 8px;
-  height: 96px;
-  flex: 0 0 96px;
-  overflow: hidden;
-  animation: signal-line-in 900ms var(--ease-standard) both;
-}
-
-.signal-word {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  min-height: 32px;
-}
-
-.signal-line.is-leaving {
-  animation: signal-line-out 900ms var(--ease-standard) both;
-}
-
-.signal-bit {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 32px;
+  font: 400 16px/2 var(--font-family-dm-mono), monospace;
+  letter-spacing: .4em;
   color: var(--immersive-ink);
-  font-family: var(--font-family-dm-mono);
-  font-size: 16px;
+}
+
+.signal-byte {
+  white-space: nowrap;
   opacity: .6;
 }
 
-@keyframes signal-line-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Schreibmarke hinter der letzten Ziffer. */
+.signal-cursor {
+  display: inline-block;
+  width: .6em;
+  height: 1.1em;
+  margin-left: calc(-1 * var(--space-5) + .1em);
+  background: var(--immersive-ink);
+  opacity: .6;
+  animation: signal-cursor-blink 1s steps(1) infinite;
 }
 
-@keyframes signal-line-out {
-  from { opacity: .6; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-10px); }
+@keyframes signal-cursor-blink {
+  50% { opacity: 0; }
 }
 
 .binary-challenge {
@@ -528,30 +514,65 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--immersive-ink);
 }
 
+/* Ablauf von oben nach unten: Vorgabe, darunter Tasten (links) und Ausgabe (rechts). */
+.decode-prompt__row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
+}
+.decode-prompt__row .challenge-code { flex: 1; min-width: 0; margin-bottom: 0; }
+
 .decode-layout {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(420px, 1.4fr);
-  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+  grid-template-areas:
+    "keys-title ."
+    "keys       answer";
+  gap: 0 var(--space-6);
   align-items: start;
+  margin-top: var(--space-6);
 }
+.decode-keys-title { grid-area: keys-title; }
+.decode-layout > .character-map { grid-area: keys; }
+.decode-answer { grid-area: answer; }
 
-.decode-prompt {
-  position: relative;
+/* Ausgabefeld wie die Enigma (station-04.css, .io-box): Label in der Box, Rahmen hellorange. */
+.decode-answer .io-box {
+  min-height: var(--space-8);
+  margin-bottom: var(--space-4);
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  border: 1px solid var(--color-primary-200);
 }
-
-/* Liegt direkt unter der Bitfolge, egal ob sie ein- oder zweizeilig ist. */
-.challenge-keyboard {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 3;
+.decode-answer .io-lbl {
+  font: 400 var(--font-size-caption-s)/1 var(--font-family-dm-mono), monospace;
+  letter-spacing: .06em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--color-primary-200);
+}
+.decode-answer .io-val {
+  display: block;
   width: 100%;
-  margin: 0;
+  min-width: 0;
+  min-height: 1.4em;
+  padding: 0;
+  /* Eine Stufe größer als in der Enigma (label 16 px → body-m 20 px), damit die Lösung gut lesbar ist. */
+  font: 400 var(--font-size-body-m)/1.4 var(--font-family-dm-mono), monospace;
+  letter-spacing: .04em;
+  text-transform: var(--text-transform-dm-mono);
+  color: var(--immersive-ink);
+  background: transparent;
+  border: 0;
+  outline: none;
 }
 
+/* 6 statt 7 Spalten: Platz für die größeren Codes, die Tabelle wird dafür höher. */
 .character-map {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: var(--space-2);
 }
 
@@ -574,10 +595,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--immersive-ink);
 }
 
+/* Code unter dem Buchstaben: body-m statt caption-s, in Primärfarbe, damit er lesbar ist. */
 .character-map__cell span {
-  font: 400 var(--font-size-caption-s)/1.4 var(--font-family-dm-mono), monospace;
+  font: 400 var(--font-size-body-m)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .02em;
-  color: var(--immersive-body);
+  color: var(--immersive-ink);
 }
 
 /* Die abgefangene Bitfolge: gut lesbar, wie das Ergebnisfeld in Station 01. */
@@ -592,10 +614,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   letter-spacing: .04em;
 }
 
-.challenge-input {
-  width: 100%;
-  margin-bottom: var(--space-4);
-}
 
 .challenge-actions {
   display: flex;
@@ -609,7 +627,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   border: 1px solid var(--immersive-accent);
   background: var(--immersive-accent);
   color: var(--immersive-bg);
-  font: 400 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
+  /* Medium (500) wie der orange Button in Station 01: dunkle Schrift auf Orange wirkt sonst zu dünn. */
+  font: 500 var(--font-size-label)/1.4 var(--font-family-dm-mono), monospace;
   letter-spacing: .04em;
   text-transform: var(--text-transform-dm-mono);
   transition: background-color var(--duration-2) var(--ease-standard),
@@ -624,6 +643,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   border-color: var(--layer-border);
   background: transparent;
   color: var(--immersive-ink);
+  font-weight: 400;
 }
 .challenge-button--quiet:active { background: var(--state-pressed-surface); border-color: var(--immersive-accent); }
 @media (hover: hover) {
@@ -668,27 +688,25 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .challenge-feedback.is-wrong {
   border-color: var(--state-accent);
-  /* Kein eigener Fehler-Flächen-Token im Immersive-Kontext: dunkle Orange-Fläche. */
+  /* Kein eigener Fehler-Flächen-Token im Immersive-Kontext: dunkle Orange-Fläche. Ohne ✕: es sah
+     wie ein Schließen-Button aus, ließ sich aber nicht antippen. */
   background: var(--state-pressed-surface);
 }
-.challenge-feedback.is-wrong::before,
-.challenge-feedback.is-wrong::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: calc(var(--space-5) - 5px);
-  width: 20px;
-  height: 3px;
-  background: var(--state-accent);
-}
-.challenge-feedback.is-wrong::before { transform: translateY(-50%) rotate(45deg); }
-.challenge-feedback.is-wrong::after { transform: translateY(-50%) rotate(-45deg); }
+
+/* Nach 5 s langsam ausblenden (station-03.js, showFeedback). */
+.template-card .challenge-feedback { transition: opacity var(--duration-6) var(--ease-exit); }
+.template-card .challenge-feedback.is-fading { opacity: 0; }
 
 @media (max-width: 1100px) {
   .template-grid { grid-template-columns: 1fr; }
   .binary-module,
   .binary-history { min-height: auto; }
-  .decode-layout { grid-template-columns: 1fr; }
+  .decode-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: "keys-title" "keys" "answer";
+    row-gap: var(--space-5);
+  }
+  .decode-keys-title { margin-bottom: calc(var(--space-3) - var(--space-5)); }
   .character-map { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
 

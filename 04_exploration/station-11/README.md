@@ -28,3 +28,11 @@ Alle Werte kommen aus `tokens.css`, es gibt keine lokale Typo-Skala. Das Templat
 - Passt weiter ohne Scrollen: auf 1563 × 864 endet der Text bei DE 724 px und EN 759 px (unterer Rand bei 832 px).
   Der Text endet links vom CTA, es gibt keine Überschneidung.
 - `index.html`: `station-11.css?v=2`.
+
+## Bild wie Station 09 (2026-10-01)
+
+- **Bild:** dieselbe Datei wie Station 09 (Kassenbillet 1772, `dither-output.png` aus `station-09` kopiert).
+  Die bisherige Datei liegt als `dither-output_old.png` daneben und ist nicht eingebunden.
+- Platzierung und Deckkraft wie Station 09: rechts, vertikal zentriert, Breite `min(1613px, 103.125vw)`,
+  rechts 160 px angeschnitten und um 40 % der Bildbreite nach rechts versetzt (`translate(40%, -50%)`), Deckkraft .28.
+- `index.html`: `station-11.css?v=3`.

@@ -6,7 +6,7 @@
 <title>Station 3 · Leibniz-Rechenmaschine</title>
 <link rel="stylesheet" href="../../00_design-system/tokens/tokens.css">
 <link rel="stylesheet" href="../../shared/css/station-offcanvas.css">
-<link rel="stylesheet" href="station-03.css?v=10">
+<link rel="stylesheet" href="station-03.css?v=19">
 <link rel="stylesheet" href="../../shared/css/station-language-switch.css">
 <link rel="stylesheet" href="../../shared/css/station-idle-reload.css">
 </head>
@@ -80,36 +80,39 @@
           </section>
 
           <section class="template-card binary-history" aria-label="Laufende binäre Signale">
-            <div class="binary-signal" id="binaryHistory" aria-label="Aktuelle binäre Signalfolge" aria-live="polite"></div>
+            <!-- Bitstrom des Namens (station-03.js, stream); rein visuell, die Übersetzung links ist lesbar. -->
+            <div class="binary-signal" id="binaryHistory" aria-hidden="true"></div>
           </section>
         </div>
       </section>
 
       <section class="binary-tab-panel hidden" id="binaryDecodePanel" role="tabpanel">
+        <!-- Ablauf von oben nach unten: 1. Vorgabe (Bitfolge), 2. Tasten links und Ausgabe rechts. -->
         <section class="template-card binary-challenge" aria-labelledby="tabDecode">
-          <div class="decode-layout">
-            <div class="decode-prompt">
-              <h3>Was steht hier?</h3>
+          <div class="decode-prompt">
+            <h3>Was steht hier?</h3>
+            <div class="decode-prompt__row">
               <div class="challenge-code" id="challengeCode"></div>
-              <div class="binary-keyboard challenge-keyboard hidden" id="challengeKeyboard" aria-label="Bildschirmtastatur für die Lösung">
-                <div class="keyboard-row" id="challengeKeyboardRowA"></div>
-                <div class="keyboard-row" id="challengeKeyboardRowB"></div>
-                <div class="keyboard-row keyboard-row--bottom" id="challengeKeyboardRowC"></div>
-                <div class="keyboard-row keyboard-row--actions">
-                  <button class="keyboard-key keyboard-key--wide" id="btnChallengeBackspace" type="button">Löschen</button>
-                  <button class="keyboard-key keyboard-key--wide" id="btnChallengeDone" type="button">Fertig</button>
-                </div>
-              </div>
+              <button class="challenge-button challenge-button--quiet" id="challengeNext" type="button">Neue Folge</button>
             </div>
-            <div class="character-map" id="characterMap" aria-label="Buchstaben und ihre 8-Bit-Codes"></div>
           </div>
-          <label class="binary-label" for="challengeInput">Deine Lösung</label>
-          <input class="binary-input challenge-input" id="challengeInput" type="text" maxlength="12" autocomplete="off" spellcheck="false">
-          <div class="challenge-actions">
-            <button class="challenge-button" id="challengeCheck" type="button">Prüfen</button>
-            <button class="challenge-button challenge-button--quiet" id="challengeNext" type="button">Neue Folge</button>
+          <div class="decode-layout">
+            <h3 class="decode-keys-title" id="decodeKeysTitle">Buchstaben auswählen</h3>
+            <div class="character-map" id="characterMap" aria-labelledby="decodeKeysTitle"></div>
+            <div class="decode-answer">
+              <!-- Ausgabefeld im Stil der Enigma (Station 04, .io-box): Label in der Box, oranger Rahmen.
+                   Eingabe nur über die Buchstabenfelder: keine Tastatur, auch keine Systemtastatur. -->
+              <div class="io-box">
+                <label class="io-lbl" for="challengeInput">Deine Lösung</label>
+                <input class="io-val challenge-input" id="challengeInput" type="text" maxlength="12" autocomplete="off" spellcheck="false" readonly inputmode="none">
+              </div>
+              <div class="challenge-actions">
+                <button class="challenge-button" id="challengeCheck" type="button">Prüfen</button>
+                <button class="challenge-button challenge-button--quiet" id="btnChallengeBackspace" type="button">Löschen</button>
+              </div>
+              <p class="challenge-feedback" id="challengeFeedback" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="challenge-feedback" id="challengeFeedback" aria-live="polite"></p>
         </section>
       </section>
     </section>
@@ -121,6 +124,6 @@
 <script src="../../shared/js/station-idle-reload.js"></script>
 <script src="../../shared/js/vendor/profanity-filter.js"></script>
 <script src="../../shared/js/station-offcanvas.js"></script>
-<script src="station-03.js?v=23"></script>
+<script src="station-03.js?v=31"></script>
 </body>
 </html>

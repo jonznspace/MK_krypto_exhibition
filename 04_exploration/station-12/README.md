@@ -29,3 +29,11 @@ Alle Werte kommen aus `tokens.css`, es gibt keine lokale Typo-Skala. Das Templat
 - `index.html`: `station-12.css?v=2`, `station-12.js?v=2`.
 - Zurückgenommen: Die Leseansicht zeigt wieder Absatz 1 als Lead, darunter Absatz 2 und 3 (wie Station 10).
   `index.html`: `station-12.js?v=3`.
+
+## Feste Umbrüche im Titel (2026-10-01)
+
+- **Titel (DE):** Umbruch nach „Firmengeld:“ und vor „der“, also
+  „Firmengeld:“ / „Die VOC und die Macht“ / „der Infrastruktur“ (Tablet quer).
+  Im Text steht dafür `\n`, `setTitle` macht daraus ein `<br>` (wie Station 13). In den Leseansichten wird es
+  zum Leerzeichen. Der englische Titel ist unverändert.
+- `index.html`: `station-12.js?v=5`.

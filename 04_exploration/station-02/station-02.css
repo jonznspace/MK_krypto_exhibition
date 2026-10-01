@@ -142,7 +142,9 @@ html, body {
 /* Bildposition bleibt stationsspezifisch (Scheibe statt Skytale).
    Bild 150 % (1920 × 1440): linke obere Ecke wie bei 1280 × 960,
    gewachsen nach rechts und unten (right/bottom um 640/480 px verschoben).
-   Zusätzlich 20 % der Screenhöhe nach oben (top/bottom je −20vh). */
+   Zusätzlich 20 % der Screenhöhe nach oben (top/bottom je −20vh).
+   Deckkraft .16 statt .28: Das Dither-Bild der Scheibe ist rund dreimal so dicht wie das
+   Leibniz-Bild in Station 03 und wirkte bei gleicher Deckkraft deutlich heller. */
 .start-visual {
   position: absolute;
   right: -1000px; top: calc(-20px - 20vh); bottom: calc(-680px + 20vh);
@@ -150,7 +152,7 @@ html, body {
   display: flex; align-items: flex-end; justify-content: flex-end;
   z-index: 1;
   pointer-events: none;
-  opacity: .28;
+  opacity: .16;
 }
 .station-image { width: 100%; height: auto; max-height: 1530px; object-fit: contain; object-position: bottom right; }
 
@@ -331,6 +333,8 @@ html, body {
 
 /* ---------- Panel ---------- */
 .panel { display: flex; flex-direction: column; gap: 22px; min-width: 0; max-width: 760px; }
+/* Tabs → Einleitung → Inhalt: je --space-6 (32 px), mehr Luft als zwischen den übrigen Elementen. */
+.panel > .tabs { margin-bottom: calc(var(--space-6) - 22px); }
 
 /* Tabs im Stil von Station 01 (wie der DE/EN-Schalter): bündige Flächen ohne
    Rahmen, aktiver Tab mit oranger Schrift und Unterkante. */
@@ -363,6 +367,7 @@ html, body {
 .modes > .mode { grid-area: 1 / 1; }
 .modes > .mode.hidden { display: flex; visibility: hidden; }
 .hint {
+  margin-bottom: calc(var(--space-6) - 18px);
   font: 400 var(--font-size-body-m)/1.45 var(--font-family-switzer), sans-serif;
   color: var(--immersive-ink);
 }
@@ -465,8 +470,14 @@ html, body {
   transform: rotate(45deg);
 }
 
-/* Vertiefung: Optik aus shared/css/station-offcanvas.css, lokal nur die Platzierung. */
-.vert-btn { margin-top: var(--space-2); align-self: flex-start; }
+/* Vertiefung: Optik aus shared/css/station-offcanvas.css, lokal nur die Platzierung.
+   Unten rechts in der Ecke, gleiche Position wie der CTA „Ausprobieren“ (.cta). */
+.vert-btn {
+  position: absolute;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 3;
+}
 
 /* ---------- Attract & Toast ---------- */
 .attract {
@@ -517,14 +528,17 @@ html, body {
   }
 
   .disk-col { gap: 16px; }
-  #disc { width: 500px; height: 500px; }
+  /* 560 px (vorher 500): auf dem Tablet quer 65 px (≈ --space-8) Abstand zur Headline und zur Unterkante. */
+  #disc { width: 560px; height: 560px; }
 
   .panel { gap: 14px; max-width: none; }
   .mode { gap: 12px; }
+  /* Tabs → Einleitung → Inhalt je --space-6 (32 px) trotz kleinerer Abstände. */
+  .panel > .tabs { margin-bottom: calc(var(--space-6) - 14px); }
+  .hint { margin-bottom: calc(var(--space-6) - 12px); }
   .chips { gap: 8px; }
   .io { gap: 10px; }
   .tile { height: 50px; }
-  .vert-btn { margin-top: 0; }
 }
 
 /* ---------- Reduced Motion ---------- */

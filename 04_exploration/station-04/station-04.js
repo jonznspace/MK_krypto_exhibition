@@ -343,7 +343,6 @@
     startImage.src = content.start.image.src;
     startImage.alt = content.start.image.alt;
     // Aktions-Screen nutzt dasselbe Hintergrundbild wie der Start.
-    $('actionImage').src = content.start.image.src;
 
     setTitle('actionTitle', content.action.title);
     setText('rotorRowLabel', content.action.rotorRowLabel);

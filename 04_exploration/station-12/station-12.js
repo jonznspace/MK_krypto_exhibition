@@ -2,7 +2,8 @@
 (function () {
   const CONTENT = {
     de: {
-      title: 'Firmengeld: Die VOC und die Macht der Infrastruktur',
+      // \n = fester Umbruch im Start-Titel (<br>); in der Leseansicht wird daraus ein Leerzeichen.
+      title: 'Firmengeld:\nDie VOC und die Macht\nder Infrastruktur',
       intro: [
         'Die Vereinigte Ostindische Compagnie (VOC), gegründet 1602 in den Niederlanden, war mehr als ein Handelsunternehmen. Sie unterhielt eigene Armeen, verwaltete Territorien in Südostasien, schloss Verträge mit ausländischen Herrschern und sie gab eigenes Geld aus.',
         'Dieses umfasst Münzen verschiedener Nominale, verschiedener Metalle, aus verschiedenen Jahrzehnten. Sie zeigen, dass die VOC nicht gelegentlich Geld prägte, sondern dass sie ein eigenes monetäres System betrieb. In ihren Handelsgebieten zirkulierten diese Münzen als gängiges Zahlungsmittel. Die VOC hatte damit etwas geschaffen, das über den reinen Handel hinausging und bisher eine staatliche Verantwortung darstellte: eine monetäre Infrastruktur. Im VOC-Netzwerk zu arbeiten, zu handeln oder zu leben, bedeutete somit, sich in einem privaten Ökosystem zu bewegen, das Vorteile bot, aber auch Abhängigkeiten schuf.',
@@ -44,12 +45,15 @@
   function setTitle(id, value) {
     const title = $(id);
     title.innerHTML = '';
-    value.split(' ').forEach((word, index, words) => {
-      const wordNode = document.createElement('span');
-      wordNode.className = 'title-word';
-      wordNode.textContent = word;
-      title.appendChild(wordNode);
-      if (index < words.length - 1) title.appendChild(document.createTextNode(' '));
+    value.split('\n').forEach((line, lineIndex) => {
+      if (lineIndex > 0) title.appendChild(document.createElement('br'));
+      line.split(' ').forEach((word, index, words) => {
+        const wordNode = document.createElement('span');
+        wordNode.className = 'title-word';
+        wordNode.textContent = word;
+        title.appendChild(wordNode);
+        if (index < words.length - 1) title.appendChild(document.createTextNode(' '));
+      });
     });
   }
 

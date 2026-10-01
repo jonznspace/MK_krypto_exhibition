@@ -38,16 +38,10 @@
   };
 
   const $ = id => document.getElementById(id);
-  const HISTORY_KEY = 'mk-krypto-station-03-binary-names';
-  const MAX_HISTORY = 8;
-  const SIGNAL_BLOCK_SIZE = 4;
-  const SIGNAL_REVEAL_DELAY = 1200;
-  const SIGNAL_BLOCK_HOLD_DELAY = 2800;
-  const SIGNAL_TRANSITION_DELAY = 900;
-  const DEFAULT_NAMES = {
-    de: ['LEIBNIZ', 'ADA LOVELACE', 'ALAN TURING', 'KATHARINA'],
-    en: ['LEIBNIZ', 'ADA LOVELACE', 'ALAN TURING', 'GRACE HOPPER']
-  };
+  // Früher gespeicherter Namensverlauf (localStorage); wird nicht mehr verwendet und einmal gelöscht.
+  const LEGACY_HISTORY_KEY = 'mk-krypto-station-03-binary-names';
+  // Bitstrom rechts: Ziffer für Ziffer, in Bytes gruppiert.
+  const STREAM_DIGIT_DELAY = 45;     // ms pro Ziffer
 
   const CHALLENGES = {
     de: ['CODE', 'IDEE', 'NULL', 'BYTE', 'LOGIK'],
@@ -66,6 +60,7 @@
       decodeTag: 'Entschlüsseln',
       decodeTitle: 'Binär entschlüsseln',
       question: 'Was steht hier?',
+      keysTitle: 'Buchstaben auswählen',
       solutionLabel: 'Deine Lösung',
       check: 'Prüfen',
       next: 'Neue Folge',
@@ -92,6 +87,8 @@
       decodeTag: 'Decode',
       decodeTitle: 'Decode binary',
       question: 'What does this say?',
+      // EN-Fassung vom Kunden für dieses Label freigegeben (2026-10-01).
+      keysTitle: 'Select letters',
       solutionLabel: 'Your answer',
       check: 'Check',
       next: 'New sequence',
@@ -101,9 +98,6 @@
       wrong: 'Not yet. Keep trying.'
     }
   };
-  let signalIndex = 0;
-  let signalTimers = [];
-  let signalLines = [];
   let challengeIndex = 0;
   let binaryMode = 'names';
   const screenStart = $('screenStart');
@@ -213,8 +207,35 @@
     const input = $('challengeInput');
     $('challengeCode').textContent = encodeName(answer);
     input.value = '';
-    $('challengeFeedback').textContent = '';
-    $('challengeFeedback').className = 'challenge-feedback';
+    clearFeedback();
+  }
+
+  // Rückmeldung zur Lösung: steht 5 s, blendet dann langsam aus (CSS .is-fading) und verschwindet.
+  const FEEDBACK_HOLD_DELAY = 5000;
+  let feedbackTimer = null;
+
+  function clearFeedback() {
+    window.clearTimeout(feedbackTimer);
+    feedbackTimer = null;
+    const feedback = $('challengeFeedback');
+    feedback.textContent = '';
+    feedback.className = 'challenge-feedback';
+  }
+
+  function showFeedback(text, state) {
+    clearFeedback();
+    const feedback = $('challengeFeedback');
+    // Sofort voll sichtbar, auch wenn die vorige Meldung gerade ausblendete.
+    feedback.style.transition = 'none';
+    feedback.textContent = text;
+    feedback.className = `challenge-feedback ${state}`;
+    void feedback.offsetWidth;
+    feedback.style.transition = '';
+    feedbackTimer = window.setTimeout(() => {
+      feedback.classList.add('is-fading');
+      const duration = parseFloat(getComputedStyle(feedback).transitionDuration) * 1000 || 0;
+      feedbackTimer = window.setTimeout(clearFeedback, duration);
+    }, FEEDBACK_HOLD_DELAY);
   }
 
   function renderCharacterMap() {
@@ -231,99 +252,115 @@
     });
   }
 
-  function loadHistory() {
-    try {
-      const stored = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-      if (Array.isArray(stored)) {
-        const valid = stored
-          .map(normalizeName)
-          .filter(name => name && !isBlocked(name));
-        if (valid.length) return [...new Set(valid)].slice(0, MAX_HISTORY);
-      }
-    } catch (error) {
-      return DEFAULT_NAMES[currentLanguage()];
-    }
-    return DEFAULT_NAMES[currentLanguage()];
+  try {
+    localStorage.removeItem(LEGACY_HISTORY_KEY);
+  } catch (error) {
+    // Kein Speicherzugriff: nichts zu löschen.
   }
 
-  function saveHistory(history) {
-    try {
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-    } catch (error) {
-      return;
-    }
-  }
+  /* Bitstrom rechts neben der Übersetzung: zeigt den eingegebenen Namen so, wie der Rechner
+     ihn speichert, als durchgehende Folge von Bytes ohne Buchstaben. Jede Ziffer wird einzeln
+     geschrieben; Bytes brechen nie in der Mitte um. Ohne Eingabe bleibt der Block leer. */
+  const stream = (() => {
+    const element = $('binaryHistory');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cursor = document.createElement('span');
+    cursor.className = 'signal-cursor';
+    let bytes = [];          // Ziel: Bytes als Strings ('01001100')
+    let written = 0;         // geschriebene Ziffern
+    let timer = null;
 
-  function createSignalLine(name, slot) {
-    const signal = $('binaryHistory');
-    const line = document.createElement('div');
-    line.className = 'signal-line';
-    line.setAttribute('aria-hidden', 'true');
-    name.split(' ').filter(Boolean).forEach(word => {
-      const wordLine = document.createElement('div');
-      wordLine.className = 'signal-word';
-      Array.from(encodeName(word)).forEach(character => {
-        if (character === ' ') return;
-        const bit = document.createElement('span');
-        bit.className = 'signal-bit';
-        bit.textContent = character;
-        wordLine.appendChild(bit);
-      });
-      line.appendChild(wordLine);
+    const toBytes = text => Array.from(text, character => {
+      const codePoint = character.codePointAt(0);
+      return codePoint.toString(2).padStart(codePoint > 255 ? 16 : 8, '0');
     });
-    signal.appendChild(line);
-    signalLines.push(line);
-  }
+    const digitCount = list => list.reduce((sum, byte) => sum + byte.length, 0);
 
-  function renderHistory() {
-    const history = loadHistory();
-    const signal = $('binaryHistory');
-    signalTimers.forEach(timer => window.clearTimeout(timer));
-    signalTimers = [];
-    signal.innerHTML = '';
-    signalLines = [];
-    signalIndex = 0;
-
-    function showNextBlock() {
-      signal.innerHTML = '';
-      signalLines = [];
-      const block = Array.from({ length: SIGNAL_BLOCK_SIZE }, (_, offset) => history[(signalIndex + offset) % history.length]);
-
-      block.forEach((name, slot) => {
-        signalTimers.push(window.setTimeout(() => createSignalLine(name, slot), slot * SIGNAL_REVEAL_DELAY));
-      });
-
-      const blockDuration = (SIGNAL_BLOCK_SIZE - 1) * SIGNAL_REVEAL_DELAY + SIGNAL_BLOCK_HOLD_DELAY;
-      signalTimers.push(window.setTimeout(() => {
-        signalLines.forEach(line => line.classList.add('is-leaving'));
-        signalTimers.push(window.setTimeout(() => {
-          signalIndex = (signalIndex + SIGNAL_BLOCK_SIZE) % history.length;
-          showNextBlock();
-        }, SIGNAL_TRANSITION_DELAY));
-      }, blockDuration));
+    // Baut den Block bis zur Ziffer `count` neu auf (nur bei Änderungen, nicht pro Ziffer).
+    function draw(count) {
+      element.replaceChildren();
+      let left = count;
+      for (const byte of bytes) {
+        if (left <= 0) break;
+        const group = document.createElement('span');
+        group.className = 'signal-byte';
+        group.textContent = byte.slice(0, left);
+        element.appendChild(group);
+        left -= byte.length;
+      }
+      element.appendChild(cursor);
     }
 
-    showNextBlock();
-  }
+    // Eine Ziffer anhängen; ein neues Byte beginnt eine neue Gruppe.
+    function appendDigit() {
+      let left = written;
+      let index = 0;
+      while (left >= bytes[index].length) {
+        left -= bytes[index].length;
+        index += 1;
+      }
+      let group = cursor.previousElementSibling;
+      if (left === 0 || !group) {
+        group = document.createElement('span');
+        group.className = 'signal-byte';
+        element.insertBefore(group, cursor);
+      }
+      group.textContent += bytes[index][left];
+      written += 1;
+    }
 
-  function rememberName(name) {
-    if (!name || isBlocked(name)) return;
-    const history = [name, ...loadHistory().filter(item => item !== name)].slice(0, MAX_HISTORY);
-    saveHistory(history);
-    signalIndex = 0;
-    renderHistory();
-  }
+    function stop() {
+      if (timer !== null) window.clearTimeout(timer);
+      timer = null;
+    }
+
+    function tick() {
+      timer = null;
+      if (written >= digitCount(bytes)) return;
+      appendDigit();
+      timer = window.setTimeout(tick, STREAM_DIGIT_DELAY);
+    }
+
+    // Zeigt den Namen aus dem Eingabefeld. `restart`: von vorn schreiben (z. B. beim Öffnen).
+    function show(text, restart = false) {
+      // Leeres Eingabefeld: leerer Block, keine Schreibmarke, keine Animation.
+      if (!text) {
+        stop();
+        bytes = [];
+        written = 0;
+        element.replaceChildren();
+        return;
+      }
+      const next = toBytes(text);
+      if (restart) {
+        stop();
+        written = 0;
+      } else {
+        // Der unveränderte Anfang bleibt stehen; ab der ersten Abweichung wird neu geschrieben.
+        let index = 0;
+        let prefix = 0;
+        while (index < bytes.length && index < next.length && bytes[index] === next[index]) {
+          prefix += bytes[index].length;
+          index += 1;
+        }
+        written = Math.min(written, prefix);
+      }
+      bytes = next;
+      if (reduced) written = digitCount(bytes);
+      draw(written);
+      if (timer === null) timer = window.setTimeout(tick, STREAM_DIGIT_DELAY);
+    }
+
+    return { show };
+  })();
 
   function checkChallenge() {
     const input = normalizeName($('challengeInput').value);
-    const feedback = $('challengeFeedback');
     const copy = ACTION_COPY[currentLanguage()];
     if (input === currentChallenges()[challengeIndex]) {
-      feedback.textContent = copy.correct;
-      feedback.className = 'challenge-feedback is-correct';
+      showFeedback(copy.correct, 'is-correct');
     } else {
-      feedback.textContent = copy.wrong;
-      feedback.className = 'challenge-feedback is-wrong';
+      showFeedback(copy.wrong, 'is-wrong');
     }
   }
 
@@ -340,11 +377,13 @@
     setText('actionDescription', copy.description);
     setText('binaryLabel', copy.binaryLabel);
     document.querySelector('.binary-challenge h3').textContent = copy.question;
+    setText('decodeKeysTitle', copy.keysTitle);
     document.querySelector('label[for="challengeInput"]').textContent = copy.solutionLabel;
     setText('challengeCheck', copy.check);
     setText('challengeNext', copy.next);
     setText('btnChallengeBackspace', copy.delete);
-    setText('btnChallengeDone', copy.done);
+    setText('btnBinaryBackspace', copy.delete);
+    setText('btnBinaryDone', copy.done);
     renderChallenge();
   }
 
@@ -379,10 +418,11 @@
     if (isBlocked(normalized)) {
       input.value = '';
       renderBinary('Dieser Name kann nicht verwendet werden.');
+      stream.show('');
       return;
     }
     renderBinary();
-    rememberName(normalized);
+    stream.show(normalized);
   }
 
   function typeOnKeyboard(character) {
@@ -413,58 +453,40 @@
     });
   }
 
+  // Eingabe nur über die Buchstabenfelder: Zeichen hinten anhängen, ohne das Feld zu fokussieren
+  // (sonst öffnet sich eine Tastatur).
   function typeChallengeCharacter(character) {
     const input = $('challengeInput');
-    input.focus();
-    const start = input.selectionStart ?? input.value.length;
-    const end = input.selectionEnd ?? start;
-    const nextLength = input.value.length - (end - start) + character.length;
-    if (nextLength > Number(input.maxLength)) return;
-    input.setRangeText(character, start, end, 'end');
-    input.dispatchEvent(new Event('input', { bubbles: true }));
+    if (input.value.length >= Number(input.maxLength)) return;
+    input.value += character;
+    handleChallengeInput();
   }
 
   function handleChallengeInput() {
     const input = $('challengeInput');
-    $('challengeKeyboard').classList.remove('hidden');
     const normalized = normalizeName(input.value);
     input.value = normalized;
-    const feedback = $('challengeFeedback');
-    feedback.textContent = '';
-    feedback.className = 'challenge-feedback';
-  }
-
-  function buildChallengeKeyboard() {
-    const rows = [
-      ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'],
-      ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-      ['Y', 'X', 'C', 'V', 'B', 'N', 'M']
-    ];
-
-    const pressVirtualKey = letter => {
-      typeChallengeCharacter(letter);
-    };
-
-    rows.forEach((letters, index) => {
-      const row = $(['challengeKeyboardRowA', 'challengeKeyboardRowB', 'challengeKeyboardRowC'][index]);
-      letters.forEach(letter => {
-        const key = document.createElement('button');
-        key.className = 'keyboard-key';
-        key.type = 'button';
-        key.textContent = letter;
-        key.setAttribute('aria-label', `Buchstabe ${letter}`);
-        key.addEventListener('click', () => pressVirtualKey(letter));
-        row.appendChild(key);
-      });
-    });
+    clearFeedback();
   }
 
   $('btnTry').addEventListener('click', () => {
     screenStart.classList.add('hidden');
     screenAction.classList.remove('hidden');
+    // Beim Öffnen schreibt sich der Name im Eingabefeld neu.
+    stream.show(normalizeName($('binaryInput').value), true);
   });
 
   $('btnClose').addEventListener('click', () => {
+    // Zurück zum Startzustand, damit der nächste Besuch nicht die vorige Eingabe sieht:
+    // Startname, Tab „Dein Name in Binär“, erste Folge, leere Lösung ohne Rückmeldung.
+    const input = $('binaryInput');
+    input.value = STATION_CONTENT.action.binary.initialValue;
+    input.blur();
+    $('binaryKeyboard').classList.add('hidden');
+    renderBinary();
+    setBinaryMode('names');
+    challengeIndex = 0;
+    renderChallenge();
     screenAction.classList.add('hidden');
     screenStart.classList.remove('hidden');
   });
@@ -489,26 +511,23 @@
 
   renderStation(STATION_CONTENT);
   // Geteilte Leseansicht (shared/js/station-offcanvas.js): Absatz 1 als Lead,
-  // Absatz 2 unverändert darunter, ohne Zwischenüberschrift.
-  // Absatz 3 steht in der blauen Infobox (Label wie Station 01).
-  const readingContent = (title, intro, highlightLabel) => ({
+  // alle weiteren Absätze unverändert darunter, ohne Zwischenüberschrift und ohne Infobox.
+  const readingContent = (title, intro) => ({
     title,
     lead: intro[0],
-    sections: [{ text: intro.slice(1, -1) }],
-    highlight: { label: highlightLabel, text: intro[intro.length - 1] }
+    sections: [{ text: intro.slice(1) }]
   });
   StationOffcanvas.create({
     trigger: $('btnReadMore'),
     content: {
-      de: readingContent(STATION_CONTENT.start.title, STATION_CONTENT.start.intro, 'Auf den Punkt gebracht'),
-      en: readingContent(ACTION_COPY.en.startTitle, ACTION_COPY.en.startIntro, 'Key takeaway')
+      de: readingContent(STATION_CONTENT.start.title, STATION_CONTENT.start.intro),
+      en: readingContent(ACTION_COPY.en.startTitle, ACTION_COPY.en.startIntro)
     }
   });
-  renderHistory();
+  stream.show(normalizeName($('binaryInput').value), true);
   renderChallenge();
   renderCharacterMap();
   buildKeyboard();
-  buildChallengeKeyboard();
   $('binaryInput').addEventListener('input', handleBinaryInput);
   $('binaryInput').addEventListener('focus', () => $('binaryKeyboard').classList.remove('hidden'));
   $('binaryInput').addEventListener('blur', () => $('binaryKeyboard').classList.add('hidden'));
@@ -532,39 +551,11 @@
     challengeIndex = (challengeIndex + 1) % currentChallenges().length;
     renderChallenge();
   });
-  $('challengeInput').addEventListener('keydown', event => {
-    if (event.key === 'Enter') checkChallenge();
-    if (event.key === 'Backspace') {
-      event.preventDefault();
-      const input = $('challengeInput');
-      input.value = input.value.slice(0, -1);
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      return;
-    }
-    if (event.key === ' ' || /^[a-zA-Z]$/.test(event.key)) {
-      event.preventDefault();
-      typeChallengeCharacter(event.key.toUpperCase());
-    }
-  });
-  $('challengeInput').addEventListener('input', handleChallengeInput);
-  $('challengeInput').addEventListener('focusin', () => $('challengeKeyboard').classList.remove('hidden'));
-  $('challengeInput').addEventListener('click', () => $('challengeKeyboard').classList.remove('hidden'));
-  $('challengeInput').addEventListener('blur', event => {
-    if ($('challengeKeyboard').contains(event.relatedTarget)) return;
-    $('challengeKeyboard').classList.add('hidden');
-  });
-  document.querySelectorAll('#challengeKeyboard .keyboard-key').forEach(key => {
-    key.addEventListener('mousedown', event => event.preventDefault());
-  });
+  // Löschen entfernt das letzte Zeichen der Lösung.
   $('btnChallengeBackspace').addEventListener('click', () => {
     const input = $('challengeInput');
     input.value = input.value.slice(0, -1);
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    input.focus();
-  });
-  $('btnChallengeDone').addEventListener('click', () => {
-    $('challengeKeyboard').classList.add('hidden');
-    $('challengeInput').blur();
+    handleChallengeInput();
   });
   // The shared language switch re-sets data-language after every DOM change,
   // so only re-render when the language actually changed (otherwise the input gets cleared).

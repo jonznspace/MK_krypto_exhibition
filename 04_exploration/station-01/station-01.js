@@ -7,14 +7,14 @@
         eyebrow: 'Geheime Botschaften in der Antike',
         title: 'Verschlüsseln & Versiegeln',
         summary: 'Wie bleibt eine Nachricht geheim? Schon in der Antike schützten Menschen ihre Botschaften mit Siegeln und verschlüsselten Zeichen. Entdecke die Skytale: Ein Streifen wird erst auf dem passenden Stab lesbar.',
-        // Off-canvas content (shared/js/station-offcanvas.js): lead, sections, highlight.
+        // Off-canvas content (shared/js/station-offcanvas.js): lead, sections.
         reading: {
           lead: 'In der Menschheit stellte sich wohl schon immer ein zentrales Problem: Wie lassen sich Nachrichten so übermitteln, dass Dritte sie nicht verstehen? Von der Antike ausgehend bestand eine Lösung beispielsweise darin, die Nachricht mit einem Siegel etwa aus Bienenwachs zu „versiegeln“. Ein Siegelbruch bedeutete, dass die Nachricht gelesen wurde. Darüber hinaus entwickelten sich weitere Lösungen: So wurden Texte, also Buchstaben, derart verändert, dass sie nur für die vorgesehenen Empfänger lesbar blieben.',
           sections: [
             { title: 'Skytale', text: 'Im antiken Sparta diente für letzteres nachweislich die Skytale. Ein Lederstreifen wurde spiralförmig um einen Holzstab gewickelt, die Nachricht über diese Wicklungen hinweg geschrieben und wurde so nach dem Abnehmen unlesbar. Erst mit einem Stab gleichen Durchmessers ließen sich die Buchstaben wieder richtig anordnen.' },
-            { title: 'Caesar-Chiffre', text: 'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.' }
-          ],
-          highlight: { label: 'Auf den Punkt gebracht', text: 'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.' }
+            { title: 'Caesar-Chiffre', text: 'Die sogenannte Caesar-Chiffre, deren Erfindung Julius Caesar zugeschrieben wird, funktioniert noch einfacher: Jeder Buchstabe wird im Alphabet um eine festgelegte Anzahl Plätze verschoben. Aus A wird zum Beispiel D, aus B wird E. Wer den „Schlüssel“ kennt – also die Zahl der Verschiebung –, kann die Nachricht dekodieren.' },
+            { text: 'Beide Verfahren sind leicht zu knacken. Sie zeigen jedoch ein Prinzip, das bis heute gilt: Informationen lassen sich so umwandeln, dass sie nur für Eingeweihte verständlich sind. Dieses Prinzip heißt Kryptografie. Es ist die erste von drei Grundlagen, auf denen später digitales Geld aufbauen wird.' }
+          ]
         },
         image: { src: 'dither-output.png', alt: '' },
         ctaLabel: 'Ausprobieren'
@@ -37,14 +37,14 @@
         eyebrow: 'Secret messages in antiquity',
         title: 'Encrypting & sealing',
         summary: 'How do you keep a message secret? Even in antiquity, people protected their messages with seals and encrypted letters. Discover the skytale: a strip becomes readable only when wrapped around the right rod.',
-        // Off-canvas content (shared/js/station-offcanvas.js): lead, sections, highlight.
+        // Off-canvas content (shared/js/station-offcanvas.js): lead, sections.
         reading: {
           lead: 'People have probably always faced a central problem: how can messages be sent so that others cannot understand them? One solution, used since antiquity, was to seal a message, for example with beeswax. A broken seal indicated that the message had been read. Other solutions were developed too: texts, or their letters, were changed so that only the intended recipients could read them.',
           sections: [
             { title: 'Skytale', text: 'In ancient Sparta, the skytale was used for this purpose. A strip of leather was wound around a wooden rod, and the message was written across the coils. Once removed, the strip became unreadable. Only a rod of the same diameter would put the letters back in the right order.' },
-            { title: 'Caesar cipher', text: 'The Caesar cipher, whose invention is attributed to Julius Caesar, works even more simply: each letter is shifted a fixed number of places in the alphabet. A becomes D, for example, and B becomes E. Anyone who knows the key – the number of places to shift – can decode the message.' }
-          ],
-          highlight: { label: 'Key takeaway', text: 'Both methods are easy to crack. But they demonstrate a principle that still applies today: information can be transformed so that only those in the know can understand it. This principle is called cryptography. It is the first of three foundations on which digital money would later be built.' }
+            { title: 'Caesar cipher', text: 'The Caesar cipher, whose invention is attributed to Julius Caesar, works even more simply: each letter is shifted a fixed number of places in the alphabet. A becomes D, for example, and B becomes E. Anyone who knows the key – the number of places to shift – can decode the message.' },
+            { text: 'Both methods are easy to crack. But they demonstrate a principle that still applies today: information can be transformed so that only those in the know can understand it. This principle is called cryptography. It is the first of three foundations on which digital money would later be built.' }
+          ]
         },
         image: { src: 'dither-output.png', alt: '' },
         ctaLabel: 'Try it out'
@@ -213,6 +213,9 @@
     }
 
     setWrapped(wrapped) { this.wrapped = wrapped; }
+
+    // Start view: the rod turned as on first load.
+    resetView() { this.roll = 0.4; }
 
     setShowRead(showRead) {
       this.showRead = showRead;
@@ -712,7 +715,12 @@
     screenAction.classList.remove('hidden');
   });
   $('btnClose').addEventListener('click', () => {
+    // Back to the start state, so the next visitor does not see the previous input:
+    // encrypt tab, default message and rod thickness, wound strip, first puzzle, start view.
     closeKeyboard();
+    puzzleIndex = 0;
+    setSkytaleMode('encrypt');
+    skytaleModel.resetView();
     screenAction.classList.add('hidden');
     screenStart.classList.remove('hidden');
   });

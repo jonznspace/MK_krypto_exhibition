@@ -199,8 +199,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 1600px) {
   .start-visual { width: 65vw; }
 }
-/* Enigma-Screen: Startbild deutlich zurückgenommen (.28 → .08), damit es nicht ablenkt. */
-.screen-action .start-visual { opacity: .08; }
 
 /* Einstieg in die Aktion: durchgehend blau, auch Hover und gedrückt. */
 .cta {
@@ -304,8 +302,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
     "l1 c1 s1"
     "l2 c2 s2"
     "l3 c3 s3";
+  /* Panel horizontal und vertikal mittig im Raum unter der Headline. */
   align-content: center;
-  justify-content: start;
+  justify-content: center;
   row-gap: var(--enigma-row-gap);
 }
 
@@ -520,15 +519,18 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .reset-btn:focus-visible { outline: 2px solid var(--immersive-focus); outline-offset: 3px; }
 
-/* Tablet quer (1563 × 864): Maschine auf ca. 80 % wie das Gerät zur Figma-Fläche. */
+/* Tablet quer (1563 × 864): Maschine auf ca. 94 % der Figma-Fläche (vorher 80 %), so groß,
+   dass oben und unten je rund 63 px (≈ --space-8) Luft bleiben. Ohne unteren Innenabstand
+   des Screens, damit das Panel mittig zwischen Headline und Unterkante sitzt. */
 @media (max-height: 900px) {
+  .screen-action { padding-bottom: 0; }
   .action-grid {
-    --enigma-key: var(--size-control-lg);   /* 52 */
-    --enigma-key-gap: var(--space-3);       /* 12 */
-    --enigma-rotor-window: 92px;
-    --enigma-row-gap: var(--space-6);       /* 32 */
-    --enigma-col-gap: var(--space-6);       /* 32 */
-    --enigma-side: 240px;
+    --enigma-key: 60px;                      /* vorher 52 */
+    --enigma-key-gap: 14px;                  /* vorher 12 */
+    --enigma-rotor-window: 104px;            /* vorher 92 */
+    --enigma-row-gap: 36px;                  /* vorher 32 */
+    --enigma-col-gap: 36px;                  /* vorher 32 */
+    --enigma-side: 260px;                    /* vorher 240 */
   }
 }
 

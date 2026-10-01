@@ -143,27 +143,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .hero-text p + p { margin-top: var(--space-3); }
 
-/* Bild: Kassenbillet 1772 rechts unten, gedämpft (Platzierung wie Station 03 und 10). */
+/* Bild: Kassenbillet (1772) wie Station 09 (gleiche Datei, Platzierung und Deckkraft):
+   rechts, vertikal zentriert, gedämpft. Größe 1,5 × (1075 px / 68,75vw). */
 .start-visual {
   position: absolute;
   right: -160px;
-  top: -20px;
-  bottom: 0;
-  width: 1180px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  top: 50%;
+  /* 40 % der Bildbreite nach rechts versetzt. */
+  transform: translate(40%, -50%);
+  width: min(1613px, 103.125vw);
   z-index: 1;
   pointer-events: none;
   opacity: .28;
 }
 
 .station-image {
+  display: block;
   width: 100%;
   height: auto;
-  max-height: 1020px;
-  object-fit: contain;
-  object-position: bottom right;
 }
 
 /* CTA „Vertiefung“ mit Glühbirne, wie der CTA in Station 03: durchgehend blau,

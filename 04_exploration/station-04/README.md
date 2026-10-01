@@ -132,3 +132,21 @@ Headline, Schließen-Button und Hintergrundbild sind unverändert.
 - Gemessen bei 1563 × 864: identisch mit Station 03 (Titel x 32 / y 36, × x 1479 / y 32).
 - `.action-hdr-copy { flex: 1; min-width: 0; }` wie Station 03.
 - `index.html`: `station-04.css?v=11`.
+
+## Enigma größer und zentriert (2026-10-01)
+
+- Tablet quer (Regel `max-height: 900px`): Maschine größer, ca. 94 % der Figma-Fläche statt 80 %.
+  Tasten 60 px (vorher 52), Tastenabstand 14 px (12), Walzenfenster 104 px (92), Zeilen- und Spaltenabstand 36 px (32),
+  Seitenspalte 260 px (240).
+- Panel horizontal und vertikal mittig (`justify-content: center`; vorher linksbündig). Auf dem Tablet quer hat der
+  Aktionsscreen unten keinen Innenabstand mehr, damit das Panel genau zwischen Headline und Unterkante sitzt:
+  je 63 px (≈ `--space-8`) oben und unten, je 179 px links und rechts.
+- `index.html`: `station-04.css?v=12`.
+
+## Enigma-Screen ohne Hintergrundbild (2026-10-01)
+
+- Auf dem Aktionsscreen (Walzen, Lampenfeld, Tastatur) gibt es kein Hintergrundbild mehr (vorher das Startbild mit
+  Deckkraft .08). Markup, Bildzuweisung in `station-04.js` und die Regel `.screen-action .start-visual` sind entfernt.
+  Der Startscreen behält sein Bild.
+- `index.html`: `station-04.css?v=13`, `station-04.js?v=10`.
+- Geprüft: Schließen setzt Eingabe, Ausgabe und Walzen zurück (`resetMachine`, bestand schon).

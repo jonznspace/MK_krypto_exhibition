@@ -202,13 +202,12 @@
       $('i' + i).style.transform = `translate(${toX - fromX}px, ${toY - fromY}px)`;
     }
   }
-  function setKey(k, tick) {
+  function setKey(k) {
     const nk = mod(k, N);
     if (nk === key) return;
     key = nk;
     applyRotation();
     $('keyRead').textContent = 'A → ' + AL[key];
-    if (tick !== false) Sound.tick();
     if (mode === 'encrypt') renderCipher(); else renderCrack();
   }
   applyRotation();
@@ -253,19 +252,15 @@
   async function playEncrypt() {
     const cipherTiles = $('cipherTiles').children;
     for (const t of cipherTiles) t.classList.add('pending');
-    let n = 0;
     for (let p = 0; p < plain.length; p++) {
       if (!isAZ(plain[p])) { cipherTiles[p].classList.remove('pending'); continue; }
       highlight(AL.indexOf(plain[p]));
       cipherTiles[p].classList.remove('pending');
       cipherTiles[p].classList.add('active');
-      Sound.tick();
       await sleep(reduced ? 0 : 240);
       cipherTiles[p].classList.remove('active');
-      n++;
     }
     clearHot();
-    if (n) Sound.confirm();
   }
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -276,7 +271,7 @@
     chips.innerHTML = '';
     EXAMPLES[currentLanguage()].encrypt.forEach(w => {
       const b = document.createElement('button'); b.className = 'chip'; b.dataset.w = w; b.textContent = w;
-      b.onclick = () => { Sound.tick(); setPlain(w); };
+      b.onclick = () => setPlain(w);
       chips.appendChild(b);
     });
   }
@@ -287,11 +282,11 @@
     const az = $('azStrip');
     AL.forEach(ch => {
       const b = document.createElement('button'); b.textContent = ch;
-      b.onclick = () => { Sound.tick(); if (plain.length < 12) { plain += ch; renderPlain(); } };
+      b.onclick = () => { if (plain.length < 12) { plain += ch; renderPlain(); } };
       az.appendChild(b);
     });
   })();
-  $('clearBtn').onclick = () => { Sound.tick(); plain = ''; renderPlain(); };
+  $('clearBtn').onclick = () => { plain = ''; renderPlain(); };
 
   /* ---------------- Modus: Knacken ---------------- */
   function newMessage() {
@@ -315,14 +310,14 @@
     box.classList.toggle('is-solved', solved);
     if (solved) {
       status.textContent = copy.cracked + AL[key];
-      if (!crackSolvedFlag) { crackSolvedFlag = true; Sound.confirm(); toast(copy.solvedToast); }
+      if (!crackSolvedFlag) { crackSolvedFlag = true; toast(copy.solvedToast); }
     } else {
       status.textContent = copy.turnKey;
       crackSolvedFlag = false;
     }
   }
   let crackSolvedFlag = false;
-  $('newMsg').onclick = () => { Sound.tick(); crackSolvedFlag = false; newMessage(); };
+  $('newMsg').onclick = () => { crackSolvedFlag = false; newMessage(); };
 
   function applyActionLanguage() {
     const language = currentLanguage();
@@ -374,8 +369,8 @@
     if (m === 'crack') { if (!crackIdx.length) newMessage(); else renderCrack(); }
     else renderCipher();
   }
-  $('tabEncrypt').onclick = () => { Sound.tick(); switchMode('encrypt'); };
-  $('tabCrack').onclick = () => { Sound.tick(); switchMode('crack'); };
+  $('tabEncrypt').onclick = () => switchMode('encrypt');
+  $('tabCrack').onclick = () => switchMode('crack');
 
   /* ---------------- Scheibe drehen ---------------- */
   $('rotL').onclick = () => setKey(key - 1);
@@ -437,30 +432,9 @@
   }
   function startAttract() {
     $('attract').classList.add('show'); $('attract').setAttribute('aria-hidden', 'false');
-    if (!reduced) attractInt = setInterval(() => setKey(key + 1, false), 2000);
+    if (!reduced) attractInt = setInterval(() => setKey(key + 1), 2000);
   }
   ['pointerdown', 'keydown'].forEach(ev => window.addEventListener(ev, kick, true));
-
-  /* ---------------- Sound (Cue-Tokens) ---------------- */
-  const Sound = (function () {
-    let ctx = null, on = true;
-    function ensure() { if (!ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) ctx = new AC(); } if (ctx && ctx.state === 'suspended') ctx.resume(); }
-    function cue(freq, dur, gain) {
-      if (!on) return; ensure(); if (!ctx) return;
-      const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain(), hp = ctx.createBiquadFilter();
-      o.type = 'square'; o.frequency.setValueAtTime(freq, t); o.frequency.exponentialRampToValueAtTime(freq * .6, t + dur);
-      hp.type = 'highpass'; hp.frequency.value = 500;
-      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .004); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-      o.connect(hp); hp.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t + dur + .02);
-    }
-    return {
-      tick: () => cue(2200, .035, .05),
-      confirm: () => cue(1800, .06, .06),
-      open: () => cue(1400, .09, .06),
-      close: () => cue(900, .07, .05),
-      toggle() { on = !on; return on; }
-    };
-  })();
 
   btnTry.onclick = () => {
     screenStart.classList.add('hidden');
@@ -468,7 +442,24 @@
     kick();
   };
 
+  // Zurück zum Startzustand, damit der nächste Besuch nicht die vorige Eingabe sieht:
+  // Schlüssel A → D, erstes Beispielwort, Tab „Verschlüsseln“, Knacken-Botschaft verworfen.
+  function resetAction() {
+    setKey(3);
+    plain = EXAMPLES[currentLanguage()].encrypt[0];
+    buildWordChips();
+    renderPlain();
+    crackIdx = [];
+    crackSolvedFlag = false;
+    $('crackCipher').replaceChildren();
+    $('crackPlain').replaceChildren();
+    $('crackStatus').textContent = currentCopy().turnKey;
+    $('toast').classList.remove('show');
+    switchMode('encrypt');
+  }
+
   btnClose.onclick = () => {
+    resetAction();
     screenAction.classList.add('hidden');
     screenStart.classList.remove('hidden');
     kick();
